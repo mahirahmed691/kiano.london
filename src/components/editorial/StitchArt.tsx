@@ -171,7 +171,7 @@ export function StitchArt() {
         <Eyebrow>The grammar</Eyebrow>
         <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, and the hand.</Display>
         <Body className="mt-6">
-          A jubbah is a column of cloth. The art is what holds it: a felled seam that
+          A thobe is a column of cloth. The art is what holds it: a felled seam that
           does not show, a pad stitch that shapes the neck, a buttonhole worked in silk
           so the placket closes without announcing itself.
         </Body>

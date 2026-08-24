@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import { HouseMark } from '@/components/brand/HouseMark'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { overlayPaths, primaryNav } from '@/data/navigation'
-import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
 
 export function Header() {
@@ -35,16 +35,7 @@ export function Header() {
         )}
       >
         <div className="flex h-[4.5rem] items-center justify-between gap-4 px-5 md:h-20 md:px-12 lg:px-16">
-          <Link
-            to="/"
-            className={cn(
-              'whitespace-nowrap font-display text-[0.95rem] font-medium uppercase tracking-[0.12em] md:text-[1.15rem] md:tracking-[0.18em]',
-              inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.45)]',
-            )}
-            aria-label={`${site.name}, home`}
-          >
-            {site.name}
-          </Link>
+          <HouseMark inverted={inverted} />
 
           <nav className="hidden md:block" aria-label="Primary">
             <ul className="flex items-center gap-10">

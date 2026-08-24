@@ -68,8 +68,15 @@ export function MobileNav({ open, onClose }: Props) {
             </li>
           ))}
         </ul>
-        <p className="mt-16 text-[11px] uppercase tracking-[0.22em] text-stone">
-          {site.neighbourhood}, {site.city} · Est. {site.established}
+        <p
+          lang="ar"
+          dir="rtl"
+          className="mt-16 font-arabic text-xl text-ink/70"
+        >
+          {site.arabicName}
+        </p>
+        <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">
+          {site.city} · Est. {site.established}
         </p>
       </nav>
     </div>

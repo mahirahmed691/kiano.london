@@ -12,20 +12,20 @@ export function CraftsmanshipPage() {
   usePageMeta({
     title: 'Craftsmanship — Cavendish House',
     description:
-      'Cloth, pattern, stitch and finish. How a Cavendish House jubbah is cut and sewn in Mayfair.',
+      'Cloth, pattern, stitch and finish. How a Cavendish House thobe is cut and sewn in London.',
     path: '/craftsmanship',
-    image: '/images/craft-closeup.jpg',
+    image: '/images/worsted-wool.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/craft-closeup.jpg"
-        imageAlt="A close study of hand stitching through the cloth of a jubbah."
+        image="/images/worsted-wool.jpg"
+        imageAlt="A needle on charcoal worsted — the stitch that holds a thobe."
         objectPosition="center"
         kicker="The work"
         title="The art of the stitch."
-        subtitle="Cloth. Pattern. Stitch. Finish. Every jubbah passes through the same rooms, in the same order."
+        subtitle="Cloth. Pattern. Stitch. Finish. Every thobe passes through the same rooms, in the same order."
         minHeight="tall"
         priority
       >
@@ -82,7 +82,7 @@ export function CraftsmanshipPage() {
             <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, fastening, pocket.</Display>
             <Body className="mt-6">
               The photographs are of the work itself: not a campaign, a close look at
-              how a Cavendish jubbah is held together.
+              how a Cavendish thobe is held together.
             </Body>
           </Reveal>
           <div className="grid gap-8 sm:grid-cols-2">
@@ -136,8 +136,8 @@ export function CraftsmanshipPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal>
               <ImageFrame
-                src="/images/workbench.jpg"
-                alt="The workbench where a jubbah is chalked, cut and sewn."
+                src="/images/featured-overcoat.jpg"
+                alt="An Emirati thobe at rest — the column of cloth these methods produce."
                 className="aspect-[4/5] w-full"
               />
             </Reveal>

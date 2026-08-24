@@ -14,22 +14,22 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function HomePage() {
   usePageMeta({
-    title: 'Cavendish House — Premium Jubbah & Thobe, London',
+    title: 'Cavendish House — الجُبَّة',
     description:
-      'Cavendish House is a Mayfair atelier of the jubbah and the thobe. Irish linen, Yorkshire worsted, hand-felled seams, cut in London since 1894.',
+      'Cavendish House cuts the Emirati thobe in London: black, grey and beige, sizes 52 to 60, in premium cloth.',
     path: '/',
-    image: '/images/og.jpg',
+    image: '/images/featured-overcoat.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/hero-model.png"
-        imageAlt="A man in a long modest jubbah, photographed in quiet studio light."
-        objectPosition="center 18%"
-        kicker={`Established ${site.established} · ${site.neighbourhood}`}
-        title="The lasting jubbah."
-        subtitle="A London house of the thobe: cut slowly, from cloth chosen to outlive the season."
+        image="/images/featured-overcoat.jpg"
+        imageAlt="A charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
+        objectPosition="center 12%"
+        kicker={`Established ${site.established} · ${site.city}`}
+        title="A column of cloth."
+        subtitle="Earthy Emirati thobes, cut slowly in London. Black, grey, beige. Sizes 52 to 60."
         priority
       >
         <Button to="/collection" variant="invert">
@@ -47,11 +47,19 @@ export function HomePage() {
                 <br />
                 held by the stitch.
               </Display>
+              <p
+                lang="ar"
+                dir="rtl"
+                className="mt-5 font-arabic text-2xl font-normal text-ink/55 md:text-3xl"
+              >
+                {site.arabicName}
+              </p>
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Lead>
-                Cavendish House cuts the jubbah and the thobe in Mayfair. Irish linen for
-                summer. Yorkshire worsted for winter. A concealed placket. A felled seam.
+                Cavendish House is a London atelier of the Emirati thobe. Black,
+                charcoal, grey, beige and bone. Japanese cotton, Super 150s, extra-long
+                staple — cloth chosen to last.
               </Lead>
               <Body className="mt-6">
                 Nothing here is made for a campaign. A thobe should look as considered in
@@ -70,7 +78,7 @@ export function HomePage() {
           <Reveal className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
             <div>
               <Eyebrow>The house line</Eyebrow>
-              <Display className="mt-3 text-4xl md:text-5xl">Selected pieces</Display>
+              <Display className="mt-3 text-4xl md:text-5xl">Five thobes</Display>
             </div>
             <TextLink to="/collection">All of the collection</TextLink>
           </Reveal>
@@ -92,8 +100,8 @@ export function HomePage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/craft-closeup.jpg"
-            imageAlt="Hand stitching through the collar stand of a jubbah."
+            image="/images/worsted-wool.jpg"
+            imageAlt="A needle resting on charcoal worsted — the cloth of a winter thobe."
             objectPosition="center"
             imageOn="left"
           >
@@ -115,18 +123,18 @@ export function HomePage() {
 
       <section className="relative min-h-[70svh] overflow-hidden">
         <ImageFrame
-          src="/images/linen-drape-home.jpg"
-          alt="Olive linen falling in a long modest line."
+          src="/images/featured-overcoat.jpg"
+          alt="A charcoal Emirati thobe at rest — the house silhouette, a column of cloth."
           className="absolute inset-0 h-full w-full"
           imgClassName="h-full w-full object-cover"
-          objectPosition="center"
+          objectPosition="center 58%"
         />
         <div className="absolute inset-0 bg-night/55" aria-hidden="true" />
         <div className="relative z-10 flex min-h-[70svh] items-center px-6 py-24 md:px-12 lg:px-16">
           <QuoteBlock
             tone="dark"
             quote="The modest garment is not empty. It is full of work you are not meant to see."
-            attribution="House note, 1926"
+            attribution="House note"
           />
         </div>
       </section>
@@ -135,12 +143,12 @@ export function HomePage() {
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal>
-              <Eyebrow>Mayfair</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The townhouse</Display>
+              <Eyebrow>The atelier</Eyebrow>
+              <Display className="mt-4 text-4xl md:text-5xl">Cut in London</Display>
               <Body className="mt-6">
-                Cavendish House still occupies a single address on Carlos Place. The
-                cutting room is on the first floor; fittings are by appointment. We do
-                not keep a shop window. The work is the invitation.
+                The cutting room is a single address. Fittings are by appointment. We
+                do not keep a shop window. The work is the invitation — an Emirati
+                thobe, cloth chosen to outlive the season.
               </Body>
               <div className="mt-8">
                 <Button to="/story">Read our story</Button>
@@ -148,8 +156,8 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120}>
               <ImageFrame
-                src="/images/garments-rail.png"
-                alt="Jubbahs and thobes spaced on a brass rail in the Mayfair atelier."
+                src="/images/heritage-linen.jpg"
+                alt="A roll of extra-long staple cotton, the beige cloth of the house."
                 className="aspect-[4/3] w-full"
                 objectPosition="center"
               />

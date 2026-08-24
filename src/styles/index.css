@@ -3,9 +3,10 @@
 @theme {
   --font-display: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
   --font-sans: 'Jost', ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: 'Amiri', 'Noto Naskh Arabic', serif;
 
-  --color-ivory: #f4efe6;
-  --color-ivory-deep: #e8dfd0;
+  --color-ivory: #f2ebdc;
+  --color-ivory-deep: #e6dcc8;
   --color-cream: #faf7f1;
   --color-ink: #1b1714;
   --color-ink-soft: #3f3933;

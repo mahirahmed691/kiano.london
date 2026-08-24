@@ -35,7 +35,7 @@ export const processSteps: ProcessStep[] = [
     number: '01',
     title: 'Cloth',
     summary:
-      'Irish linen, Yorkshire worsted, Como crepe. Weight and handle are chosen in the piece, never from a swatch book alone. A jubbah lives or dies by the drape.',
+      'Japanese compact cotton, Super 150s wool-cotton, extra-long staple Giza. Weight and handle are chosen in the piece. An Emirati thobe lives or dies by the drape.',
     image: '/images/heritage-linen.jpg',
     imageAlt: 'Heritage linen in the piece, before it is chalked and cut.',
   },
@@ -44,16 +44,16 @@ export const processSteps: ProcessStep[] = [
     title: 'Pattern',
     summary:
       'Each thobe is cut from a house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
-    image: '/images/workbench.jpg',
-    imageAlt: 'The workbench where patterns are chalked onto cloth.',
+    image: '/images/featured-overcoat.jpg',
+    imageAlt: 'The Emirati thobe as a column of cloth — the house pattern, at rest.',
   },
   {
     number: '03',
     title: 'Stitch',
     summary:
-      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Cavendish jubbah is fused.',
-    image: '/images/craft-closeup.jpg',
-    imageAlt: 'A close study of hand stitching through cloth.',
+      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Cavendish thobe is fused.',
+    image: '/images/worsted-wool.jpg',
+    imageAlt: 'A needle on charcoal worsted — the stitch that holds a winter thobe.',
   },
   {
     number: '04',
@@ -61,25 +61,25 @@ export const processSteps: ProcessStep[] = [
     summary:
       'Concealed plackets, horn buttons, a label set by hand. The last press is as considered as the first cut. The garment should look finished from the inside.',
     image: '/images/fastenings.jpg',
-    imageAlt: 'Integrated fastenings at the finish of a jubbah placket.',
+    imageAlt: 'Integrated fastenings at the finish of a thobe placket.',
   },
 ]
 
 export const materials: Material[] = [
   {
-    name: 'Irish linen',
-    origin: 'Baird McNutt & Libeco',
-    copy: 'For summer thobes. A cloth that breathes, holds a crease, and takes on the wearer’s shape without losing the line.',
+    name: 'Japanese compact cotton',
+    origin: 'Shizuoka',
+    copy: 'For the black and grey thobes. Dense, matte, a high-count two-ply that holds a clean column without stiffness.',
   },
   {
-    name: 'Yorkshire worsted',
-    origin: 'Abraham Moon, Guiseley',
-    copy: 'For the winter jubbah. Compact, resilient, a memory in the fibre so the silhouette stays architectural.',
+    name: 'Super 150s wool-cotton',
+    origin: 'Huddersfield',
+    copy: 'For charcoal. Compact, resilient, a memory in the fibre so the Emirati silhouette stays architectural.',
   },
   {
-    name: 'Silk-wool crepe',
-    origin: 'Como',
-    copy: 'For evening. Matte, fluid, almost without light. The Obsidian Jubbah is cut from this and nothing else.',
+    name: 'Extra-long staple cotton',
+    origin: 'Giza',
+    copy: 'For beige and bone. Long fibre, a quiet sheen, washed so the thobe drapes rather than stands.',
   },
   {
     name: 'Silk twist & horn',
@@ -93,29 +93,29 @@ export const stitchStudies: StitchStudy[] = [
     id: 'stitch',
     title: 'The stitch',
     note: 'Pad-stitching through the collar stand, silk on linen.',
-    image: '/images/craft-closeup.jpg',
+    image: '/images/worsted-wool.jpg',
     imageAlt: 'Hand stitches sitting proud of the cloth.',
   },
   {
     id: 'seam',
     title: 'The seam',
     note: 'A felled side seam, the allowance enclosed, the face uninterrupted.',
-    image: '/images/fabric-detail.png',
-    imageAlt: 'The face of the cloth where a seam has been felled out of sight.',
+    image: '/images/heritage-linen.jpg',
+    imageAlt: 'The face of flax linen, a felled seam held out of sight.',
   },
   {
     id: 'fastening',
     title: 'The fastening',
     note: 'Integrated closures set into the placket, never sitting on it.',
     image: '/images/fastenings.jpg',
-    imageAlt: 'A row of integrated fastenings on a jubbah placket.',
+    imageAlt: 'A row of integrated fastenings on a thobe placket.',
   },
   {
     id: 'pocket',
     title: 'The pocket',
     note: 'A concealed interior pocket that does not break the silhouette.',
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'A concealed interior pocket set into the lining of a jubbah.',
+    imageAlt: 'A concealed interior pocket set into the lining of a thobe.',
   },
 ]
 
@@ -125,10 +125,10 @@ export const detailSections: DetailSection[] = [
     kicker: '01 — The seam',
     title: 'The felled seam',
     copy: [
-      'A machine overlock is a shortcut. A Cavendish side seam is felled: the allowance is folded into itself and stitched twice, so the inside of the jubbah is as clean as the face.',
+      'A machine overlock is a shortcut. A Cavendish side seam is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
       'It takes longer. It also means the garment can be washed, pressed and worn for years without the seam opening or the edge fraying. The line down the body stays a single plane of cloth.',
     ],
-    image: '/images/fabric-detail.png',
+    image: '/images/heritage-linen.jpg',
     imageAlt: 'Cloth at close range, where the seam has been worked out of sight.',
     imagePosition: 'right',
   },
@@ -140,8 +140,8 @@ export const detailSections: DetailSection[] = [
       'The collar stand of a thobe is pad-stitched by hand. The stitches are not decorative. They shape the roll of the neck and keep the stand from collapsing after a day’s wear.',
       'We work in silk twist, the tension set by eye. A fused collar is quicker. It is also why so many garments look tired by the third season.',
     ],
-    image: '/images/craft-closeup.jpg',
-    imageAlt: 'Close work: stitches through the collar and chest of a jubbah.',
+    image: '/images/worsted-wool.jpg',
+    imageAlt: 'Close work: a needle and charcoal cloth, the stitch of a thobe.',
     imagePosition: 'left',
   },
   {
@@ -149,11 +149,11 @@ export const detailSections: DetailSection[] = [
     kicker: '03 — The fastening',
     title: 'The concealed placket',
     copy: [
-      'Buttons sit inside the placket, not on it. From a few paces the jubbah reads as a single column of cloth. The closures are horn, the buttonholes worked in silk, the bartack set by the same hand that cut the first hole.',
+      'Buttons sit inside the placket, not on it. From a few paces the thobe reads as a single column of cloth. The closures are horn, the buttonholes worked in silk, the bartack set by the same hand that cut the first hole.',
       'It is the modest line: nothing announced, everything in place.',
     ],
     image: '/images/fastenings.jpg',
-    imageAlt: 'Concealed fastenings integrated into the jubbah placket.',
+    imageAlt: 'Concealed fastenings integrated into the thobe placket.',
     imagePosition: 'right',
   },
   {
@@ -165,8 +165,7 @@ export const detailSections: DetailSection[] = [
       'The house label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
     ],
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The concealed interior pocket of a Cavendish jubbah.',
+    imageAlt: 'The concealed interior pocket of a Cavendish thobe.',
     imagePosition: 'left',
   },
 ]
-

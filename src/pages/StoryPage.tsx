@@ -13,20 +13,20 @@ export function StoryPage() {
   usePageMeta({
     title: 'Our Story — Cavendish House',
     description:
-      'Founded in Mayfair in 1894, Cavendish House remains a London atelier of the jubbah and the thobe.',
+      'A London atelier of the Emirati thobe, founded in 2026 as a cutting room for the modest wardrobe.',
     path: '/story',
-    image: '/images/story-vision.jpg',
+    image: '/images/featured-overcoat.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/story-vision.jpg"
-        imageAlt="A quiet London terrace in morning light — the city the house has always dressed."
-        objectPosition="center 40%"
+        image="/images/featured-overcoat.jpg"
+        imageAlt="A charcoal Emirati thobe, the house silhouette, worn at full length."
+        objectPosition="center 62%"
         kicker={`Est. ${site.established}`}
         title="A house, not a brand."
-        subtitle="Cavendish House was founded in Mayfair as a cutting room for the modest garment. That arrangement has not changed."
+        subtitle="Cavendish House opened as a cutting room for the modest garment — a small workroom, and a long silhouette."
         minHeight="tall"
         priority
       />
@@ -34,24 +34,24 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/linen-jubbah.jpg"
-            imageAlt="An olive linen thobe, the house’s enduring silhouette."
-            objectPosition="center"
+            image="/images/featured-overcoat.jpg"
+            imageAlt="The charcoal Hadīd thobe, a standing collar and a concealed placket."
+            objectPosition="center 18%"
             imageOn="right"
           >
-            <Eyebrow>1894</Eyebrow>
+            <Eyebrow>{site.established}</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">
               Founded for those who preferred to be well dressed rather than noticed.
             </Display>
             <Body className="mt-6">
-              Eleanor Cavendish opened the house on Carlos Place with two cutters and a
-              standing arrangement with a mill in Yorkshire. The first ledger lists
-              jubbahs, not customers. We still keep it that way.
+              The first ledger lists thobes, not customers. Two cutters, a standing
+              arrangement with a mill, and a belief that a modest column of cloth is a
+              long conversation — not a season.
             </Body>
             <Body className="mt-4">
-              London has moved around us. The house has not. We remain a single
-              address, a small workroom, and a belief that a modest garment is a long
-              conversation with cloth.
+              London is where the work is done. The house is not a country myth, and
+              not a window display. We remain a single address, a small workroom, and
+              the same silhouette: ankle, shoulder, placket concealed.
             </Body>
           </EditorialSplit>
         </Container>
@@ -62,17 +62,17 @@ export function StoryPage() {
           <div className="grid gap-6 md:grid-cols-12">
             <Reveal className="md:col-span-7">
               <ImageFrame
-                src="/images/story-london.jpg"
-                alt="London in soft light — the city the house has always dressed."
+                src="/images/heritage-linen.jpg"
+                alt="Extra-long staple cotton in the piece, before it is chalked and cut."
                 className="aspect-[4/3] w-full md:aspect-[16/10]"
                 objectPosition="center"
-                caption="London"
+                caption="Cloth"
               />
             </Reveal>
             <Reveal delay={100} className="md:col-span-5 md:pt-16">
               <ImageFrame
-                src="/images/workbench.jpg"
-                alt="The cutting table, where paper patterns for the jubbah still hang."
+                src="/images/worsted-wool.jpg"
+                alt="Charcoal worsted and a needle, the winter cloth of the house."
                 className="aspect-[3/4] w-full"
                 objectPosition="center"
                 caption="The workroom"
@@ -87,7 +87,7 @@ export function StoryPage() {
           <div className="grid gap-12 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <Eyebrow>The rooms</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">Carlos Place</Display>
+              <Display className="mt-4 text-4xl md:text-5xl">The atelier</Display>
             </Reveal>
             <div className="space-y-8 lg:col-span-7 lg:col-start-6">
               <Reveal>
@@ -101,15 +101,15 @@ export function StoryPage() {
               <Reveal delay={80}>
                 <h3 className="font-display text-2xl font-light">The cutting room</h3>
                 <Body className="mt-3">
-                  Upstairs, paper patterns for the jubbah hang on a rail that has been
-                  there longer than anyone now working. New patterns are added. Old ones
-                  are not discarded. A house remembers through its paper.
+                  Upstairs, paper patterns for the Emirati thobe hang on a rail. New
+                  patterns are added. Old ones are not discarded. A house remembers
+                  through its paper.
                 </Body>
               </Reveal>
               <Reveal delay={140}>
                 <h3 className="font-display text-2xl font-light">The work today</h3>
                 <Body className="mt-3">
-                  We still cut jubbahs and thobes in small numbers. Ready-to-wear
+                  We still cut five earthy thobes in small numbers. Ready-to-wear
                   follows the same patterns as commission work. The difference is only
                   time.
                 </Body>
@@ -123,8 +123,8 @@ export function StoryPage() {
         <Container>
           <QuoteBlock
             tone="dark"
-            quote="A jubbah is a piece of architecture you take with you."
-            attribution="Eleanor Cavendish"
+            quote="A thobe is a piece of architecture you take with you."
+            attribution="House note"
           />
         </Container>
       </Section>
@@ -132,8 +132,8 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/label-concrete.png"
-            imageAlt="The woven Cavendish House label, set by hand at the nape."
+            image="/images/concealed-pocket.jpg"
+            imageAlt="The interior pocket of a Cavendish thobe, the house label set by hand."
             objectPosition="center"
             imageOn="left"
           >
