@@ -12,20 +12,20 @@ export function CraftsmanshipDetailsPage() {
   usePageMeta({
     title: 'The Making — Cavendish House',
     description:
-      'The floating canvas, the buttonhole, the shoulder and the lining: how a Cavendish House coat is built.',
+      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a Cavendish House jubbah is built.',
     path: '/craftsmanship-details',
-    image: '/images/details-hero.jpg',
+    image: '/images/fabric-detail.png',
   })
 
   return (
     <>
       <Hero
-        image="/images/details-hero.jpg"
-        imageAlt="Shirting and cloth laid out before they are cut."
+        image="/images/fabric-detail.png"
+        imageAlt="The face of the cloth, where a seam has been felled out of sight."
         objectPosition="center"
         kicker="Craftsmanship · Details"
         title="What the cloth conceals."
-        subtitle="A coat is judged from ten paces. It is made in millimetres."
+        subtitle="A jubbah is judged from ten paces. It is made in millimetres."
         minHeight="page"
         priority
       />
@@ -35,11 +35,11 @@ export function CraftsmanshipDetailsPage() {
           <Reveal className="mx-auto max-w-2xl text-center">
             <Eyebrow>An editorial of four</Eyebrow>
             <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-              Structure, the hand, the line, the unseen.
+              Seam, stitch, fastening, the unseen.
             </Display>
             <Body className="mx-auto mt-6">
-              These are not selling points. They are the reasons a Cavendish garment
-              can be recut, relined and worn again. We write them down so they are not
+              These are not selling points. They are the reasons a Cavendish thobe can
+              be recut, relined and worn again. We write them down so they are not
               treated as folklore.
             </Body>
           </Reveal>
@@ -74,7 +74,7 @@ export function CraftsmanshipDetailsPage() {
               <Eyebrow>Continue</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">From the workroom to the rail.</Display>
               <Body className="mt-6">
-                See the pieces these methods produce, or return to the four acts of
+                See the jubbahs these methods produce, or return to the four acts of
                 the making.
               </Body>
             </Reveal>

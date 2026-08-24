@@ -2,6 +2,7 @@ import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
+import { StitchArt } from '@/components/editorial/StitchArt'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -13,9 +14,9 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function HomePage() {
   usePageMeta({
-    title: 'Cavendish House — Coats, Tailoring & Knitwear, London',
+    title: 'Cavendish House — Premium Jubbah & Thobe, London',
     description:
-      'Cavendish House is a Mayfair atelier of coats, tailoring and knitwear, cut by hand in London since 1894.',
+      'Cavendish House is a Mayfair atelier of the jubbah and the thobe. Irish linen, Yorkshire worsted, hand-felled seams, cut in London since 1894.',
     path: '/',
     image: '/images/og.jpg',
   })
@@ -23,12 +24,12 @@ export function HomePage() {
   return (
     <>
       <Hero
-        image="/images/hero-home.jpg"
-        imageAlt="Camel wool wrap coat, tied at the waist, photographed against pale stone."
+        image="/images/hero-model.png"
+        imageAlt="A man in a long modest jubbah, photographed in quiet studio light."
         objectPosition="center 18%"
         kicker={`Established ${site.established} · ${site.neighbourhood}`}
-        title="The lasting coat."
-        subtitle="Made slowly in London, from cloth chosen to outlive the season."
+        title="The lasting jubbah."
+        subtitle="A London house of the thobe: cut slowly, from cloth chosen to outlive the season."
         priority
       >
         <Button to="/collection" variant="invert">
@@ -42,19 +43,19 @@ export function HomePage() {
             <Reveal className="lg:col-span-5">
               <Eyebrow>The house</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl lg:text-6xl">
-                Quiet luxury,
+                Modest luxury,
                 <br />
-                cut by hand.
+                held by the stitch.
               </Display>
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Lead>
-                Cavendish House is a London atelier of coats, tailoring and knitwear.
-                We work with a small cutting room in Mayfair and a handful of British mills.
+                Cavendish House cuts the jubbah and the thobe in Mayfair. Irish linen for
+                summer. Yorkshire worsted for winter. A concealed placket. A felled seam.
               </Lead>
               <Body className="mt-6">
-                Nothing here is made for a campaign. A coat should look as considered in its
-                tenth winter as it did in its first. That is the only standard we keep.
+                Nothing here is made for a campaign. A thobe should look as considered in
+                its tenth year as it did in its first. That is the only standard we keep.
               </Body>
               <div className="mt-8">
                 <TextLink to="/story">Our story</TextLink>
@@ -68,7 +69,7 @@ export function HomePage() {
         <Container>
           <Reveal className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
             <div>
-              <Eyebrow>Autumn winter</Eyebrow>
+              <Eyebrow>The house line</Eyebrow>
               <Display className="mt-3 text-4xl md:text-5xl">Selected pieces</Display>
             </div>
             <TextLink to="/collection">All of the collection</TextLink>
@@ -84,20 +85,26 @@ export function HomePage() {
 
       <Section className="bg-ivory-deep/50">
         <Container>
+          <StitchArt />
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
           <EditorialSplit
-            image="/images/home-atelier.jpg"
-            imageAlt="The Mayfair atelier: garments spaced on black rails beneath a timber ceiling."
+            image="/images/craft-closeup.jpg"
+            imageAlt="Hand stitching through the collar stand of a jubbah."
             objectPosition="center"
             imageOn="left"
           >
-            <Eyebrow>The cut</Eyebrow>
+            <Eyebrow>The stitch</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">
               Structure you cannot see, and would miss if it were gone.
             </Display>
             <Body className="mt-6">
-              Every coat is canvassed, not fused. The chest is pad-stitched by hand so the
-              cloth holds its line without stiffness. It is slower work. It is why the
-              garment lasts.
+              Side seams are felled, not overlocked. The collar is pad-stitched by hand
+              so the neck holds its line. Fastenings sit inside the placket. It is slower
+              work. It is why the garment lasts.
             </Body>
             <div className="mt-8">
               <TextLink to="/craftsmanship">Craftsmanship</TextLink>
@@ -108,8 +115,8 @@ export function HomePage() {
 
       <section className="relative min-h-[70svh] overflow-hidden">
         <ImageFrame
-          src="/images/home-craft.jpg"
-          alt="A rail of coats and knitwear in cream, navy and terracotta."
+          src="/images/linen-drape-home.jpg"
+          alt="Olive linen falling in a long modest line."
           className="absolute inset-0 h-full w-full"
           imgClassName="h-full w-full object-cover"
           objectPosition="center"
@@ -118,7 +125,7 @@ export function HomePage() {
         <div className="relative z-10 flex min-h-[70svh] items-center px-6 py-24 md:px-12 lg:px-16">
           <QuoteBlock
             tone="dark"
-            quote="Nothing should look new except the person wearing it."
+            quote="The modest garment is not empty. It is full of work you are not meant to see."
             attribution="House note, 1926"
           />
         </div>
@@ -141,8 +148,8 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120}>
               <ImageFrame
-                src="/images/story-hero.jpg"
-                alt="An English country house reflected in still water, the house’s namesake calm."
+                src="/images/garments-rail.png"
+                alt="Jubbahs and thobes spaced on a brass rail in the Mayfair atelier."
                 className="aspect-[4/3] w-full"
                 objectPosition="center"
               />

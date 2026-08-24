@@ -27,7 +27,9 @@ function CardBody({ product, index }: Pick<Props, 'product' | 'index'>) {
             <p className="mb-1 text-[10px] uppercase tracking-[0.22em] text-stone">{index}</p>
           ) : null}
           <h3 className="font-display text-2xl font-light leading-tight">{product.name}</h3>
-          <p className="mt-1 text-[13px] font-light text-stone">{product.cloth}</p>
+          <p className="mt-1 text-[13px] font-light text-stone">
+            {product.cut} · {product.cloth}
+          </p>
         </div>
         <p className="shrink-0 text-[12px] tracking-[0.08em] text-ink-soft">{product.price}</p>
       </div>

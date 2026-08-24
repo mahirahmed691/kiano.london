@@ -1,6 +1,6 @@
 # Cavendish House — design system
 
-Extracted and implemented as a restrained British fashion house: ivory ground, espresso ink, serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained British house of the jubbah and the thobe: ivory ground, espresso ink, serif display, generous measure, no decorative chrome.
 
 ## Character
 

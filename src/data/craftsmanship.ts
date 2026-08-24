@@ -22,111 +22,151 @@ export type DetailSection = {
   imagePosition: 'left' | 'right'
 }
 
+export type StitchStudy = {
+  id: string
+  title: string
+  note: string
+  image: string
+  imageAlt: string
+}
+
 export const processSteps: ProcessStep[] = [
   {
     number: '01',
     title: 'Cloth',
     summary:
-      'We buy from a handful of British mills. Weight, handle and colour are chosen in the piece, never from a swatch book alone.',
-    image: '/images/craft-cloth.jpg',
-    imageAlt: 'Camel wool coat showing the drape and hand of the cloth.',
+      'Irish linen, Yorkshire worsted, Como crepe. Weight and handle are chosen in the piece, never from a swatch book alone. A jubbah lives or dies by the drape.',
+    image: '/images/heritage-linen.jpg',
+    imageAlt: 'Heritage linen in the piece, before it is chalked and cut.',
   },
   {
     number: '02',
     title: 'Pattern',
     summary:
-      'Each pattern is cut in brown paper, then chalked onto the cloth. The shears follow the grain. Nothing is rushed through a machine.',
-    image: '/images/craft-pattern.jpg',
-    imageAlt: 'A navy tailored suit, the result of a carefully cut pattern.',
+      'Each thobe is cut from a house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
+    image: '/images/workbench.jpg',
+    imageAlt: 'The workbench where patterns are chalked onto cloth.',
   },
   {
     number: '03',
-    title: 'Canvas',
+    title: 'Stitch',
     summary:
-      'A floating canvas of horsehair and linen is pad-stitched by hand. It is what gives a Cavendish coat its quiet structure.',
-    image: '/images/craft-canvas.jpg',
-    imageAlt: 'Crisp white shirting, a study in clean construction.',
+      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Cavendish jubbah is fused.',
+    image: '/images/craft-closeup.jpg',
+    imageAlt: 'A close study of hand stitching through cloth.',
   },
   {
     number: '04',
     title: 'Finish',
     summary:
-      'Horn buttons, hand-sewn buttonholes, a silk lining set by hand. The last press is as considered as the first cut.',
-    image: '/images/craft-finish.jpg',
-    imageAlt: 'Finished outerwear, ready to be worn for years.',
+      'Concealed plackets, horn buttons, a label set by hand. The last press is as considered as the first cut. The garment should look finished from the inside.',
+    image: '/images/fastenings.jpg',
+    imageAlt: 'Integrated fastenings at the finish of a jubbah placket.',
   },
 ]
 
 export const materials: Material[] = [
   {
-    name: 'Yorkshire wool',
-    origin: 'Abraham Moon & Sons',
-    copy: 'Woven in Guiseley since 1837. We take camel, charcoal and a particular mid-navy that takes the London light well.',
+    name: 'Irish linen',
+    origin: 'Baird McNutt & Libeco',
+    copy: 'For summer thobes. A cloth that breathes, holds a crease, and takes on the wearer’s shape without losing the line.',
   },
   {
-    name: 'Huddersfield worsted',
-    origin: 'Super 110s–150s',
-    copy: 'For suits and the Chesterfield. A cloth that holds a crease and still moves when you walk.',
+    name: 'Yorkshire worsted',
+    origin: 'Abraham Moon, Guiseley',
+    copy: 'For the winter jubbah. Compact, resilient, a memory in the fibre so the silhouette stays architectural.',
   },
   {
-    name: 'Hawick cashmere',
-    origin: 'Scottish Borders',
-    copy: 'Two-ply, not over-brushed. The knit should last a decade, not a season.',
+    name: 'Silk-wool crepe',
+    origin: 'Como',
+    copy: 'For evening. Matte, fluid, almost without light. The Obsidian Jubbah is cut from this and nothing else.',
   },
   {
-    name: 'Horn & silk',
-    origin: 'Buttons and linings',
-    copy: 'Dark buffalo horn, never plastic. Linings in cupro or silk, chosen to disappear against the cloth.',
+    name: 'Silk twist & horn',
+    origin: 'Thread and closures',
+    copy: 'Buttonholes in silk twist. Dark buffalo horn, never plastic. The hardware should disappear until you need it.',
+  },
+]
+
+export const stitchStudies: StitchStudy[] = [
+  {
+    id: 'stitch',
+    title: 'The stitch',
+    note: 'Pad-stitching through the collar stand, silk on linen.',
+    image: '/images/craft-closeup.jpg',
+    imageAlt: 'Hand stitches sitting proud of the cloth.',
+  },
+  {
+    id: 'seam',
+    title: 'The seam',
+    note: 'A felled side seam, the allowance enclosed, the face uninterrupted.',
+    image: '/images/fabric-detail.png',
+    imageAlt: 'The face of the cloth where a seam has been felled out of sight.',
+  },
+  {
+    id: 'fastening',
+    title: 'The fastening',
+    note: 'Integrated closures set into the placket, never sitting on it.',
+    image: '/images/fastenings.jpg',
+    imageAlt: 'A row of integrated fastenings on a jubbah placket.',
+  },
+  {
+    id: 'pocket',
+    title: 'The pocket',
+    note: 'A concealed interior pocket that does not break the silhouette.',
+    image: '/images/concealed-pocket.jpg',
+    imageAlt: 'A concealed interior pocket set into the lining of a jubbah.',
   },
 ]
 
 export const detailSections: DetailSection[] = [
   {
-    id: 'canvas',
-    kicker: '01 — Structure',
-    title: 'The floating canvas',
+    id: 'seam',
+    kicker: '01 — The seam',
+    title: 'The felled seam',
     copy: [
-      'Between the cloth and the lining sits a layer you never see. Horsehair, linen and a little wool, pad-stitched in concentric curves through the chest and lapel.',
-      'The stitches are not decorative. They shape the roll of the lapel and keep the coat from collapsing after a wet afternoon. A fused chest is quicker. It is also why so many coats look tired by the third winter.',
+      'A machine overlock is a shortcut. A Cavendish side seam is felled: the allowance is folded into itself and stitched twice, so the inside of the jubbah is as clean as the face.',
+      'It takes longer. It also means the garment can be washed, pressed and worn for years without the seam opening or the edge fraying. The line down the body stays a single plane of cloth.',
     ],
-    image: '/images/details-canvas.jpg',
-    imageAlt: 'Hands and cloth in the cutting room, the quiet work of structure.',
+    image: '/images/fabric-detail.png',
+    imageAlt: 'Cloth at close range, where the seam has been worked out of sight.',
     imagePosition: 'right',
   },
   {
-    id: 'buttonhole',
-    kicker: '02 — The hand',
-    title: 'The buttonhole',
+    id: 'stitch',
+    kicker: '02 — The stitch',
+    title: 'The hand stitch',
     copy: [
-      'A machine buttonhole is a slit with a zigzag. A Cavendish buttonhole is worked in silk twist, the purl sitting proud of the cloth, the bartack set by eye.',
-      'It takes a morning to do a coat. The first and last holes are always cut by the same hand, so the tension matches. We still mark them in chalk, never in a template.',
+      'The collar stand of a thobe is pad-stitched by hand. The stitches are not decorative. They shape the roll of the neck and keep the stand from collapsing after a day’s wear.',
+      'We work in silk twist, the tension set by eye. A fused collar is quicker. It is also why so many garments look tired by the third season.',
     ],
-    image: '/images/details-buttonhole.jpg',
-    imageAlt: 'Close study of outerwear construction and hardware.',
+    image: '/images/craft-closeup.jpg',
+    imageAlt: 'Close work: stitches through the collar and chest of a jubbah.',
     imagePosition: 'left',
   },
   {
-    id: 'shoulder',
-    kicker: '03 — Line',
-    title: 'The shoulder',
+    id: 'fastening',
+    kicker: '03 — The fastening',
+    title: 'The concealed placket',
     copy: [
-      'We cut a natural shoulder: a little padding, no rope, no theatrical peak. The sleeve is set high, the scye close, so the coat hangs from the frame rather than sitting on it.',
-      'It is the line that reads as British from across a room. Not loud. Simply in place.',
+      'Buttons sit inside the placket, not on it. From a few paces the jubbah reads as a single column of cloth. The closures are horn, the buttonholes worked in silk, the bartack set by the same hand that cut the first hole.',
+      'It is the modest line: nothing announced, everything in place.',
     ],
-    image: '/images/details-shoulder.jpg',
-    imageAlt: 'The fall of a jacket through the shoulder and chest.',
+    image: '/images/fastenings.jpg',
+    imageAlt: 'Concealed fastenings integrated into the jubbah placket.',
     imagePosition: 'right',
   },
   {
-    id: 'lining',
+    id: 'pocket',
     kicker: '04 — The unseen',
-    title: 'The lining',
+    title: 'The interior pocket',
     copy: [
-      'Linings are felled by hand at the hem and the sleeve. We leave a little extra in the back so the coat can be let out, years from now, without showing the work.',
-      'Nothing in a Cavendish garment is meant to be disposable. The lining is simply the part that proves it.',
+      'A telephone, a pair of glasses, a folded letter. The pocket is bagged in the lining and set so it does not pull the cloth. You feel it. Nobody else should see it.',
+      'The house label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
     ],
-    image: '/images/details-lining.jpg',
-    imageAlt: 'Folded shirts and cloth, the quiet inventory of the house.',
+    image: '/images/concealed-pocket.jpg',
+    imageAlt: 'The concealed interior pocket of a Cavendish jubbah.',
     imagePosition: 'left',
   },
 ]
+
