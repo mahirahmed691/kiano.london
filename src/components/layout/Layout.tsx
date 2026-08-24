@@ -17,7 +17,7 @@ export function Layout() {
   return (
     <>
       <ScrollToTop />
-      <Header key={pathname} />
+      <Header />
       <main id="main-content" className="page-enter" key={pathname}>
         <Outlet />
       </main>

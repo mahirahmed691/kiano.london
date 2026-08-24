@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { HouseMark } from '@/components/brand/HouseMark'
 import { Container } from '@/components/ui/Container'
 import { Rule } from '@/components/ui/Rule'
 import { primaryNav } from '@/data/navigation'
@@ -12,12 +13,7 @@ export function Footer() {
       <Container className="py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-3 md:gap-8">
           <div>
-            <Link
-              to="/"
-              className="font-display text-lg tracking-[0.18em] uppercase"
-            >
-              {site.name}
-            </Link>
+            <HouseMark className="text-ivory" />
             <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ivory/65">
               {site.tagline}
             </p>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { type Product } from '@/data/products'
+import { type Product, thobeSizes } from '@/data/products'
 import { cn } from '@/lib/cn'
 
 type Props = {
@@ -28,7 +28,10 @@ function CardBody({ product, index }: Pick<Props, 'product' | 'index'>) {
           ) : null}
           <h3 className="font-display text-2xl font-light leading-tight">{product.name}</h3>
           <p className="mt-1 text-[13px] font-light text-stone">
-            {product.cut} · {product.cloth}
+            {product.colour} · {product.cloth}
+          </p>
+          <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-stone">
+            Sizes {thobeSizes[0]}–{thobeSizes[thobeSizes.length - 1]}
           </p>
         </div>
         <p className="shrink-0 text-[12px] tracking-[0.08em] text-ink-soft">{product.price}</p>

@@ -1,17 +1,17 @@
 # Cavendish House — design system
 
-Extracted and implemented as a restrained British house of the jubbah and the thobe: ivory ground, espresso ink, serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained London atelier of the jubbah and the thobe: warm ivory ground, espresso ink, a quiet Arabic mark, serif display, generous measure, no decorative chrome.
 
 ## Character
 
-Luxurious, refined, British, timeless, understated, editorial, craft-focused. Typography, proportion and photography carry the identity. Whitespace is structural, not empty.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is where the work is cut — not the costume of the house. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic sits beside the English mark; it is not ornament.
 
 ## Colour
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| Ivory | `#F4EFE6` | Page ground, header after scroll |
-| Ivory deep | `#E8DFD0` | Alternate bands, image holds |
+| Ivory | `#F2EBDC` | Page ground, header after scroll |
+| Ivory deep | `#E6DCC8` | Alternate bands, image holds |
 | Cream | `#FAF7F1` | Highlights |
 | Ink | `#1B1714` | Type, rules on light |
 | Ink soft | `#3F3933` | Body copy |
@@ -20,12 +20,13 @@ Luxurious, refined, British, timeless, understated, editorial, craft-focused. Ty
 | Rule | `#D4CBB8` | Hairlines |
 | Night | `#141210` | Footer, dark bands, hero scrim |
 
-No gradients as decoration. Hero overlays are photographic scrims only.
+No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour.
 
 ## Typography
 
 - **Display:** Cormorant Garamond, 300. Headlines, pull quotes.
 - **Interface:** Jost, 300–400. Navigation, labels, body.
+- **Arabic:** Amiri, 400. The house mark and occasional bilingual lines only.
 
 Labels are 11px, uppercase, tracking `0.22em–0.28em`. Headlines are light weight with tight tracking. Body is 15–16px, relaxed leading, `max-width: 65ch` in practice.
 

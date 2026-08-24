@@ -12,20 +12,20 @@ export function CraftsmanshipDetailsPage() {
   usePageMeta({
     title: 'The Making — Cavendish House',
     description:
-      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a Cavendish House jubbah is built.',
+      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a Cavendish House thobe is built.',
     path: '/craftsmanship-details',
-    image: '/images/fabric-detail.png',
+    image: '/images/heritage-linen.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/fabric-detail.png"
-        imageAlt="The face of the cloth, where a seam has been felled out of sight."
+        image="/images/heritage-linen.jpg"
+        imageAlt="The face of flax linen, where a seam has been felled out of sight."
         objectPosition="center"
         kicker="Craftsmanship · Details"
         title="What the cloth conceals."
-        subtitle="A jubbah is judged from ten paces. It is made in millimetres."
+        subtitle="A thobe is judged from ten paces. It is made in millimetres."
         minHeight="page"
         priority
       />
@@ -74,7 +74,7 @@ export function CraftsmanshipDetailsPage() {
               <Eyebrow>Continue</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">From the workroom to the rail.</Display>
               <Body className="mt-6">
-                See the jubbahs these methods produce, or return to the four acts of
+                See the thobes these methods produce, or return to the four acts of
                 the making.
               </Body>
             </Reveal>
