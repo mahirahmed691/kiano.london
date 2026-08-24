@@ -15,7 +15,9 @@ One service: the Next.js app on port 3000.
 | `npm run build` | Production build |
 | `npm start` | Serve the production build |
 
-Bind to all interfaces if the preview pane cannot reach localhost: `npx next dev --hostname 0.0.0.0 --port 3000`.
+Bind to all interfaces if the preview pane cannot reach localhost: `npx next dev --hostname 0.0.0.0 --port 3000`. For a production-like preview (no HMR), `npm run build` then `npx next start --hostname 0.0.0.0 --port 3000`.
+
+`next.config.ts` sets `allowedDevOrigins` for 127.0.0.1/localhost so `/_next` chunks are not 403'd in development.
 
 ### Notes
 
