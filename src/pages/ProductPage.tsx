@@ -9,7 +9,9 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import {
+  colourVariants,
   getProduct,
+  productPath,
   relatedProducts,
   thobeSizes,
   type ThobeSize,
@@ -31,13 +33,14 @@ export function ProductPage() {
     () => (product ? relatedProducts(product.id).slice(0, 3) : []),
     [product],
   )
+  const variants = useMemo(() => (product ? colourVariants(product) : []), [product])
 
   usePageMeta({
     title: product ? `${product.name} — Suhail` : 'Suhail',
     description: product
-      ? `${product.name}: ${product.colour.toLowerCase()} Emirati thobe in ${product.cloth.toLowerCase()}. Cut in London, sizes 52 to 60.`
+      ? `${product.name}: ${product.colour.toLowerCase()} Emirati ${product.cut.toLowerCase()} in ${product.cloth.toLowerCase()}. Cut in London, sizes 52 to 60.`
       : 'This piece is not in the collection.',
-    path: product ? `/collection/${product.id}` : '/collection',
+    path: product ? productPath(product) : '/shop',
     image: product?.image,
   })
 
@@ -77,8 +80,11 @@ export function ProductPage() {
           <div className="order-2 px-6 py-12 md:px-12 xl:order-1 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
             <Reveal>
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                <Link to="/collection" className="transition-opacity hover:opacity-70">
-                  The Collection
+                <Link
+                  to={product.cut === 'Jubbah' ? '/shop' : '/collection'}
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {product.cut === 'Jubbah' ? 'The Shop' : 'The Collection'}
                 </Link>
                 <span aria-hidden="true"> · </span>
                 {product.colour}
@@ -131,6 +137,29 @@ export function ProductPage() {
               <Body className="mt-6 xl:hidden">{product.description}</Body>
 
               <div className="mt-10" ref={buyRef}>
+                {variants.length > 1 ? (
+                  <div className="mb-8">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Colour</p>
+                    <div className="mt-4 flex items-center gap-3">
+                      {variants.map((variant) => (
+                        <Link
+                          key={variant.id}
+                          to={productPath(variant)}
+                          aria-label={variant.colour}
+                          aria-current={variant.id === product.id ? 'true' : undefined}
+                          className={cn(
+                            'block h-7 w-7 border transition-opacity',
+                            variant.id === product.id
+                              ? 'border-ink'
+                              : 'border-rule opacity-70 hover:opacity-100',
+                          )}
+                          style={{ backgroundColor: variant.swatch ?? '#1B1714' }}
+                        />
+                      ))}
+                    </div>
+                    <p className="mt-3 text-[13px] font-light text-stone">{product.colour}</p>
+                  </div>
+                ) : null}
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
                 <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-rule">
                   {thobeSizes.map((value) => (
@@ -186,7 +215,9 @@ export function ProductPage() {
           <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-5">
               <Eyebrow>The making</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">How this thobe is held.</Display>
+              <Display className="mt-4 text-4xl md:text-5xl">
+                How this {product.cut.toLowerCase()} is held.
+              </Display>
               <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
                 {product.composition}
               </p>
@@ -206,9 +237,13 @@ export function ProductPage() {
           <Reveal className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <Eyebrow>The line</Eyebrow>
-              <Display className="mt-3 text-4xl md:text-5xl">The other thobes</Display>
+              <Display className="mt-3 text-4xl md:text-5xl">
+                {product.cut === 'Jubbah' ? 'The other colours' : 'The other thobes'}
+              </Display>
             </div>
-            <TextLink to="/collection">All of the collection</TextLink>
+            <TextLink to={product.cut === 'Jubbah' ? '/shop' : '/collection'}>
+              {product.cut === 'Jubbah' ? 'All of the shop' : 'All of the collection'}
+            </TextLink>
           </Reveal>
           <ProductGrid products={related} numbered={false} />
         </Container>

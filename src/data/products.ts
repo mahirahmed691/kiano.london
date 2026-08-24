@@ -2,7 +2,9 @@ export const thobeSizes = [52, 54, 56, 58, 60] as const
 
 export type ThobeSize = (typeof thobeSizes)[number]
 
-export type ProductColour = 'Black' | 'Charcoal' | 'Grey' | 'Beige' | 'Bone'
+export type ProductCut = 'Thobe' | 'Jubbah'
+
+export type ProductColour = 'Black' | 'Charcoal' | 'Grey' | 'Beige' | 'Bone' | 'Sand'
 
 export type ProductImage = {
   src: string
@@ -14,8 +16,10 @@ export type Product = {
   id: string
   name: string
   arabicName: string
-  cut: 'Thobe'
+  cut: ProductCut
   colour: ProductColour
+  swatch?: string
+  variantGroup?: string
   cloth: string
   mill: string
   price: string
@@ -236,17 +240,164 @@ export const products: Product[] = [
       },
     ],
   },
+  {
+    id: 'jubbah-black',
+    name: 'The Jubbah',
+    arabicName: 'الجُبَّة',
+    cut: 'Jubbah',
+    colour: 'Black',
+    swatch: '#1B1714',
+    variantGroup: 'jubbah',
+    cloth: 'Matte Japanese cotton, band collar',
+    mill: 'Compact cotton, 80s two-ply',
+    price: '£1,180',
+    pricePence: 118000,
+    image: '/images/jubbah-black.jpg',
+    imageAlt: 'A black Emirati jubbah worn at full length in a Mayfair atelier.',
+    objectPosition: 'center 12%',
+    featured: true,
+    description:
+      'The jubbah in black: compact Japanese cotton, a modest column with more air through the chest than the thobe. Band collar, concealed placket, hem to the ankle. Cut from the Suhail block in five sizes.',
+    details: [
+      'The outer garment. Worn alone, or over a thobe.',
+      'Band collar, pad-stitched by hand. Concealed placket.',
+      'Felled side seams. Interior pocket bagged in the lining.',
+      'The Suhail label is woven and set at the nape by hand.',
+    ],
+    composition: '100% compact Japanese cotton, 80s two-ply. Silk-twist buttonholes. Buffalo horn.',
+    leadTime: 'Made to order, four to eight weeks.',
+    gallery: [
+      {
+        src: '/images/jubbah-black.jpg',
+        alt: 'A black Emirati jubbah worn at full length in a Mayfair atelier.',
+        objectPosition: 'center 12%',
+      },
+      {
+        src: '/images/jubbah-black-02.jpg',
+        alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
+      },
+      {
+        src: '/images/concealed-pocket.jpg',
+        alt: 'The interior of a Suhail garment, the Suhail label set by hand.',
+        objectPosition: 'center 62%',
+      },
+    ],
+  },
+  {
+    id: 'jubbah-sand',
+    name: 'The Jubbah',
+    arabicName: 'الجُبَّة',
+    cut: 'Jubbah',
+    colour: 'Sand',
+    swatch: '#C4B49A',
+    variantGroup: 'jubbah',
+    cloth: 'Egyptian extra-long staple cotton',
+    mill: 'Giza 86, washed for drape',
+    price: '£1,180',
+    pricePence: 118000,
+    image: '/images/jubbah-sand.jpg',
+    imageAlt: 'A sand Emirati jubbah worn at full length in a sunlit plaster room.',
+    objectPosition: 'center 8%',
+    featured: true,
+    description:
+      'The jubbah in sand: Giza 86 extra-long staple, washed so the fibre drapes. The daylight colour. Same block as black and charcoal, five sizes, 52 to 60.',
+    details: [
+      'The outer garment. Worn alone, or over a thobe.',
+      'Giza 86 extra-long staple cotton, washed for drape.',
+      'Band collar. Concealed placket. Felled seams.',
+      'A quiet sheen from the long fibre, never a gloss.',
+    ],
+    composition: '100% extra-long staple cotton, Giza 86. Silk-twist buttonholes. Buffalo horn.',
+    leadTime: 'Made to order, four to eight weeks.',
+    gallery: [
+      {
+        src: '/images/jubbah-sand.jpg',
+        alt: 'A sand Emirati jubbah worn at full length in a sunlit plaster room.',
+        objectPosition: 'center 8%',
+      },
+      {
+        src: '/images/jubbah-sand-02.jpg',
+        alt: 'The sand jubbah at rest: the cloth draped to the ankle.',
+      },
+      {
+        src: '/images/heritage-linen.jpg',
+        alt: 'Sand extra-long staple cotton in the piece.',
+        objectPosition: '22% 50%',
+      },
+    ],
+  },
+  {
+    id: 'jubbah-charcoal',
+    name: 'The Jubbah',
+    arabicName: 'الجُبَّة',
+    cut: 'Jubbah',
+    colour: 'Charcoal',
+    swatch: '#5C5854',
+    variantGroup: 'jubbah',
+    cloth: 'Super 150s wool-cotton, concealed placket',
+    mill: 'Huddersfield Super 150s',
+    price: '£1,180',
+    pricePence: 118000,
+    image: '/images/jubbah-charcoal.jpg',
+    imageAlt: 'A charcoal Emirati jubbah worn at full length in a concrete atelier.',
+    objectPosition: 'center 10%',
+    featured: true,
+    description:
+      'The jubbah in charcoal: Huddersfield Super 150s wool-cotton, a winter handle. The silhouette stays architectural. Same Suhail block as black and sand, sizes 52 to 60.',
+    details: [
+      'The outer garment. Worn alone, or over a thobe.',
+      'Super 150s wool-cotton from Huddersfield; compact, resilient.',
+      'Concealed placket. Side seams felled, never overlocked.',
+      'Hem set to the ankle of the Suhail block.',
+    ],
+    composition: 'Wool-cotton Super 150s, Huddersfield. Silk-twist buttonholes. Buffalo horn.',
+    leadTime: 'Made to order, four to eight weeks.',
+    gallery: [
+      {
+        src: '/images/jubbah-charcoal.jpg',
+        alt: 'A charcoal Emirati jubbah worn at full length in a concrete atelier.',
+        objectPosition: 'center 10%',
+      },
+      {
+        src: '/images/jubbah-charcoal-02.jpg',
+        alt: 'The charcoal jubbah walking: wool-cotton, ankle hem, concealed placket.',
+      },
+      {
+        src: '/images/jubbah-charcoal-cloth.jpg',
+        alt: 'Charcoal Super 150s in the piece, before it is cut.',
+      },
+    ],
+  },
 ]
 
-export const featuredProducts = products.filter((item) => item.featured)
+export const thobes = products.filter((item) => item.cut === 'Thobe')
+
+export const jubbahs = products.filter((item) => item.cut === 'Jubbah')
+
+export const featuredProducts = thobes.filter((item) => item.featured)
+
+export const featuredJubbahs = jubbahs
 
 export const productColours: ProductColour[] = ['Black', 'Charcoal', 'Grey', 'Beige', 'Bone']
+
+export const jubbahColours: ProductColour[] = ['Black', 'Sand', 'Charcoal']
 
 export function getProduct(id: string | undefined) {
   if (!id) return undefined
   return products.find((item) => item.id === id)
 }
 
+export function productPath(product: Product) {
+  return product.cut === 'Jubbah' ? `/shop/${product.id}` : `/collection/${product.id}`
+}
+
+export function colourVariants(product: Product) {
+  if (!product.variantGroup) return []
+  return products.filter((item) => item.variantGroup === product.variantGroup)
+}
+
 export function relatedProducts(id: string) {
-  return products.filter((item) => item.id !== id)
+  const product = getProduct(id)
+  if (!product) return []
+  return products.filter((item) => item.cut === product.cut && item.id !== id)
 }

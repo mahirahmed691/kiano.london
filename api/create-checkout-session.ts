@@ -49,7 +49,7 @@ export async function POST(request: Request) {
         currency: 'gbp',
         unit_amount: product.pricePence,
         product_data: {
-          name: `${product.name} · ${size}`,
+          name: `${product.name}${product.cut === 'Jubbah' ? ` · ${product.colour}` : ''} · ${size}`,
           description: `${product.colour}. ${product.cloth}. Made to order in London.`,
         },
       },

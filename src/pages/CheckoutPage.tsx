@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
+import { productPath } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import { formatGbp } from '@/lib/money'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -54,7 +55,7 @@ export function CheckoutPage() {
           </Display>
           <Body className="mt-6">The bag is empty. Choose a thobe first.</Body>
           <div className="mt-10">
-            <Button to="/collection">The Collection</Button>
+            <Button to="/shop">The Shop</Button>
           </div>
         </Container>
       </Section>
@@ -82,7 +83,7 @@ export function CheckoutPage() {
                   className="grid grid-cols-[6.5rem_1fr] gap-5 border-t border-rule py-6"
                 >
                   <Link
-                    to={`/collection/${item.product.id}`}
+                    to={productPath(item.product)}
                     className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep"
                   >
                     <img
@@ -136,7 +137,7 @@ export function CheckoutPage() {
                 {busy ? 'Opening payment' : 'Pay by card'}
               </Button>
               <div className="mt-6">
-                <TextLink to="/collection">Continue looking</TextLink>
+                <TextLink to="/shop">Continue looking</TextLink>
               </div>
             </div>
           </div>

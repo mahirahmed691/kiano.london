@@ -37,10 +37,15 @@ export function AppointmentForm() {
   const [note, setNote] = useState('')
   const [sent, setSent] = useState(false)
 
-  const selectedName = useMemo(
-    () => products.find((item) => item.id === piece)?.name,
+  const selected = useMemo(
+    () => products.find((item) => item.id === piece),
     [piece],
   )
+  const selectedName = selected
+    ? selected.cut === 'Jubbah'
+      ? `${selected.name} · ${selected.colour}`
+      : selected.name
+    : undefined
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -130,7 +135,7 @@ export function AppointmentForm() {
             <option value="">To be discussed</option>
             {products.map((item) => (
               <option key={item.id} value={item.id}>
-                {item.name}
+                {item.cut === 'Jubbah' ? `${item.name} · ${item.colour}` : item.name}
               </option>
             ))}
           </select>

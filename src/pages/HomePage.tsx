@@ -9,7 +9,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { featuredProducts } from '@/data/products'
+import { featuredJubbahs, featuredProducts } from '@/data/products'
 import { site } from '@/data/site'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -55,8 +55,8 @@ export function HomePage() {
         priority
       >
         <div className="flex flex-wrap items-center gap-6">
-          <Button to="/collection" variant="invert">
-            The Collection
+          <Button to="/shop" variant="invert">
+            The Shop
           </Button>
           <TextLink to="/visit" className="text-ivory">
             Visit the atelier
@@ -96,6 +96,19 @@ export function HomePage() {
               </div>
             </Reveal>
           </div>
+        </Container>
+      </Section>
+
+      <Section className="pt-0">
+        <Container>
+          <Reveal className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+            <div>
+              <Eyebrow>The shop</Eyebrow>
+              <Display className="mt-3 text-4xl md:text-5xl">The jubbah</Display>
+            </div>
+            <TextLink to="/shop">All colours</TextLink>
+          </Reveal>
+          <ProductGrid products={featuredJubbahs} numbered={false} className="lg:grid-cols-3" />
         </Container>
       </Section>
 
