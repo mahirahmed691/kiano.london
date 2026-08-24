@@ -13,9 +13,9 @@ export function HouseMark({ to = '/', inverted = false, className }: Props) {
     <Link
       to={to}
       className={cn(
-        'flex flex-col items-start leading-none',
+        'flex flex-col leading-none',
         inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.45)]',
-        className,
+        className ?? 'items-start',
       )}
       aria-label={`${site.name}, home`}
     >

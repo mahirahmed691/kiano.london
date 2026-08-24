@@ -12,13 +12,14 @@ type Props = {
 function CardBody({ product, index }: Pick<Props, 'product' | 'index'>) {
   return (
     <>
-      <div className="img-zoom aspect-[3/4] bg-ivory-deep">
+      <div className="img-zoom relative aspect-[3/4] overflow-hidden bg-ivory-deep">
         <img
           src={product.image}
           alt={product.imageAlt}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover"
+          className="size-full object-cover"
+          style={product.objectPosition ? { objectPosition: product.objectPosition } : undefined}
         />
       </div>
       <div className="mt-5 flex items-baseline justify-between gap-4">

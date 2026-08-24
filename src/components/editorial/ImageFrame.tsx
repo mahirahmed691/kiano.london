@@ -20,15 +20,17 @@ export function ImageFrame({
   caption,
 }: Props) {
   return (
-    <figure className={cn('img-zoom bg-ivory-deep', className)}>
-      <img
-        src={src}
-        alt={alt}
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-        className={cn('h-full w-full object-cover', imgClassName)}
-        style={{ objectPosition }}
-      />
+    <figure className={cn(className)}>
+      <div className="img-zoom h-full w-full overflow-hidden bg-ivory-deep">
+        <img
+          src={src}
+          alt={alt}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          className={cn('size-full object-cover', imgClassName)}
+          style={{ objectPosition }}
+        />
+      </div>
       {caption ? (
         <figcaption className="mt-3 text-[11px] uppercase tracking-[0.18em] text-stone">
           {caption}

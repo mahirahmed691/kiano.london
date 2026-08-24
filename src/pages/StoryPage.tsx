@@ -34,9 +34,9 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/featured-overcoat.jpg"
-            imageAlt="The charcoal Hadīd thobe, a standing collar and a concealed placket."
-            objectPosition="center 18%"
+            image="/images/workbench.jpg"
+            imageAlt="The cutting bench at Cavendish House: shears, chalk, and the house block."
+            objectPosition="center 40%"
             imageOn="right"
           >
             <Eyebrow>{site.established}</Eyebrow>
@@ -71,10 +71,10 @@ export function StoryPage() {
             </Reveal>
             <Reveal delay={100} className="md:col-span-5 md:pt-16">
               <ImageFrame
-                src="/images/worsted-wool.jpg"
-                alt="Charcoal worsted and a needle, the winter cloth of the house."
+                src="/images/workbench.jpg"
+                alt="The cutting bench: paper patterns, shears, and cloth in the work."
                 className="aspect-[3/4] w-full"
-                objectPosition="center"
+                objectPosition="center 40%"
                 caption="The workroom"
               />
             </Reveal>
@@ -144,7 +144,7 @@ export function StoryPage() {
               simply walk through the rooms. We keep the diary small on purpose.
             </Body>
             <div className="mt-8 flex flex-wrap gap-6">
-              <Button href={`mailto:${site.email}`}>Write to the house</Button>
+              <Button to="/visit">Visit by appointment</Button>
               <TextLink to="/craftsmanship">How it is made</TextLink>
             </div>
           </EditorialSplit>

@@ -7,6 +7,7 @@ export const primaryNav: NavItem[] = [
   { label: 'Collection', to: '/collection' },
   { label: 'Our Story', to: '/story' },
   { label: 'Craftsmanship', to: '/craftsmanship' },
+  { label: 'Visit', to: '/visit' },
 ]
 
 export const overlayPaths = [

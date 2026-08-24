@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { cn } from '@/lib/cn'
 
-type Variant = 'outline' | 'ghost' | 'invert'
+type Variant = 'outline' | 'ghost' | 'invert' | 'solid'
 
 type Props = {
   children: ReactNode
@@ -12,6 +12,7 @@ type Props = {
   href?: string
   type?: 'button' | 'submit'
   onClick?: () => void
+  disabled?: boolean
 }
 
 const variantClass: Record<Variant, string> = {
@@ -20,12 +21,14 @@ const variantClass: Record<Variant, string> = {
   ghost: 'border-0 bg-transparent px-0 hover:opacity-70',
   invert:
     'border border-ivory/70 bg-transparent text-ivory hover:bg-ivory hover:text-ink',
+  solid: 'border border-ink bg-ink text-ivory hover:bg-transparent hover:text-ink',
 }
 
-function classes(variant: Variant, className?: string) {
+function classes(variant: Variant, className?: string, disabled?: boolean) {
   return cn(
     'inline-flex items-center gap-3 px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300',
     variantClass[variant],
+    disabled && 'pointer-events-none opacity-35',
     className,
   )
 }
@@ -38,18 +41,19 @@ export function Button({
   href,
   type = 'button',
   onClick,
+  disabled = false,
 }: Props) {
-  const classNames = classes(variant, className)
+  const classNames = classes(variant, className, disabled)
 
-  if (to) {
+  if (to && !disabled) {
     return (
-      <Link to={to} className={classNames}>
+      <Link to={to} className={classNames} onClick={onClick}>
         {children}
       </Link>
     )
   }
 
-  if (href) {
+  if (href && !disabled) {
     return (
       <a href={href} className={classNames}>
         {children}
@@ -58,7 +62,7 @@ export function Button({
   }
 
   return (
-    <button type={type} className={classNames} onClick={onClick}>
+    <button type={type} className={classNames} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   )
