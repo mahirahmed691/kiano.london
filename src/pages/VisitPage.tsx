@@ -27,9 +27,9 @@ const visitSteps = [
 
 export function VisitPage() {
   usePageMeta({
-    title: 'Visit — Cavendish House',
+    title: 'Visit — Suhail',
     description:
-      'Appointments at the Cavendish House atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
+      'Appointments at the Suhail atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
     path: '/visit',
     image: '/images/workbench.jpg',
   })
@@ -57,7 +57,7 @@ export function VisitPage() {
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
           src="/images/workbench.jpg"
-          alt="The cutting bench at Cavendish House: shears, chalk, and cloth in progress."
+          alt="The cutting bench at Suhail: shears, chalk, and cloth in progress."
           className="object-[center_40%]"
           loading="eager"
           decoding="async"

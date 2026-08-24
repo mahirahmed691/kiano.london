@@ -9,8 +9,8 @@ export function OrderConfirmedPage() {
   const { clear } = useCart()
 
   usePageMeta({
-    title: 'The cut is reserved — Cavendish House',
-    description: 'Your Cavendish House thobe is reserved. Cut in London, four to eight weeks.',
+    title: 'The cut is reserved — Suhail',
+    description: 'Your Suhail thobe is reserved. Cut in London, four to eight weeks.',
     path: '/order/confirmed',
   })
 

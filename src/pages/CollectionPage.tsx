@@ -24,9 +24,9 @@ export function CollectionPage() {
   )
 
   usePageMeta({
-    title: 'The Collection — Cavendish House',
+    title: 'The Collection — Suhail',
     description:
-      'Five earthy Emirati thobes from Cavendish House. Black, grey and beige, sizes 52 to 60, cut in London in premium cloth.',
+      'Five earthy Emirati thobes from Suhail. Black, grey and beige, sizes 52 to 60, cut in London in premium cloth.',
     path: '/collection',
     image: '/images/heritage-linen.jpg',
   })
@@ -111,7 +111,7 @@ export function CollectionPage() {
             {[
               {
                 src: '/images/concealed-pocket.jpg',
-                alt: 'The interior of a Cavendish thobe, the house label set by hand.',
+                alt: 'The interior of a Suhail thobe, the house label set by hand.',
                 objectPosition: 'center 62%',
               },
               {

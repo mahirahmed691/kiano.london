@@ -2,7 +2,7 @@
 
 ## Cursor Cloud specific instructions
 
-This repository is a Vite, React, TypeScript and Tailwind site for Cavendish House. Tokens live in `DESIGN.md` and `src/styles/index.css`.
+This repository is a Vite, React, TypeScript and Tailwind site for Suhail. Tokens live in `DESIGN.md` and `src/styles/index.css`.
 
 ### Services
 

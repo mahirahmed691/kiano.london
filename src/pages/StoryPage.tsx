@@ -11,7 +11,7 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function StoryPage() {
   usePageMeta({
-    title: 'Our Story — Cavendish House',
+    title: 'Our Story — Suhail',
     description:
       'A London atelier of the Emirati thobe, founded in 2026 as a cutting room for the modest wardrobe.',
     path: '/story',
@@ -26,7 +26,7 @@ export function StoryPage() {
         objectPosition="center 62%"
         kicker={`Est. ${site.established}`}
         title="A house, not a brand."
-        subtitle="Cavendish House opened as a cutting room for the modest garment — a small workroom, and a long silhouette."
+        subtitle="Suhail opened as a cutting room for the modest garment — a small workroom, and a long silhouette."
         minHeight="tall"
         priority
       />
@@ -35,7 +35,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/workbench.jpg"
-            imageAlt="The cutting bench at Cavendish House: shears, chalk, and the house block."
+            imageAlt="The cutting bench at Suhail: shears, chalk, and the house block."
             objectPosition="center 40%"
             imageOn="right"
           >
@@ -133,7 +133,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/concealed-pocket.jpg"
-            imageAlt="The interior pocket of a Cavendish thobe, the house label set by hand."
+            imageAlt="The interior pocket of a Suhail thobe, the house label set by hand."
             objectPosition="center"
             imageOn="left"
           >
