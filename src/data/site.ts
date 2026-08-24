@@ -9,5 +9,5 @@ export const site = {
   telephone: '+44 20 7499 1894',
   telephoneHref: 'tel:+442074991894',
   hours: 'Atelier visits by appointment',
-  tagline: 'A house of cloth, cut by hand in London.',
+  tagline: 'A London house of the jubbah and the thobe, cut by hand.',
 } as const

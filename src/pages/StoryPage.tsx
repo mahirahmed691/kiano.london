@@ -13,20 +13,20 @@ export function StoryPage() {
   usePageMeta({
     title: 'Our Story — Cavendish House',
     description:
-      'Founded in Mayfair in 1894, Cavendish House remains a London atelier of coats, tailoring and knitwear.',
+      'Founded in Mayfair in 1894, Cavendish House remains a London atelier of the jubbah and the thobe.',
     path: '/story',
-    image: '/images/story-hero.jpg',
+    image: '/images/story-vision.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/story-hero.jpg"
-        imageAlt="A stone English house among trees, reflected in still water."
-        objectPosition="center 60%"
+        image="/images/story-vision.jpg"
+        imageAlt="A quiet London terrace in morning light — the city the house has always dressed."
+        objectPosition="center 40%"
         kicker={`Est. ${site.established}`}
         title="A house, not a brand."
-        subtitle="Cavendish House was founded in Mayfair as a cutting room with rooms above it. That arrangement has not changed."
+        subtitle="Cavendish House was founded in Mayfair as a cutting room for the modest garment. That arrangement has not changed."
         minHeight="tall"
         priority
       />
@@ -34,9 +34,9 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/story-portrait.jpg"
-            imageAlt="A navy suit, worn without ceremony, in daylight."
-            objectPosition="center 15%"
+            image="/images/linen-jubbah.jpg"
+            imageAlt="An olive linen thobe, the house’s enduring silhouette."
+            objectPosition="center"
             imageOn="right"
           >
             <Eyebrow>1894</Eyebrow>
@@ -46,11 +46,12 @@ export function StoryPage() {
             <Body className="mt-6">
               Eleanor Cavendish opened the house on Carlos Place with two cutters and a
               standing arrangement with a mill in Yorkshire. The first ledger lists
-              coats, not customers. We still keep it that way.
+              jubbahs, not customers. We still keep it that way.
             </Body>
             <Body className="mt-4">
               London has moved around us. The house has not. We remain a single
-              address, a small workroom, and a belief that cloth is a long conversation.
+              address, a small workroom, and a belief that a modest garment is a long
+              conversation with cloth.
             </Body>
           </EditorialSplit>
         </Container>
@@ -70,11 +71,11 @@ export function StoryPage() {
             </Reveal>
             <Reveal delay={100} className="md:col-span-5 md:pt-16">
               <ImageFrame
-                src="/images/story-archive.jpg"
-                alt="Garments in the house archive, hung with the space they deserve."
+                src="/images/workbench.jpg"
+                alt="The cutting table, where paper patterns for the jubbah still hang."
                 className="aspect-[3/4] w-full"
                 objectPosition="center"
-                caption="The archive"
+                caption="The workroom"
               />
             </Reveal>
           </div>
@@ -92,7 +93,7 @@ export function StoryPage() {
               <Reveal>
                 <h3 className="font-display text-2xl font-light">The shop floor</h3>
                 <Body className="mt-3">
-                  There is no window dressing. Cloth is shown on the table. A coat is
+                  There is no window dressing. Cloth is shown on the table. A thobe is
                   tried in natural light from the street. Appointments last as long as
                   they need to.
                 </Body>
@@ -100,15 +101,15 @@ export function StoryPage() {
               <Reveal delay={80}>
                 <h3 className="font-display text-2xl font-light">The cutting room</h3>
                 <Body className="mt-3">
-                  Upstairs, paper patterns hang on a rail that has been there longer
-                  than anyone now working. New patterns are added. Old ones are not
-                  discarded. A house remembers through its paper.
+                  Upstairs, paper patterns for the jubbah hang on a rail that has been
+                  there longer than anyone now working. New patterns are added. Old ones
+                  are not discarded. A house remembers through its paper.
                 </Body>
               </Reveal>
               <Reveal delay={140}>
                 <h3 className="font-display text-2xl font-light">The work today</h3>
                 <Body className="mt-3">
-                  We still cut coats, suits and knitwear in small numbers. Ready-to-wear
+                  We still cut jubbahs and thobes in small numbers. Ready-to-wear
                   follows the same patterns as commission work. The difference is only
                   time.
                 </Body>
@@ -122,7 +123,7 @@ export function StoryPage() {
         <Container>
           <QuoteBlock
             tone="dark"
-            quote="A coat is a piece of architecture you take with you."
+            quote="A jubbah is a piece of architecture you take with you."
             attribution="Eleanor Cavendish"
           />
         </Container>
@@ -131,8 +132,8 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/story-cutting.jpg"
-            imageAlt="The house interior: rails, timber, and clothes given room to hang."
+            image="/images/label-concrete.png"
+            imageAlt="The woven Cavendish House label, set by hand at the nape."
             objectPosition="center"
             imageOn="left"
           >

@@ -1,30 +1,31 @@
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { StitchArt } from '@/components/editorial/StitchArt'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { materials, processSteps } from '@/data/craftsmanship'
+import { materials, processSteps, stitchStudies } from '@/data/craftsmanship'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function CraftsmanshipPage() {
   usePageMeta({
     title: 'Craftsmanship — Cavendish House',
     description:
-      'Cloth, pattern, canvas and finish. How a Cavendish House coat is cut and made in Mayfair.',
+      'Cloth, pattern, stitch and finish. How a Cavendish House jubbah is cut and sewn in Mayfair.',
     path: '/craftsmanship',
-    image: '/images/craft-hero.jpg',
+    image: '/images/craft-closeup.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/craft-hero.jpg"
-        imageAlt="Cloth hanging in a measured row, the colour and hand of the piece."
+        image="/images/craft-closeup.jpg"
+        imageAlt="A close study of hand stitching through the cloth of a jubbah."
         objectPosition="center"
         kicker="The work"
-        title="Four acts, and no shortcuts."
-        subtitle="Cloth. Pattern. Canvas. Finish. Everything we make passes through the same rooms, in the same order."
+        title="The art of the stitch."
+        subtitle="Cloth. Pattern. Stitch. Finish. Every jubbah passes through the same rooms, in the same order."
         minHeight="tall"
         priority
       >
@@ -35,13 +36,19 @@ export function CraftsmanshipPage() {
 
       <Section>
         <Container>
+          <StitchArt />
+        </Container>
+      </Section>
+
+      <Section className="pt-0">
+        <Container>
           <Reveal className="max-w-2xl">
             <Eyebrow>Process</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">
-              The coat is built, not assembled.
+              The thobe is built, not assembled.
             </Display>
             <Body className="mt-6">
-              We do not fuse a chest because it is faster. We do not send buttonholes
+              We do not fuse a collar because it is faster. We do not send buttonholes
               out. The methods are older than the house; we keep them because they still
               make a better garment.
             </Body>
@@ -71,8 +78,42 @@ export function CraftsmanshipPage() {
       <Section className="bg-ivory-deep/50">
         <Container>
           <Reveal className="mb-14 max-w-xl">
+            <Eyebrow>Studies</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, fastening, pocket.</Display>
+            <Body className="mt-6">
+              The photographs are of the work itself: not a campaign, a close look at
+              how a Cavendish jubbah is held together.
+            </Body>
+          </Reveal>
+          <div className="grid gap-8 sm:grid-cols-2">
+            {stitchStudies.map((study, index) => (
+              <Reveal key={study.id} delay={index * 70}>
+                <figure>
+                  <ImageFrame
+                    src={study.image}
+                    alt={study.imageAlt}
+                    className="aspect-[4/5] w-full"
+                  />
+                  <figcaption className="mt-5">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                      {study.title}
+                    </p>
+                    <p className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-ink-soft">
+                      {study.note}
+                    </p>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <Reveal className="mb-14 max-w-xl">
             <Eyebrow>Materials</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">British cloth, chosen in the piece.</Display>
+            <Display className="mt-4 text-4xl md:text-5xl">Cloth chosen in the piece.</Display>
           </Reveal>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {materials.map((material, index) => (
@@ -90,13 +131,13 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
-      <Section>
+      <Section className="bg-ivory-deep/40">
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal>
               <ImageFrame
-                src="/images/details-canvas.jpg"
-                alt="Close work in the cutting room."
+                src="/images/workbench.jpg"
+                alt="The workbench where a jubbah is chalked, cut and sewn."
                 className="aspect-[4/5] w-full"
               />
             </Reveal>
@@ -106,8 +147,9 @@ export function CraftsmanshipPage() {
                 A closer look at the making.
               </Display>
               <Body className="mt-6">
-                The floating canvas, the buttonhole, the shoulder, the lining. Four
-                details that decide whether a coat is still itself a decade later.
+                The felled seam, the hand stitch, the concealed placket, the interior
+                pocket. Four details that decide whether a thobe is still itself a
+                decade later.
               </Body>
               <div className="mt-8">
                 <TextLink to="/craftsmanship-details">Read the details</TextLink>
