@@ -1,32 +1,78 @@
 # Cavendish House
 
-Quiet-luxury modest menswear site. Screens, copy, palette, type, and photography come from the Google Stitch export (`stitch_cavendish_house_brand_landing`). See `DESIGN.md` for tokens.
+A bespoke React website for **Cavendish House**, a Mayfair atelier of coats, tailoring and knitwear.
 
-## Develop
+This is not a theme, a WordPress site, or a generic landing page. It is a small, production-ready application: Vite, React, TypeScript and Tailwind CSS, structured so the house can be extended without rewriting pages.
+
+## Pages
+
+| URL | Page |
+| --- | --- |
+| `/` | Home |
+| `/collection` | The Collection |
+| `/story` | Our Story |
+| `/craftsmanship` | Craftsmanship |
+| `/craftsmanship-details` | The making, in detail |
+
+The logotype returns to the homepage. Collection pieces are driven from `src/data/products.ts`.
+
+## Stack
+
+- React 19 and TypeScript
+- Vite
+- Tailwind CSS v4
+- React Router
+- Semantic HTML, CSS transitions, `prefers-reduced-motion`
+
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+The app runs at [http://localhost:5173](http://localhost:5173).
 
-| Script | Purpose |
+```bash
+npm run build
+npm run preview
+```
+
+## Deploying to Vercel
+
+This repository is ready for a standard Vite deployment.
+
+1. Import the GitHub repository in Vercel.
+2. Framework preset: **Vite**.
+3. Build command: `npm run build`
+4. Output directory: `dist`
+
+`vercel.json` rewrites unknown routes to `index.html` so `/collection`, `/story` and the craftsmanship pages work on refresh.
+
+Optional: set `VITE_SITE_URL` to the live origin (no trailing slash) so Open Graph tags and canonical URLs match production.
+
+## Project structure
+
+```
+src/
+  components/   layout, editorial, product and UI
+  pages/        one module per route
+  data/         typed content (products, craft, site)
+  lib/          seo helpers
+  styles/       design tokens and motion
+public/
+  images/       house photography
+```
+
+## Design
+
+Visual language, type, colour and spacing are recorded in `DESIGN.md`.
+
+## Scripts
+
+| Command | Purpose |
 | --- | --- |
-| `npm run lint` | ESLint (Next.js core-web-vitals + TypeScript) |
-| `npm run build` | Production build |
-| `npm start` | Serve the production build |
-
-## Routes
-
-- `/` — landing (hero, story teaser, Jubbah collection, craftsmanship, Inner Circle)
-- `/collection` — The Jubbah Collection lookbook
-- `/collection/[slug]` — piece detail and add-to-bag
-- `/story` — Our Story
-- `/craftsmanship` — The Art of the Stitch
-- `/craftsmanship/details` — Physical branding / techniques
-- `/membership` — Inner Circle invite
-- `/contact` — enquiry
-- `/privacy`, `/terms`, `/shipping`
-
-Primary CTAs: **View All** / collection pieces (add to bag) and **Request Invite**.
+| `npm run dev` | Development server |
+| `npm run build` | Typecheck and production build |
+| `npm run preview` | Serve the production build |
+| `npm run lint` | Oxlint |

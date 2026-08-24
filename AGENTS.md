@@ -2,39 +2,25 @@
 
 ## Cursor Cloud specific instructions
 
-This repository is a Next.js App Router site (Cavendish House) implemented from the Google Stitch export. Tokens live in `DESIGN.md` and `app/globals.css`.
+This repository is a Vite, React, TypeScript and Tailwind site for Cavendish House. Tokens live in `DESIGN.md` and `src/styles/index.css`.
 
 ### Services
 
-One service: the Next.js app on port 3000.
+One service: the Vite app on port 5173.
 
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Development server (hot reload) |
-| `npm run lint` | ESLint |
-| `npm run build` | Production build |
-| `npm start` | Serve the production build |
+| `npm run lint` | Oxlint |
+| `npm run build` | Typecheck and production build |
+| `npm run preview` | Serve the production build |
 
-Bind to all interfaces if the preview pane cannot reach localhost: `npx next dev --hostname 0.0.0.0 --port 3000`. For a production-like preview (no HMR), `npm run build` then `npx next start --hostname 0.0.0.0 --port 3000`.
-
-`next.config.ts` sets `allowedDevOrigins` for 127.0.0.1/localhost so `/_next` chunks are not 403'd in development.
+Bind to all interfaces if the preview pane cannot reach localhost: `npx vite --host 0.0.0.0 --port 5173`. For a production-like preview (no HMR), `npm run build` then `npx vite preview --host 0.0.0.0 --port 5173`.
 
 ### Notes
 
 - Package manager is npm (`package-lock.json`). Startup install is `npm install`.
-- There is no database, auth, or third-party API. Inner Circle and contact forms succeed in-session only.
-- Shopping bag state is client-side React context (not persisted).
-- Do not invent a new visual system. Match Stitch HTML/CSS and `DESIGN.md` (Playfair Display + Inter, off-white / stone / deep olive).
-- Standard routes and scripts are listed in `README.md`.
-- Contact is a client component; its document title is set in `app/contact/layout.tsx`.
-- Material Symbols are self-hosted at `public/fonts/material-symbols-outlined.woff2` so icons render without Google Fonts.
-
-<!-- BEGIN:nextjs-agent-rules -->
-
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
+- There is no database, auth, or third-party API.
+- Do not invent a new visual system. Follow `DESIGN.md` (Cormorant Garamond / editorial ivory and espresso).
+- Standard routes and scripts are listed in `README.md`. Routes are declared in `src/App.tsx` with React Router.
+- Framework is Vite, not Next.js. Deploy as a SPA (`vercel.json` rewrites unknown routes to `index.html`).
