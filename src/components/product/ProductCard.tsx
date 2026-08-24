@@ -54,7 +54,7 @@ export function ProductCard({ product, index, className, to }: Props) {
   return (
     <article className={cn('group', className)}>
       {to ? (
-        <Link to={to} className="block" aria-label={`${product.name}, ${product.price}`}>
+        <Link to={to} className="block" aria-label={`${product.name}, ${product.colour}, ${product.price}`}>
           <CardBody product={product} index={index} />
         </Link>
       ) : (

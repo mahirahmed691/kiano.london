@@ -9,6 +9,7 @@ import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { OrderConfirmedPage } from '@/pages/OrderConfirmedPage'
 import { ProductPage } from '@/pages/ProductPage'
+import { ShopPage } from '@/pages/ShopPage'
 import { StoryPage } from '@/pages/StoryPage'
 import { VisitPage } from '@/pages/VisitPage'
 
@@ -19,6 +20,8 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/shop/:id" element={<ProductPage />} />
             <Route path="/collection" element={<CollectionPage />} />
             <Route path="/collection/:id" element={<ProductPage />} />
             <Route path="/story" element={<StoryPage />} />

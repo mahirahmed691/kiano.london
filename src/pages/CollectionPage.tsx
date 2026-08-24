@@ -8,7 +8,8 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import {
   productColours,
-  products,
+  productPath,
+  thobes,
   type ProductColour,
 } from '@/data/products'
 import { site } from '@/data/site'
@@ -20,7 +21,7 @@ const filters: Array<'All' | ProductColour> = ['All', ...productColours]
 export function CollectionPage() {
   const [colour, setColour] = useState<'All' | ProductColour>('All')
   const shown = useMemo(
-    () => (colour === 'All' ? products : products.filter((item) => item.colour === colour)),
+    () => (colour === 'All' ? thobes : thobes.filter((item) => item.colour === colour)),
     [colour],
   )
 
@@ -96,7 +97,7 @@ export function CollectionPage() {
               <ProductCard
                 key={product.id}
                 product={product}
-                to={`/collection/${product.id}`}
+                to={productPath(product)}
                 className={
                   index === 0
                     ? 'sm:col-span-2 lg:col-span-7'

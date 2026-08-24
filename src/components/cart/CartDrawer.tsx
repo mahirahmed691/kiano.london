@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
+import { productPath } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
@@ -46,8 +47,8 @@ export function CartDrawer() {
               A thobe is cut when you ask for it. Choose a cloth and a size, then return here.
             </p>
             <div className="mt-8">
-              <Button to="/collection" onClick={() => setOpen(false)}>
-                The Collection
+              <Button to="/shop" onClick={() => setOpen(false)}>
+                The Shop
               </Button>
             </div>
           </div>
@@ -60,7 +61,7 @@ export function CartDrawer() {
                   className="grid grid-cols-[5rem_1fr] gap-4 border-b border-rule py-5 first:pt-0"
                 >
                   <Link
-                    to={`/collection/${item.product.id}`}
+                    to={productPath(item.product)}
                     className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep"
                     onClick={() => setOpen(false)}
                   >
@@ -79,7 +80,7 @@ export function CartDrawer() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <Link
-                          to={`/collection/${item.product.id}`}
+                          to={productPath(item.product)}
                           className="font-display text-xl font-light leading-tight"
                           onClick={() => setOpen(false)}
                         >

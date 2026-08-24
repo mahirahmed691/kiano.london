@@ -38,7 +38,7 @@ export function Header() {
       >
         <div className="relative grid h-[4.5rem] grid-cols-[1fr_auto_1fr] items-center px-5 md:h-20 md:px-12 lg:px-16">
           <nav className="hidden md:block" aria-label="Primary">
-            <ul className="flex items-center gap-7 lg:gap-9">
+            <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:gap-x-9">
               {primaryNav.map((item) => (
                 <li key={item.to}>
                   <NavLink

@@ -1,4 +1,4 @@
-import { type Product } from '@/data/products'
+import { type Product, productPath } from '@/data/products'
 import { ProductCard } from '@/components/product/ProductCard'
 import { cn } from '@/lib/cn'
 
@@ -16,7 +16,7 @@ export function ProductGrid({ products, className, numbered = true }: Props) {
           key={product.id}
           product={product}
           index={numbered ? String(i + 1).padStart(2, '0') : undefined}
-          to={`/collection/${product.id}`}
+          to={productPath(product)}
         />
       ))}
     </div>
