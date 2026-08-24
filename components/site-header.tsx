@@ -101,8 +101,8 @@ export function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
           )}
           <div className={`flex items-center space-x-6 ${onHero ? "text-white" : "text-primary"}`}>
             {variant === "solid" ? (
-              <Link href="/collection" aria-label="Search collection" className="hidden transition-opacity hover:opacity-70 md:inline-flex">
-                <span className="material-symbols-outlined">search</span>
+              <Link href="/membership" aria-label="Membership" className="hidden transition-opacity hover:opacity-70 md:inline-flex">
+                <span className="material-symbols-outlined">person</span>
               </Link>
             ) : null}
             <button
