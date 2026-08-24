@@ -19,7 +19,7 @@ export function HouseMark({ to = '/', inverted = false, className }: Props) {
       )}
       aria-label={`${site.name}, home`}
     >
-      <span className="font-display text-[0.95rem] font-medium uppercase tracking-[0.12em] md:text-[1.15rem] md:tracking-[0.18em]">
+      <span className="font-display text-[1.05rem] font-medium uppercase tracking-[0.32em] md:text-[1.28rem] md:tracking-[0.42em]">
         {site.name}
       </span>
       <span

@@ -5,8 +5,8 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function NotFoundPage() {
   usePageMeta({
-    title: 'Page not found — Cavendish House',
-    description: 'This page does not exist on the Cavendish House website.',
+    title: 'Page not found — Suhail',
+    description: 'This page does not exist on the Suhail website.',
     path: '/404',
   })
 

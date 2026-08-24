@@ -10,9 +10,9 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function CraftsmanshipPage() {
   usePageMeta({
-    title: 'Craftsmanship — Cavendish House',
+    title: 'Craftsmanship — Suhail',
     description:
-      'Cloth, pattern, stitch and finish. How a Cavendish House thobe is cut and sewn in London.',
+      'Cloth, pattern, stitch and finish. How a Suhail thobe is cut and sewn in London.',
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
   })
@@ -82,7 +82,7 @@ export function CraftsmanshipPage() {
             <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, fastening, pocket.</Display>
             <Body className="mt-6">
               The photographs are of the work itself: not a campaign, a close look at
-              how a Cavendish thobe is held together.
+              how a Suhail thobe is held together.
             </Body>
           </Reveal>
           <div className="grid gap-8 sm:grid-cols-2">

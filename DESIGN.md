@@ -1,4 +1,4 @@
-# Cavendish House — design system
+# Suhail — design system
 
 Extracted and implemented as a restrained London atelier of the jubbah and the thobe: warm ivory ground, espresso ink, a quiet Arabic mark, serif display, generous measure, no decorative chrome.
 

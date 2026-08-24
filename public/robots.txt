@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.cavendishhouse.com/sitemap.xml
+Sitemap: https://www.suhail.london/sitemap.xml

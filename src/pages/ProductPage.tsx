@@ -32,7 +32,7 @@ export function ProductPage() {
   )
 
   usePageMeta({
-    title: product ? `${product.name} — Cavendish House` : 'Cavendish House',
+    title: product ? `${product.name} — Suhail` : 'Suhail',
     description: product
       ? `${product.name}: ${product.colour.toLowerCase()} Emirati thobe in ${product.cloth.toLowerCase()}. Cut in London, sizes 52 to 60.`
       : 'This piece is not in the collection.',

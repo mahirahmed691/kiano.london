@@ -13,8 +13,8 @@ export function CheckoutPage() {
   const [error, setError] = useState('')
 
   usePageMeta({
-    title: 'Checkout — Cavendish House',
-    description: 'Reserve a Cavendish House thobe. Made to order in London, four to eight weeks.',
+    title: 'Checkout — Suhail',
+    description: 'Reserve a Suhail thobe. Made to order in London, four to eight weeks.',
     path: '/checkout',
   })
 

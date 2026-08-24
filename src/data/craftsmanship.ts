@@ -51,7 +51,7 @@ export const processSteps: ProcessStep[] = [
     number: '03',
     title: 'Stitch',
     summary:
-      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Cavendish thobe is fused.',
+      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Suhail thobe is fused.',
     image: '/images/worsted-wool.jpg',
     imageAlt: 'A needle on charcoal worsted — the stitch that holds a winter thobe.',
   },
@@ -125,7 +125,7 @@ export const detailSections: DetailSection[] = [
     kicker: '01 — The seam',
     title: 'The felled seam',
     copy: [
-      'A machine overlock is a shortcut. A Cavendish side seam is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
+      'A machine overlock is a shortcut. A Suhail side seam is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
       'It takes longer. It also means the garment can be washed, pressed and worn for years without the seam opening or the edge fraying. The line down the body stays a single plane of cloth.',
     ],
     image: '/images/heritage-linen.jpg',
@@ -165,7 +165,7 @@ export const detailSections: DetailSection[] = [
       'The house label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
     ],
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The concealed interior pocket of a Cavendish thobe.',
+    imageAlt: 'The concealed interior pocket of a Suhail thobe.',
     imagePosition: 'left',
   },
 ]

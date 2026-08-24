@@ -64,7 +64,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/fastenings.jpg',
-        alt: 'A concealed placket, the fastenings of a Cavendish thobe.',
+        alt: 'A concealed placket, the fastenings of a Suhail thobe.',
         objectPosition: 'center 45%',
       },
       {
@@ -109,7 +109,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior pocket of a Cavendish thobe, bagged so it does not pull the cloth.',
+        alt: 'The interior pocket of a Suhail thobe, bagged so it does not pull the cloth.',
         objectPosition: 'center 62%',
       },
     ],
@@ -231,7 +231,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of a Cavendish thobe: pocket, lining, the house label.',
+        alt: 'The interior of a Suhail thobe: pocket, lining, the house label.',
         objectPosition: 'center 62%',
       },
     ],

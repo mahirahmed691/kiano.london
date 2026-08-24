@@ -15,7 +15,7 @@ import { usePageMeta } from '@/lib/usePageMeta'
 const lookbook = [
   {
     src: '/images/concealed-pocket.jpg',
-    alt: 'The interior of a Cavendish thobe: the house label set by hand.',
+    alt: 'The interior of a Suhail thobe: the house label set by hand.',
     caption: 'The unseen',
     objectPosition: 'center 62%',
   },
@@ -35,9 +35,9 @@ const lookbook = [
 
 export function HomePage() {
   usePageMeta({
-    title: 'Cavendish House — الجُبَّة',
+    title: 'Suhail — الجُبَّة',
     description:
-      'Cavendish House cuts the Emirati thobe in London: black, grey and beige, sizes 52 to 60, in premium cloth.',
+      'Suhail cuts the Emirati thobe in London: black, grey and beige, sizes 52 to 60, in premium cloth.',
     path: '/',
     image: '/images/featured-overcoat.jpg',
   })
@@ -83,7 +83,7 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Lead>
-                Cavendish House is a London atelier of the Emirati thobe. Black,
+                Suhail is a London atelier of the Emirati thobe. Black,
                 charcoal, grey, beige and bone. Japanese cotton, Super 150s, extra-long
                 staple: cloth chosen to last.
               </Lead>
@@ -201,7 +201,7 @@ export function HomePage() {
             <Reveal delay={120}>
               <ImageFrame
                 src="/images/workbench.jpg"
-                alt="The cutting bench at Cavendish House: shears, chalk, and the house block."
+                alt="The cutting bench at Suhail: shears, chalk, and the house block."
                 className="aspect-[4/5] w-full"
                 objectPosition="center 40%"
                 caption="Mayfair. By appointment."
