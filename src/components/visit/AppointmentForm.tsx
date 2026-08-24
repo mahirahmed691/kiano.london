@@ -46,7 +46,7 @@ export function AppointmentForm() {
     event.preventDefault()
     const subject = selectedName
       ? `Appointment: ${selectedName}`
-      : 'Appointment at the atelier'
+      : 'Appointment at Suhail'
     const body = [
       `Name: ${name}`,
       `Email: ${email}`,

@@ -17,7 +17,7 @@ export function NotFoundPage() {
         <Display as="h1" className="mt-4 text-5xl md:text-6xl">
           This room is empty.
         </Display>
-        <Body className="mt-6">The page you asked for is not in the house.</Body>
+        <Body className="mt-6">The page you asked for is not under Suhail.</Body>
         <Link
           to="/"
           className="mt-10 inline-flex text-[11px] uppercase tracking-[0.22em] underline underline-offset-4"

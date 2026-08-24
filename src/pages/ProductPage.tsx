@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { ProductGrid } from '@/components/product/ProductGrid'
@@ -22,10 +22,11 @@ import { NotFoundPage } from '@/pages/NotFoundPage'
 export function ProductPage() {
   const { id } = useParams()
   const product = getProduct(id)
-  const { add } = useCart()
-  const [active, setActive] = useState(0)
+  const { add, open } = useCart()
   const [size, setSize] = useState<ThobeSize | ''>('')
   const [guideOpen, setGuideOpen] = useState(false)
+  const [showBar, setShowBar] = useState(false)
+  const buyRef = useRef<HTMLDivElement>(null)
   const related = useMemo(
     () => (product ? relatedProducts(product.id).slice(0, 3) : []),
     [product],
@@ -40,14 +41,34 @@ export function ProductPage() {
     image: product?.image,
   })
 
+  useEffect(() => {
+    setSize('')
+    setGuideOpen(false)
+  }, [product?.id])
+
+  useEffect(() => {
+    const node = buyRef.current
+    if (!node) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowBar(!entry.isIntersecting),
+      { threshold: 0.15 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [product?.id])
+
   if (!product) {
     return <NotFoundPage />
   }
 
-  const current = product.gallery[active] ?? product.gallery[0]
   const enquireTo = size
     ? `/visit?piece=${product.id}&size=${size}`
     : `/visit?piece=${product.id}`
+
+  function addToBag() {
+    if (!product || !size) return
+    add(product.id, size)
+  }
 
   return (
     <>
@@ -83,43 +104,21 @@ export function ProductPage() {
           </div>
 
           <div className="order-1 xl:order-2">
-            <div className="bg-ivory-deep">
-              <ImageFrame
-                src={current.src}
-                alt={current.alt}
-                eager
-                objectPosition={current.objectPosition}
-                className="aspect-[3/4] w-full xl:min-h-[calc(100svh-7rem)] xl:aspect-auto"
-              />
-            </div>
-            {product.gallery.length > 1 ? (
-              <div className="grid grid-cols-3">
-                {product.gallery.map((image, index) => (
-                  <button
-                    key={`${image.src}-${index}`}
-                    type="button"
-                    onClick={() => setActive(index)}
-                    aria-label={`View photograph ${index + 1} of ${product.name}`}
-                    aria-pressed={index === active}
-                    className={cn(
-                      'img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep',
-                      index === active ? 'opacity-100' : 'opacity-55 hover:opacity-100',
-                    )}
-                  >
-                    <img
-                      src={image.src}
-                      alt=""
-                      className="size-full object-cover"
-                      style={
-                        image.objectPosition
-                          ? { objectPosition: image.objectPosition }
-                          : undefined
-                      }
-                    />
-                  </button>
-                ))}
+            {product.gallery.map((image, index) => (
+              <div key={`${image.src}-${index}`} className="bg-ivory-deep">
+                <ImageFrame
+                  src={image.src}
+                  alt={image.alt}
+                  eager={index === 0}
+                  objectPosition={image.objectPosition}
+                  className={
+                    index === 0
+                      ? 'aspect-[3/4] w-full xl:min-h-[calc(100svh-7rem)] xl:aspect-auto'
+                      : 'aspect-[3/4] w-full'
+                  }
+                />
               </div>
-            ) : null}
+            ))}
           </div>
 
           <div className="order-3 px-6 py-12 md:px-12 xl:sticky xl:top-28 xl:py-16 xl:pr-16 xl:pl-10">
@@ -131,19 +130,17 @@ export function ProductPage() {
               </p>
               <Body className="mt-6 xl:hidden">{product.description}</Body>
 
-              <div className="mt-10">
+              <div className="mt-10" ref={buyRef}>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-rule">
                   {thobeSizes.map((value) => (
                     <button
                       key={value}
                       type="button"
                       onClick={() => setSize(value)}
                       className={cn(
-                        'h-11 min-w-11 px-3 text-[12px] tracking-[0.08em] transition-colors duration-300',
-                        size === value
-                          ? 'border border-ink bg-ink text-ivory'
-                          : 'border border-rule hover:border-ink',
+                        'flex aspect-square items-center justify-center bg-ivory text-[12px] tracking-[0.08em] transition-colors duration-300',
+                        size === value ? 'bg-ink text-ivory' : 'hover:bg-ivory-deep',
                       )}
                     >
                       {value}
@@ -157,9 +154,7 @@ export function ProductPage() {
                 variant="solid"
                 className="mt-10 w-full justify-center"
                 disabled={!size}
-                onClick={() => {
-                  if (size) add(product.id, size)
-                }}
+                onClick={addToBag}
               >
                 {size ? 'Add to bag' : 'Choose a size'}
               </Button>
@@ -198,7 +193,7 @@ export function ProductPage() {
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
               <Eyebrow>Sizes 52–60</Eyebrow>
-              <Display className="mt-4 text-4xl">The house block.</Display>
+              <Display className="mt-4 text-4xl">The Suhail block.</Display>
               <SizeGuide className="mt-8" />
             </Reveal>
           </div>
@@ -210,7 +205,7 @@ export function ProductPage() {
           <Rule className="mb-16" />
           <Reveal className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <Eyebrow>The house line</Eyebrow>
+              <Eyebrow>The line</Eyebrow>
               <Display className="mt-3 text-4xl md:text-5xl">The other thobes</Display>
             </div>
             <TextLink to="/collection">All of the collection</TextLink>
@@ -218,6 +213,30 @@ export function ProductPage() {
           <ProductGrid products={related} numbered={false} />
         </Container>
       </Section>
+
+      <div
+        className={cn(
+          'fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
+          showBar && !open ? 'translate-y-0' : 'translate-y-full',
+        )}
+        style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        aria-hidden={!showBar}
+      >
+        <div className="flex items-center gap-4">
+          <p className="font-display text-2xl font-light">{product.price}</p>
+          <Button
+            variant="solid"
+            className="flex-1 justify-center"
+            disabled={!size}
+            onClick={() => {
+              if (size) addToBag()
+              else buyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }}
+          >
+            {size ? 'Add to bag' : 'Choose a size'}
+          </Button>
+        </div>
+      </div>
     </>
   )
 }

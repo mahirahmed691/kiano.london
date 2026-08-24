@@ -43,23 +43,23 @@ export const products: Product[] = [
     price: '£980',
     pricePence: 98000,
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The interior of a black Emirati thobe, the house label set by hand.',
+    imageAlt: 'The interior of a black Emirati thobe, the Suhail label set by hand.',
     objectPosition: 'center 62%',
     featured: true,
     description:
-      'Layl is the black column. Compact Japanese cotton, matte so it does not shine under evening light, cut from the house block with a band collar and a placket that closes out of sight.',
+      'Layl is the black column. Compact Japanese cotton, matte so it does not shine under evening light, cut from the Suhail block with a band collar and a placket that closes out of sight.',
     details: [
       'Band collar, pad-stitched by hand so the neck holds after a day’s wear.',
       'Concealed placket; horn buttons sit inside the cloth.',
       'Felled side seams. Interior pocket bagged in the lining.',
-      'The house label is woven and set at the nape by hand.',
+      'The Suhail label is woven and set at the nape by hand.',
     ],
     composition: '100% compact Japanese cotton, 80s two-ply. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of the Layl thobe, the house label set by hand.',
+        alt: 'The interior of the Layl thobe, the Suhail label set by hand.',
         objectPosition: 'center 62%',
       },
       {
@@ -93,7 +93,7 @@ export const products: Product[] = [
       'Standing collar, pad-stitched through the stand.',
       'Super 150s wool-cotton from Huddersfield; compact, resilient, a quiet handle.',
       'Concealed placket. Side seams felled, never overlocked.',
-      'Hem set to the ankle of the house block. Interior pocket unseen from the face.',
+      'Hem set to the ankle of the Suhail block. Interior pocket unseen from the face.',
     ],
     composition: 'Wool-cotton Super 150s, Huddersfield. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
@@ -105,7 +105,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/worsted-wool.jpg',
-        alt: 'Charcoal Super 150s and a needle, the winter cloth of the house.',
+        alt: 'Charcoal Super 150s and a needle, the winter cloth of Suhail.',
       },
       {
         src: '/images/concealed-pocket.jpg',
@@ -133,7 +133,7 @@ export const products: Product[] = [
     details: [
       'Albini compact cotton, earth grey, a high-count two-ply.',
       'Band collar. Concealed placket. Felled seams.',
-      'Cut from the same house block as Layl; the difference is only the cloth.',
+      'Cut from the same Suhail block as Layl; the difference is only the cloth.',
       'Washed once before it leaves the workroom so the drape is already itself.',
     ],
     composition: '100% Italian compact cotton, Albini. Silk-twist buttonholes. Buffalo horn.',
@@ -186,7 +186,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/workbench.jpg',
-        alt: 'The cutting bench: shears, chalk, and paper for the house block.',
+        alt: 'The cutting bench: shears, chalk, and paper for the Suhail block.',
       },
       {
         src: '/images/concealed-pocket.jpg',
@@ -209,7 +209,7 @@ export const products: Product[] = [
     imageAlt: 'Bone cotton-silk at the placket of the Hajar thobe, fastenings concealed.',
     objectPosition: 'center 45%',
     description:
-      'Hajar is bone: Como cotton-silk, washed, a cooler handle than Raml and a quieter light. The placket is the same concealed work as the rest of the house. The cloth is the distinction.',
+      'Hajar is bone: Como cotton-silk, washed, a cooler handle than Raml and a quieter light. The placket is the same concealed work as the rest of the line. The cloth is the distinction.',
     details: [
       'Washed cotton-silk from Como. Bone, not white.',
       'Concealed placket; the fastenings disappear until the hand finds them.',
@@ -226,12 +226,12 @@ export const products: Product[] = [
       },
       {
         src: '/images/heritage-linen.jpg',
-        alt: 'Pale cloth in the piece, before it is chalked for the house block.',
+        alt: 'Pale cloth in the piece, before it is chalked for the Suhail block.',
         objectPosition: '22% 50%',
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of a Suhail thobe: pocket, lining, the house label.',
+        alt: 'The interior of a Suhail thobe: pocket, lining, the Suhail label.',
         objectPosition: 'center 62%',
       },
     ],

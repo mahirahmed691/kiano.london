@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { LookbookStrip } from '@/components/editorial/LookbookStrip'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -26,7 +27,7 @@ export function CollectionPage() {
   usePageMeta({
     title: 'The Collection — Suhail',
     description:
-      'Five earthy Emirati thobes from Suhail. Black, grey and beige, sizes 52 to 60, cut in London in premium cloth.',
+              'Five Emirati thobes from Suhail. Black, grey and beige, sizes 52 to 60, cut in London for cooler air.',
     path: '/collection',
     image: '/images/heritage-linen.jpg',
   })
@@ -44,8 +45,8 @@ export function CollectionPage() {
               {site.arabicName}
             </p>
             <Body className="mt-6 max-w-xl">
-              Five earthy Emirati thobes: black, charcoal, grey, beige and bone.
-              Premium cloth, sized 52 to 60. Named for a colour, not a season.
+              Five Emirati thobes: black, charcoal, grey, beige and bone. Named for a
+              colour, not a season. Cut in London for the air after summer.
             </Body>
           </Reveal>
         </Container>
@@ -54,7 +55,7 @@ export function CollectionPage() {
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
           src="/images/heritage-linen.jpg"
-          alt="Sand-beige extra-long staple cotton, the cloth of the earthy thobe."
+          alt="Sand-beige extra-long staple cotton, the cloth of Raml."
           className="object-[22%_center]"
           loading="eager"
           decoding="async"
@@ -107,34 +108,28 @@ export function CollectionPage() {
             ))}
           </div>
 
-          <div className="mt-24 grid grid-cols-3 gap-2 md:mt-32">
-            {[
-              {
-                src: '/images/concealed-pocket.jpg',
-                alt: 'The interior of a Suhail thobe, the house label set by hand.',
-                objectPosition: 'center 62%',
-              },
-              {
-                src: '/images/heritage-linen.jpg',
-                alt: 'Sand-beige extra-long staple cotton in the piece.',
-                objectPosition: '22% 50%',
-              },
-              {
-                src: '/images/workbench.jpg',
-                alt: 'The cutting bench: shears, chalk, and the house block.',
-                objectPosition: 'center 40%',
-              },
-            ].map((plate) => (
-              <div key={plate.src} className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep">
-                <img
-                  src={plate.src}
-                  alt={plate.alt}
-                  className="size-full object-cover"
-                  style={{ objectPosition: plate.objectPosition }}
-                />
-              </div>
-            ))}
-          </div>
+        </Container>
+        <LookbookStrip
+          className="mt-24 md:mt-32"
+          plates={[
+            {
+              src: '/images/concealed-pocket.jpg',
+              alt: 'The interior of a Suhail thobe, the Suhail label set by hand.',
+              objectPosition: 'center 62%',
+            },
+            {
+              src: '/images/heritage-linen.jpg',
+              alt: 'Sand-beige extra-long staple cotton in the piece.',
+              objectPosition: '22% 50%',
+            },
+            {
+              src: '/images/workbench.jpg',
+              alt: 'The cutting bench: shears, chalk, and the Suhail block.',
+              objectPosition: 'center 40%',
+            },
+          ]}
+        />
+        <Container>
           <Rule className="mt-20 md:mt-28" />
           <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">

@@ -1,6 +1,6 @@
 export const site = {
   name: 'Suhail',
-  arabicName: 'الجُبَّة',
+  arabicName: 'سهيل',
   shortName: 'Suhail',
   established: '2026',
   city: 'London',
@@ -10,5 +10,6 @@ export const site = {
   telephone: '+44 20 7499 2026',
   telephoneHref: 'tel:+442074992026',
   hours: 'Atelier visits by appointment',
-  tagline: 'Earthy Emirati thobes, cut in London in cloth chosen to last.',
+  tagline: 'Emirati thobes, cut in London. Named for the winter star of the Gulf.',
+  note: 'Suhail',
 } as const

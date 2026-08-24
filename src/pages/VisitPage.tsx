@@ -21,7 +21,7 @@ const visitSteps = [
   {
     number: '03',
     title: 'Cut',
-    copy: 'We cut from the house block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
+    copy: 'We cut from the Suhail block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
   },
 ]
 
@@ -93,7 +93,7 @@ export function VisitPage() {
                 Request a time.
               </Display>
               <Body className="mt-6">
-                The form opens a letter to the house. If you would rather write directly:{' '}
+                The form opens a letter to Suhail. If you would rather write directly:{' '}
                 <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
                   {site.email}
                 </a>
@@ -122,7 +122,7 @@ export function VisitPage() {
           <div className="grid items-start gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-5">
               <Eyebrow>Sizes 52–60</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The house block.</Display>
+              <Display className="mt-4 text-4xl md:text-5xl">The Suhail block.</Display>
               <Body className="mt-6">
                 If you already know your size, name it in the letter. If you do not, we
                 will measure you here. Between sizes, we cut from the larger and take in.
