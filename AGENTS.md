@@ -2,22 +2,25 @@
 
 ## Cursor Cloud specific instructions
 
-### Repository state
+This repository is a Next.js App Router site (Cavendish House) implemented from the Google Stitch export. Tokens live in `DESIGN.md` and `app/globals.css`.
 
-This repository is currently a placeholder. The only tracked content is `hello.txt`
-(contents: `hello`). There is:
+### Services
 
-- No application source code.
-- No dependency manifests (no `package.json`, `requirements.txt`, `go.mod`, etc.).
-- No build, lint, or test tooling.
-- No active git hooks (only default `*.sample` hooks).
-- No `.cursor/environment.json`.
+One service: the Next.js app on port 3000.
 
-### Consequences for setup
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Development server (hot reload) |
+| `npm run lint` | ESLint |
+| `npm run build` | Production build |
+| `npm start` | Serve the production build |
 
-- There are no dependencies to install, so the environment update script is a no-op.
-- There is nothing to build, lint, or test yet. Standard commands (build/lint/test/run)
-  do not exist until real application code and its manifests are added.
-- Once application code is introduced, update the environment: add the appropriate
-  install command (e.g. `npm ci`, `pip install -r requirements.txt`, `uv sync`) to the
-  Cloud Agent update script, and document how to run/lint/test the app here.
+Bind to all interfaces if the preview pane cannot reach localhost: `npx next dev --hostname 0.0.0.0 --port 3000`.
+
+### Notes
+
+- Package manager is npm (`package-lock.json`). Startup install is `npm install`.
+- There is no database, auth, or third-party API. Inner Circle and contact forms succeed in-session only.
+- Shopping bag state is client-side React context (not persisted).
+- Do not invent a new visual system. Match Stitch HTML/CSS and `DESIGN.md` (Playfair Display + Inter, off-white / stone / deep olive).
+- Standard routes and scripts are listed in `README.md`.
