@@ -12,6 +12,27 @@ import { featuredProducts } from '@/data/products'
 import { site } from '@/data/site'
 import { usePageMeta } from '@/lib/usePageMeta'
 
+const lookbook = [
+  {
+    src: '/images/concealed-pocket.jpg',
+    alt: 'The interior of a Cavendish thobe: the house label set by hand.',
+    caption: 'The unseen',
+    objectPosition: 'center 62%',
+  },
+  {
+    src: '/images/heritage-linen.jpg',
+    alt: 'Extra-long staple cotton in the piece, the sand cloth of the house.',
+    caption: 'Cloth in the piece',
+    objectPosition: '22% 50%',
+  },
+  {
+    src: '/images/workbench.jpg',
+    alt: 'The cutting bench: shears, chalk, and paper for the house block.',
+    caption: 'The bench',
+    objectPosition: 'center 40%',
+  },
+]
+
 export function HomePage() {
   usePageMeta({
     title: 'Cavendish House — الجُبَّة',
@@ -26,15 +47,20 @@ export function HomePage() {
       <Hero
         image="/images/featured-overcoat.jpg"
         imageAlt="A charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
-        objectPosition="center 12%"
+        objectPosition="68% 12%"
         kicker={`Established ${site.established} · ${site.city}`}
         title="A column of cloth."
         subtitle="Earthy Emirati thobes, cut slowly in London. Black, grey, beige. Sizes 52 to 60."
         priority
       >
-        <Button to="/collection" variant="invert">
-          The Collection
-        </Button>
+        <div className="flex flex-wrap items-center gap-6">
+          <Button to="/collection" variant="invert">
+            The Collection
+          </Button>
+          <TextLink to="/visit" className="text-ivory">
+            Visit the atelier
+          </TextLink>
+        </div>
       </Hero>
 
       <Section>
@@ -59,7 +85,7 @@ export function HomePage() {
               <Lead>
                 Cavendish House is a London atelier of the Emirati thobe. Black,
                 charcoal, grey, beige and bone. Japanese cotton, Super 150s, extra-long
-                staple — cloth chosen to last.
+                staple: cloth chosen to last.
               </Lead>
               <Body className="mt-6">
                 Nothing here is made for a campaign. A thobe should look as considered in
@@ -82,26 +108,43 @@ export function HomePage() {
             </div>
             <TextLink to="/collection">All of the collection</TextLink>
           </Reveal>
-          <ProductGrid
-            products={featuredProducts}
-            numbered={false}
-            linkTo="/collection"
-            className="lg:grid-cols-3"
-          />
+          <ProductGrid products={featuredProducts} numbered={false} className="lg:grid-cols-3" />
         </Container>
       </Section>
 
       <Section className="bg-ivory-deep/50">
         <Container>
-          <StitchArt />
+          <Reveal className="mb-12 md:mb-16">
+            <Eyebrow>In the rooms</Eyebrow>
+            <Display className="mt-3 text-4xl md:text-5xl">Garment, cloth, bench.</Display>
+          </Reveal>
+          <div className="grid gap-2 md:grid-cols-3 md:gap-3">
+            {lookbook.map((plate, index) => (
+              <Reveal key={plate.caption} delay={index * 80}>
+                <ImageFrame
+                  src={plate.src}
+                  alt={plate.alt}
+                  objectPosition={plate.objectPosition}
+                  className="aspect-[3/4] w-full"
+                  caption={plate.caption}
+                />
+              </Reveal>
+            ))}
+          </div>
         </Container>
       </Section>
 
       <Section>
         <Container>
+          <StitchArt />
+        </Container>
+      </Section>
+
+      <Section className="pt-0">
+        <Container>
           <EditorialSplit
             image="/images/worsted-wool.jpg"
-            imageAlt="A needle resting on charcoal worsted — the cloth of a winter thobe."
+            imageAlt="A needle resting on charcoal worsted: the cloth of a winter thobe."
             objectPosition="center"
             imageOn="left"
           >
@@ -124,7 +167,7 @@ export function HomePage() {
       <section className="relative min-h-[70svh] overflow-hidden">
         <ImageFrame
           src="/images/featured-overcoat.jpg"
-          alt="A charcoal Emirati thobe at rest — the house silhouette, a column of cloth."
+          alt="A charcoal Emirati thobe at rest: the house silhouette, a column of cloth."
           className="absolute inset-0 h-full w-full"
           imgClassName="h-full w-full object-cover"
           objectPosition="center 58%"
@@ -147,19 +190,21 @@ export function HomePage() {
               <Display className="mt-4 text-4xl md:text-5xl">Cut in London</Display>
               <Body className="mt-6">
                 The cutting room is a single address. Fittings are by appointment. We
-                do not keep a shop window. The work is the invitation — an Emirati
+                do not keep a shop window. The work is the invitation: an Emirati
                 thobe, cloth chosen to outlive the season.
               </Body>
-              <div className="mt-8">
-                <Button to="/story">Read our story</Button>
+              <div className="mt-8 flex flex-wrap items-center gap-6">
+                <Button to="/visit">Visit by appointment</Button>
+                <TextLink to="/story">Read our story</TextLink>
               </div>
             </Reveal>
             <Reveal delay={120}>
               <ImageFrame
-                src="/images/heritage-linen.jpg"
-                alt="A roll of extra-long staple cotton, the beige cloth of the house."
-                className="aspect-[4/3] w-full"
-                objectPosition="center"
+                src="/images/workbench.jpg"
+                alt="The cutting bench at Cavendish House: shears, chalk, and the house block."
+                className="aspect-[4/5] w-full"
+                objectPosition="center 40%"
+                caption="Mayfair. By appointment."
               />
             </Reveal>
           </div>

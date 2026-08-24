@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useCart } from '@/lib/cart'
 import { primaryNav } from '@/data/navigation'
 import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
@@ -10,6 +11,7 @@ type Props = {
 }
 
 export function MobileNav({ open, onClose }: Props) {
+  const { count, setOpen } = useCart()
   useEffect(() => {
     if (!open) return
     const onKey = (event: KeyboardEvent) => {
@@ -67,6 +69,18 @@ export function MobileNav({ open, onClose }: Props) {
               </NavLink>
             </li>
           ))}
+          <li>
+            <button
+              type="button"
+              className="font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"
+              onClick={() => {
+                onClose()
+                setOpen(true)
+              }}
+            >
+              Bag{count ? ` ${String(count).padStart(2, '0')}` : ''}
+            </button>
+          </li>
         </ul>
         <p
           lang="ar"

@@ -44,8 +44,8 @@ export const processSteps: ProcessStep[] = [
     title: 'Pattern',
     summary:
       'Each thobe is cut from a house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
-    image: '/images/featured-overcoat.jpg',
-    imageAlt: 'The Emirati thobe as a column of cloth — the house pattern, at rest.',
+    image: '/images/workbench.jpg',
+    imageAlt: 'The cutting bench: paper, chalk and shears for the house block.',
   },
   {
     number: '03',

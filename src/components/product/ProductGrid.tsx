@@ -6,10 +6,9 @@ type Props = {
   products: Product[]
   className?: string
   numbered?: boolean
-  linkTo?: string
 }
 
-export function ProductGrid({ products, className, numbered = true, linkTo }: Props) {
+export function ProductGrid({ products, className, numbered = true }: Props) {
   return (
     <div className={cn('grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8', className)}>
       {products.map((product, i) => (
@@ -17,7 +16,7 @@ export function ProductGrid({ products, className, numbered = true, linkTo }: Pr
           key={product.id}
           product={product}
           index={numbered ? String(i + 1).padStart(2, '0') : undefined}
-          to={linkTo}
+          to={`/collection/${product.id}`}
         />
       ))}
     </div>
