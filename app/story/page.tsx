@@ -15,7 +15,7 @@ export default function StoryPage() {
           <div className="grid h-[70vh] min-h-[600px] grid-cols-1 items-end gap-gutter md:grid-cols-12">
             <div className="relative h-full overflow-hidden rounded-DEFAULT bg-surface-container md:col-span-8">
               <img
-                src="/images/hero-model.png"
+                src="/images/fabric-detail.png"
                 alt="Editorial imagery of Cavendish House aesthetic"
                 className="absolute inset-0 h-full w-full object-cover"
               />

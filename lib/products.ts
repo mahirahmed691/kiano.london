@@ -17,7 +17,7 @@ export const products: Product[] = [
     name: "The Brutalist Overcoat",
     material: "Charcoal Wool",
     price: 850,
-    image: "/images/featured-overcoat.jpg",
+    image: "/images/fabric-detail.png",
     alt: "A tailored deep charcoal overcoat with clean, straight lines and a concealed placket.",
     description:
       "A structured overcoat in charcoal wool, cut with a concealed placket and architectural shoulder.",
