@@ -46,7 +46,7 @@ export function Hero({
         decoding="async"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-t from-night/80 via-night/25 to-night/15"
+        className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.55)_0%,rgba(20,18,16,0.12)_26%,rgba(20,18,16,0.1)_50%,rgba(20,18,16,0.8)_100%)]"
         aria-hidden="true"
       />
       <Container

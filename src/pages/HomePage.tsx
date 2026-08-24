@@ -73,7 +73,12 @@ export function HomePage() {
             </div>
             <TextLink to="/collection">All of the collection</TextLink>
           </Reveal>
-          <ProductGrid products={featuredProducts} numbered={false} className="lg:grid-cols-3" />
+          <ProductGrid
+            products={featuredProducts}
+            numbered={false}
+            linkTo="/collection"
+            className="lg:grid-cols-3"
+          />
         </Container>
       </Section>
 

@@ -34,12 +34,12 @@ export const products: Product[] = [
   },
   {
     id: 'hawick-crew',
-    name: 'Hawick Cashmere Crew',
+    name: 'Hawick Cashmere',
     cloth: 'Two-ply Scottish cashmere',
     mill: 'Hawick, Borders',
     price: '£685',
     image: '/images/product-cashmere.jpg',
-    imageAlt: 'Folded cream cashmere knitwear on a quiet tabletop.',
+    imageAlt: 'Cream cashmere knit hanging in even light.',
     featured: true,
   },
   {

@@ -34,10 +34,13 @@ export function Header() {
           !inverted && 'border-b border-rule/80',
         )}
       >
-        <div className="flex h-[4.5rem] items-center justify-between px-6 md:h-20 md:px-12 lg:px-16">
+        <div className="flex h-[4.5rem] items-center justify-between gap-4 px-5 md:h-20 md:px-12 lg:px-16">
           <Link
             to="/"
-            className="font-display text-[1.35rem] font-medium tracking-[0.18em] uppercase md:text-[1.15rem]"
+            className={cn(
+              'whitespace-nowrap font-display text-[0.95rem] font-medium uppercase tracking-[0.12em] md:text-[1.15rem] md:tracking-[0.18em]',
+              inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.45)]',
+            )}
             aria-label={`${site.name}, home`}
           >
             {site.name}
@@ -51,8 +54,11 @@ export function Header() {
                     to={item.to}
                     className={({ isActive }) =>
                       cn(
-                        'text-[11px] uppercase tracking-[0.22em] transition-opacity',
-                        isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100',
+                        'relative text-[11px] uppercase tracking-[0.22em] transition-opacity',
+                        inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
+                        isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100',
+                        isActive &&
+                          'after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:bg-current',
                       )
                     }
                   >
@@ -65,7 +71,10 @@ export function Header() {
 
           <button
             type="button"
-            className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+            className={cn(
+              'relative z-50 flex h-11 w-11 shrink-0 items-center justify-center md:hidden',
+              inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.8)]',
+            )}
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label={open ? 'Close menu' : 'Open menu'}
