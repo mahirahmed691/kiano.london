@@ -3,9 +3,9 @@
 @font-face {
   font-family: "Material Symbols Outlined";
   font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/material-symbols-outlined.ttf") format("truetype");
+  font-weight: 100 700;
+  font-display: block;
+  src: url("/fonts/material-symbols-outlined.woff2") format("woff2");
 }
 
 @theme {
@@ -108,7 +108,7 @@ body {
 }
 
 .material-symbols-outlined {
-  font-family: "Material Symbols Outlined";
+  font-family: "Material Symbols Outlined", sans-serif;
   font-weight: 300;
   font-style: normal;
   font-size: 22px;
@@ -121,6 +121,7 @@ body {
   font-feature-settings: "liga";
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
 }
 
 ::selection {
