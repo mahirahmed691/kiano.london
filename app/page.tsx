@@ -109,7 +109,7 @@ export default function HomePage() {
                     The Brutalist Overcoat
                   </h3>
                   <p className="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant md:text-white/80">
-                    Deep Olive Wool
+                    Charcoal Wool
                   </p>
                 </div>
               </Link>

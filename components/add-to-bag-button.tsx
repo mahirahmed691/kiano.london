@@ -10,6 +10,7 @@ export function AddToBagButton({ product }: { product: Product }) {
   return (
     <button
       type="button"
+      data-testid="add-to-bag"
       onClick={() => addItem(product)}
       className="bg-primary px-8 py-4 font-label-caps uppercase tracking-widest text-on-primary transition-colors hover:bg-secondary"
     >

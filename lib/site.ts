@@ -10,10 +10,3 @@ export const footerLinks = [
   { href: "/shipping", label: "Shipping" },
   { href: "/contact", label: "Contact" },
 ] as const;
-
-export const homeFooterLinks = [
-  { href: "/contact", label: "Contact" },
-  { href: "/membership", label: "Membership" },
-  { href: "/terms", label: "Terms" },
-  { href: "/privacy", label: "Privacy" },
-] as const;

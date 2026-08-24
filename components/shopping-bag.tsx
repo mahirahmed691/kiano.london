@@ -74,6 +74,7 @@ export function ShoppingBag() {
           <Link
             href="/membership"
             onClick={closeBag}
+            data-testid="bag-request-invite"
             className="flex w-full items-center justify-center bg-primary px-8 py-4 font-label-caps uppercase tracking-widest text-on-primary transition-colors hover:bg-primary/90"
           >
             Request Invite

@@ -14,7 +14,7 @@ export function SiteFooter({ variant = "default" }: SiteFooterProps) {
             Cavendish House
           </Link>
           <p className="font-sans text-body-md text-on-surface-variant">
-            © 2026 Cavendish House. All rights reserved.
+            © 2024 Cavendish House. All rights reserved.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-8 md:col-span-6">
@@ -57,7 +57,7 @@ export function SiteFooter({ variant = "default" }: SiteFooterProps) {
           ))}
         </div>
         <p className="font-label-caps uppercase tracking-widest text-secondary">
-          © 2026 Cavendish House. British Heritage, Islamic Tradition.
+          © 2024 Cavendish House. British Heritage, Islamic Tradition.
         </p>
       </div>
     </footer>
