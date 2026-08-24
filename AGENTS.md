@@ -25,7 +25,7 @@ Bind to all interfaces if the preview pane cannot reach localhost: `npx next dev
 - Do not invent a new visual system. Match Stitch HTML/CSS and `DESIGN.md` (Playfair Display + Inter, off-white / stone / deep olive).
 - Standard routes and scripts are listed in `README.md`.
 - Contact is a client component; its document title is set in `app/contact/layout.tsx`.
-- Material Symbols are self-hosted at `public/fonts/material-symbols-outlined.ttf` so icons render without Google Fonts.
+- Material Symbols are self-hosted at `public/fonts/material-symbols-outlined.woff2` so icons render without Google Fonts.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
