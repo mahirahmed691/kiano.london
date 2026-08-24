@@ -21,7 +21,7 @@ export function CraftsmanshipPage() {
     <>
       <Hero
         image="/images/worsted-wool.jpg"
-        imageAlt="A needle on charcoal worsted — the stitch that holds a thobe."
+        imageAlt="A needle on charcoal worsted: the stitch that holds a thobe."
         objectPosition="center"
         kicker="The work"
         title="The art of the stitch."
@@ -49,7 +49,7 @@ export function CraftsmanshipPage() {
             </Display>
             <Body className="mt-6">
               We do not fuse a collar because it is faster. We do not send buttonholes
-              out. The methods are older than the house; we keep them because they still
+              out. The methods are older than this workroom; we keep them because they still
               make a better garment.
             </Body>
           </Reveal>
@@ -137,7 +137,7 @@ export function CraftsmanshipPage() {
             <Reveal>
               <ImageFrame
                 src="/images/featured-overcoat.jpg"
-                alt="An Emirati thobe at rest — the column of cloth these methods produce."
+                alt="An Emirati thobe at rest: the column of cloth these methods produce."
                 className="aspect-[4/5] w-full"
               />
             </Reveal>

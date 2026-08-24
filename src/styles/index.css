@@ -122,7 +122,15 @@ select {
   .img-zoom img {
     animation: none !important;
     transition: none !important;
-    opacity: 1 !important;
     transform: none !important;
+  }
+
+  .page-enter,
+  .reveal {
+    opacity: 1 !important;
+  }
+
+  .img-zoom .img-swap {
+    display: none !important;
   }
 }

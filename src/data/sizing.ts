@@ -16,6 +16,6 @@ export const sizeChart: SizeRow[] = [
 ]
 
 export const sizeNote =
-  'The house block. Chest, length and shoulder as cut. A fitting at the atelier will move a centimetre where it matters. If you are between sizes, write; we cut from the larger and take in.'
+  'Chest, length and shoulder as cut. A fitting at the atelier will move a centimetre where it matters. If you are between sizes, write; we cut from the larger and take in.'
 
 export { thobeSizes }

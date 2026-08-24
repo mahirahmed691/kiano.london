@@ -72,7 +72,7 @@ export function CheckoutPage() {
             </Display>
             <Body className="mt-6">
               {String(count).padStart(2, '0')} {count === 1 ? 'piece' : 'pieces'}. Each thobe is
-              made after payment, from the house block, in four to eight weeks. Carriage is
+              made after payment, from the Suhail block, in four to eight weeks. Carriage is
               included.
             </Body>
             <ul className="mt-12">

@@ -11,9 +11,9 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function StoryPage() {
   usePageMeta({
-    title: 'Our Story — Suhail',
+    title: 'Story — Suhail',
     description:
-      'A London atelier of the Emirati thobe, founded in 2026 as a cutting room for the modest wardrobe.',
+      'Named for the winter star of the Gulf. A London atelier of the Emirati thobe, opened as a cutting room for the modest garment.',
     path: '/story',
     image: '/images/featured-overcoat.jpg',
   })
@@ -22,11 +22,11 @@ export function StoryPage() {
     <>
       <Hero
         image="/images/featured-overcoat.jpg"
-        imageAlt="A charcoal Emirati thobe, the house silhouette, worn at full length."
+        imageAlt="A charcoal Emirati thobe, the Suhail silhouette, worn at full length."
         objectPosition="center 62%"
         kicker={`Est. ${site.established}`}
-        title="A house, not a brand."
-        subtitle="Suhail opened as a cutting room for the modest garment — a small workroom, and a long silhouette."
+        title="Named for a star."
+        subtitle="Suhail rises when the Gulf heat breaks. We opened as a cutting room for the modest garment: a small workroom, and a long silhouette."
         minHeight="tall"
         priority
       />
@@ -35,7 +35,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/workbench.jpg"
-            imageAlt="The cutting bench at Suhail: shears, chalk, and the house block."
+            imageAlt="The cutting bench at Suhail: shears, chalk, and the Suhail block."
             objectPosition="center 40%"
             imageOn="right"
           >
@@ -46,10 +46,10 @@ export function StoryPage() {
             <Body className="mt-6">
               The first ledger lists thobes, not customers. Two cutters, a standing
               arrangement with a mill, and a belief that a modest column of cloth is a
-              long conversation — not a season.
+              long conversation, not a season.
             </Body>
             <Body className="mt-4">
-              London is where the work is done. The house is not a country myth, and
+              London is where the work is done. Suhail is not a country myth, and
               not a window display. We remain a single address, a small workroom, and
               the same silhouette: ankle, shoulder, placket concealed.
             </Body>
@@ -102,14 +102,14 @@ export function StoryPage() {
                 <h3 className="font-display text-2xl font-light">The cutting room</h3>
                 <Body className="mt-3">
                   Upstairs, paper patterns for the Emirati thobe hang on a rail. New
-                  patterns are added. Old ones are not discarded. A house remembers
+                  patterns are added. Old ones are not discarded. Suhail remembers
                   through its paper.
                 </Body>
               </Reveal>
               <Reveal delay={140}>
                 <h3 className="font-display text-2xl font-light">The work today</h3>
                 <Body className="mt-3">
-                  We still cut five earthy thobes in small numbers. Ready-to-wear
+                  We still cut five thobes in small numbers. Ready-to-wear
                   follows the same patterns as commission work. The difference is only
                   time.
                 </Body>
@@ -124,7 +124,7 @@ export function StoryPage() {
           <QuoteBlock
             tone="dark"
             quote="A thobe is a piece of architecture you take with you."
-            attribution="House note"
+            attribution={site.note}
           />
         </Container>
       </Section>
@@ -133,7 +133,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/concealed-pocket.jpg"
-            imageAlt="The interior pocket of a Suhail thobe, the house label set by hand."
+            imageAlt="The interior pocket of a Suhail thobe, the Suhail label set by hand."
             objectPosition="center"
             imageOn="left"
           >

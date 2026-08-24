@@ -1,6 +1,7 @@
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { LookbookStrip } from '@/components/editorial/LookbookStrip'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { StitchArt } from '@/components/editorial/StitchArt'
 import { ProductGrid } from '@/components/product/ProductGrid'
@@ -15,19 +16,19 @@ import { usePageMeta } from '@/lib/usePageMeta'
 const lookbook = [
   {
     src: '/images/concealed-pocket.jpg',
-    alt: 'The interior of a Suhail thobe: the house label set by hand.',
+    alt: 'The interior of a Suhail thobe: the Suhail label set by hand.',
     caption: 'The unseen',
     objectPosition: 'center 62%',
   },
   {
     src: '/images/heritage-linen.jpg',
-    alt: 'Extra-long staple cotton in the piece, the sand cloth of the house.',
+    alt: 'Extra-long staple cotton in the piece, the sand cloth of Suhail.',
     caption: 'Cloth in the piece',
     objectPosition: '22% 50%',
   },
   {
     src: '/images/workbench.jpg',
-    alt: 'The cutting bench: shears, chalk, and paper for the house block.',
+    alt: 'The cutting bench: shears, chalk, and paper for the Suhail block.',
     caption: 'The bench',
     objectPosition: 'center 40%',
   },
@@ -35,9 +36,9 @@ const lookbook = [
 
 export function HomePage() {
   usePageMeta({
-    title: 'Suhail — الجُبَّة',
+    title: 'Suhail — سهيل',
     description:
-      'Suhail cuts the Emirati thobe in London: black, grey and beige, sizes 52 to 60, in premium cloth.',
+      'Suhail cuts Emirati thobes in London. Named for the winter star of the Gulf. Black, grey and beige, sizes 52 to 60.',
     path: '/',
     image: '/images/featured-overcoat.jpg',
   })
@@ -49,8 +50,8 @@ export function HomePage() {
         imageAlt="A charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
         objectPosition="68% 12%"
         kicker={`Established ${site.established} · ${site.city}`}
-        title="A column of cloth."
-        subtitle="Earthy Emirati thobes, cut slowly in London. Black, grey, beige. Sizes 52 to 60."
+        title="After the heat."
+        subtitle="Emirati thobes, cut in London. Black, grey, beige. For cooler air."
         priority
       >
         <div className="flex flex-wrap items-center gap-6">
@@ -67,9 +68,9 @@ export function HomePage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>The house</Eyebrow>
+              <Eyebrow>Suhail</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl lg:text-6xl">
-                Modest luxury,
+                A quieter season,
                 <br />
                 held by the stitch.
               </Display>
@@ -83,16 +84,15 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Lead>
-                Suhail is a London atelier of the Emirati thobe. Black,
-                charcoal, grey, beige and bone. Japanese cotton, Super 150s, extra-long
-                staple: cloth chosen to last.
+                Named for the winter star of the Gulf. We cut the Emirati thobe in
+                London: black, charcoal, grey, beige and bone. Cloth chosen to last.
               </Lead>
               <Body className="mt-6">
                 Nothing here is made for a campaign. A thobe should look as considered in
                 its tenth year as it did in its first. That is the only standard we keep.
               </Body>
               <div className="mt-8">
-                <TextLink to="/story">Our story</TextLink>
+                <TextLink to="/story">The story</TextLink>
               </div>
             </Reveal>
           </div>
@@ -103,7 +103,7 @@ export function HomePage() {
         <Container>
           <Reveal className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
             <div>
-              <Eyebrow>The house line</Eyebrow>
+              <Eyebrow>The line</Eyebrow>
               <Display className="mt-3 text-4xl md:text-5xl">Five thobes</Display>
             </div>
             <TextLink to="/collection">All of the collection</TextLink>
@@ -118,20 +118,14 @@ export function HomePage() {
             <Eyebrow>In the rooms</Eyebrow>
             <Display className="mt-3 text-4xl md:text-5xl">Garment, cloth, bench.</Display>
           </Reveal>
-          <div className="grid gap-2 md:grid-cols-3 md:gap-3">
-            {lookbook.map((plate, index) => (
-              <Reveal key={plate.caption} delay={index * 80}>
-                <ImageFrame
-                  src={plate.src}
-                  alt={plate.alt}
-                  objectPosition={plate.objectPosition}
-                  className="aspect-[3/4] w-full"
-                  caption={plate.caption}
-                />
-              </Reveal>
-            ))}
-          </div>
         </Container>
+        <LookbookStrip
+          plates={lookbook.map(({ src, alt, objectPosition }) => ({
+            src,
+            alt,
+            objectPosition,
+          }))}
+        />
       </Section>
 
       <Section>
@@ -167,7 +161,7 @@ export function HomePage() {
       <section className="relative min-h-[70svh] overflow-hidden">
         <ImageFrame
           src="/images/featured-overcoat.jpg"
-          alt="A charcoal Emirati thobe at rest: the house silhouette, a column of cloth."
+          alt="A charcoal Emirati thobe at rest: the Suhail silhouette, a column of cloth."
           className="absolute inset-0 h-full w-full"
           imgClassName="h-full w-full object-cover"
           objectPosition="center 58%"
@@ -177,7 +171,7 @@ export function HomePage() {
           <QuoteBlock
             tone="dark"
             quote="The modest garment is not empty. It is full of work you are not meant to see."
-            attribution="House note"
+            attribution={site.note}
           />
         </div>
       </section>
@@ -191,17 +185,17 @@ export function HomePage() {
               <Body className="mt-6">
                 The cutting room is a single address. Fittings are by appointment. We
                 do not keep a shop window. The work is the invitation: an Emirati
-                thobe, cloth chosen to outlive the season.
+                thobe, cut for the air after summer.
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/visit">Visit by appointment</Button>
-                <TextLink to="/story">Read our story</TextLink>
+                <TextLink to="/story">Read the story</TextLink>
               </div>
             </Reveal>
             <Reveal delay={120}>
               <ImageFrame
                 src="/images/workbench.jpg"
-                alt="The cutting bench at Suhail: shears, chalk, and the house block."
+                alt="The cutting bench at Suhail: shears, chalk, and the Suhail block."
                 className="aspect-[4/5] w-full"
                 objectPosition="center 40%"
                 caption="Mayfair. By appointment."

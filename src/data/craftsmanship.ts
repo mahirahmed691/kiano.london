@@ -43,9 +43,9 @@ export const processSteps: ProcessStep[] = [
     number: '02',
     title: 'Pattern',
     summary:
-      'Each thobe is cut from a house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
+      'Each thobe is cut from the Suhail block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
     image: '/images/workbench.jpg',
-    imageAlt: 'The cutting bench: paper, chalk and shears for the house block.',
+    imageAlt: 'The cutting bench: paper, chalk and shears for the Suhail block.',
   },
   {
     number: '03',
@@ -53,7 +53,7 @@ export const processSteps: ProcessStep[] = [
     summary:
       'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Suhail thobe is fused.',
     image: '/images/worsted-wool.jpg',
-    imageAlt: 'A needle on charcoal worsted — the stitch that holds a winter thobe.',
+    imageAlt: 'A needle on charcoal worsted: the stitch that holds a winter thobe.',
   },
   {
     number: '04',
@@ -162,7 +162,7 @@ export const detailSections: DetailSection[] = [
     title: 'The interior pocket',
     copy: [
       'A telephone, a pair of glasses, a folded letter. The pocket is bagged in the lining and set so it does not pull the cloth. You feel it. Nobody else should see it.',
-      'The house label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
+      'The Suhail label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
     ],
     image: '/images/concealed-pocket.jpg',
     imageAlt: 'The concealed interior pocket of a Suhail thobe.',
