@@ -2,6 +2,7 @@
   "expo": {
     "name": "Kiano London",
     "slug": "kiano-london",
+    "owner": "mahir93",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d1786b49-0e68-46d1-a5f7-37c57a92f025"
+      }
     }
   }
 }
