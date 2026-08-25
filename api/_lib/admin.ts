@@ -13,15 +13,21 @@ export function adminAllowlist() {
   return parseAdminEmails(process.env.ADMIN_EMAILS || process.env.VITE_ADMIN_EMAILS)
 }
 
-export async function requireAdmin(request: Request) {
+type AdminDenied = { ok: false; error: Response }
+type AdminOk = { ok: true; clerkUserId: string; email: string }
+
+export async function requireAdmin(request: Request): Promise<AdminOk | AdminDenied> {
   const clerkUserId = await clerkUserIdFrom(request)
   if (!clerkUserId) {
-    return { error: Response.json({ error: 'Sign in to open the ledger.' }, { status: 401 }) }
+    return {
+      ok: false,
+      error: Response.json({ error: 'Sign in to open the ledger.' }, { status: 401 }),
+    }
   }
 
   const allowed = adminAllowlist()
   if (allowed.length === 0) {
-    return { error: Response.json({ error: 'The ledger is closed.' }, { status: 403 }) }
+    return { ok: false, error: Response.json({ error: 'The ledger is closed.' }, { status: 403 }) }
   }
 
   let email = ''
@@ -49,8 +55,11 @@ export async function requireAdmin(request: Request) {
   }
 
   if (!email || !allowed.includes(email)) {
-    return { error: Response.json({ error: 'This ledger is not for this account.' }, { status: 403 }) }
+    return {
+      ok: false,
+      error: Response.json({ error: 'This ledger is not for this account.' }, { status: 403 }),
+    }
   }
 
-  return { clerkUserId, email }
+  return { ok: true, clerkUserId, email }
 }

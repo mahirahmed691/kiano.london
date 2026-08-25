@@ -9,9 +9,9 @@ function asCount(rows: { n?: string | number | bigint }[]) {
   return 0
 }
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<Response> {
   const gate = await requireAdmin(request)
-  if ('error' in gate) return gate.error
+  if (!gate.ok) return gate.error
 
   try {
     const sql = await withDb()
