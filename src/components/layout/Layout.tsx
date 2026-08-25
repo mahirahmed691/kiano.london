@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { CartDrawer } from '@/components/cart/CartDrawer'
+import { QuickAddDialog } from '@/components/product/QuickAddDialog'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { HouseNotices } from '@/components/notices/HouseNotices'
@@ -27,6 +28,7 @@ export function Layout() {
         <Outlet />
       </main>
       {quiet ? null : <Footer />}
+      <QuickAddDialog />
       <CartDrawer />
       <HouseNotices />
     </>

@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AppProviders } from '@/components/auth/AppProviders'
 import { Layout } from '@/components/layout/Layout'
 import { CartProvider } from '@/lib/cart'
+import { QuickAddProvider } from '@/lib/quickAdd'
 import { AccountPage } from '@/pages/AccountPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
@@ -25,28 +26,30 @@ export default function App() {
     <BrowserRouter>
       <AppProviders>
         <CartProvider>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/shop/:id" element={<ProductPage />} />
-              <Route path="/collection" element={<CollectionPage />} />
-              <Route path="/collection/:id" element={<ProductPage />} />
-              <Route path="/story" element={<StoryPage />} />
-              <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
-              <Route path="/craftsmanship-details" element={<CraftsmanshipDetailsPage />} />
-              <Route path="/visit" element={<VisitPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/cookies" element={<CookiesPage />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />
-              <Route path="/sign-in/*" element={<SignInPage />} />
-              <Route path="/sign-up/*" element={<SignUpPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
+          <QuickAddProvider>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/shop" element={<ShopPage />} />
+                <Route path="/shop/:id" element={<ProductPage />} />
+                <Route path="/collection" element={<CollectionPage />} />
+                <Route path="/collection/:id" element={<ProductPage />} />
+                <Route path="/story" element={<StoryPage />} />
+                <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
+                <Route path="/craftsmanship-details" element={<CraftsmanshipDetailsPage />} />
+                <Route path="/visit" element={<VisitPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/cookies" element={<CookiesPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />
+                <Route path="/sign-in/*" element={<SignInPage />} />
+                <Route path="/sign-up/*" element={<SignUpPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </QuickAddProvider>
         </CartProvider>
       </AppProviders>
     </BrowserRouter>
