@@ -31,7 +31,7 @@ export function VisitPage() {
     description:
       'Appointments at the Kiano London atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
     path: '/visit',
-    image: '/images/workbench.jpg',
+      image: '/images/obsidian.jpg',
   })
 
   return (
@@ -56,8 +56,8 @@ export function VisitPage() {
 
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
-          src="/images/workbench.jpg"
-          alt="The cutting bench at Kiano London: shears, chalk, and cloth in progress."
+          src="/images/obsidian.jpg"
+          alt="A black thobe at the window in London: the house silhouette."
           className="object-[center_40%]"
           loading="eager"
           decoding="async"
@@ -134,10 +134,10 @@ export function VisitPage() {
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
               <ImageFrame
-                src="/images/heritage-linen.jpg"
-                alt="Extra-long staple cotton in the piece, shown on the table before it is cut."
+                src="/images/jubbah-sand-02.jpg"
+                alt="The sand jubbah at rest, shown before it is cut from the house block."
                 className="aspect-[4/5] w-full"
-                caption="Cloth is shown on the table, in daylight."
+                caption="Cloth is shown in daylight."
               />
             </Reveal>
           </div>

@@ -14,14 +14,14 @@ export function CraftsmanshipDetailsPage() {
     description:
       'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a thobe is built.',
     path: '/craftsmanship-details',
-    image: '/images/heritage-linen.jpg',
+      image: '/images/stitch-felled.jpg',
   })
 
   return (
     <>
       <Hero
-        image="/images/heritage-linen.jpg"
-        imageAlt="The face of flax linen, where a seam has been felled out of sight."
+        image="/images/stitch-felled.jpg"
+        imageAlt="A felled seam at close range: the allowance enclosed, the face a single plane."
         objectPosition="center"
         kicker="Craftsmanship · Details"
         title="What the cloth conceals."

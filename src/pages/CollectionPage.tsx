@@ -30,7 +30,7 @@ export function CollectionPage() {
     description:
               'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, cut in London.',
     path: '/collection',
-    image: '/images/heritage-linen.jpg',
+      image: '/images/jubbah-sand-02.jpg',
   })
 
   return (
@@ -55,9 +55,9 @@ export function CollectionPage() {
 
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
-          src="/images/heritage-linen.jpg"
-          alt="Sand-beige extra-long staple cotton, the cloth of Raml."
-          className="object-[22%_center]"
+          src="/images/jubbah-sand-02.jpg"
+          alt="The sand jubbah at rest, the cloth of the daylight thobe."
+          className="object-[center_28%]"
           loading="eager"
           decoding="async"
         />
@@ -119,13 +119,13 @@ export function CollectionPage() {
               objectPosition: 'center 62%',
             },
             {
-              src: '/images/heritage-linen.jpg',
-              alt: 'Sand-beige extra-long staple cotton in the piece.',
-              objectPosition: '22% 50%',
+              src: '/images/jubbah-sand-02.jpg',
+              alt: 'The sand jubbah at rest: extra-long staple, hem to the ankle.',
+              objectPosition: 'center 28%',
             },
             {
-              src: '/images/workbench.jpg',
-              alt: 'The cutting bench: shears, chalk, and the house block.',
+              src: '/images/obsidian.jpg',
+              alt: 'A black thobe at the window: the house silhouette, cut in London.',
               objectPosition: 'center 40%',
             },
           ]}

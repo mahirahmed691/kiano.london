@@ -36,16 +36,16 @@ export const processSteps: ProcessStep[] = [
     title: 'Cloth',
     summary:
       'Japanese compact cotton, Super 150s wool-cotton, extra-long staple Giza. Weight and handle are chosen in the piece. An Emirati thobe lives or dies by the drape.',
-    image: '/images/heritage-linen.jpg',
-    imageAlt: 'Heritage linen in the piece, before it is chalked and cut.',
+    image: '/images/jubbah-sand-02.jpg',
+    imageAlt: 'The sand jubbah at rest, the cloth to the ankle, before it is chalked and cut.',
   },
   {
     number: '02',
     title: 'Pattern',
     summary:
       'Each thobe is cut from the house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
-    image: '/images/workbench.jpg',
-    imageAlt: 'The cutting bench: paper, chalk and shears for the house block.',
+    image: '/images/obsidian.jpg',
+    imageAlt: 'The house silhouette at the window: a black column, cut in London.',
   },
   {
     number: '03',
@@ -60,8 +60,8 @@ export const processSteps: ProcessStep[] = [
     title: 'Finish',
     summary:
       'Concealed plackets, horn buttons, three labels set by hand. The woven mark at the nape, the size beside it, care at the side seam. The last press is as considered as the first cut. The garment should look finished from the inside.',
-    image: '/images/fastenings.jpg',
-    imageAlt: 'Integrated fastenings at the finish of a thobe placket.',
+    image: '/images/stitch-buttonhole.jpg',
+    imageAlt: 'A silk-twist buttonhole at the finish of a thobe placket.',
   },
 ]
 
@@ -128,7 +128,7 @@ export const detailSections: DetailSection[] = [
       'A machine overlock is a shortcut. A side seam here is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
       'It takes longer. It also means the garment can be washed, pressed and worn for years without the seam opening or the edge fraying. The line down the body stays a single plane of cloth.',
     ],
-    image: '/images/heritage-linen.jpg',
+    image: '/images/stitch-felled.jpg',
     imageAlt: 'Cloth at close range, where the seam has been worked out of sight.',
     imagePosition: 'right',
   },
@@ -152,8 +152,8 @@ export const detailSections: DetailSection[] = [
       'Buttons sit inside the placket, not on it. From a few paces the thobe reads as a single column of cloth. The closures are horn, the buttonholes worked in silk, the bartack set by the same hand that cut the first hole.',
       'It is the modest line: nothing announced, everything in place.',
     ],
-    image: '/images/fastenings.jpg',
-    imageAlt: 'Concealed fastenings integrated into the thobe placket.',
+    image: '/images/stitch-buttonhole.jpg',
+    imageAlt: 'A silk-twist buttonhole set into the placket, never sitting on it.',
     imagePosition: 'right',
   },
   {

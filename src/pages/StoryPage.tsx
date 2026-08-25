@@ -34,8 +34,8 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/workbench.jpg"
-            imageAlt="The cutting bench: shears, chalk, and the house block."
+            image="/images/obsidian.jpg"
+            imageAlt="A black thobe at the window: London beyond the glass."
             objectPosition="center 40%"
             imageOn="right"
           >
@@ -63,17 +63,17 @@ export function StoryPage() {
           <div className="grid gap-6 md:grid-cols-12">
             <Reveal className="md:col-span-7">
               <ImageFrame
-                src="/images/heritage-linen.jpg"
-                alt="Extra-long staple cotton in the piece, before it is chalked and cut."
+                src="/images/jubbah-sand-02.jpg"
+                alt="The sand jubbah at rest, the cloth to the ankle."
                 className="aspect-[4/3] w-full md:aspect-[16/10]"
-                objectPosition="center"
+                objectPosition="center 28%"
                 caption="Cloth"
               />
             </Reveal>
             <Reveal delay={100} className="md:col-span-5 md:pt-16">
               <ImageFrame
-                src="/images/workbench.jpg"
-                alt="The cutting bench: paper patterns, shears, and cloth in the work."
+                src="/images/obsidian.jpg"
+                alt="A black thobe at the window: the workroom, and the city."
                 className="aspect-[3/4] w-full"
                 objectPosition="center 40%"
                 caption="The workroom"

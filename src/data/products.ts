@@ -70,9 +70,8 @@ export const products: Product[] = [
         objectPosition: 'center 62%',
       },
       {
-        src: '/images/fastenings.jpg',
-        alt: 'A concealed placket, the fastenings of the Layl thobe.',
-        objectPosition: 'center 45%',
+        src: '/images/stitch-buttonhole.jpg',
+        alt: 'A silk-twist buttonhole on dark cloth, the placket of the Layl thobe.',
       },
       {
         src: '/images/worsted-wool.jpg',
@@ -132,9 +131,9 @@ export const products: Product[] = [
     mill: 'Albini compact cotton',
     price: '£60',
     pricePence: 6000,
-    image: '/images/fabric-detail.png',
-    imageAlt: 'Earth-grey compact cotton, the cloth of the Ghabār thobe.',
-    objectPosition: '18% 42%',
+    image: '/images/jubbah-charcoal-cloth.jpg',
+    imageAlt: 'The Ghabār thobe: earth grey, a standing collar, the cloth held close.',
+    objectPosition: 'center 20%',
     featured: true,
     description:
       'Ghabār is earth grey: Albini compact cotton, dense without stiffness, named for dust rather than a season. It is the thobe that reads as colour only when you stand beside black.',
@@ -149,14 +148,13 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
-        src: '/images/fabric-detail.png',
-        alt: 'Earth-grey compact cotton, the face of the Ghabār thobe.',
-        objectPosition: '18% 42%',
+        src: '/images/jubbah-charcoal-cloth.jpg',
+        alt: 'The Ghabār thobe at the collar: earth grey, the placket concealed.',
+        objectPosition: 'center 20%',
       },
       {
-        src: '/images/fastenings.jpg',
-        alt: 'Integrated fastenings set into the placket, never sitting on it.',
-        objectPosition: 'center 45%',
+        src: '/images/stitch-buttonhole.jpg',
+        alt: 'A silk-twist buttonhole, the fastening set into the cloth.',
       },
       {
         src: '/images/worsted-wool.jpg',
@@ -174,9 +172,9 @@ export const products: Product[] = [
     mill: 'Giza 86, washed for drape',
     price: '£65',
     pricePence: 6500,
-    image: '/images/heritage-linen.jpg',
-    imageAlt: 'Sand-beige extra-long staple cotton, the cloth of the Raml thobe.',
-    objectPosition: '22% 50%',
+    image: '/images/jubbah-sand-02.jpg',
+    imageAlt: 'The Raml thobe at rest: sand extra-long staple, the cloth to the ankle.',
+    objectPosition: 'center 28%',
     description:
       'Raml is sand. Extra-long staple Giza 86, washed so the fibre drapes rather than stands. It is the daylight thobe: pale, dry, named for the ground it resembles.',
     details: [
@@ -190,13 +188,13 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
-        src: '/images/heritage-linen.jpg',
-        alt: 'Sand-beige extra-long staple cotton in the piece, the cloth of Raml.',
-        objectPosition: '22% 50%',
+        src: '/images/jubbah-sand-02.jpg',
+        alt: 'Sand extra-long staple cotton, the Raml thobe draped to the ankle.',
+        objectPosition: 'center 28%',
       },
       {
-        src: '/images/workbench.jpg',
-        alt: 'The cutting bench: shears, chalk, and paper for the house block.',
+        src: '/images/obsidian.jpg',
+        alt: 'A black column at the window: the house silhouette, cut in London.',
       },
       {
         src: '/images/concealed-pocket.jpg',
@@ -215,9 +213,9 @@ export const products: Product[] = [
     mill: 'Como cotton-silk',
     price: '£80',
     pricePence: 8000,
-    image: '/images/fastenings.jpg',
-    imageAlt: 'Bone cotton-silk at the placket of the Hajar thobe, fastenings concealed.',
-    objectPosition: 'center 45%',
+    image: '/images/concealed-pocket.jpg',
+    imageAlt: 'The interior of the Hajar thobe: the woven Kiano label, set by hand.',
+    objectPosition: 'center 62%',
     description:
       'Hajar is bone: Como cotton-silk, washed, a cooler handle than Raml and a quieter light. The placket is the same concealed work as the rest of the line. The cloth is the distinction.',
     details: [
@@ -231,19 +229,18 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
-        src: '/images/fastenings.jpg',
-        alt: 'Bone cotton-silk at the placket of the Hajar thobe.',
-        objectPosition: 'center 45%',
-      },
-      {
-        src: '/images/heritage-linen.jpg',
-        alt: 'Pale cloth in the piece, before it is chalked for the house block.',
-        objectPosition: '22% 50%',
-      },
-      {
         src: '/images/concealed-pocket.jpg',
         alt: 'The interior of the Hajar thobe: pocket, lining, the woven label.',
         objectPosition: 'center 62%',
+      },
+      {
+        src: '/images/jubbah-sand-02.jpg',
+        alt: 'Pale cloth at full length, the daylight column of the house block.',
+        objectPosition: 'center 28%',
+      },
+      {
+        src: '/images/stitch-buttonhole.jpg',
+        alt: 'A silk-twist buttonhole: the fastening disappears until the hand finds it.',
       },
     ],
   },
@@ -328,7 +325,7 @@ export const products: Product[] = [
         alt: 'The sand jubbah at rest: the cloth draped to the ankle.',
       },
       {
-        src: '/images/heritage-linen.jpg',
+        src: '/images/worsted-wool.jpg',
         alt: 'Sand extra-long staple cotton in the piece.',
         objectPosition: '22% 50%',
       },

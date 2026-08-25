@@ -110,8 +110,8 @@ export function ShopPage() {
               alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
             },
             {
-              src: '/images/workbench.jpg',
-              alt: 'The cutting bench: shears, chalk, and the house block.',
+              src: '/images/obsidian.jpg',
+              alt: 'A black thobe at the window: the house silhouette, cut in London.',
               objectPosition: 'center 40%',
             },
             {

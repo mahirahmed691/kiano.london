@@ -21,15 +21,15 @@ const lookbook = [
     objectPosition: 'center 62%',
   },
   {
-    src: '/images/heritage-linen.jpg',
-    alt: 'Extra-long staple cotton in the piece, the sand cloth of Raml.',
+    src: '/images/jubbah-sand-02.jpg',
+    alt: 'The sand jubbah at rest: extra-long staple, the cloth to the ankle.',
     caption: 'Cloth in the piece',
-    objectPosition: '22% 50%',
+    objectPosition: 'center 28%',
   },
   {
-    src: '/images/workbench.jpg',
-    alt: 'The cutting bench: shears, chalk, and paper for the house block.',
-    caption: 'The bench',
+    src: '/images/obsidian.jpg',
+    alt: 'A black thobe at the window: London beyond the glass.',
+    caption: 'The rooms',
     objectPosition: 'center 40%',
   },
 ]
@@ -204,8 +204,8 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120}>
               <ImageFrame
-                src="/images/workbench.jpg"
-                alt="The cutting bench: shears, chalk, and the house block."
+                src="/images/obsidian.jpg"
+                alt="A black thobe at the window: the house silhouette, cut in London."
                 className="aspect-[4/5] w-full"
                 objectPosition="center 40%"
                 caption="Mayfair. By appointment."
