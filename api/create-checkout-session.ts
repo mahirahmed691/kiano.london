@@ -1,5 +1,7 @@
 import Stripe from 'stripe'
+import { shippingCountryCodes } from '../src/data/shipping.ts'
 import { getProduct, thobeSizes } from '../src/data/products.ts'
+import { parseCheckoutDetails, type CheckoutDetails } from '../src/lib/checkout.ts'
 
 type BasketItem = {
   productId: string
@@ -8,8 +10,44 @@ type BasketItem = {
 }
 
 function originFrom(request: Request) {
-  const url = new URL(request.url)
-  return process.env.SITE_URL?.replace(/\/$/, '') ?? url.origin
+  const fromHeader = request.headers.get('origin')?.replace(/\/$/, '')
+  if (fromHeader) return fromHeader
+  const configured = process.env.SITE_URL?.replace(/\/$/, '')
+  if (configured) return configured
+  return new URL(request.url).origin
+}
+
+function stripeAddress(details: CheckoutDetails) {
+  return {
+    line1: details.line1,
+    line2: details.line2 || undefined,
+    city: details.city,
+    state: details.region || undefined,
+    postal_code: details.postalCode,
+    country: details.country,
+  }
+}
+
+async function upsertCustomer(stripe: Stripe, details: CheckoutDetails) {
+  const existing = await stripe.customers.list({ email: details.email, limit: 1 })
+  const payload: Stripe.CustomerCreateParams = {
+    name: details.name,
+    email: details.email,
+    phone: details.telephone,
+    address: stripeAddress(details),
+    shipping: {
+      name: details.name,
+      phone: details.telephone,
+      address: stripeAddress(details),
+    },
+    metadata: details.note ? { note: details.note } : undefined,
+  }
+
+  if (existing.data[0]) {
+    return stripe.customers.update(existing.data[0].id, payload)
+  }
+
+  return stripe.customers.create(payload)
 }
 
 export async function POST(request: Request) {
@@ -21,20 +59,28 @@ export async function POST(request: Request) {
     )
   }
 
-  let body: { items?: BasketItem[] }
+  let body: { items?: BasketItem[]; details?: unknown }
   try {
-    body = (await request.json()) as { items?: BasketItem[] }
+    body = (await request.json()) as { items?: BasketItem[]; details?: unknown }
   } catch {
     return Response.json({ error: 'The bag could not be read.' }, { status: 400 })
   }
+
+  const parsed = parseCheckoutDetails(body.details)
+  if ('error' in parsed) {
+    return Response.json({ error: parsed.error }, { status: 400 })
+  }
+  const details = parsed.details
 
   const items = body.items ?? []
   if (items.length === 0) {
     return Response.json({ error: 'The bag is empty.' }, { status: 400 })
   }
 
+  const origin = originFrom(request)
   const allowed = new Set<number>(thobeSizes)
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = []
+  const summary: string[] = []
 
   for (const item of items) {
     const product = getProduct(item.productId)
@@ -43,32 +89,46 @@ export async function POST(request: Request) {
     if (!product || quantity < 1 || !allowed.has(size)) {
       return Response.json({ error: 'A line in the bag is not valid.' }, { status: 400 })
     }
+
+    const name = `${product.name}${product.cut === 'Jubbah' ? ` · ${product.colour}` : ''} · ${size}`
+    summary.push(`${name} × ${quantity}`)
+
+    const imageUrl = origin.startsWith('https') ? `${origin}${product.image}` : undefined
+
     lineItems.push({
       quantity,
       price_data: {
         currency: 'gbp',
         unit_amount: product.pricePence,
         product_data: {
-          name: `${product.name}${product.cut === 'Jubbah' ? ` · ${product.colour}` : ''} · ${size}`,
+          name,
           description: `${product.colour}. ${product.cloth}. Made to order in London.`,
+          ...(imageUrl ? { images: [imageUrl] } : {}),
         },
       },
     })
   }
 
-  const origin = originFrom(request)
   const stripe = new Stripe(secret)
 
   try {
+    const customer = await upsertCustomer(stripe, details)
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
+      customer: customer.id,
+      customer_update: {
+        address: 'auto',
+        name: 'auto',
+        shipping: 'auto',
+      },
       line_items: lineItems,
       success_url: `${origin}/order/confirmed?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/checkout`,
+      cancel_url: `${origin}/checkout?cancelled=1`,
+      locale: 'en-GB',
       billing_address_collection: 'required',
       phone_number_collection: { enabled: true },
       shipping_address_collection: {
-        allowed_countries: ['GB', 'AE', 'SA', 'KW', 'QA', 'BH', 'OM', 'US', 'FR', 'DE', 'IT'],
+        allowed_countries: [...shippingCountryCodes],
       },
       shipping_options: [
         {
@@ -83,8 +143,30 @@ export async function POST(request: Request) {
           },
         },
       ],
+      invoice_creation: { enabled: true },
       allow_promotion_codes: true,
       integration_identifier: 'kiano_bag_xhwpqelm',
+      custom_text: {
+        submit: {
+          message: 'Payment reserves the cut. Cloth is cut in four to eight weeks.',
+        },
+        shipping_address: {
+          message: 'Confirm where the finished piece should be sent.',
+        },
+      },
+      metadata: {
+        name: details.name,
+        email: details.email,
+        telephone: details.telephone,
+        note: details.note,
+        country: details.country,
+      },
+      payment_intent_data: {
+        description: `Kiano London. ${summary.join('; ')}`.slice(0, 1000),
+        metadata: {
+          note: details.note,
+        },
+      },
     })
 
     if (!session.url) {
