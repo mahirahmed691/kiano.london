@@ -1,5 +1,8 @@
 {
   "rewrites": [
+    { "source": "/api/admin-summary", "destination": "/api/admin?section=summary" },
+    { "source": "/api/admin-inventory", "destination": "/api/admin?section=inventory" },
+    { "source": "/api/admin-competitors", "destination": "/api/admin?section=competitors" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

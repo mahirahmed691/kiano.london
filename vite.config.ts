@@ -50,28 +50,38 @@ const routes: Route[] = [
   },
   {
     method: 'GET',
+    path: '/api/admin',
+    load: async () => (await import('./api/admin.ts')).GET,
+  },
+  {
+    method: 'POST',
+    path: '/api/admin',
+    load: async () => (await import('./api/admin.ts')).POST,
+  },
+  {
+    method: 'GET',
     path: '/api/admin-summary',
-    load: async () => (await import('./api/admin-summary.ts')).GET,
+    load: async () => (await import('./api/admin.ts')).GET,
   },
   {
     method: 'GET',
     path: '/api/admin-inventory',
-    load: async () => (await import('./api/admin-inventory.ts')).GET,
+    load: async () => (await import('./api/admin.ts')).GET,
   },
   {
     method: 'POST',
     path: '/api/admin-inventory',
-    load: async () => (await import('./api/admin-inventory.ts')).POST,
+    load: async () => (await import('./api/admin.ts')).POST,
   },
   {
     method: 'GET',
     path: '/api/admin-competitors',
-    load: async () => (await import('./api/admin-competitors.ts')).GET,
+    load: async () => (await import('./api/admin.ts')).GET,
   },
   {
     method: 'POST',
     path: '/api/admin-competitors',
-    load: async () => (await import('./api/admin-competitors.ts')).POST,
+    load: async () => (await import('./api/admin.ts')).POST,
   },
   {
     method: 'POST',
