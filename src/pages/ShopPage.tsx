@@ -26,9 +26,9 @@ export function ShopPage() {
   )
 
   usePageMeta({
-    title: 'Shop — Suhail',
+    title: 'Shop — Kiano London',
     description:
-      'The Suhail jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, cut in London.',
+      'The jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, cut in London.',
     path: '/shop',
     image: '/images/jubbah-sand.jpg',
   })
@@ -47,7 +47,7 @@ export function ShopPage() {
             </p>
             <Body className="mt-6 max-w-xl">
               The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52
-              to 60. Cut in London from the Suhail block.
+              to 60. Cut in London from the house block.
             </Body>
           </Reveal>
         </Container>

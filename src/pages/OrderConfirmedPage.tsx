@@ -9,8 +9,8 @@ export function OrderConfirmedPage() {
   const { clear } = useCart()
 
   usePageMeta({
-    title: 'The cut is reserved — Suhail',
-    description: 'Your Suhail thobe is reserved. Cut in London, four to eight weeks.',
+    title: 'The cut is reserved — Kiano London',
+    description: 'Your piece is reserved. Cut in London, four to eight weeks.',
     path: '/order/confirmed',
   })
 
@@ -26,7 +26,7 @@ export function OrderConfirmedPage() {
           The cut is reserved.
         </Display>
         <Body className="mt-8">
-          Payment is held. Cloth will be cut from the Suhail block in four to eight weeks.
+          Payment is held. Cloth will be cut from the house block in four to eight weeks.
           A note will follow if a fitting is needed before it leaves the workroom.
         </Body>
         <div className="mt-12 flex flex-wrap items-center gap-6">

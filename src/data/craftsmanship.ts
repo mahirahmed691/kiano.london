@@ -43,15 +43,15 @@ export const processSteps: ProcessStep[] = [
     number: '02',
     title: 'Pattern',
     summary:
-      'Each thobe is cut from the Suhail block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
+      'Each thobe is cut from the house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
     image: '/images/workbench.jpg',
-    imageAlt: 'The cutting bench: paper, chalk and shears for the Suhail block.',
+    imageAlt: 'The cutting bench: paper, chalk and shears for the house block.',
   },
   {
     number: '03',
     title: 'Stitch',
     summary:
-      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a Suhail thobe is fused.',
+      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a thobe is fused.',
     image: '/images/worsted-wool.jpg',
     imageAlt: 'A needle on charcoal worsted: the stitch that holds a winter thobe.',
   },
@@ -69,17 +69,17 @@ export const materials: Material[] = [
   {
     name: 'Japanese compact cotton',
     origin: 'Shizuoka',
-    copy: 'For the black and grey thobes. Dense, matte, a high-count two-ply that holds a clean column without stiffness.',
+    copy: 'For Layl and Ghabār. Dense, matte, a high-count two-ply that holds a clean column without stiffness.',
   },
   {
     name: 'Super 150s wool-cotton',
     origin: 'Huddersfield',
-    copy: 'For charcoal. Compact, resilient, a memory in the fibre so the Emirati silhouette stays architectural.',
+    copy: 'For Hadīd, and the charcoal jubbah. Compact, resilient, a memory in the fibre so the silhouette stays architectural.',
   },
   {
     name: 'Extra-long staple cotton',
     origin: 'Giza',
-    copy: 'For beige and bone. Long fibre, a quiet sheen, washed so the thobe drapes rather than stands.',
+    copy: 'For Raml, and the sand jubbah. Long fibre, a quiet sheen, washed so the cloth drapes rather than stands.',
   },
   {
     name: 'Silk twist & horn',
@@ -125,7 +125,7 @@ export const detailSections: DetailSection[] = [
     kicker: '01 — The seam',
     title: 'The felled seam',
     copy: [
-      'A machine overlock is a shortcut. A Suhail side seam is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
+      'A machine overlock is a shortcut. A side seam here is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
       'It takes longer. It also means the garment can be washed, pressed and worn for years without the seam opening or the edge fraying. The line down the body stays a single plane of cloth.',
     ],
     image: '/images/heritage-linen.jpg',
@@ -162,10 +162,10 @@ export const detailSections: DetailSection[] = [
     title: 'The interior pocket',
     copy: [
       'A telephone, a pair of glasses, a folded letter. The pocket is bagged in the lining and set so it does not pull the cloth. You feel it. Nobody else should see it.',
-      'The Suhail label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
+      'The label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
     ],
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The concealed interior pocket of a Suhail thobe.',
+    imageAlt: 'The concealed interior pocket of the Layl thobe.',
     imagePosition: 'left',
   },
 ]

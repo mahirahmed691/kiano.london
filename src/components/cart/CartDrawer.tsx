@@ -44,7 +44,7 @@ export function CartDrawer() {
           <div className="flex flex-1 flex-col justify-center px-8">
             <p className="font-display text-3xl font-light">The bag is empty.</p>
             <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-              A thobe is cut when you ask for it. Choose a cloth and a size, then return here.
+              A piece is cut when you ask for it. Choose a cloth and a size, then return here.
             </p>
             <div className="mt-8">
               <Button to="/shop" onClick={() => setOpen(false)}>

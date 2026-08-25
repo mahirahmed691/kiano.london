@@ -36,7 +36,7 @@ export function ProductPage() {
   const variants = useMemo(() => (product ? colourVariants(product) : []), [product])
 
   usePageMeta({
-    title: product ? `${product.name} — Suhail` : 'Suhail',
+    title: product ? `${product.name} — Kiano London` : 'Kiano London',
     description: product
       ? `${product.name}: ${product.colour.toLowerCase()} Emirati ${product.cut.toLowerCase()} in ${product.cloth.toLowerCase()}. Cut in London, sizes 52 to 60.`
       : 'This piece is not in the collection.',
@@ -224,7 +224,7 @@ export function ProductPage() {
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
               <Eyebrow>Sizes 52–60</Eyebrow>
-              <Display className="mt-4 text-4xl">The Suhail block.</Display>
+              <Display className="mt-4 text-4xl">The house block.</Display>
               <SizeGuide className="mt-8" />
             </Reveal>
           </div>

@@ -1,5 +1,5 @@
 export const SITE_URL =
-  import.meta.env.VITE_SITE_URL?.replace(/\/$/, '') ?? 'https://www.suhail.london'
+  import.meta.env.VITE_SITE_URL?.replace(/\/$/, '') ?? 'https://www.kiano.london'
 
 export type PageMeta = {
   title: string

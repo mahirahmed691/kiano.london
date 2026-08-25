@@ -5,8 +5,8 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function NotFoundPage() {
   usePageMeta({
-    title: 'Page not found — Suhail',
-    description: 'This page does not exist on the Suhail website.',
+    title: 'Page not found — Kiano London',
+    description: 'This page does not exist on the Kiano London website.',
     path: '/404',
   })
 
@@ -17,7 +17,7 @@ export function NotFoundPage() {
         <Display as="h1" className="mt-4 text-5xl md:text-6xl">
           This room is empty.
         </Display>
-        <Body className="mt-6">The page you asked for is not under Suhail.</Body>
+        <Body className="mt-6">The page you asked for is not under Kiano London.</Body>
         <Link
           to="/"
           className="mt-10 inline-flex text-[11px] uppercase tracking-[0.22em] underline underline-offset-4"

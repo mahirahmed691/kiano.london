@@ -47,28 +47,28 @@ export const products: Product[] = [
     price: '£980',
     pricePence: 98000,
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The interior of a black Emirati thobe, the Suhail label set by hand.',
+    imageAlt: 'The interior of the Layl thobe, the woven label set by hand.',
     objectPosition: 'center 62%',
     featured: true,
     description:
-      'Layl is the black column. Compact Japanese cotton, matte so it does not shine under evening light, cut from the Suhail block with a band collar and a placket that closes out of sight.',
+      'Layl is the black column. Compact Japanese cotton, matte so it does not shine under evening light, cut from the house block with a band collar and a placket that closes out of sight.',
     details: [
       'Band collar, pad-stitched by hand so the neck holds after a day’s wear.',
       'Concealed placket; horn buttons sit inside the cloth.',
       'Felled side seams. Interior pocket bagged in the lining.',
-      'The Suhail label is woven and set at the nape by hand.',
+      'A woven label is set at the nape by hand.',
     ],
     composition: '100% compact Japanese cotton, 80s two-ply. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of the Layl thobe, the Suhail label set by hand.',
+        alt: 'The interior of the Layl thobe, the woven label set by hand.',
         objectPosition: 'center 62%',
       },
       {
         src: '/images/fastenings.jpg',
-        alt: 'A concealed placket, the fastenings of a Suhail thobe.',
+        alt: 'A concealed placket, the fastenings of the Layl thobe.',
         objectPosition: 'center 45%',
       },
       {
@@ -97,7 +97,7 @@ export const products: Product[] = [
       'Standing collar, pad-stitched through the stand.',
       'Super 150s wool-cotton from Huddersfield; compact, resilient, a quiet handle.',
       'Concealed placket. Side seams felled, never overlocked.',
-      'Hem set to the ankle of the Suhail block. Interior pocket unseen from the face.',
+      'Hem set to the ankle of the house block. Interior pocket unseen from the face.',
     ],
     composition: 'Wool-cotton Super 150s, Huddersfield. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
@@ -109,11 +109,11 @@ export const products: Product[] = [
       },
       {
         src: '/images/worsted-wool.jpg',
-        alt: 'Charcoal Super 150s and a needle, the winter cloth of Suhail.',
+        alt: 'Charcoal Super 150s and a needle, the winter cloth of Hadīd.',
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior pocket of a Suhail thobe, bagged so it does not pull the cloth.',
+        alt: 'The interior pocket of the Hadīd thobe, bagged so it does not pull the cloth.',
         objectPosition: 'center 62%',
       },
     ],
@@ -137,7 +137,7 @@ export const products: Product[] = [
     details: [
       'Albini compact cotton, earth grey, a high-count two-ply.',
       'Band collar. Concealed placket. Felled seams.',
-      'Cut from the same Suhail block as Layl; the difference is only the cloth.',
+      'Cut from the same house block as Layl; the difference is only the cloth.',
       'Washed once before it leaves the workroom so the drape is already itself.',
     ],
     composition: '100% Italian compact cotton, Albini. Silk-twist buttonholes. Buffalo horn.',
@@ -190,7 +190,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/workbench.jpg',
-        alt: 'The cutting bench: shears, chalk, and paper for the Suhail block.',
+        alt: 'The cutting bench: shears, chalk, and paper for the house block.',
       },
       {
         src: '/images/concealed-pocket.jpg',
@@ -230,12 +230,12 @@ export const products: Product[] = [
       },
       {
         src: '/images/heritage-linen.jpg',
-        alt: 'Pale cloth in the piece, before it is chalked for the Suhail block.',
+        alt: 'Pale cloth in the piece, before it is chalked for the house block.',
         objectPosition: '22% 50%',
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of a Suhail thobe: pocket, lining, the Suhail label.',
+        alt: 'The interior of the Hajar thobe: pocket, lining, the woven label.',
         objectPosition: 'center 62%',
       },
     ],
@@ -257,12 +257,12 @@ export const products: Product[] = [
     objectPosition: 'center 12%',
     featured: true,
     description:
-      'The jubbah in black: compact Japanese cotton, a modest column with more air through the chest than the thobe. Band collar, concealed placket, hem to the ankle. Cut from the Suhail block in five sizes.',
+      'The jubbah in black: compact Japanese cotton, a modest column with more air through the chest than the thobe. Band collar, concealed placket, hem to the ankle. Cut from the house block in five sizes.',
     details: [
       'The outer garment. Worn alone, or over a thobe.',
       'Band collar, pad-stitched by hand. Concealed placket.',
       'Felled side seams. Interior pocket bagged in the lining.',
-      'The Suhail label is woven and set at the nape by hand.',
+      'A woven label is set at the nape by hand.',
     ],
     composition: '100% compact Japanese cotton, 80s two-ply. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
@@ -278,7 +278,7 @@ export const products: Product[] = [
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of a Suhail garment, the Suhail label set by hand.',
+        alt: 'The interior of the jubbah, the woven label set by hand.',
         objectPosition: 'center 62%',
       },
     ],
@@ -343,12 +343,12 @@ export const products: Product[] = [
     objectPosition: 'center 10%',
     featured: true,
     description:
-      'The jubbah in charcoal: Huddersfield Super 150s wool-cotton, a winter handle. The silhouette stays architectural. Same Suhail block as black and sand, sizes 52 to 60.',
+      'The jubbah in charcoal: Huddersfield Super 150s wool-cotton, a winter handle. The silhouette stays architectural. Same house block as black and sand, sizes 52 to 60.',
     details: [
       'The outer garment. Worn alone, or over a thobe.',
       'Super 150s wool-cotton from Huddersfield; compact, resilient.',
       'Concealed placket. Side seams felled, never overlocked.',
-      'Hem set to the ankle of the Suhail block.',
+      'Hem set to the ankle of the house block.',
     ],
     composition: 'Wool-cotton Super 150s, Huddersfield. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',

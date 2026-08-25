@@ -11,9 +11,9 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function StoryPage() {
   usePageMeta({
-    title: 'Story — Suhail',
+    title: 'Story — Kiano London',
     description:
-      'Named for the winter star of the Gulf. A London atelier of the Emirati thobe, opened as a cutting room for the modest garment.',
+      'A London atelier of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar, cut in London.',
     path: '/story',
     image: '/images/featured-overcoat.jpg',
   })
@@ -22,11 +22,11 @@ export function StoryPage() {
     <>
       <Hero
         image="/images/featured-overcoat.jpg"
-        imageAlt="A charcoal Emirati thobe, the Suhail silhouette, worn at full length."
+        imageAlt="Hadīd: a charcoal Emirati thobe, worn at full length."
         objectPosition="center 62%"
         kicker={`Est. ${site.established}`}
-        title="Named for a star."
-        subtitle="Suhail rises when the Gulf heat breaks. We opened as a cutting room for the modest garment: a small workroom, and a long silhouette."
+        title="Cut in London."
+        subtitle="Kiano opened as a cutting room for the modest garment: a small workroom, and a long silhouette."
         minHeight="tall"
         priority
       />
@@ -35,7 +35,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/workbench.jpg"
-            imageAlt="The cutting bench at Suhail: shears, chalk, and the Suhail block."
+            imageAlt="The cutting bench: shears, chalk, and the house block."
             objectPosition="center 40%"
             imageOn="right"
           >
@@ -49,7 +49,7 @@ export function StoryPage() {
               long conversation, not a season.
             </Body>
             <Body className="mt-4">
-              London is where the work is done. Suhail is not a country myth, and
+              London is where the work is done. Kiano is not a country myth, and
               not a window display. We remain a single address, a small workroom, and
               the same silhouette: ankle, shoulder, placket concealed.
             </Body>
@@ -102,16 +102,16 @@ export function StoryPage() {
                 <h3 className="font-display text-2xl font-light">The cutting room</h3>
                 <Body className="mt-3">
                   Upstairs, paper patterns for the Emirati thobe hang on a rail. New
-                  patterns are added. Old ones are not discarded. Suhail remembers
+                  patterns are added. Old ones are not discarded. Kiano remembers
                   through its paper.
                 </Body>
               </Reveal>
               <Reveal delay={140}>
                 <h3 className="font-display text-2xl font-light">The work today</h3>
                 <Body className="mt-3">
-                  We still cut five thobes in small numbers. Ready-to-wear
-                  follows the same patterns as commission work. The difference is only
-                  time.
+                  We still cut five thobes in small numbers: Layl, Hadīd, Ghabār, Raml
+                  and Hajar. Ready-to-wear follows the same patterns as commission work.
+                  The difference is only time.
                 </Body>
               </Reveal>
             </div>
@@ -133,7 +133,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/concealed-pocket.jpg"
-            imageAlt="The interior pocket of a Suhail thobe, the Suhail label set by hand."
+            imageAlt="The interior pocket of the Layl thobe, the woven label set by hand."
             objectPosition="center"
             imageOn="left"
           >

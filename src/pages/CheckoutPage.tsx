@@ -14,8 +14,8 @@ export function CheckoutPage() {
   const [error, setError] = useState('')
 
   usePageMeta({
-    title: 'Checkout — Suhail',
-    description: 'Reserve a Suhail thobe. Made to order in London, four to eight weeks.',
+    title: 'Checkout — Kiano London',
+    description: 'Reserve a thobe or jubbah. Made to order in London, four to eight weeks.',
     path: '/checkout',
   })
 
@@ -53,7 +53,7 @@ export function CheckoutPage() {
           <Display as="h1" className="mt-4 text-5xl md:text-6xl">
             Nothing is held.
           </Display>
-          <Body className="mt-6">The bag is empty. Choose a thobe first.</Body>
+          <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
           <div className="mt-10">
             <Button to="/shop">The Shop</Button>
           </div>
@@ -72,8 +72,8 @@ export function CheckoutPage() {
               Reserve the cut.
             </Display>
             <Body className="mt-6">
-              {String(count).padStart(2, '0')} {count === 1 ? 'piece' : 'pieces'}. Each thobe is
-              made after payment, from the Suhail block, in four to eight weeks. Carriage is
+              {String(count).padStart(2, '0')} {count === 1 ? 'piece' : 'pieces'}. Each piece is
+              made after payment, from the house block, in four to eight weeks. Carriage is
               included.
             </Body>
             <ul className="mt-12">

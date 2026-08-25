@@ -31,7 +31,7 @@ type BagContextValue = {
   clear: () => void
 }
 
-const STORAGE_KEY = 'suhail.bag'
+const STORAGE_KEY = 'kiano.bag'
 
 const BagContext = createContext<BagContextValue | null>(null)
 
