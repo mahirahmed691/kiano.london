@@ -146,7 +146,7 @@ export const products: Product[] = [
       'Albini compact cotton, earth grey, a high-count two-ply.',
       'Band collar. Concealed placket. Felled seams.',
       'Cut from the same house block as Layl; the difference is only the cloth.',
-      'Washed once before it leaves the workroom so the drape is already itself.',
+      'Washed once so the drape is already itself.',
       napeFinish,
     ],
     composition: '100% Italian compact cotton, Albini. Silk-twist buttonholes. Buffalo horn.',
@@ -264,7 +264,7 @@ export const products: Product[] = [
     pricePence: 8500,
     image: '/images/jubbah-black.jpg',
     film: '/films/jubbah-black.mp4',
-    imageAlt: 'A black Emirati jubbah worn at full length in a Mayfair atelier.',
+    imageAlt: 'A black Emirati jubbah worn at full length.',
     objectPosition: 'center 12%',
     featured: true,
     description:
@@ -280,7 +280,7 @@ export const products: Product[] = [
     gallery: [
       {
         src: '/images/jubbah-black.jpg',
-        alt: 'A black Emirati jubbah worn at full length in a Mayfair atelier.',
+        alt: 'A black Emirati jubbah worn at full length.',
         objectPosition: 'center 12%',
       },
       {
@@ -352,7 +352,7 @@ export const products: Product[] = [
     pricePence: 8500,
     image: '/images/jubbah-charcoal.jpg',
     film: '/films/jubbah-charcoal.mp4',
-    imageAlt: 'A charcoal Emirati jubbah worn at full length in a concrete atelier.',
+    imageAlt: 'A charcoal Emirati jubbah worn at full length.',
     objectPosition: 'center 10%',
     featured: true,
     description:
@@ -369,7 +369,7 @@ export const products: Product[] = [
     gallery: [
       {
         src: '/images/jubbah-charcoal.jpg',
-        alt: 'A charcoal Emirati jubbah worn at full length in a concrete atelier.',
+        alt: 'A charcoal Emirati jubbah worn at full length.',
         objectPosition: 'center 10%',
       },
       {

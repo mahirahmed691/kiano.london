@@ -1,10 +1,10 @@
 # Kiano London — design system
 
-Extracted and implemented as a restrained London atelier of the jubbah and the thobe: warm ivory ground, espresso ink, a two-line English mark, serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained London house of the jubbah and the thobe: warm ivory ground, espresso ink, a two-line English mark, serif display, generous measure, no decorative chrome.
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is where the work is cut — not the costume of the house. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic appears on garment names; it is not the house mark.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic appears on garment names; it is not the house mark.
 
 ## Colour
 

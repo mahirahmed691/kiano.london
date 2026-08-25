@@ -146,7 +146,7 @@ export function OrderConfirmedPage() {
             </Display>
             <Body className="mt-8">
               Payment is held. Cloth will be cut from the house block in four to eight weeks. A
-              note will follow if a fitting is needed before it leaves the workroom.{' '}
+              note will follow if a fitting is needed before it is packed.{' '}
               {packingNote}
             </Body>
             {order?.customerEmail ? (
@@ -156,7 +156,7 @@ export function OrderConfirmedPage() {
             ) : null}
             <div className="mt-12 flex flex-wrap items-center gap-6">
               <Button to="/collection">The Collection</Button>
-              <TextLink to="/visit">Visit the atelier</TextLink>
+              <TextLink to="/visit">Visit by appointment</TextLink>
             </div>
           </div>
 
@@ -205,7 +205,7 @@ export function OrderConfirmedPage() {
                 {order.note ? (
                   <div className="mt-8">
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                      Workroom note
+                      A note
                     </p>
                     <p className="mt-3 text-[14px] font-light leading-relaxed text-ink-soft">
                       {order.note}

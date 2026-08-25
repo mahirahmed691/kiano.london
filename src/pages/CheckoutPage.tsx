@@ -302,7 +302,7 @@ export function CheckoutPage() {
                   03 · A note
                 </legend>
                 <div className="mt-6">
-                  <Field id="checkout-note" label="For the workroom (optional)">
+                  <Field id="checkout-note" label="A note for the house (optional)">
                     <textarea
                       id="checkout-note"
                       name="note"
@@ -329,7 +329,7 @@ export function CheckoutPage() {
                   className="w-full justify-center"
                   disabled={busy}
                 >
-                  {busy ? 'Opening payment' : 'Continue to payment'}
+                  {busy ? 'A moment' : 'Reserve the cut'}
                 </Button>
               </div>
             </form>
@@ -415,8 +415,8 @@ export function CheckoutPage() {
                 <p className="font-display text-4xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
               <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
-                Card, Apple Pay and Google Pay are taken on Stripe. You will return here when the
-                cut is reserved.
+                Card, Apple Pay and Google Pay on the next page. You return here when the cut
+                is reserved.
               </p>
               {error ? (
                 <p className="mt-5 hidden text-[14px] font-light text-ink lg:block" role="alert">
@@ -429,7 +429,7 @@ export function CheckoutPage() {
                 disabled={busy}
                 className="mt-8 hidden w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35 lg:inline-flex"
               >
-                {busy ? 'Opening payment' : 'Continue to payment'}
+                {busy ? 'A moment' : 'Reserve the cut'}
               </button>
               <div className="mt-6">
                 <TextLink to="/shop">Continue looking</TextLink>

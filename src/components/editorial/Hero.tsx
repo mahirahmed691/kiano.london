@@ -10,12 +10,13 @@ type Props = {
   film?: string
   objectPosition?: string
   kicker?: string
-  title: string
+  title?: string
   subtitle?: string
   align?: 'start' | 'center'
   minHeight?: 'screen' | 'tall' | 'page'
   children?: ReactNode
   priority?: boolean
+  quiet?: boolean
 }
 
 const heightClass = {
@@ -36,7 +37,10 @@ export function Hero({
   minHeight = 'screen',
   children,
   priority = false,
+  quiet = false,
 }: Props) {
+  const hasCopy = Boolean(kicker || title || subtitle || children)
+
   return (
     <section className={cn('relative flex items-end overflow-hidden', heightClass[minHeight])}>
       {film ? (
@@ -60,39 +64,47 @@ export function Hero({
         />
       )}
       <div
-        className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.55)_0%,rgba(20,18,16,0.12)_26%,rgba(20,18,16,0.1)_50%,rgba(20,18,16,0.8)_100%)]"
+        className={
+          quiet
+            ? 'absolute inset-x-0 top-0 h-40 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.42)_0%,rgba(20,18,16,0)_100%)]'
+            : 'absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.55)_0%,rgba(20,18,16,0.12)_26%,rgba(20,18,16,0.1)_50%,rgba(20,18,16,0.8)_100%)]'
+        }
         aria-hidden="true"
       />
-      <Container
-        className={cn(
-          'relative z-10 w-full pb-[max(4.5rem,calc(env(safe-area-inset-bottom)+2rem))] pt-32 md:pb-20 lg:pb-24',
-          align === 'center' && 'text-center',
-        )}
-      >
-        {kicker ? (
-          <Eyebrow className="mb-5 text-ivory/75">{kicker}</Eyebrow>
-        ) : null}
-        <Display
-          as="h1"
+      {!quiet && hasCopy ? (
+        <Container
           className={cn(
-            'max-w-4xl text-[2.75rem] text-ivory sm:text-6xl md:text-7xl lg:text-[5.25rem]',
-            align === 'center' && 'mx-auto',
+            'relative z-10 w-full pb-[max(4.5rem,calc(env(safe-area-inset-bottom)+2rem))] pt-32 md:pb-20 lg:pb-24',
+            align === 'center' && 'text-center',
           )}
         >
-          {title}
-        </Display>
-        {subtitle ? (
-          <Lead
-            className={cn(
-              'mt-6 text-ivory/80',
-              align === 'center' && 'mx-auto',
-            )}
-          >
-            {subtitle}
-          </Lead>
-        ) : null}
-        {children ? <div className="mt-10">{children}</div> : null}
-      </Container>
+          {kicker ? (
+            <Eyebrow className="mb-5 text-ivory/75">{kicker}</Eyebrow>
+          ) : null}
+          {title ? (
+            <Display
+              as="h1"
+              className={cn(
+                'max-w-4xl text-[2.75rem] text-ivory sm:text-6xl md:text-7xl lg:text-[5.25rem]',
+                align === 'center' && 'mx-auto',
+              )}
+            >
+              {title}
+            </Display>
+          ) : null}
+          {subtitle ? (
+            <Lead
+              className={cn(
+                'mt-6 text-ivory/80',
+                align === 'center' && 'mx-auto',
+              )}
+            >
+              {subtitle}
+            </Lead>
+          ) : null}
+          {children ? <div className="mt-10">{children}</div> : null}
+        </Container>
+      ) : null}
     </section>
   )
 }

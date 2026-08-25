@@ -248,8 +248,8 @@ export function ProductPage() {
                 </button>
                 {guideOpen ? <SizeGuide className="pb-4" compact /> : null}
                 <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
-                  Carriage included. Made to order in London. Payment is taken before the cloth
-                  is cut. {packingNote}
+                  Carriage included. Made to order, four to eight weeks. Payment is taken first.
+                  {packingNote}
                 </p>
                 <TextLink to={enquireTo}>Enquire to visit</TextLink>
                 <ShareLink title={share.title} text={share.description} path={share.path} />

@@ -110,7 +110,7 @@ async function createSession(request: Request) {
         unit_amount: product.pricePence,
         product_data: {
           name,
-          description: `${product.colour}. ${product.cloth}. Made to order in London.`,
+          description: `${product.colour}. ${product.cloth}. Made to order.`,
           metadata: {
             product_id: product.id,
             size: String(size),

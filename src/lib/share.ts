@@ -10,28 +10,28 @@ export type PageMeta = {
 }
 
 const defaultImage = '/images/og.jpg'
-const defaultAlt = 'Kiano London. Emirati thobes and jubbahs, cut in London.'
+const defaultAlt = 'Kiano London. Emirati thobes and jubbahs.'
 
 const pages: Record<string, PageMeta> = {
   '/': {
     title: site.fullName,
     description:
-      'Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. Cut in London, sizes 52 to 60.',
+      'Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. A London house, sizes 52 to 60.',
     path: '/',
     image: '/images/featured-overcoat.jpg',
     imageAlt: 'Hadīd: a charcoal Emirati thobe with a standing collar, worn at full length.',
   },
   '/shop': {
     title: 'Shop — Kiano London',
-    description: 'The jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, cut in London.',
+    description: 'The jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, from the house block.',
     path: '/shop',
     image: '/images/jubbah-sand-02.jpg',
-    imageAlt: 'The jubbah in sand, cut in London.',
+    imageAlt: 'The jubbah in sand, hem to the ankle.',
   },
   '/collection': {
     title: 'The Collection — Kiano London',
     description:
-      'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, cut in London.',
+      'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, from the house block.',
     path: '/collection',
     image: '/images/thobe-raml.jpg',
     imageAlt: 'The Raml thobe.',
@@ -39,7 +39,7 @@ const pages: Record<string, PageMeta> = {
   '/story': {
     title: 'Story — Kiano London',
     description:
-      'A London atelier of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar, cut in London.',
+      'A London house of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar.',
     path: '/story',
     image: '/images/atelier-rail.jpg',
     imageAlt: 'The house line on the rail: black, sand, and bone.',
@@ -47,7 +47,7 @@ const pages: Record<string, PageMeta> = {
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',
     description:
-      'Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are cut and sewn in London.',
+      'Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are built.',
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
     imageAlt: 'A needle on charcoal worsted: the stitch that holds a thobe.',
@@ -63,10 +63,10 @@ const pages: Record<string, PageMeta> = {
   '/visit': {
     title: 'Visit — Kiano London',
     description:
-      'Appointments at the Kiano London atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
+      'Appointments with Kiano London. See cloth, sit for a fitting, or write first.',
     path: '/visit',
     image: '/images/cutting-room.jpg',
-    imageAlt: 'The Kiano London cutting room.',
+    imageAlt: 'Paper, shears, and cloth: the work of a thobe.',
   },
   '/cookies': {
     title: 'Cookies — Kiano London',
@@ -100,12 +100,12 @@ const pages: Record<string, PageMeta> = {
   },
   '/checkout': {
     title: 'Checkout — Kiano London',
-    description: 'Reserve a thobe or jubbah. Made to order in London, four to eight weeks.',
+    description: 'Reserve a thobe or jubbah. Made to order, four to eight weeks.',
     path: '/checkout',
   },
   '/order/confirmed': {
     title: 'Order — Kiano London',
-    description: 'Your piece is reserved. Cut in London, four to eight weeks.',
+    description: 'Your piece is reserved. Made to order, four to eight weeks.',
     path: '/order/confirmed',
   },
 }
@@ -127,7 +127,7 @@ export function getShareMeta(pathname: string): PageMeta {
     if (product) {
       return {
         title: `${product.name} — Kiano London`,
-        description: `${product.name}: ${product.colour.toLowerCase()} Emirati ${product.cut.toLowerCase()} in ${product.cloth.toLowerCase()}. Cut in London, sizes 52 to 60.`,
+        description: `${product.name}: ${product.colour.toLowerCase()} Emirati ${product.cut.toLowerCase()} in ${product.cloth.toLowerCase()}. Sizes 52 to 60, from the house block.`,
         path: productPath(product),
         image: product.image,
         imageAlt: product.imageAlt,

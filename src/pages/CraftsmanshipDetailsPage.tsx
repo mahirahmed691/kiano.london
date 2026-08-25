@@ -67,7 +67,7 @@ export function CraftsmanshipDetailsPage() {
           <div className="grid gap-10 md:grid-cols-2 md:items-end">
             <Reveal>
               <Eyebrow>Continue</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">From the workroom to the rail.</Display>
+              <Display className="mt-4 text-4xl md:text-5xl">From the block to the rail.</Display>
               <Body className="mt-6">
                 See the thobes these methods produce, or return to the four acts of
                 the making.

@@ -37,7 +37,7 @@ export const processSteps: ProcessStep[] = [
     summary:
       'Japanese compact cotton, Super 150s wool-cotton, extra-long staple Giza. Weight and handle are chosen in the piece. An Emirati thobe lives or dies by the drape.',
     image: '/images/cloth-giza.jpg',
-    imageAlt: 'Extra-long staple cotton unrolled on the cutting table, before it is chalked.',
+    imageAlt: 'Extra-long staple cotton unrolled, before it is chalked.',
   },
   {
     number: '02',
@@ -45,7 +45,7 @@ export const processSteps: ProcessStep[] = [
     summary:
       'Each thobe is cut from the house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
     image: '/images/cutting-room.jpg',
-    imageAlt: 'The cutting room: paper for the house block, shears, and cloth on the bench.',
+    imageAlt: 'Paper for the house block, shears, and cloth on the bench.',
   },
   {
     number: '03',

@@ -191,7 +191,7 @@ export function QuickAddDialog() {
                   </button>
                   {guideOpen ? <SizeGuide className="pb-2" compact /> : null}
                   <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
-                    Carriage included. Made to order in London. {packingNote}
+                    Carriage included. Made to order, four to eight weeks. {packingNote}
                   </p>
                   <TextLink to={productPath(current)}>The piece</TextLink>
                 </div>

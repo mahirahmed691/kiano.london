@@ -56,7 +56,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-ivory/45">Atelier</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ivory/45">Visit</p>
             <address className="mt-4 not-italic text-[14px] font-light leading-relaxed text-ivory/80">
               {site.address}
               <br />

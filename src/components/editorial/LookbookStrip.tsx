@@ -13,9 +13,12 @@ type Props = {
 
 export function LookbookStrip({ plates, className }: Props) {
   return (
-    <div className={cn('grid grid-cols-3 gap-px bg-rule', className)}>
+    <div className={cn('grid grid-cols-1 gap-px bg-rule sm:grid-cols-3', className)}>
       {plates.map((plate) => (
-        <figure key={plate.src} className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep">
+        <figure
+          key={plate.src}
+          className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep max-sm:min-h-[85svh] max-sm:aspect-auto"
+        >
           <img
             src={plate.src}
             alt={plate.alt}

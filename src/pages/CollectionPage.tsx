@@ -41,7 +41,7 @@ export function CollectionPage() {
             </p>
             <Body className="mt-6 max-w-xl text-ivory/75">
               Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal,
-              grey, beige and bone. Cut in London from the house block.
+              grey, beige and bone. Cut from the house block.
             </Body>
           </Reveal>
         </Container>
@@ -103,8 +103,8 @@ export function CollectionPage() {
               <Display className="mt-4 text-4xl md:text-5xl">The bone column.</Display>
               <Body className="mt-6">
                 The last of the five: a pale extra-long staple, cut from the same block
-                as Layl. Fittings are held at the London atelier. Come if you wish to
-                see a cloth before it is cut.
+                as Layl. Fittings are by appointment. Come if you wish to see a cloth
+                before it is reserved.
               </Body>
               <div className="mt-8">
                 <Button to="/visit">Visit by appointment</Button>

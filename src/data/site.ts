@@ -10,7 +10,7 @@ export const site = {
   email: 'atelier@kiano.london',
   telephone: '+44 20 7499 2026',
   telephoneHref: 'tel:+442074992026',
-  hours: 'Atelier visits by appointment',
-  tagline: 'Emirati thobes and jubbahs, cut in London.',
+  hours: 'Visits by appointment',
+  tagline: 'Emirati thobes and jubbahs. A London house.',
   note: 'Kiano London',
 } as const

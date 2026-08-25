@@ -20,7 +20,7 @@ export function CraftsmanshipPage() {
         objectPosition="center"
         kicker="The work"
         title="The art of the stitch."
-        subtitle="Cloth. Pattern. Stitch. Finish. Every thobe passes through the same rooms, in the same order."
+        subtitle="Cloth. Pattern. Stitch. Finish. Every thobe is built in that order."
         minHeight="tall"
         priority
       >
@@ -44,7 +44,7 @@ export function CraftsmanshipPage() {
             </Display>
             <Body className="mt-6">
               We do not fuse a collar because it is faster. We do not send buttonholes
-              out. The methods are older than this workroom; we keep them because they still
+              out. The methods are older than this house; we keep them because they still
               make a better garment.
             </Body>
           </Reveal>

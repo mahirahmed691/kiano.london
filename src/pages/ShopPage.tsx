@@ -12,7 +12,6 @@ import {
   productPath,
   type ProductColour,
 } from '@/data/products'
-import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -51,7 +50,7 @@ export function ShopPage() {
             </p>
             <Body className="mt-6 max-w-md">
               The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52
-              to 60. Cut in London from the house block.
+              to 60. Cut from the house block.
             </Body>
           </Reveal>
         </div>
@@ -118,7 +117,7 @@ export function ShopPage() {
           <Rule className="mt-20 md:mt-28" />
           <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">
-              {site.name} also cuts the thobe. The jubbah is the outer column; the thobe
+              The house also keeps the thobe. The jubbah is the outer column; the thobe
               is the one beneath. Each piece leaves unscented, in a garment bag and a
               rigid box.
             </p>

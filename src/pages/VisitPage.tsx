@@ -17,12 +17,12 @@ const visitSteps = [
   {
     number: '02',
     title: 'Sit',
-    copy: 'Cloth is shown on the table in daylight from the street. A thobe is tried. The appointment lasts as long as it needs to.',
+    copy: 'Cloth is shown on the table in daylight. A thobe is tried. The appointment lasts as long as it needs to.',
   },
   {
     number: '03',
-    title: 'Cut',
-    copy: 'We cut from the house block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
+    title: 'After',
+    copy: 'The piece is made from the house block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
   },
 ]
 
@@ -33,11 +33,11 @@ export function VisitPage() {
     <>
       <Hero
         image="/images/cutting-room.jpg"
-        imageAlt="The cutting room at Kiano London: paper, shears, and cloth in progress."
+        imageAlt="Paper, shears, and cloth: the work of a thobe."
         objectPosition="center 40%"
-        kicker="The atelier"
+        kicker="The house"
         title="By appointment."
-        subtitle="There is no shop window. Come to see cloth, to be fitted, or to walk the rooms. Write first. We keep the diary small."
+        subtitle="There is no shop window. Come to see cloth, or to be fitted. Write first. We keep the diary small."
         minHeight="tall"
         priority
       />
@@ -106,7 +106,7 @@ export function VisitPage() {
             </Body>
             <SizeGuide className="mt-10" compact />
             <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
-              Prices include VAT. Each thobe is cut to order.
+              Prices include VAT. Each thobe is made to order.
             </p>
           </Reveal>
         </Container>

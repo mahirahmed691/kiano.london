@@ -54,7 +54,7 @@ export function WovenLabel({ size = 'sm', inverted = true, className }: Props) {
       <Monogram className={markClass[size]} decorative />
       <p className={cn('font-display font-medium uppercase', wordClass[size])}>{site.name}</p>
       <p className={cn('uppercase opacity-70', cityClass[size])}>{site.lockup}</p>
-      <p className={cn('uppercase', originClass[size])}>Cut in London</p>
+      <p className={cn('uppercase', originClass[size])}>Est. {site.established}</p>
     </div>
   )
 }
