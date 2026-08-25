@@ -52,7 +52,7 @@ cd mobile
 npm start
 ```
 
-Scan the QR code with Expo Go. The native shell loads [https://www.kiano.london](https://www.kiano.london).
+Scan the QR code with Expo Go from the App Store (SDK 54). The native shell loads [https://www.kiano.london](https://www.kiano.london).
 
 ```bash
 npm run build
