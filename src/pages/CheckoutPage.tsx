@@ -86,7 +86,13 @@ export function CheckoutPage() {
           })),
         }),
       })
-      const data = (await response.json()) as { url?: string; error?: string }
+      const text = await response.text()
+      let data: { url?: string; error?: string }
+      try {
+        data = JSON.parse(text) as { url?: string; error?: string }
+      } catch {
+        throw new Error('The payment page could not be opened.')
+      }
       if (!response.ok || !data.url) {
         throw new Error(data.error || 'The payment page could not be opened.')
       }

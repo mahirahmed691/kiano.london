@@ -44,7 +44,14 @@ export function OrderConfirmedPage() {
         const response = await fetch(
           `/api/checkout-session?session_id=${encodeURIComponent(sessionId)}`,
         )
-        const data = (await response.json()) as CheckoutOrder & { error?: string }
+        const text = await response.text()
+        let data: CheckoutOrder & { error?: string }
+        try {
+          data = JSON.parse(text) as CheckoutOrder & { error?: string }
+        } catch {
+          if (!cancelled) setView('missing')
+          return
+        }
         if (cancelled) return
         if (!response.ok) {
           setView('missing')

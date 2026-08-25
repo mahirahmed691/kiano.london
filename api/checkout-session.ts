@@ -1,5 +1,9 @@
 import Stripe from 'stripe'
-import type { CheckoutOrder, CheckoutOrderAddress } from '../src/lib/checkout.ts'
+import {
+  paymentStatusOf,
+  type CheckoutOrder,
+  type CheckoutOrderAddress,
+} from '../src/data/shipping.ts'
 
 function addressFrom(
   name: string | null | undefined,
@@ -28,7 +32,7 @@ function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
 
   return {
     id: session.id,
-    paymentStatus: session.payment_status,
+    paymentStatus: paymentStatusOf(session.payment_status),
     amountTotal: session.amount_total ?? 0,
     currency: session.currency ?? 'gbp',
     customerEmail: session.customer_details?.email ?? session.customer_email,
@@ -46,7 +50,7 @@ function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
 
 export async function GET(request: Request) {
   const secret = process.env.STRIPE_SECRET_KEY
-  if (!secret) {
+  if (!secret || secret === 'undefined') {
     return Response.json(
       { error: 'Payment is not configured. Add STRIPE_SECRET_KEY to the environment.' },
       { status: 503 },

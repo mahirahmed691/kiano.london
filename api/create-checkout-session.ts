@@ -1,7 +1,10 @@
 import Stripe from 'stripe'
-import { shippingCountryCodes } from '../src/data/shipping.ts'
 import { getProduct, thobeSizes } from '../src/data/products.ts'
-import { parseCheckoutDetails, type CheckoutDetails } from '../src/lib/checkout.ts'
+import {
+  parseCheckoutDetails,
+  shippingCountryCodes,
+  type CheckoutDetails,
+} from '../src/data/shipping.ts'
 
 type BasketItem = {
   productId: string
@@ -51,8 +54,17 @@ async function upsertCustomer(stripe: Stripe, details: CheckoutDetails) {
 }
 
 export async function POST(request: Request) {
+  try {
+    return await createSession(request)
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The payment page could not be opened.' }, { status: 500 })
+  }
+}
+
+async function createSession(request: Request) {
   const secret = process.env.STRIPE_SECRET_KEY
-  if (!secret) {
+  if (!secret || secret === 'undefined') {
     return Response.json(
       { error: 'Payment is not configured. Add STRIPE_SECRET_KEY to the environment.' },
       { status: 503 },
@@ -176,6 +188,16 @@ export async function POST(request: Request) {
     return Response.json({ url: session.url })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'Stripe could not open a payment page.' }, { status: 502 })
+    const connection =
+      caught instanceof Error &&
+      (caught.name === 'StripeConnectionError' || caught.message.includes('connection to Stripe'))
+    return Response.json(
+      {
+        error: connection
+          ? 'Payment could not be reached. Try again in a moment.'
+          : 'Stripe could not open a payment page.',
+      },
+      { status: 502 },
+    )
   }
 }

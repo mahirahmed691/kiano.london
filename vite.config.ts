@@ -29,8 +29,8 @@ function checkoutApi(env: Record<string, string>): Plugin {
         }
 
         void (async () => {
-          process.env.STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY
-          process.env.SITE_URL = env.SITE_URL
+          if (env.STRIPE_SECRET_KEY) process.env.STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY
+          if (env.SITE_URL) process.env.SITE_URL = env.SITE_URL
           try {
             if (createSession) {
               const chunks: Buffer[] = []
