@@ -5,7 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { getProduct, productPath } from '@/data/products'
-import { isAdminEmail } from '@/lib/admin'
+import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { orderReference } from '@/lib/checkout'
 import { formatGbp } from '@/lib/money'
@@ -147,7 +147,7 @@ function AccountOrders() {
 
 function AccountLedgerLink() {
   const { user } = useUser()
-  if (!isAdminEmail(user?.primaryEmailAddress?.emailAddress)) return null
+  if (!isAdminUser(user)) return null
   return (
     <div className="mt-10">
       <TextLink to="/admin">The house board</TextLink>

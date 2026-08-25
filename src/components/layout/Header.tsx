@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { HouseMark } from '@/components/brand/HouseMark'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
+import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
-import { overlayPaths, primaryNav } from '@/data/navigation'
+import { overlayPaths } from '@/data/navigation'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
 
@@ -39,28 +40,7 @@ export function Header() {
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
         <div className="relative grid h-[5.25rem] grid-cols-[1fr_auto_1fr] items-center px-5 md:h-[5.75rem] md:px-12 lg:px-16">
-          <nav className="hidden md:block" aria-label="Primary">
-            <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:gap-x-9">
-              {primaryNav.map((item) => (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    className={({ isActive }) =>
-                      cn(
-                        'relative text-[11px] uppercase tracking-[0.22em] transition-opacity',
-                        inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
-                        isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100',
-                        isActive &&
-                          'after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:bg-current',
-                      )
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <MegaMenu key={pathname} inverted={inverted} />
 
           <button
             type="button"

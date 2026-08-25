@@ -1,7 +1,7 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { products, productLineName, thobeSizes } from '@/data/products'
-import { isAdminEmail } from '@/lib/admin'
+import { isAdminUser } from '@/lib/admin'
 
 type Cut = {
   productId: string
@@ -28,7 +28,7 @@ export function RestockLedger() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    if (!isSignedIn || !isAdminEmail(user?.primaryEmailAddress?.emailAddress)) return
+    if (!isSignedIn || !isAdminUser(user)) return
     let cancelled = false
 
     async function load() {

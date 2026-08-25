@@ -3,13 +3,45 @@ import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { useCart } from '@/lib/cart'
-import { primaryNav } from '@/data/navigation'
+import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
 
 type Props = {
   open: boolean
   onClose: () => void
+}
+
+function SectionLabel({ children }: { children: string }) {
+  return <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{children}</p>
+}
+
+function RoomLink({
+  to,
+  onClose,
+  children,
+  large,
+}: {
+  to: string
+  onClose: () => void
+  children: string
+  large?: boolean
+}) {
+  return (
+    <NavLink
+      to={to}
+      onClick={onClose}
+      className={({ isActive }) =>
+        cn(
+          'block font-display font-light tracking-[-0.02em] transition-opacity',
+          large ? 'text-4xl' : 'text-2xl',
+          isActive ? 'opacity-100' : 'opacity-55 hover:opacity-100',
+        )
+      }
+    >
+      {children}
+    </NavLink>
+  )
 }
 
 export function MobileNav({ open, onClose }: Props) {
@@ -31,60 +63,76 @@ export function MobileNav({ open, onClose }: Props) {
     <div
       id="mobile-navigation"
       className={cn(
-        'fixed inset-0 z-40 bg-ivory transition-opacity duration-500 md:hidden',
+        'fixed inset-0 z-40 overflow-y-auto bg-ivory transition-opacity duration-500 md:hidden',
         open ? 'opacity-100' : 'pointer-events-none opacity-0',
       )}
       aria-hidden={!open}
     >
       <nav
-        className="flex h-full flex-col justify-center px-8 pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
+        className="flex min-h-full flex-col justify-center px-8 py-28 pt-[max(7rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))]"
         aria-label="Mobile"
       >
         <Monogram decorative className="mb-10 h-7 text-ink" />
-        <ul className="space-y-2">
+        <ul className="space-y-8">
           <li>
-            <NavLink
-              to="/"
-              onClick={onClose}
-              className={({ isActive }) =>
-                cn(
-                  'font-display text-4xl font-light tracking-[-0.02em] transition-opacity',
-                  isActive ? 'opacity-100' : 'opacity-55 hover:opacity-100',
-                )
-              }
-            >
+            <RoomLink to="/" onClose={onClose} large>
               Home
-            </NavLink>
+            </RoomLink>
           </li>
-          {primaryNav.map((item) => (
-            <li key={item.to}>
-              <NavLink
-                to={item.to}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  cn(
-                    'font-display text-4xl font-light tracking-[-0.02em] transition-opacity',
-                    isActive ? 'opacity-100' : 'opacity-55 hover:opacity-100',
-                  )
-                }
-              >
-                {item.label}
-              </NavLink>
-            </li>
-          ))}
+          <li className="space-y-3">
+            <SectionLabel>The Shop</SectionLabel>
+            <RoomLink to="/shop" onClose={onClose} large>
+              Shop
+            </RoomLink>
+            <ul className="space-y-1 pt-1">
+              {jubbahs.map((piece) => (
+                <li key={piece.id}>
+                  <RoomLink to={productPath(piece)} onClose={onClose}>
+                    {productLineName(piece)}
+                  </RoomLink>
+                </li>
+              ))}
+            </ul>
+          </li>
+          <li className="space-y-3">
+            <SectionLabel>The Collection</SectionLabel>
+            <RoomLink to="/collection" onClose={onClose} large>
+              Collection
+            </RoomLink>
+            <ul className="space-y-1 pt-1">
+              {thobes.map((piece) => (
+                <li key={piece.id}>
+                  <RoomLink to={productPath(piece)} onClose={onClose}>
+                    {piece.name}
+                  </RoomLink>
+                </li>
+              ))}
+            </ul>
+          </li>
+          <li className="space-y-3">
+            <SectionLabel>The house</SectionLabel>
+            <ul className="space-y-1">
+              <li>
+                <RoomLink to="/story" onClose={onClose} large>
+                  Story
+                </RoomLink>
+              </li>
+              <li>
+                <RoomLink to="/craftsmanship" onClose={onClose} large>
+                  Craftsmanship
+                </RoomLink>
+              </li>
+              <li>
+                <RoomLink to="/visit" onClose={onClose} large>
+                  Visit
+                </RoomLink>
+              </li>
+            </ul>
+          </li>
           <li>
-            <NavLink
-              to="/account"
-              onClick={onClose}
-              className={({ isActive }) =>
-                cn(
-                  'font-display text-4xl font-light tracking-[-0.02em] transition-opacity',
-                  isActive ? 'opacity-100' : 'opacity-55 hover:opacity-100',
-                )
-              }
-            >
+            <RoomLink to="/account" onClose={onClose} large>
               Account
-            </NavLink>
+            </RoomLink>
           </li>
           <li>
             <AdminNavLink

@@ -1,20 +1,31 @@
 import { createClerkClient } from '@clerk/backend'
+import { resolveAdminEmails } from '../../src/lib/admin-allowlist.ts'
 import { clerkUserIdFrom } from './clerk.ts'
 import { withDb } from './db.ts'
 
-function parseAdminEmails(raw: string | undefined) {
-  return (raw ?? '')
-    .split(',')
-    .map((entry) => entry.trim().toLowerCase())
-    .filter(Boolean)
-}
-
 export function adminAllowlist() {
-  return parseAdminEmails(process.env.ADMIN_EMAILS || process.env.VITE_ADMIN_EMAILS)
+  return resolveAdminEmails(process.env.ADMIN_EMAILS || process.env.VITE_ADMIN_EMAILS)
 }
 
 type AdminDenied = { ok: false; error: Response }
 type AdminOk = { ok: true; clerkUserId: string; email: string }
+
+function clerkUserEmails(user: {
+  primaryEmailAddress?: { emailAddress?: string | null } | null
+  emailAddresses?: { emailAddress?: string | null }[]
+}) {
+  const emails = [
+    user.primaryEmailAddress?.emailAddress,
+    ...(user.emailAddresses ?? []).map((entry) => entry.emailAddress),
+  ]
+  return [
+    ...new Set(
+      emails
+        .map((email) => email?.trim().toLowerCase())
+        .filter((email): email is string => Boolean(email)),
+    ),
+  ]
+}
 
 export async function requireAdmin(request: Request): Promise<AdminOk | AdminDenied> {
   const clerkUserId = await clerkUserIdFrom(request)
@@ -30,31 +41,33 @@ export async function requireAdmin(request: Request): Promise<AdminOk | AdminDen
     return { ok: false, error: Response.json({ error: 'The ledger is closed.' }, { status: 403 }) }
   }
 
-  let email = ''
+  const matched = new Set<string>()
   const secret = process.env.CLERK_SECRET_KEY
   if (secret) {
     try {
       const clerk = createClerkClient({ secretKey: secret })
       const user = await clerk.users.getUser(clerkUserId)
-      email = user.primaryEmailAddress?.emailAddress?.trim().toLowerCase() ?? ''
+      for (const email of clerkUserEmails(user)) matched.add(email)
     } catch (caught) {
       console.error(caught)
     }
   }
 
-  if (!email) {
+  if (matched.size === 0) {
     try {
       const sql = await withDb()
       const rows = (await sql`
         SELECT email FROM members WHERE clerk_user_id = ${clerkUserId}
       `) as { email: string }[]
-      email = rows[0]?.email?.trim().toLowerCase() ?? ''
+      const email = rows[0]?.email?.trim().toLowerCase() ?? ''
+      if (email) matched.add(email)
     } catch (caught) {
       console.error(caught)
     }
   }
 
-  if (!email || !allowed.includes(email)) {
+  const email = [...matched].find((entry) => allowed.includes(entry)) ?? ''
+  if (!email) {
     return {
       ok: false,
       error: Response.json({ error: 'This ledger is not for this account.' }, { status: 403 }),

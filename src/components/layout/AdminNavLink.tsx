@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/react'
 import { NavLink } from 'react-router-dom'
-import { isAdminEmail } from '@/lib/admin'
+import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
 
@@ -12,7 +12,7 @@ type Props = {
 function AdminNavLinkInner({ className, onClick }: Props) {
   const { user, isSignedIn } = useUser()
   if (!isSignedIn) return null
-  if (!isAdminEmail(user?.primaryEmailAddress?.emailAddress)) return null
+  if (!isAdminUser(user)) return null
 
   return (
     <NavLink

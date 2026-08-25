@@ -14,7 +14,7 @@ import {
   houseVisualAudit,
 } from '@/data/house-board'
 import { getProduct, productLineName } from '@/data/products'
-import { isAdminEmail } from '@/lib/admin'
+import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
@@ -56,7 +56,7 @@ function useLedger() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    if (!isSignedIn || !isAdminEmail(user?.primaryEmailAddress?.emailAddress)) return
+    if (!isSignedIn || !isAdminUser(user)) return
     let cancelled = false
 
     async function load() {
@@ -132,7 +132,8 @@ function SignedOutBoard() {
   return (
     <>
       <Body className="mt-6">
-        The ledger is for the house. Sign in with the address that is listed.
+        The ledger is for the house. Sign in with atelier@kiano.london or the address
+        that keeps the house.
       </Body>
       <div className="mt-10">
         <Button to="/sign-in?redirect_url=/admin" variant="solid">
@@ -147,8 +148,8 @@ function ClosedBoard() {
   return (
     <>
       <Body className="mt-6">
-        This account can shop. It cannot open the ledger. If you keep the house, sign in
-        with the listed address.
+        This account can shop. It cannot open the ledger. Sign in with
+        atelier@kiano.london, or the Gmail that keeps the house.
       </Body>
       <div className="mt-10">
         <TextLink to="/account">Your cuts</TextLink>
@@ -177,7 +178,7 @@ function AppointmentDiary({ ledger }: { ledger: Ledger | null }) {
   if (!ledger) return null
 
   return (
-    <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
+    <div id="ledger-diary" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
       <Reveal>
         <Eyebrow>The diary</Eyebrow>
         <Display as="h2" className="mt-4 text-4xl md:text-5xl">
@@ -233,12 +234,34 @@ function OpenBoard() {
   return (
     <>
       <Body className="mt-6">
-        A private reading of the house: what is kept, what is hooked, who else cuts a
-        column, and how the rooms look on a screen. Mean completion {mean} of 100.
+        Open from The ledger in the header, from Account, from /admin, or kiano://admin.
+        Mean completion {mean} of 100.
       </Body>
+      <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[11px] uppercase tracking-[0.22em] text-stone">
+        <li>
+          <a href="#ledger-cuts" className="transition-opacity hover:opacity-70">
+            Cuts
+          </a>
+        </li>
+        <li>
+          <a href="#ledger-diary" className="transition-opacity hover:opacity-70">
+            The diary
+          </a>
+        </li>
+        <li>
+          <a href="#ledger-line" className="transition-opacity hover:opacity-70">
+            The line
+          </a>
+        </li>
+        <li>
+          <a href="#ledger-field" className="transition-opacity hover:opacity-70">
+            The field
+          </a>
+        </li>
+      </ul>
       <LedgerFigures ledger={ledger} error={error} />
 
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
+      <div id="ledger-cuts" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
         <Reveal>
           <Eyebrow>Cuts</Eyebrow>
           <Display as="h2" className="mt-4 text-4xl md:text-5xl">
@@ -254,7 +277,7 @@ function OpenBoard() {
 
       <AppointmentDiary ledger={ledger} />
 
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
+      <div id="ledger-line" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
         <Reveal>
           <Eyebrow>01 · The line of work</Eyebrow>
           <Display as="h2" className="mt-4 text-4xl md:text-5xl">
@@ -324,7 +347,7 @@ function OpenBoard() {
         </div>
       </div>
 
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
+      <div id="ledger-field" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
         <Reveal>
           <Eyebrow>04 · The field</Eyebrow>
           <Display as="h2" className="mt-4 text-4xl md:text-5xl">
@@ -427,7 +450,7 @@ function AdminGate() {
   if (!isLoaded) {
     return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the house.</p>
   }
-  const listed = isAdminEmail(user?.primaryEmailAddress?.emailAddress)
+  const listed = isAdminUser(user)
 
   return (
     <>
