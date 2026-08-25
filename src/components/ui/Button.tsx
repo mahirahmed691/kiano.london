@@ -17,16 +17,17 @@ type Props = {
 
 const variantClass: Record<Variant, string> = {
   outline:
-    'border border-current bg-transparent hover:bg-ink hover:text-ivory hover:border-ink',
-  ghost: 'border-0 bg-transparent px-0 hover:opacity-70',
+    'border border-current bg-transparent [@media(hover:hover)]:hover:bg-ink [@media(hover:hover)]:hover:text-ivory [@media(hover:hover)]:hover:border-ink',
+  ghost: 'border-0 bg-transparent px-0 [@media(hover:hover)]:hover:opacity-70',
   invert:
-    'border border-ivory/70 bg-transparent text-ivory hover:bg-ivory hover:text-ink',
-  solid: 'border border-ink bg-ink text-ivory hover:bg-transparent hover:text-ink',
+    'border border-ivory bg-ivory text-ink [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-ivory',
+  solid:
+    'border border-ink bg-ink text-ivory [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-ink',
 }
 
 function classes(variant: Variant, className?: string, disabled?: boolean) {
   return cn(
-    'inline-flex items-center gap-3 px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300',
+    'inline-flex min-h-11 items-center gap-3 px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300 active:opacity-80',
     variantClass[variant],
     disabled && 'pointer-events-none opacity-35',
     className,

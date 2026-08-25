@@ -51,7 +51,7 @@ export function Hero({
       />
       <Container
         className={cn(
-          'relative z-10 w-full pb-16 pt-32 md:pb-20 lg:pb-24',
+          'relative z-10 w-full pb-[max(4.5rem,calc(env(safe-area-inset-bottom)+2rem))] pt-32 md:pb-20 lg:pb-24',
           align === 'center' && 'text-center',
         )}
       >
