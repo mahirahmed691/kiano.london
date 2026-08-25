@@ -1,3 +1,4 @@
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
@@ -75,7 +76,7 @@ export function ProductPage() {
 
   return (
     <>
-      <section className="pt-24 md:pt-28">
+      <section className="pt-28 md:pt-32">
         <div className="grid xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)] xl:items-start">
           <div className="order-2 px-6 py-12 md:px-12 xl:order-1 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
             <Reveal>
@@ -111,7 +112,7 @@ export function ProductPage() {
 
           <div className="order-1 xl:order-2">
             {product.gallery.map((image, index) => (
-              <div key={`${image.src}-${index}`} className="bg-ivory-deep">
+              <div key={`${image.src}-${index}`} className="relative bg-ivory-deep">
                 <ImageFrame
                   src={image.src}
                   alt={image.alt}
@@ -123,6 +124,12 @@ export function ProductPage() {
                       : 'aspect-[3/4] w-full'
                   }
                 />
+                {index === 0 ? (
+                  <WovenLabel
+                    size="md"
+                    className="pointer-events-none absolute bottom-5 left-5 z-10 md:bottom-8 md:left-8"
+                  />
+                ) : null}
               </div>
             ))}
           </div>
@@ -213,7 +220,16 @@ export function ProductPage() {
       <Section className="bg-ivory-deep/40">
         <Container>
           <div className="grid gap-16 lg:grid-cols-12">
-            <Reveal className="lg:col-span-5">
+            <Reveal className="lg:col-span-4">
+              <Eyebrow>The nape</Eyebrow>
+              <Display className="mt-4 text-4xl md:text-5xl">The monogram.</Display>
+              <WovenLabel size="lg" className="mt-10" />
+              <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
+                The K is woven, not printed, and set at the nape by hand after the last
+                press. The same mark is on every thobe and every jubbah.
+              </p>
+            </Reveal>
+            <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">
               <Eyebrow>The making</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">
                 How this {product.cut.toLowerCase()} is held.
@@ -221,9 +237,7 @@ export function ProductPage() {
               <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
                 {product.composition}
               </p>
-            </Reveal>
-            <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
-              <Eyebrow>Sizes 52–60</Eyebrow>
+              <Eyebrow className="mt-14">Sizes 52–60</Eyebrow>
               <Display className="mt-4 text-4xl">The house block.</Display>
               <SizeGuide className="mt-8" />
             </Reveal>

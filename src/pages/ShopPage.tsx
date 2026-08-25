@@ -55,9 +55,9 @@ export function ShopPage() {
 
       <div className="img-zoom relative aspect-[16/8] max-h-[560px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
-          src="/images/jubbah-sand.jpg"
-          alt="A sand Emirati jubbah worn at full length."
-          className="object-[center_18%]"
+          src="/images/jubbah-sand-02.jpg"
+          alt="The sand jubbah at rest, the cloth to the ankle."
+          className="object-[center_28%]"
           loading="eager"
           decoding="async"
         />
@@ -104,11 +104,21 @@ export function ShopPage() {
         </Container>
         <LookbookStrip
           className="mt-24 md:mt-32"
-          plates={jubbahs.map((item) => ({
-            src: item.image,
-            alt: item.imageAlt,
-            objectPosition: item.objectPosition,
-          }))}
+          plates={[
+            {
+              src: '/images/jubbah-black-02.jpg',
+              alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
+            },
+            {
+              src: '/images/workbench.jpg',
+              alt: 'The cutting bench: shears, chalk, and the house block.',
+              objectPosition: 'center 40%',
+            },
+            {
+              src: '/images/jubbah-charcoal-02.jpg',
+              alt: 'The charcoal jubbah walking: wool-cotton, ankle hem, concealed placket.',
+            },
+          ]}
         />
         <Container>
           <Rule className="mt-20 md:mt-28" />

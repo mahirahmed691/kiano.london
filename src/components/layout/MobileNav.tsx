@@ -1,3 +1,4 @@
+import { Monogram } from '@/components/brand/Monogram'
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useCart } from '@/lib/cart'
@@ -38,6 +39,7 @@ export function MobileNav({ open, onClose }: Props) {
         className="flex h-full flex-col justify-center px-8"
         aria-label="Mobile"
       >
+        <Monogram decorative className="mb-10 h-7 text-ink" />
         <ul className="space-y-2">
           <li>
             <NavLink

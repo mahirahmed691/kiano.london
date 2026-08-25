@@ -162,7 +162,7 @@ export const detailSections: DetailSection[] = [
     title: 'The interior pocket',
     copy: [
       'A telephone, a pair of glasses, a folded letter. The pocket is bagged in the lining and set so it does not pull the cloth. You feel it. Nobody else should see it.',
-      'The label is woven, not printed, and set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
+      'The label is woven, not printed: the Kiano monogram, set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
     ],
     image: '/images/concealed-pocket.jpg',
     imageAlt: 'The concealed interior pocket of the Layl thobe.',
