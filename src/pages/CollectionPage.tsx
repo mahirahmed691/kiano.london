@@ -26,9 +26,9 @@ export function CollectionPage() {
   )
 
   usePageMeta({
-    title: 'The Collection — Suhail',
+    title: 'The Collection — Kiano London',
     description:
-              'Five Emirati thobes from Suhail. Black, grey and beige, sizes 52 to 60, cut in London for cooler air.',
+              'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, cut in London.',
     path: '/collection',
     image: '/images/heritage-linen.jpg',
   })
@@ -42,12 +42,12 @@ export function CollectionPage() {
             <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
               The Collection
             </Display>
-            <p lang="ar" dir="rtl" className="mt-4 font-arabic text-2xl text-ink/55">
-              {site.arabicName}
+            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
+              {site.lockup}
             </p>
             <Body className="mt-6 max-w-xl">
-              Five Emirati thobes: black, charcoal, grey, beige and bone. Named for a
-              colour, not a season. Cut in London for the air after summer.
+              Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal,
+              grey, beige and bone. Cut in London for cooler air.
             </Body>
           </Reveal>
         </Container>
@@ -115,7 +115,7 @@ export function CollectionPage() {
           plates={[
             {
               src: '/images/concealed-pocket.jpg',
-              alt: 'The interior of a Suhail thobe, the Suhail label set by hand.',
+              alt: 'The interior of the Layl thobe, the woven label set by hand.',
               objectPosition: 'center 62%',
             },
             {
@@ -125,7 +125,7 @@ export function CollectionPage() {
             },
             {
               src: '/images/workbench.jpg',
-              alt: 'The cutting bench: shears, chalk, and the Suhail block.',
+              alt: 'The cutting bench: shears, chalk, and the house block.',
               objectPosition: 'center 40%',
             },
           ]}

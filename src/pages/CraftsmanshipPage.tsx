@@ -10,9 +10,9 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function CraftsmanshipPage() {
   usePageMeta({
-    title: 'Craftsmanship — Suhail',
+    title: 'Craftsmanship — Kiano London',
     description:
-      'Cloth, pattern, stitch and finish. How a Suhail thobe is cut and sewn in London.',
+      'Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are cut and sewn in London.',
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
   })
@@ -82,7 +82,7 @@ export function CraftsmanshipPage() {
             <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, fastening, pocket.</Display>
             <Body className="mt-6">
               The photographs are of the work itself: not a campaign, a close look at
-              how a Suhail thobe is held together.
+              how a thobe is held together.
             </Body>
           </Reveal>
           <div className="grid gap-8 sm:grid-cols-2">

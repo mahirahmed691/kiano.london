@@ -21,15 +21,15 @@ const visitSteps = [
   {
     number: '03',
     title: 'Cut',
-    copy: 'We cut from the Suhail block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
+    copy: 'We cut from the house block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
   },
 ]
 
 export function VisitPage() {
   usePageMeta({
-    title: 'Visit — Suhail',
+    title: 'Visit — Kiano London',
     description:
-      'Appointments at the Suhail atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
+      'Appointments at the Kiano London atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
     path: '/visit',
     image: '/images/workbench.jpg',
   })
@@ -43,8 +43,8 @@ export function VisitPage() {
             <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
               By appointment.
             </Display>
-            <p lang="ar" dir="rtl" className="mt-4 font-arabic text-2xl text-ink/55">
-              {site.arabicName}
+            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
+              {site.lockup}
             </p>
             <Body className="mt-6 max-w-xl">
               There is no shop window. Come to see cloth, to be fitted, or to walk the
@@ -57,7 +57,7 @@ export function VisitPage() {
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
           src="/images/workbench.jpg"
-          alt="The cutting bench at Suhail: shears, chalk, and cloth in progress."
+          alt="The cutting bench at Kiano London: shears, chalk, and cloth in progress."
           className="object-[center_40%]"
           loading="eager"
           decoding="async"
@@ -93,7 +93,7 @@ export function VisitPage() {
                 Request a time.
               </Display>
               <Body className="mt-6">
-                The form opens a letter to Suhail. If you would rather write directly:{' '}
+                The form opens a letter to Kiano London. If you would rather write directly:{' '}
                 <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
                   {site.email}
                 </a>
@@ -122,7 +122,7 @@ export function VisitPage() {
           <div className="grid items-start gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-5">
               <Eyebrow>Sizes 52–60</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The Suhail block.</Display>
+              <Display className="mt-4 text-4xl md:text-5xl">The house block.</Display>
               <Body className="mt-6">
                 If you already know your size, name it in the letter. If you do not, we
                 will measure you here. Between sizes, we cut from the larger and take in.

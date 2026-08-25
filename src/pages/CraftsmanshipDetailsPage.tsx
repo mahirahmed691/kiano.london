@@ -10,9 +10,9 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function CraftsmanshipDetailsPage() {
   usePageMeta({
-    title: 'The Making — Suhail',
+    title: 'The Making — Kiano London',
     description:
-      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a Suhail thobe is built.',
+      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a thobe is built.',
     path: '/craftsmanship-details',
     image: '/images/heritage-linen.jpg',
   })
@@ -38,7 +38,7 @@ export function CraftsmanshipDetailsPage() {
               Seam, stitch, fastening, the unseen.
             </Display>
             <Body className="mx-auto mt-6">
-              These are not selling points. They are the reasons a Suhail thobe can
+              These are not selling points. They are the reasons a thobe can
               be recut, relined and worn again. We write them down so they are not
               treated as folklore.
             </Body>

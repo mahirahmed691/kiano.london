@@ -1,10 +1,10 @@
-# Suhail — design system
+# Kiano London — design system
 
-Extracted and implemented as a restrained London atelier of the jubbah and the thobe: warm ivory ground, espresso ink, a quiet Arabic mark, serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained London atelier of the jubbah and the thobe: warm ivory ground, espresso ink, a two-line English mark, serif display, generous measure, no decorative chrome.
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is where the work is cut — not the costume of the house. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic sits beside the English mark; it is not ornament.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is where the work is cut — not the costume of the house. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic appears on garment names; it is not the house mark.
 
 ## Colour
 
@@ -26,7 +26,7 @@ No gradients as decoration. Hero overlays are photographic scrims only. No gold 
 
 - **Display:** Cormorant Garamond, 300. Headlines, pull quotes.
 - **Interface:** Jost, 300–400. Navigation, labels, body.
-- **Arabic:** Amiri, 400. The house mark and occasional bilingual lines only.
+- **Arabic:** Amiri, 400. Garment names and occasional bilingual lines only.
 
 Labels are 11px, uppercase, tracking `0.22em–0.28em`. Headlines are light weight with tight tracking. Body is 15–16px, relaxed leading, `max-width: 65ch` in practice.
 

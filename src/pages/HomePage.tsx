@@ -16,19 +16,19 @@ import { usePageMeta } from '@/lib/usePageMeta'
 const lookbook = [
   {
     src: '/images/concealed-pocket.jpg',
-    alt: 'The interior of a Suhail thobe: the Suhail label set by hand.',
+    alt: 'The interior of the Layl thobe: the woven label set by hand.',
     caption: 'The unseen',
     objectPosition: 'center 62%',
   },
   {
     src: '/images/heritage-linen.jpg',
-    alt: 'Extra-long staple cotton in the piece, the sand cloth of Suhail.',
+    alt: 'Extra-long staple cotton in the piece, the sand cloth of Raml.',
     caption: 'Cloth in the piece',
     objectPosition: '22% 50%',
   },
   {
     src: '/images/workbench.jpg',
-    alt: 'The cutting bench: shears, chalk, and paper for the Suhail block.',
+    alt: 'The cutting bench: shears, chalk, and paper for the house block.',
     caption: 'The bench',
     objectPosition: 'center 40%',
   },
@@ -36,9 +36,9 @@ const lookbook = [
 
 export function HomePage() {
   usePageMeta({
-    title: 'Suhail — سهيل',
+    title: 'Kiano London',
     description:
-      'Suhail cuts Emirati thobes in London. Named for the winter star of the Gulf. Black, grey and beige, sizes 52 to 60.',
+      'Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. Cut in London, sizes 52 to 60.',
     path: '/',
     image: '/images/featured-overcoat.jpg',
   })
@@ -47,11 +47,11 @@ export function HomePage() {
     <>
       <Hero
         image="/images/featured-overcoat.jpg"
-        imageAlt="A charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
+        imageAlt="Hadīd: a charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
         objectPosition="68% 12%"
         kicker={`Established ${site.established} · ${site.city}`}
-        title="After the heat."
-        subtitle="Emirati thobes, cut in London. Black, grey, beige. For cooler air."
+        title="Cut in London."
+        subtitle="Emirati thobes and jubbahs. Black, grey, beige. For cooler air."
         priority
       >
         <div className="flex flex-wrap items-center gap-6">
@@ -68,24 +68,20 @@ export function HomePage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>Suhail</Eyebrow>
+              <Eyebrow>Kiano</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl lg:text-6xl">
                 A quieter season,
                 <br />
                 held by the stitch.
               </Display>
-              <p
-                lang="ar"
-                dir="rtl"
-                className="mt-5 font-arabic text-2xl font-normal text-ink/55 md:text-3xl"
-              >
-                {site.arabicName}
+              <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
+                {site.lockup}
               </p>
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Lead>
-                Named for the winter star of the Gulf. We cut the Emirati thobe in
-                London: black, charcoal, grey, beige and bone. Cloth chosen to last.
+                We cut five thobes in London: Layl, Hadīd, Ghabār, Raml and Hajar.
+                Cloth chosen to last.
               </Lead>
               <Body className="mt-6">
                 Nothing here is made for a campaign. A thobe should look as considered in
@@ -174,7 +170,7 @@ export function HomePage() {
       <section className="relative min-h-[70svh] overflow-hidden">
         <ImageFrame
           src="/images/featured-overcoat.jpg"
-          alt="A charcoal Emirati thobe at rest: the Suhail silhouette, a column of cloth."
+          alt="Hadīd at rest: a charcoal Emirati thobe, a column of cloth."
           className="absolute inset-0 h-full w-full"
           imgClassName="h-full w-full object-cover"
           objectPosition="center 58%"
@@ -197,8 +193,8 @@ export function HomePage() {
               <Display className="mt-4 text-4xl md:text-5xl">Cut in London</Display>
               <Body className="mt-6">
                 The cutting room is a single address. Fittings are by appointment. We
-                do not keep a shop window. The work is the invitation: an Emirati
-                thobe, cut for the air after summer.
+                do not keep a shop window. The work is the invitation: Layl, Hadīd,
+                the jubbah. Cut in London.
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/visit">Visit by appointment</Button>
@@ -208,7 +204,7 @@ export function HomePage() {
             <Reveal delay={120}>
               <ImageFrame
                 src="/images/workbench.jpg"
-                alt="The cutting bench at Suhail: shears, chalk, and the Suhail block."
+                alt="The cutting bench: shears, chalk, and the house block."
                 className="aspect-[4/5] w-full"
                 objectPosition="center 40%"
                 caption="Mayfair. By appointment."

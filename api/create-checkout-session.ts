@@ -84,7 +84,7 @@ export async function POST(request: Request) {
         },
       ],
       allow_promotion_codes: true,
-      integration_identifier: 'suhail_bag_xhwpqelm',
+      integration_identifier: 'kiano_bag_xhwpqelm',
     })
 
     if (!session.url) {

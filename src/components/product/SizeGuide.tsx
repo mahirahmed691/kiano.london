@@ -10,7 +10,7 @@ export function SizeGuide({ className, compact = false }: Props) {
   return (
     <div className={cn(className)}>
       <table className="w-full border-collapse text-left">
-        <caption className="sr-only">Suhail size chart for the Emirati thobe, sizes 52 to 60</caption>
+        <caption className="sr-only">House size chart for the Emirati thobe, sizes 52 to 60</caption>
         <thead>
           <tr className="border-b border-rule text-[11px] uppercase tracking-[0.18em] text-stone">
             <th className="py-3 pr-4 font-normal">Size</th>

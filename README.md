@@ -1,6 +1,6 @@
-# Suhail
+# Kiano London
 
-A bespoke React website for **Suhail**, a London atelier of the jubbah and the thobe.
+A bespoke React website for **Kiano London**, a London atelier of the jubbah and the thobe.
 
 This is not a theme, a WordPress site, or a generic landing page. It is a small, production-ready application: Vite, React, TypeScript and Tailwind CSS, structured so the house can be extended without rewriting pages.
 
@@ -9,6 +9,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | URL | Page |
 | --- | --- |
 | `/` | Home |
+| `/shop` | The Shop (jubbah) |
 | `/collection` | The Collection |
 | `/story` | Our Story |
 | `/craftsmanship` | Craftsmanship |

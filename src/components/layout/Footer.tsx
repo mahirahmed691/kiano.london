@@ -20,7 +20,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-ivory/45">Suhail</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ivory/45">{site.name}</p>
             <ul className="mt-4 space-y-2">
               {primaryNav.map((item) => (
                 <li key={item.to}>
@@ -63,7 +63,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.18em] text-ivory/40 sm:flex-row sm:justify-between">
           <p>
-            © {year} {site.name}. All rights reserved.
+            © {year} {site.fullName}. All rights reserved.
           </p>
           <p>
             Est. {site.established} · {site.city}

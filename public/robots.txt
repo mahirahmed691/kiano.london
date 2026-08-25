@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.suhail.london/sitemap.xml
+Sitemap: https://www.kiano.london/sitemap.xml
