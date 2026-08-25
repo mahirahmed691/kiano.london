@@ -2,8 +2,9 @@ import { WovenLabel } from '@/components/brand/WovenLabel'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { HowItArrives } from '@/components/editorial/HowItArrives'
-import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { ProductGrid } from '@/components/product/ProductGrid'
+import { ClothZoom } from '@/components/product/ClothZoom'
+import { ProductPlate } from '@/components/product/ProductPlate'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -36,6 +37,7 @@ export function ProductPage() {
   const [size, setSize] = useState<ThobeSize | ''>('')
   const [guideOpen, setGuideOpen] = useState(false)
   const [showBar, setShowBar] = useState(false)
+  const [looking, setLooking] = useState<number | null>(null)
   const stock = useProductStock(product?.id ?? '')
   const buyRef = useRef<HTMLDivElement>(null)
   const related = useMemo(
@@ -58,6 +60,13 @@ export function ProductPage() {
   useEffect(() => {
     setSize('')
     setGuideOpen(false)
+    setLooking(null)
+  }, [product?.id])
+
+  useEffect(() => {
+    if (!product) return
+    document.documentElement.classList.add('snap-product')
+    return () => document.documentElement.classList.remove('snap-product')
   }, [product?.id])
 
   useEffect(() => {
@@ -108,9 +117,9 @@ export function ProductPage() {
           }),
         }}
       />
-      <section className="pt-28 md:pt-32">
+      <section className="xl:pt-32">
         <div className="grid xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)] xl:items-start">
-          <div className="order-2 px-6 py-12 md:px-12 xl:order-1 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
+          <div className="order-2 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-1 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
             <Reveal>
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
                 <Link
@@ -144,25 +153,13 @@ export function ProductPage() {
 
           <div className="order-1 xl:order-2">
             {product.gallery.map((image, index) => (
-              <div key={`${image.src}-${index}`} className="relative bg-ivory-deep">
-                <ImageFrame
-                  src={image.src}
-                  alt={image.alt}
-                  eager={index === 0}
-                  objectPosition={image.objectPosition}
-                  className={
-                    index === 0
-                      ? 'aspect-[3/4] w-full xl:min-h-[calc(100svh-7rem)] xl:aspect-auto'
-                      : 'aspect-[3/4] w-full'
-                  }
-                />
-                {index === 0 ? (
-                  <WovenLabel
-                    size="md"
-                    className="pointer-events-none absolute bottom-5 left-5 z-10 md:bottom-8 md:left-8"
-                  />
-                ) : null}
-              </div>
+              <ProductPlate
+                key={`${image.src}-${index}`}
+                image={image}
+                film={index === 0 ? product.film : undefined}
+                first={index === 0}
+                onLook={() => setLooking(index)}
+              />
             ))}
           </div>
 
@@ -314,7 +311,7 @@ export function ProductPage() {
       <div
         className={cn(
           'fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
-          showBar && !open ? 'translate-y-0' : 'translate-y-full',
+          showBar && !open && looking === null ? 'translate-y-0' : 'translate-y-full',
         )}
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         aria-hidden={!showBar}
@@ -340,6 +337,14 @@ export function ProductPage() {
           )}
         </div>
       </div>
+      {looking !== null ? (
+        <ClothZoom
+          src={product.gallery[looking]?.src ?? product.image}
+          alt={product.gallery[looking]?.alt ?? product.imageAlt}
+          objectPosition={product.gallery[looking]?.objectPosition ?? product.objectPosition}
+          onClose={() => setLooking(null)}
+        />
+      ) : null}
     </>
   )
 }

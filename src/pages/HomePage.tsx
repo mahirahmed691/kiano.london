@@ -1,4 +1,4 @@
-import { LookbookStrip } from '@/components/editorial/LookbookStrip'
+import { HouseFilm } from '@/components/editorial/HouseFilm'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Hero } from '@/components/editorial/Hero'
 import { ProductGrid } from '@/components/product/ProductGrid'
@@ -14,18 +14,24 @@ import { usePageMeta } from '@/lib/usePageMeta'
 const lookbook = [
   {
     src: '/images/thobe-layl.jpg',
+    film: '/films/layl.mp4',
     alt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
     objectPosition: 'center 12%',
+    name: 'Layl',
   },
   {
     src: '/images/thobe-ghabar.jpg',
+    film: '/films/ghabar.mp4',
     alt: 'Ghabār: an earth-grey Emirati thobe, a column of cloth.',
     objectPosition: 'center 18%',
+    name: 'Ghabār',
   },
   {
     src: '/images/thobe-raml.jpg',
+    film: '/films/raml.mp4',
     alt: 'The Raml thobe: sand extra-long staple, the daylight column.',
     objectPosition: 'center 12%',
+    name: 'Raml',
   },
 ]
 
@@ -36,6 +42,7 @@ export function HomePage() {
     <>
       <Hero
         image="/images/featured-overcoat.jpg"
+        film="/films/hadid.mp4"
         imageAlt="Hadīd: a charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
         objectPosition="68% 12%"
         kicker={`Established ${site.established} · ${site.city}`}
@@ -111,15 +118,40 @@ export function HomePage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/50">
-        <Container>
-          <Reveal className="mb-12 md:mb-16">
-            <Eyebrow>The columns</Eyebrow>
-            <Display className="mt-3 text-4xl md:text-5xl">Layl, Ghabār, Raml.</Display>
-          </Reveal>
-        </Container>
-        <LookbookStrip plates={lookbook} />
-      </Section>
+      <section>
+        {lookbook.map((plate) => (
+          <figure key={plate.src} className="relative min-h-[100svh] overflow-hidden bg-night">
+            <HouseFilm
+              src={plate.film}
+              poster={plate.src}
+              alt={plate.alt}
+              objectPosition={plate.objectPosition}
+              className="absolute inset-0 h-full w-full"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.72)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-24 md:px-12 lg:px-16">
+              <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">The columns</p>
+              <p className="mt-2 font-display text-4xl font-light text-ivory md:text-5xl">
+                {plate.name}
+              </p>
+            </figcaption>
+          </figure>
+        ))}
+        <figure className="relative min-h-[100svh] overflow-hidden bg-night">
+          <HouseFilm
+            src="/films/cloth.mp4"
+            poster="/images/stitch-pad.jpg"
+            alt="Pad-stitching through the collar stand, silk on linen."
+            objectPosition="center 40%"
+            className="absolute inset-0 h-full w-full"
+          />
+          <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.72)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-24 md:px-12 lg:px-16">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">The stitch</p>
+            <p className="mt-2 font-display text-4xl font-light text-ivory md:text-5xl">
+              Closer.
+            </p>
+          </figcaption>
+        </figure>
+      </section>
 
       <Section className="bg-night py-24 md:py-32">
         <Container>

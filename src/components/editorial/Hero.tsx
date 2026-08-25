@@ -1,11 +1,13 @@
 import { type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 import { Container } from '@/components/ui/Container'
+import { HouseFilm } from '@/components/editorial/HouseFilm'
 import { Display, Eyebrow, Lead } from '@/components/ui/Heading'
 
 type Props = {
   image: string
   imageAlt: string
+  film?: string
   objectPosition?: string
   kicker?: string
   title: string
@@ -25,6 +27,7 @@ const heightClass = {
 export function Hero({
   image,
   imageAlt,
+  film,
   objectPosition = 'center 22%',
   kicker,
   title,
@@ -36,15 +39,26 @@ export function Hero({
 }: Props) {
   return (
     <section className={cn('relative flex items-end overflow-hidden', heightClass[minHeight])}>
-      <img
-        src={image}
-        alt={imageAlt}
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{ objectPosition }}
-        fetchPriority={priority ? 'high' : undefined}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-      />
+      {film ? (
+        <HouseFilm
+          src={film}
+          poster={image}
+          alt={imageAlt}
+          objectPosition={objectPosition}
+          priority={priority}
+          className="absolute inset-0 h-full w-full"
+        />
+      ) : (
+        <img
+          src={image}
+          alt={imageAlt}
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition }}
+          fetchPriority={priority ? 'high' : undefined}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      )}
       <div
         className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.55)_0%,rgba(20,18,16,0.12)_26%,rgba(20,18,16,0.1)_50%,rgba(20,18,16,0.8)_100%)]"
         aria-hidden="true"

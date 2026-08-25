@@ -146,6 +146,16 @@ select {
   }
 }
 
+html.snap-product {
+  scroll-snap-type: y proximity;
+}
+
+@media (min-width: 80rem) {
+  html.snap-product {
+    scroll-snap-type: none;
+  }
+}
+
 .cl-rootBox,
 .cl-cardBox,
 .cl-card {
