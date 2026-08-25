@@ -59,7 +59,7 @@ export const processSteps: ProcessStep[] = [
     number: '04',
     title: 'Finish',
     summary:
-      'Concealed plackets, horn buttons, a label set by hand. The last press is as considered as the first cut. The garment should look finished from the inside.',
+      'Concealed plackets, horn buttons, three labels set by hand. The woven mark at the nape, the size beside it, care at the side seam. The last press is as considered as the first cut. The garment should look finished from the inside.',
     image: '/images/fastenings.jpg',
     imageAlt: 'Integrated fastenings at the finish of a thobe placket.',
   },
@@ -162,7 +162,7 @@ export const detailSections: DetailSection[] = [
     title: 'The interior pocket',
     copy: [
       'A telephone, a pair of glasses, a folded letter. The pocket is bagged in the lining and set so it does not pull the cloth. You feel it. Nobody else should see it.',
-      'The label is woven, not printed: the Kiano monogram, set at the nape by hand. Even the parts that remain unseen are made to the same standard.',
+      'The label is woven, not printed: the Kiano monogram, set at the nape by hand. Size is a separate tab. Care sits at the side seam. Even the parts that remain unseen are made to the same standard.',
     ],
     image: '/images/concealed-pocket.jpg',
     imageAlt: 'The concealed interior pocket of the Layl thobe.',

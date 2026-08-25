@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
+import { packingNote } from '@/data/packing'
 import { productPath } from '@/data/products'
 import { shippingCountries } from '@/data/shipping'
 import { useCart } from '@/lib/cart'
@@ -132,7 +133,7 @@ export function CheckoutPage() {
             <Body className="mt-6">
               {String(count).padStart(2, '0')} {count === 1 ? 'piece' : 'pieces'}. Each piece is
               made after payment, from the house block, in four to eight weeks. Carriage is
-              included.
+              included. {packingNote}
             </Body>
 
             {cancelled ? (
