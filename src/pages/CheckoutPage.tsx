@@ -427,7 +427,7 @@ export function CheckoutPage() {
                 type="submit"
                 form="checkout-form"
                 disabled={busy}
-                className="mt-8 hidden w-full items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory transition-colors duration-300 hover:bg-transparent hover:text-ink disabled:pointer-events-none disabled:opacity-35 lg:inline-flex"
+                className="mt-8 hidden w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35 lg:inline-flex"
               >
                 {busy ? 'Opening payment' : 'Continue to payment'}
               </button>

@@ -17,17 +17,17 @@ type Props = {
 
 const variantClass: Record<Variant, string> = {
   outline:
-    'border border-current bg-transparent [@media(hover:hover)]:hover:bg-ink [@media(hover:hover)]:hover:text-ivory [@media(hover:hover)]:hover:border-ink',
+    'border border-current bg-transparent [@media(hover:hover)]:hover:bg-ink [@media(hover:hover)]:hover:text-ivory [@media(hover:hover)]:hover:[-webkit-text-fill-color:#F2EBDC] [@media(hover:hover)]:hover:border-ink',
   ghost: 'border-0 bg-transparent px-0 [@media(hover:hover)]:hover:opacity-70',
   invert:
-    'border border-ivory bg-ivory text-ink [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-ivory',
+    'border border-ivory bg-ivory text-ink [-webkit-text-fill-color:#1B1714] [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-ivory [@media(hover:hover)]:hover:[-webkit-text-fill-color:#F2EBDC]',
   solid:
-    'border border-ink bg-ink text-ivory [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-ink',
+    'border border-ink bg-ink text-ivory [-webkit-text-fill-color:#F2EBDC] [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-ink [@media(hover:hover)]:hover:[-webkit-text-fill-color:#1B1714]',
 }
 
 function classes(variant: Variant, className?: string, disabled?: boolean) {
   return cn(
-    'inline-flex min-h-11 items-center gap-3 px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300 active:opacity-80',
+    'inline-flex min-h-11 appearance-none items-center gap-3 px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300 active:opacity-80',
     variantClass[variant],
     disabled && 'pointer-events-none opacity-35',
     className,

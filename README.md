@@ -36,6 +36,8 @@ The logotype returns to the homepage. Collection pieces are driven from `src/dat
 - Stripe Checkout
 - Semantic HTML, CSS transitions, `prefers-reduced-motion`
 
+The site installs as a standalone app from Safari or Chrome (Add to Home Screen). Native iOS and Android use the Expo shell in `mobile/`, which opens the live house.
+
 ## Local development
 
 ```bash
@@ -43,7 +45,14 @@ npm install
 npm run dev
 ```
 
-The app runs at [http://localhost:5173](http://localhost:5173).
+The site runs at [http://localhost:5173](http://localhost:5173).
+
+```bash
+cd mobile
+npm start
+```
+
+Scan the QR code with Expo Go. The native shell loads [https://www.kiano.london](https://www.kiano.london).
 
 ```bash
 npm run build
@@ -89,3 +98,4 @@ Visual language, type, colour and spacing are recorded in `DESIGN.md`.
 | `npm run preview` | Serve the production build |
 | `npm run lint` | Oxlint |
 | `npm run db:migrate` | Create inventory, members and orders tables |
+| `cd mobile && npm start` | Expo Go shell for the house app |

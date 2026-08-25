@@ -21,6 +21,7 @@ Bind to all interfaces if the preview pane cannot reach localhost: `npx vite --h
 
 - Package manager is npm (`package-lock.json`). Startup install is `npm install`.
 - Clerk handles member sign-in. Neon Postgres holds stock and orders. Stripe remains checkout.
+- The installable web app is the Vite PWA. Native Expo lives in `mobile/` (`npx expo start` from that folder).
 - Do not invent a new visual system. Follow `DESIGN.md` (Cormorant Garamond / editorial ivory and espresso).
 - Standard routes and scripts are listed in `README.md`. Routes are declared in `src/App.tsx` with React Router.
 - Framework is Vite, not Next.js. Deploy as a SPA (`vercel.json` rewrites unknown routes to `index.html`).

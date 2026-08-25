@@ -1,6 +1,7 @@
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
@@ -145,7 +146,21 @@ export default defineConfig(({ mode }) => {
     env.VITE_CLERK_PUBLISHABLE_KEY || env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
 
   return {
-    plugins: [react(), tailwindcss(), atelierApi(env)],
+    plugins: [
+      react(),
+      tailwindcss(),
+      atelierApi(env),
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
+        manifest: false,
+        workbox: {
+          navigateFallback: '/index.html',
+          navigateFallbackDenylist: [/^\/api\//],
+          globPatterns: ['**/*.{js,css,html,svg,png,jpg,jpeg,webp,woff2}'],
+        },
+      }),
+    ],
     envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
     define: {
       'import.meta.env.VITE_CLERK_PUBLISHABLE_KEY': JSON.stringify(clerkPublishable),

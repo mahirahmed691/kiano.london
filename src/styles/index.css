@@ -18,6 +18,14 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+@media (display-mode: standalone) {
+  html {
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+  }
 }
 
 body {
@@ -46,12 +54,15 @@ img {
   max-width: 100%;
 }
 
-a {
-  color: inherit;
-}
+@layer base {
+  a {
+    color: inherit;
+  }
 
-button {
-  font-family: inherit;
+  button {
+    appearance: none;
+    font-family: inherit;
+  }
 }
 
 input,

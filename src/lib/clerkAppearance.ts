@@ -41,6 +41,10 @@ export const clerkAppearance = {
       letterSpacing: '0.22em',
       fontSize: '11px',
       fontWeight: '400',
+      backgroundColor: '#1B1714',
+      color: '#F2EBDC',
+      WebkitAppearance: 'none',
+      WebkitTextFillColor: '#F2EBDC',
     },
     socialButtonsBlockButton: {
       borderRadius: '0',
