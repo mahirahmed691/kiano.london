@@ -4,62 +4,134 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv, type Plugin } from 'vite'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
+const envKeys = [
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+  'SITE_URL',
+  'DATABASE_URL',
+  'POSTGRES_URL',
+  'CLERK_SECRET_KEY',
+  'RESEND_API_KEY',
+  'RESEND_FROM',
+] as const
+
+type Method = 'GET' | 'POST'
+
+type Route = {
+  method: Method
+  path: string
+  load: () => Promise<(request: Request) => Promise<Response>>
+}
+
+const routes: Route[] = [
+  {
+    method: 'POST',
+    path: '/api/create-checkout-session',
+    load: async () => (await import('./api/create-checkout-session.ts')).POST,
+  },
+  {
+    method: 'GET',
+    path: '/api/checkout-session',
+    load: async () => (await import('./api/checkout-session.ts')).GET,
+  },
+  {
+    method: 'GET',
+    path: '/api/inventory',
+    load: async () => (await import('./api/inventory.ts')).GET,
+  },
+  {
+    method: 'GET',
+    path: '/api/orders',
+    load: async () => (await import('./api/orders.ts')).GET,
+  },
+  {
+    method: 'POST',
+    path: '/api/member',
+    load: async () => (await import('./api/member.ts')).POST,
+  },
+  {
+    method: 'POST',
+    path: '/api/stripe-webhook',
+    load: async () => (await import('./api/stripe-webhook.ts')).POST,
+  },
+  {
+    method: 'POST',
+    path: '/api/subscribe',
+    load: async () => (await import('./api/subscribe.ts')).POST,
+  },
+  {
+    method: 'GET',
+    path: '/api/subscribe-confirm',
+    load: async () => (await import('./api/subscribe-confirm.ts')).GET,
+  },
+]
+
 function originOf(req: IncomingMessage) {
   return `http://${req.headers.host}`
 }
 
 async function writeJson(res: ServerResponse, response: Response) {
   res.statusCode = response.status
-  res.setHeader('content-type', 'application/json')
-  res.end(await response.text())
+  response.headers.forEach((value, key) => {
+    res.setHeader(key, value)
+  })
+  if (response.status >= 300 && response.status < 400) {
+    res.end()
+    return
+  }
+  if (!res.getHeader('content-type')) {
+    res.setHeader('content-type', 'application/json')
+  }
+  res.end(Buffer.from(await response.arrayBuffer()))
 }
 
-function checkoutApi(env: Record<string, string>): Plugin {
+function headerValue(value: string | string[] | undefined) {
+  if (Array.isArray(value)) return value.join(', ')
+  return value ?? ''
+}
+
+function atelierApi(env: Record<string, string>): Plugin {
   return {
-    name: 'checkout-api',
+    name: 'atelier-api',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const pathname = req.url?.split('?')[0]
-        const createSession = pathname === '/api/create-checkout-session' && req.method === 'POST'
-        const readSession = pathname === '/api/checkout-session' && req.method === 'GET'
-
-        if (!createSession && !readSession) {
+        const pathname = req.url?.split('?')[0] ?? ''
+        const route = routes.find(
+          (entry) => entry.path === pathname && entry.method === req.method,
+        )
+        if (!route) {
           next()
           return
         }
 
         void (async () => {
-          if (env.STRIPE_SECRET_KEY) process.env.STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY
-          if (env.SITE_URL) process.env.SITE_URL = env.SITE_URL
+          for (const key of envKeys) {
+            if (env[key]) process.env[key] = env[key]
+          }
           try {
-            if (createSession) {
-              const chunks: Buffer[] = []
+            const chunks: Buffer[] = []
+            if (route.method === 'POST') {
               for await (const chunk of req) {
                 chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
               }
-              const request = new Request(`${originOf(req)}/api/create-checkout-session`, {
-                method: 'POST',
-                headers: {
-                  'content-type': 'application/json',
-                  origin: req.headers.origin ?? originOf(req),
-                },
-                body: Buffer.concat(chunks),
-              })
-              const { POST } = await import('./api/create-checkout-session.ts')
-              await writeJson(res, await POST(request))
-              return
             }
-
             const request = new Request(`${originOf(req)}${req.url}`, {
-              method: 'GET',
+              method: route.method,
+              headers: {
+                'content-type': headerValue(req.headers['content-type']) || 'application/json',
+                origin: headerValue(req.headers.origin) || originOf(req),
+                authorization: headerValue(req.headers.authorization),
+                'stripe-signature': headerValue(req.headers['stripe-signature']),
+              },
+              body: route.method === 'POST' ? Buffer.concat(chunks) : undefined,
             })
-            const { GET } = await import('./api/checkout-session.ts')
-            await writeJson(res, await GET(request))
+            const handler = await route.load()
+            await writeJson(res, await handler(request))
           } catch (caught) {
             console.error(caught)
             res.statusCode = 500
             res.setHeader('content-type', 'application/json')
-            res.end(JSON.stringify({ error: 'The atelier could not reach payment.' }))
+            res.end(JSON.stringify({ error: 'The atelier could not complete that request.' }))
           }
         })()
       })
@@ -69,8 +141,15 @@ function checkoutApi(env: Record<string, string>): Plugin {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  const clerkPublishable =
+    env.VITE_CLERK_PUBLISHABLE_KEY || env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
+
   return {
-    plugins: [react(), tailwindcss(), checkoutApi(env)],
+    plugins: [react(), tailwindcss(), atelierApi(env)],
+    envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
+    define: {
+      'import.meta.env.VITE_CLERK_PUBLISHABLE_KEY': JSON.stringify(clerkPublishable),
+    },
     resolve: {
       alias: {
         '@': path.resolve(import.meta.dirname, 'src'),

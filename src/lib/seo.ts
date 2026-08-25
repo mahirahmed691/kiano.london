@@ -1,12 +1,9 @@
+import { type PageMeta } from '@/lib/share'
+
+export type { PageMeta }
+
 export const SITE_URL =
   import.meta.env.VITE_SITE_URL?.replace(/\/$/, '') ?? 'https://www.kiano.london'
-
-export type PageMeta = {
-  title: string
-  description: string
-  path: string
-  image?: string
-}
 
 function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
   const selector = `meta[${attr}="${key}"]`
@@ -19,18 +16,20 @@ function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
   el.setAttribute('content', content)
 }
 
-export function applyPageMeta({ title, description, path, image }: PageMeta) {
+export function applyPageMeta({ title, description, path, image, imageAlt }: PageMeta) {
   const url = `${SITE_URL}${path}`
-  const ogImage = image?.startsWith('http')
-    ? image
-    : `${SITE_URL}${image ?? '/images/og.jpg'}`
+  const ogImage = image?.startsWith('http') ? image : `${SITE_URL}${image ?? '/images/og.jpg'}`
+  const alt = imageAlt ?? 'Kiano London. Emirati thobes and jubbahs, cut in London.'
 
   document.title = title
   upsertMeta('name', 'description', description)
+  upsertMeta('property', 'og:locale', 'en_GB')
+  upsertMeta('property', 'og:site_name', 'Kiano London')
   upsertMeta('property', 'og:title', title)
   upsertMeta('property', 'og:description', description)
   upsertMeta('property', 'og:url', url)
   upsertMeta('property', 'og:image', ogImage)
+  upsertMeta('property', 'og:image:alt', alt)
   upsertMeta('property', 'og:type', 'website')
   upsertMeta('name', 'twitter:card', 'summary_large_image')
   upsertMeta('name', 'twitter:title', title)

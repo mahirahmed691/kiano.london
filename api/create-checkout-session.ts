@@ -5,6 +5,8 @@ import {
   shippingCountryCodes,
   type CheckoutDetails,
 } from '../src/data/shipping.ts'
+import { clerkUserIdFrom } from './_lib/clerk.ts'
+import { assertStock, StockError } from './_lib/stock.ts'
 
 type BasketItem = {
   productId: string
@@ -63,14 +65,6 @@ export async function POST(request: Request) {
 }
 
 async function createSession(request: Request) {
-  const secret = process.env.STRIPE_SECRET_KEY
-  if (!secret || secret === 'undefined') {
-    return Response.json(
-      { error: 'Payment is not configured. Add STRIPE_SECRET_KEY to the environment.' },
-      { status: 503 },
-    )
-  }
-
   let body: { items?: BasketItem[]; details?: unknown }
   try {
     body = (await request.json()) as { items?: BasketItem[]; details?: unknown }
@@ -93,6 +87,7 @@ async function createSession(request: Request) {
   const allowed = new Set<number>(thobeSizes)
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = []
   const summary: string[] = []
+  const stockLines: { productId: string; size: number; quantity: number }[] = []
 
   for (const item of items) {
     const product = getProduct(item.productId)
@@ -104,6 +99,7 @@ async function createSession(request: Request) {
 
     const name = `${product.name}${product.cut === 'Jubbah' ? ` · ${product.colour}` : ''} · ${size}`
     summary.push(`${name} × ${quantity}`)
+    stockLines.push({ productId: product.id, size, quantity })
 
     const imageUrl = origin.startsWith('https') ? `${origin}${product.image}` : undefined
 
@@ -115,11 +111,35 @@ async function createSession(request: Request) {
         product_data: {
           name,
           description: `${product.colour}. ${product.cloth}. Made to order in London.`,
+          metadata: {
+            product_id: product.id,
+            size: String(size),
+          },
           ...(imageUrl ? { images: [imageUrl] } : {}),
         },
       },
     })
   }
+
+  try {
+    await assertStock(stockLines)
+  } catch (caught) {
+    if (caught instanceof StockError) {
+      return Response.json({ error: caught.message }, { status: 409 })
+    }
+    console.error(caught)
+    return Response.json({ error: 'Remaining cuts could not be read.' }, { status: 503 })
+  }
+
+  const secret = process.env.STRIPE_SECRET_KEY
+  if (!secret || secret === 'undefined') {
+    return Response.json(
+      { error: 'Payment is not configured. Add STRIPE_SECRET_KEY to the environment.' },
+      { status: 503 },
+    )
+  }
+
+  const clerkUserId = await clerkUserIdFrom(request)
 
   const stripe = new Stripe(secret)
 
@@ -166,12 +186,14 @@ async function createSession(request: Request) {
           message: 'Confirm where the finished piece should be sent.',
         },
       },
+      client_reference_id: clerkUserId ?? undefined,
       metadata: {
         name: details.name,
         email: details.email,
         telephone: details.telephone,
         note: details.note,
         country: details.country,
+        clerk_user_id: clerkUserId ?? '',
       },
       payment_intent_data: {
         description: `Kiano London. ${summary.join('; ')}`.slice(0, 1000),

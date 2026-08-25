@@ -5,6 +5,7 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { AppointmentForm } from '@/components/visit/AppointmentForm'
 import { site } from '@/data/site'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const visitSteps = [
@@ -26,13 +27,7 @@ const visitSteps = [
 ]
 
 export function VisitPage() {
-  usePageMeta({
-    title: 'Visit — Kiano London',
-    description:
-      'Appointments at the Kiano London atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
-    path: '/visit',
-    image: '/images/cutting-room.jpg',
-  })
+  usePageMeta(getShareMeta('/visit'))
 
   return (
     <>

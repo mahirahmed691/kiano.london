@@ -11,6 +11,7 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { packingNote } from '@/data/packing'
+import { site } from '@/data/site'
 import {
   colourVariants,
   getProduct,
@@ -21,7 +22,11 @@ import {
 } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
+import { ShareLink } from '@/components/ui/ShareLink'
+import { SITE_URL } from '@/lib/seo'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { remainingCopy, useProductStock } from '@/lib/useProductStock'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export function ProductPage() {
@@ -31,6 +36,7 @@ export function ProductPage() {
   const [size, setSize] = useState<ThobeSize | ''>('')
   const [guideOpen, setGuideOpen] = useState(false)
   const [showBar, setShowBar] = useState(false)
+  const stock = useProductStock(product?.id ?? '')
   const buyRef = useRef<HTMLDivElement>(null)
   const related = useMemo(
     () => (product ? relatedProducts(product.id).slice(0, 3) : []),
@@ -38,14 +44,16 @@ export function ProductPage() {
   )
   const variants = useMemo(() => (product ? colourVariants(product) : []), [product])
 
-  usePageMeta({
-    title: product ? `${product.name} — Kiano London` : 'Kiano London',
-    description: product
-      ? `${product.name}: ${product.colour.toLowerCase()} Emirati ${product.cut.toLowerCase()} in ${product.cloth.toLowerCase()}. Cut in London, sizes 52 to 60.`
-      : 'This piece is not in the collection.',
-    path: product ? productPath(product) : '/shop',
-    image: product?.image,
-  })
+  const share = getShareMeta(product ? productPath(product) : '/shop')
+  usePageMeta(
+    product
+      ? share
+      : {
+          title: 'Kiano London',
+          description: 'This piece is not in the collection.',
+          path: '/shop',
+        },
+  )
 
   useEffect(() => {
     setSize('')
@@ -70,14 +78,36 @@ export function ProductPage() {
   const enquireTo = size
     ? `/visit?piece=${product.id}&size=${size}`
     : `/visit?piece=${product.id}`
+  const remaining = size && stock ? stock[size] : undefined
+  const held = remaining === 0
 
   function addToBag() {
-    if (!product || !size) return
+    if (!product || !size || held) return
     add(product.id, size)
   }
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: product.name,
+            image: `${SITE_URL}${product.image}`,
+            description: product.description,
+            brand: { '@type': 'Brand', name: site.fullName },
+            offers: {
+              '@type': 'Offer',
+              url: `${SITE_URL}${productPath(product)}`,
+              priceCurrency: 'GBP',
+              price: (product.pricePence / 100).toFixed(2),
+              availability: 'https://schema.org/PreOrder',
+            },
+          }),
+        }}
+      />
       <section className="pt-28 md:pt-32">
         <div className="grid xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)] xl:items-start">
           <div className="order-2 px-6 py-12 md:px-12 xl:order-1 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
@@ -171,31 +201,43 @@ export function ProductPage() {
                 ) : null}
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
                 <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-rule">
-                  {thobeSizes.map((value) => (
-                    <button
-                      key={value}
-                      type="button"
-                      onClick={() => setSize(value)}
-                      className={cn(
-                        'flex aspect-square items-center justify-center bg-ivory text-[12px] tracking-[0.08em] transition-colors duration-300',
-                        size === value ? 'bg-ink text-ivory' : 'hover:bg-ivory-deep',
-                      )}
-                    >
-                      {value}
-                    </button>
-                  ))}
+                  {thobeSizes.map((value) => {
+                    const sizeHeld = stock?.[value] === 0
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setSize(value)}
+                        className={cn(
+                          'flex aspect-square items-center justify-center bg-ivory text-[12px] tracking-[0.08em] transition-colors duration-300',
+                          size === value ? 'bg-ink text-ivory' : 'hover:bg-ivory-deep',
+                          sizeHeld && size !== value && 'opacity-35',
+                        )}
+                      >
+                        {value}
+                      </button>
+                    )
+                  })}
                 </div>
-                <p className="mt-3 text-[13px] font-light text-stone">{product.leadTime}</p>
+                <p className="mt-3 text-[13px] font-light text-stone">
+                  {size && remaining !== undefined ? remainingCopy(remaining) : product.leadTime}
+                </p>
               </div>
 
-              <Button
-                variant="solid"
-                className="mt-10 w-full justify-center"
-                disabled={!size}
-                onClick={addToBag}
-              >
-                {size ? 'Add to bag' : 'Choose a size'}
-              </Button>
+              {held ? (
+                <Button variant="solid" className="mt-10 w-full justify-center" to={enquireTo}>
+                  Write to the atelier
+                </Button>
+              ) : (
+                <Button
+                  variant="solid"
+                  className="mt-10 w-full justify-center"
+                  disabled={!size}
+                  onClick={addToBag}
+                >
+                  {size ? 'Add to bag' : 'Choose a size'}
+                </Button>
+              )}
 
               <div className="mt-8 space-y-4 border-t border-rule pt-6">
                 <button
@@ -213,6 +255,7 @@ export function ProductPage() {
                   is cut. {packingNote}
                 </p>
                 <TextLink to={enquireTo}>Enquire to visit</TextLink>
+                <ShareLink title={share.title} text={share.description} path={share.path} />
               </div>
             </Reveal>
           </div>
@@ -278,17 +321,23 @@ export function ProductPage() {
       >
         <div className="flex items-center gap-4">
           <p className="font-display text-2xl font-light">{product.price}</p>
-          <Button
-            variant="solid"
-            className="flex-1 justify-center"
-            disabled={!size}
-            onClick={() => {
-              if (size) addToBag()
-              else buyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-            }}
-          >
-            {size ? 'Add to bag' : 'Choose a size'}
-          </Button>
+          {held ? (
+            <Button variant="solid" className="flex-1 justify-center" to={enquireTo}>
+              Write to the atelier
+            </Button>
+          ) : (
+            <Button
+              variant="solid"
+              className="flex-1 justify-center"
+              disabled={!size}
+              onClick={() => {
+                if (size) addToBag()
+                else buyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              }}
+            >
+              {size ? 'Add to bag' : 'Choose a size'}
+            </Button>
+          )}
         </div>
       </div>
     </>

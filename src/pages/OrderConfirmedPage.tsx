@@ -12,6 +12,7 @@ import {
   type CheckoutOrder,
 } from '@/lib/checkout'
 import { formatGbp } from '@/lib/money'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 type View = 'loading' | 'missing' | 'unpaid' | 'paid'
@@ -24,12 +25,11 @@ export function OrderConfirmedPage() {
   const [order, setOrder] = useState<CheckoutOrder | null>(null)
 
   usePageMeta({
+    ...getShareMeta('/order/confirmed'),
     title:
       view === 'paid'
         ? 'The cut is reserved — Kiano London'
         : 'Order — Kiano London',
-    description: 'Your piece is reserved. Cut in London, four to eight weeks.',
-    path: '/order/confirmed',
   })
 
   useEffect(() => {

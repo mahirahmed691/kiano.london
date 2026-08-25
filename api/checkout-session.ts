@@ -4,6 +4,7 @@ import {
   type CheckoutOrder,
   type CheckoutOrderAddress,
 } from '../src/data/shipping.ts'
+import { fulfillPaidSession } from './_lib/fulfill.ts'
 
 function addressFrom(
   name: string | null | undefined,
@@ -66,8 +67,13 @@ export async function GET(request: Request) {
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ['line_items'],
+      expand: ['line_items.data.price.product'],
     })
+    try {
+      await fulfillPaidSession(session)
+    } catch (caught) {
+      console.error(caught)
+    }
     return Response.json(toCheckoutOrder(session))
   } catch (caught) {
     console.error(caught)

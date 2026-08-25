@@ -14,6 +14,13 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/story` | Our Story |
 | `/craftsmanship` | Craftsmanship |
 | `/craftsmanship-details` | The making, in detail |
+| `/visit` | Atelier visit |
+| `/account` | Member reservations |
+| `/cookies` | Cookies |
+| `/privacy` | Privacy |
+| `/letters/confirmed` | List confirmation |
+| `/sign-in` | Member sign in |
+| `/sign-up` | Open an account |
 
 The logotype returns to the homepage. Collection pieces are driven from `src/data/products.ts`.
 
@@ -23,6 +30,10 @@ The logotype returns to the homepage. Collection pieces are driven from `src/dat
 - Vite
 - Tailwind CSS v4
 - React Router
+- Clerk (member accounts)
+- Neon Postgres (stock, orders, and the list)
+- Resend (list confirmation, once the domain is verified)
+- Stripe Checkout
 - Semantic HTML, CSS transitions, `prefers-reduced-motion`
 
 ## Local development
@@ -77,3 +88,4 @@ Visual language, type, colour and spacing are recorded in `DESIGN.md`.
 | `npm run build` | Typecheck and production build |
 | `npm run preview` | Serve the production build |
 | `npm run lint` | Oxlint |
+| `npm run db:migrate` | Create inventory, members and orders tables |

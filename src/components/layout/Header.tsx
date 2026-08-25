@@ -90,7 +90,16 @@ export function Header() {
 
           <HouseMark inverted={inverted} className="items-center text-center" />
 
-          <div className="flex items-center justify-end">
+          <div className="flex items-center justify-end gap-6 lg:gap-9">
+            <NavLink
+              to="/account"
+              className={cn(
+                'hidden text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 md:inline',
+                inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
+              )}
+            >
+              Account
+            </NavLink>
             <button
               type="button"
               className={cn(

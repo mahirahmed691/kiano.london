@@ -3,6 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { CartDrawer } from '@/components/cart/CartDrawer'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
+import { HouseNotices } from '@/components/notices/HouseNotices'
+import { HouseSchema } from '@/components/seo/HouseSchema'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -19,12 +21,14 @@ export function Layout() {
   return (
     <>
       <ScrollToTop />
+      <HouseSchema />
       <Header />
       <main id="main-content" className="page-enter" key={pathname}>
         <Outlet />
       </main>
       {quiet ? null : <Footer />}
       <CartDrawer />
+      <HouseNotices />
     </>
   )
 }

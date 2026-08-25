@@ -11,6 +11,7 @@ import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { featuredJubbahs, featuredProducts } from '@/data/products'
 import { site } from '@/data/site'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const lookbook = [
@@ -35,13 +36,7 @@ const lookbook = [
 ]
 
 export function HomePage() {
-  usePageMeta({
-    title: 'Kiano London',
-    description:
-      'Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. Cut in London, sizes 52 to 60.',
-    path: '/',
-    image: '/images/featured-overcoat.jpg',
-  })
+  usePageMeta(getShareMeta('/'))
 
   return (
     <>

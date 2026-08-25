@@ -5,6 +5,7 @@ type Props = {
   as?: 'h1' | 'h2' | 'h3'
   children: ReactNode
   className?: string
+  id?: string
 }
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
@@ -20,9 +21,10 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
   )
 }
 
-export function Display({ as: Tag = 'h2', children, className }: Props) {
+export function Display({ as: Tag = 'h2', children, className, id }: Props) {
   return (
     <Tag
+      id={id}
       className={cn(
         'font-display font-light leading-[1.05] tracking-[-0.02em] text-ink',
         className,

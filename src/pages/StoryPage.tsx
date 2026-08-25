@@ -7,16 +7,11 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { site } from '@/data/site'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function StoryPage() {
-  usePageMeta({
-    title: 'Story — Kiano London',
-    description:
-      'A London atelier of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar, cut in London.',
-    path: '/story',
-    image: '/images/featured-overcoat.jpg',
-  })
+  usePageMeta(getShareMeta('/story'))
 
   return (
     <>

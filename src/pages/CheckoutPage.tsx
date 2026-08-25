@@ -1,5 +1,6 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
+import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { CheckoutMember } from '@/components/checkout/CheckoutMember'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -13,8 +14,10 @@ import {
   writeStoredCheckout,
   type CheckoutDetails,
 } from '@/lib/checkout'
+import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const fieldClass =
@@ -46,16 +49,21 @@ export function CheckoutPage() {
   const [details, setDetails] = useState<CheckoutDetails>(readStoredCheckout)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const getTokenRef = useRef<() => Promise<string | null>>(async () => null)
 
-  usePageMeta({
-    title: 'Checkout — Kiano London',
-    description: 'Reserve a thobe or jubbah. Made to order in London, four to eight weeks.',
-    path: '/checkout',
-  })
+  usePageMeta(getShareMeta('/checkout'))
 
   useEffect(() => {
     writeStoredCheckout(details)
   }, [details])
+
+  const onPrefill = useCallback((patch: Pick<CheckoutDetails, 'name' | 'email'>) => {
+    setDetails((current) => ({
+      ...current,
+      name: current.name || patch.name,
+      email: current.email || patch.email,
+    }))
+  }, [])
 
   function setField<K extends keyof CheckoutDetails>(key: K, value: CheckoutDetails[K]) {
     setDetails((current) => ({ ...current, [key]: value }))
@@ -75,9 +83,13 @@ export function CheckoutPage() {
     setBusy(true)
 
     try {
+      const token = await getTokenRef.current()
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({
           details: parsed.details,
           items: items.map((item) => ({
@@ -135,6 +147,14 @@ export function CheckoutPage() {
               made after payment, from the house block, in four to eight weeks. Carriage is
               included. {packingNote}
             </Body>
+            {clerkEnabled ? (
+              <CheckoutMember
+                onPrefill={onPrefill}
+                onToken={(getToken) => {
+                  getTokenRef.current = getToken
+                }}
+              />
+            ) : null}
 
             {cancelled ? (
               <p className="mt-8 max-w-prose border-t border-rule pt-6 text-[15px] font-light leading-relaxed text-ink">

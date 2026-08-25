@@ -134,3 +134,15 @@ select {
     display: none !important;
   }
 }
+
+.cl-rootBox,
+.cl-cardBox,
+.cl-card {
+  width: 100%;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.cl-footer {
+  background: transparent !important;
+}

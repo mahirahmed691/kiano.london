@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { applyPageMeta, type PageMeta } from '@/lib/seo'
+import { applyPageMeta } from '@/lib/seo'
+import { type PageMeta } from '@/lib/share'
 
-export function usePageMeta({ title, description, path, image }: PageMeta) {
+export function usePageMeta({ title, description, path, image, imageAlt }: PageMeta) {
   useEffect(() => {
-    applyPageMeta({ title, description, path, image })
-  }, [title, description, path, image])
+    applyPageMeta({ title, description, path, image, imageAlt })
+  }, [title, description, path, image, imageAlt])
 }

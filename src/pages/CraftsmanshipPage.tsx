@@ -6,16 +6,11 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { materials, processSteps, stitchStudies } from '@/data/craftsmanship'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function CraftsmanshipPage() {
-  usePageMeta({
-    title: 'Craftsmanship — Kiano London',
-    description:
-      'Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are cut and sewn in London.',
-    path: '/craftsmanship',
-    image: '/images/worsted-wool.jpg',
-  })
+  usePageMeta(getShareMeta('/craftsmanship'))
 
   return (
     <>

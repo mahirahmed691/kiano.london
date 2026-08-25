@@ -6,16 +6,11 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { detailSections } from '@/data/craftsmanship'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function CraftsmanshipDetailsPage() {
-  usePageMeta({
-    title: 'The Making — Kiano London',
-    description:
-      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a thobe is built.',
-    path: '/craftsmanship-details',
-      image: '/images/stitch-felled.jpg',
-  })
+  usePageMeta(getShareMeta('/craftsmanship-details'))
 
   return (
     <>

@@ -72,6 +72,20 @@ export function MobileNav({ open, onClose }: Props) {
             </li>
           ))}
           <li>
+            <NavLink
+              to="/account"
+              onClick={onClose}
+              className={({ isActive }) =>
+                cn(
+                  'font-display text-4xl font-light tracking-[-0.02em] transition-opacity',
+                  isActive ? 'opacity-100' : 'opacity-55 hover:opacity-100',
+                )
+              }
+            >
+              Account
+            </NavLink>
+          </li>
+          <li>
             <button
               type="button"
               className="font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"

@@ -14,6 +14,7 @@ import {
 } from '@/data/products'
 import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const filters: Array<'All' | ProductColour> = ['All', ...jubbahColours]
@@ -25,13 +26,7 @@ export function ShopPage() {
     [colour],
   )
 
-  usePageMeta({
-    title: 'Shop — Kiano London',
-    description:
-      'The jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, cut in London.',
-    path: '/shop',
-    image: '/images/jubbah-sand-02.jpg',
-  })
+  usePageMeta(getShareMeta('/shop'))
 
   return (
     <>

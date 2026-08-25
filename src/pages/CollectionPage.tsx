@@ -14,6 +14,7 @@ import {
 } from '@/data/products'
 import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
+import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const filters: Array<'All' | ProductColour> = ['All', ...productColours]
@@ -25,13 +26,7 @@ export function CollectionPage() {
     [colour],
   )
 
-  usePageMeta({
-    title: 'The Collection — Kiano London',
-    description:
-      'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, cut in London.',
-    path: '/collection',
-    image: '/images/thobe-raml.jpg',
-  })
+  usePageMeta(getShareMeta('/collection'))
 
   return (
     <>
