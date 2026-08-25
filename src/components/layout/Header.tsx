@@ -36,7 +36,7 @@ export function Header() {
           !inverted && 'border-b border-rule/80',
         )}
       >
-        <div className="relative grid h-[4.5rem] grid-cols-[1fr_auto_1fr] items-center px-5 md:h-20 md:px-12 lg:px-16">
+        <div className="relative grid h-[5.25rem] grid-cols-[1fr_auto_1fr] items-center px-5 md:h-[5.75rem] md:px-12 lg:px-16">
           <nav className="hidden md:block" aria-label="Primary">
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:gap-x-9">
               {primaryNav.map((item) => (

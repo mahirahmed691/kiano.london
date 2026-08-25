@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Monogram } from '@/components/brand/Monogram'
 import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
 
@@ -19,6 +20,7 @@ export function HouseMark({ to = '/', inverted = false, className }: Props) {
       )}
       aria-label={`${site.fullName}, home`}
     >
+      <Monogram className="mb-1.5 h-4 md:h-[1.15rem]" decorative />
       <span className="font-display text-[1.05rem] font-medium uppercase tracking-[0.32em] md:text-[1.28rem] md:tracking-[0.42em]">
         {site.name}
       </span>

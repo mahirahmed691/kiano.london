@@ -1,3 +1,4 @@
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { Link } from 'react-router-dom'
 import { type Product } from '@/data/products'
 import { cn } from '@/lib/cn'
@@ -35,6 +36,7 @@ function CardBody({ product, index }: Pick<Props, 'product' | 'index'>) {
             style={hover.objectPosition ? { objectPosition: hover.objectPosition } : undefined}
           />
         ) : null}
+        <WovenLabel size="sm" className="pointer-events-none absolute bottom-3 left-3 z-10" />
       </div>
       <div className="mt-4 flex items-baseline justify-between gap-4">
         <div>
