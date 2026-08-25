@@ -41,8 +41,8 @@ const pages: Record<string, PageMeta> = {
     description:
       'A London atelier of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar, cut in London.',
     path: '/story',
-    image: '/images/featured-overcoat.jpg',
-    imageAlt: 'Hadīd: a charcoal Emirati thobe, worn at full length.',
+    image: '/images/atelier-rail.jpg',
+    imageAlt: 'The house line on the rail: black, sand, and bone.',
   },
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',

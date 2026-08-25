@@ -1,4 +1,4 @@
-import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { Hero } from '@/components/editorial/Hero'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -31,33 +31,16 @@ export function VisitPage() {
 
   return (
     <>
-      <header className="bg-ivory pt-32 pb-10 md:pt-40 md:pb-14">
-        <Container>
-          <Reveal>
-            <Eyebrow>The atelier</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
-              By appointment.
-            </Display>
-            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
-              {site.lockup}
-            </p>
-            <Body className="mt-6 max-w-xl">
-              There is no shop window. Come to see cloth, to be fitted, or to walk the
-              rooms. Write first. We keep the diary small.
-            </Body>
-          </Reveal>
-        </Container>
-      </header>
-
-      <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
-        <img
-          src="/images/cutting-room.jpg"
-          alt="The cutting room at Kiano London: paper, shears, and cloth in progress."
-          className="object-[center_40%]"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+      <Hero
+        image="/images/cutting-room.jpg"
+        imageAlt="The cutting room at Kiano London: paper, shears, and cloth in progress."
+        objectPosition="center 40%"
+        kicker="The atelier"
+        title="By appointment."
+        subtitle="There is no shop window. Come to see cloth, to be fitted, or to walk the rooms. Write first. We keep the diary small."
+        minHeight="tall"
+        priority
+      />
 
       <Section>
         <Container>
@@ -114,28 +97,18 @@ export function VisitPage() {
 
       <Section>
         <Container>
-          <div className="grid items-start gap-16 lg:grid-cols-12">
-            <Reveal className="lg:col-span-5">
-              <Eyebrow>Sizes 52–60</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The house block.</Display>
-              <Body className="mt-6">
-                If you already know your size, name it in the letter. If you do not, we
-                will measure you here. Between sizes, we cut from the larger and take in.
-              </Body>
-              <SizeGuide className="mt-10" compact />
-              <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
-                Prices include VAT. Each thobe is cut to order.
-              </p>
-            </Reveal>
-            <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
-              <ImageFrame
-                src="/images/atelier-rail.jpg"
-                alt="The house line on the rail: black, sand, and bone, before a fitting."
-                className="aspect-[4/5] w-full"
-                caption="Cloth is shown in daylight."
-              />
-            </Reveal>
-          </div>
+          <Reveal className="max-w-2xl">
+            <Eyebrow>Sizes 52–60</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">The house block.</Display>
+            <Body className="mt-6">
+              If you already know your size, name it in the letter. If you do not, we
+              will measure you here. Between sizes, we cut from the larger and take in.
+            </Body>
+            <SizeGuide className="mt-10" compact />
+            <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
+              Prices include VAT. Each thobe is cut to order.
+            </p>
+          </Reveal>
         </Container>
       </Section>
     </>

@@ -1,9 +1,6 @@
-import { EditorialSplit } from '@/components/editorial/EditorialSplit'
-import { Hero } from '@/components/editorial/Hero'
-import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { LookbookStrip } from '@/components/editorial/LookbookStrip'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
-import { StitchArt } from '@/components/editorial/StitchArt'
+import { Hero } from '@/components/editorial/Hero'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -18,20 +15,17 @@ const lookbook = [
   {
     src: '/images/thobe-layl.jpg',
     alt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
-    caption: 'Layl',
     objectPosition: 'center 12%',
   },
   {
-    src: '/images/cloth-giza.jpg',
-    alt: 'Extra-long staple cotton unrolled on the cutting table.',
-    caption: 'Cloth in the piece',
-    objectPosition: 'center 40%',
+    src: '/images/thobe-ghabar.jpg',
+    alt: 'Ghabār: an earth-grey Emirati thobe, a column of cloth.',
+    objectPosition: 'center 18%',
   },
   {
-    src: '/images/atelier-rail.jpg',
-    alt: 'The house line on the rail: black, sand, and bone.',
-    caption: 'The rooms',
-    objectPosition: 'center 40%',
+    src: '/images/thobe-raml.jpg',
+    alt: 'The Raml thobe: sand extra-long staple, the daylight column.',
+    objectPosition: 'center 12%',
   },
 ]
 
@@ -120,93 +114,38 @@ export function HomePage() {
       <Section className="bg-ivory-deep/50">
         <Container>
           <Reveal className="mb-12 md:mb-16">
-            <Eyebrow>In the rooms</Eyebrow>
-            <Display className="mt-3 text-4xl md:text-5xl">Garment, cloth, bench.</Display>
+            <Eyebrow>The columns</Eyebrow>
+            <Display className="mt-3 text-4xl md:text-5xl">Layl, Ghabār, Raml.</Display>
           </Reveal>
         </Container>
-        <LookbookStrip
-          plates={lookbook.map(({ src, alt, objectPosition }) => ({
-            src,
-            alt,
-            objectPosition,
-          }))}
-        />
+        <LookbookStrip plates={lookbook} />
       </Section>
 
-      <Section>
+      <Section className="bg-night py-24 md:py-32">
         <Container>
-          <StitchArt />
-        </Container>
-      </Section>
-
-      <Section className="pt-0">
-        <Container>
-          <EditorialSplit
-            image="/images/cloth-dust.jpg"
-            imageAlt="Earth-grey compact cotton and a needle: the stitch of a thobe."
-            objectPosition="center"
-            imageOn="left"
-          >
-            <Eyebrow>The stitch</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">
-              Structure you cannot see, and would miss if it were gone.
-            </Display>
-            <Body className="mt-6">
-              Side seams are felled, not overlocked. The collar is pad-stitched by hand
-              so the neck holds its line. Fastenings sit inside the placket. It is slower
-              work. It is why the garment lasts.
-            </Body>
-            <div className="mt-8">
-              <TextLink to="/craftsmanship">Craftsmanship</TextLink>
-            </div>
-          </EditorialSplit>
-        </Container>
-      </Section>
-
-      <section className="relative min-h-[70svh] overflow-hidden">
-        <ImageFrame
-          src="/images/thobe-ghabar.jpg"
-          alt="Ghabār at rest: an earth-grey Emirati thobe, a column of cloth."
-          className="absolute inset-0 h-full w-full"
-          imgClassName="h-full w-full object-cover"
-          objectPosition="center 18%"
-        />
-        <div className="absolute inset-0 bg-night/55" aria-hidden="true" />
-        <div className="relative z-10 flex min-h-[70svh] items-center px-6 py-24 md:px-12 lg:px-16">
           <QuoteBlock
             tone="dark"
             quote="The modest garment is not empty. It is full of work you are not meant to see."
             attribution={site.note}
           />
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       <Section>
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <Reveal>
-              <Eyebrow>The atelier</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">Cut in London</Display>
-              <Body className="mt-6">
-                The cutting room is a single address. Fittings are by appointment. We
-                do not keep a shop window. The work is the invitation: Layl, Hadīd,
-                the jubbah. Cut in London.
-              </Body>
-              <div className="mt-8 flex flex-wrap items-center gap-6">
-                <Button to="/visit">Visit by appointment</Button>
-                <TextLink to="/story">Read the story</TextLink>
-              </div>
-            </Reveal>
-            <Reveal delay={120}>
-              <ImageFrame
-                src="/images/cutting-room.jpg"
-                alt="The cutting room: paper for the house block, shears, and cloth on the bench."
-                className="aspect-[4/5] w-full"
-                objectPosition="center 45%"
-                caption="Mayfair. By appointment."
-              />
-            </Reveal>
-          </div>
+          <Reveal className="max-w-2xl">
+            <Eyebrow>The atelier</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">Cut in London</Display>
+            <Body className="mt-6">
+              The cutting room is a single address. Fittings are by appointment. We
+              do not keep a shop window. The work is the invitation: Layl, Hadīd,
+              the jubbah. Cut in London.
+            </Body>
+            <div className="mt-8 flex flex-wrap items-center gap-6">
+              <Button to="/visit">Visit by appointment</Button>
+              <TextLink to="/craftsmanship">How it is made</TextLink>
+            </div>
+          </Reveal>
         </Container>
       </Section>
     </>

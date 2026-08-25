@@ -1,6 +1,5 @@
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
-import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -16,9 +15,9 @@ export function StoryPage() {
   return (
     <>
       <Hero
-        image="/images/featured-overcoat.jpg"
-        imageAlt="Hadīd: a charcoal Emirati thobe, worn at full length."
-        objectPosition="center 62%"
+        image="/images/atelier-rail.jpg"
+        imageAlt="The house line on the rail: black, sand, and bone."
+        objectPosition="18% 40%"
         kicker={site.fullName}
         title="The house."
         subtitle="Kiano London is a cutting room for the modest garment: a name, a single address, a long silhouette."
@@ -29,9 +28,9 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/thobe-layl.jpg"
-            imageAlt="The Layl thobe: a black column, cut in London."
-            objectPosition="center 12%"
+            image="/images/cloth-giza.jpg"
+            imageAlt="Extra-long staple cotton unrolled on the cutting table."
+            objectPosition="center 40%"
             imageOn="right"
           >
             <Eyebrow>{site.established}</Eyebrow>
@@ -50,31 +49,6 @@ export function StoryPage() {
               placket concealed.
             </Body>
           </EditorialSplit>
-        </Container>
-      </Section>
-
-      <Section className="bg-ivory-deep/40 pt-0">
-        <Container className="pt-20 md:pt-28">
-          <div className="grid gap-6 md:grid-cols-12">
-            <Reveal className="md:col-span-7">
-              <ImageFrame
-                src="/images/cloth-giza.jpg"
-                alt="Extra-long staple cotton unrolled on the cutting table."
-                className="aspect-[4/3] w-full md:aspect-[16/10]"
-                objectPosition="center 40%"
-                caption="Cloth"
-              />
-            </Reveal>
-            <Reveal delay={100} className="md:col-span-5 md:pt-16">
-              <ImageFrame
-                src="/images/cutting-room.jpg"
-                alt="The cutting room: paper for the house block, and London at the window."
-                className="aspect-[3/4] w-full"
-                objectPosition="center 40%"
-                caption="The workroom"
-              />
-            </Reveal>
-          </div>
         </Container>
       </Section>
 
@@ -115,10 +89,9 @@ export function StoryPage() {
         </Container>
       </Section>
 
-      <Section className="bg-night py-24 md:py-32">
+      <Section className="bg-ivory-deep/50 py-24 md:py-32">
         <Container>
           <QuoteBlock
-            tone="dark"
             quote="A thobe is a piece of architecture you take with you."
             attribution={site.note}
           />
@@ -127,12 +100,7 @@ export function StoryPage() {
 
       <Section>
         <Container>
-          <EditorialSplit
-            image="/images/concealed-pocket.jpg"
-            imageAlt="The interior pocket of the Layl thobe, the woven label set by hand."
-            objectPosition="center"
-            imageOn="left"
-          >
+          <Reveal className="max-w-2xl">
             <Eyebrow>Visit</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
@@ -143,7 +111,7 @@ export function StoryPage() {
               <Button to="/visit">Visit by appointment</Button>
               <TextLink to="/craftsmanship">How it is made</TextLink>
             </div>
-          </EditorialSplit>
+          </Reveal>
         </Container>
       </Section>
     </>

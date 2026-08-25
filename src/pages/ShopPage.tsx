@@ -30,8 +30,17 @@ export function ShopPage() {
 
   return (
     <>
-      <header className="bg-ivory pt-32 pb-6 md:pt-40">
-        <Container>
+      <section className="grid bg-ivory lg:min-h-[100dvh] lg:grid-cols-12">
+        <div className="relative order-1 min-h-[62svh] overflow-hidden bg-ivory-deep lg:order-2 lg:col-span-7 lg:min-h-[100dvh]">
+          <img
+            src="/images/jubbah-sand-02.jpg"
+            alt="The sand jubbah at rest, the cloth to the ankle."
+            className="absolute inset-0 h-full w-full object-cover object-[center_22%]"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div className="order-2 flex flex-col justify-center px-6 py-16 md:px-12 lg:order-1 lg:col-span-5 lg:px-16 lg:py-32">
           <Reveal>
             <Eyebrow>The outer garment</Eyebrow>
             <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
@@ -40,23 +49,13 @@ export function ShopPage() {
             <p lang="ar" dir="rtl" className="mt-4 font-arabic text-2xl text-ink/55">
               الجُبَّة
             </p>
-            <Body className="mt-6 max-w-xl">
+            <Body className="mt-6 max-w-md">
               The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52
               to 60. Cut in London from the house block.
             </Body>
           </Reveal>
-        </Container>
-      </header>
-
-      <div className="img-zoom relative aspect-[16/8] max-h-[560px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
-        <img
-          src="/images/jubbah-sand-02.jpg"
-          alt="The sand jubbah at rest, the cloth to the ankle."
-          className="object-[center_28%]"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+        </div>
+      </section>
 
       <Section>
         <Container>
@@ -105,8 +104,8 @@ export function ShopPage() {
               alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
             },
             {
-              src: '/images/atelier-rail.jpg',
-              alt: 'The house line on the rail: black, sand, and bone.',
+              src: '/images/jubbah-charcoal-cloth.jpg',
+              alt: 'Charcoal wool-cotton for the jubbah, still in the piece.',
               objectPosition: 'center 40%',
             },
             {

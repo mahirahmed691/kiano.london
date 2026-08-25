@@ -126,31 +126,24 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/40">
+      <Section className="bg-night">
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <Reveal>
-              <ImageFrame
-                src="/images/thobe-hajar.jpg"
-                alt="The Hajar thobe at rest: the column of cloth these methods produce."
-                className="aspect-[4/5] w-full"
-              />
-            </Reveal>
-            <Reveal delay={100}>
-              <Eyebrow>Further</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">
-                A closer look at the making.
-              </Display>
-              <Body className="mt-6">
-                The felled seam, the hand stitch, the concealed placket, the interior
-                pocket. Four details that decide whether a thobe is still itself a
-                decade later.
-              </Body>
-              <div className="mt-8">
-                <TextLink to="/craftsmanship-details">Read the details</TextLink>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal className="max-w-2xl">
+            <Eyebrow className="text-ivory/70">Further</Eyebrow>
+            <Display className="mt-4 text-4xl text-ivory md:text-5xl">
+              A closer look at the making.
+            </Display>
+            <Body className="mt-6 text-ivory/75">
+              The felled seam, the hand stitch, the concealed placket, the interior
+              pocket. Four details that decide whether a thobe is still itself a
+              decade later.
+            </Body>
+            <div className="mt-8">
+              <TextLink to="/craftsmanship-details" className="text-ivory">
+                Read the details
+              </TextLink>
+            </div>
+          </Reveal>
         </Container>
       </Section>
     </>

@@ -49,9 +49,9 @@ export function SubscribeDialog({ open, onClose }: Props) {
           <div className="grid md:grid-cols-2">
             <div className="relative hidden bg-ivory-deep md:block">
               <img
-                src="/images/atelier-rail.jpg"
+                src="/images/jubbah-black.jpg"
                 alt=""
-                className="h-full min-h-[28rem] w-full object-cover"
+                className="h-full min-h-[28rem] w-full object-cover object-[center_18%]"
               />
             </div>
             <div className="px-6 py-8 md:px-10 md:py-12">

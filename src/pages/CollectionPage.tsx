@@ -1,11 +1,10 @@
 import { useMemo, useState } from 'react'
-import { LookbookStrip } from '@/components/editorial/LookbookStrip'
+import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { Rule } from '@/components/ui/Rule'
 import {
   productColours,
   productPath,
@@ -30,33 +29,23 @@ export function CollectionPage() {
 
   return (
     <>
-      <header className="bg-ivory pt-32 pb-6 md:pt-40">
+      <header className="bg-night pt-32 pb-20 md:pt-40 md:pb-28">
         <Container>
           <Reveal>
-            <Eyebrow>Emirati thobe</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
+            <Eyebrow className="text-ivory/70">Emirati thobe</Eyebrow>
+            <Display as="h1" className="mt-4 text-5xl text-ivory md:text-6xl lg:text-7xl">
               The Collection
             </Display>
-            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
+            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ivory/45">
               {site.lockup}
             </p>
-            <Body className="mt-6 max-w-xl">
+            <Body className="mt-6 max-w-xl text-ivory/75">
               Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal,
               grey, beige and bone. Cut in London from the house block.
             </Body>
           </Reveal>
         </Container>
       </header>
-
-      <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
-        <img
-          src="/images/thobe-raml.jpg"
-          alt="The Raml thobe: sand extra-long staple, the daylight column."
-          className="object-[center_12%]"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
 
       <Section>
         <Container>
@@ -103,39 +92,36 @@ export function CollectionPage() {
               />
             ))}
           </div>
-
-        </Container>
-        <LookbookStrip
-          className="mt-24 md:mt-32"
-          plates={[
-            {
-              src: '/images/cutting-room.jpg',
-              alt: 'The cutting room: paper for the house block, shears, and cloth.',
-              objectPosition: 'center 40%',
-            },
-            {
-              src: '/images/cloth-giza.jpg',
-              alt: 'Extra-long staple cotton unrolled on the cutting table.',
-              objectPosition: 'center 40%',
-            },
-            {
-              src: '/images/atelier-rail.jpg',
-              alt: 'The house line on the rail: black, sand, and bone.',
-              objectPosition: 'center 40%',
-            },
-          ]}
-        />
-        <Container>
-          <Rule className="mt-20 md:mt-28" />
-          <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">
-              Fittings are held at the London atelier. Come if you wish to see a cloth
-              before it is cut.
-            </p>
-            <Button to="/visit">Visit by appointment</Button>
-          </div>
         </Container>
       </Section>
+
+      <section className="bg-ivory-deep/50">
+        <Container className="py-20 md:py-28">
+          <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-5">
+              <Eyebrow>Hajar</Eyebrow>
+              <Display className="mt-4 text-4xl md:text-5xl">The bone column.</Display>
+              <Body className="mt-6">
+                The last of the five: a pale extra-long staple, cut from the same block
+                as Layl. Fittings are held at the London atelier. Come if you wish to
+                see a cloth before it is cut.
+              </Body>
+              <div className="mt-8">
+                <Button to="/visit">Visit by appointment</Button>
+              </div>
+            </Reveal>
+            <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
+              <ImageFrame
+                src="/images/thobe-hajar.jpg"
+                alt="The Hajar thobe at rest: bone extra-long staple, a pale column."
+                className="aspect-[4/5] w-full"
+                objectPosition="center 12%"
+                caption="Hajar."
+              />
+            </Reveal>
+          </div>
+        </Container>
+      </section>
     </>
   )
 }
