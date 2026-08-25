@@ -7,4 +7,4 @@ for (const key of ['DATABASE_URL', 'POSTGRES_URL'] as const) {
 }
 
 await withDb()
-console.log('Inventory, members and orders are ready.')
+console.log('Inventory, members, orders, the list, and the diary are ready.')

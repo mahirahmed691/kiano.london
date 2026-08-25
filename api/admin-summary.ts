@@ -45,6 +45,24 @@ export async function GET(request: Request): Promise<Response> {
     const sizesHeld = asCount(
       (await sql`SELECT COUNT(*)::int AS n FROM inventory WHERE quantity <= 0`) as { n: number }[],
     )
+    const appointmentCount = asCount(
+      (await sql`SELECT COUNT(*)::int AS n FROM appointments`) as { n: number }[],
+    )
+    const appointmentRows = (await sql`
+      SELECT id, name, email, telephone, product_id, size, note, created_at
+      FROM appointments
+      ORDER BY created_at DESC
+      LIMIT 20
+    `) as {
+      id: number
+      name: string
+      email: string
+      telephone: string | null
+      product_id: string | null
+      size: number | null
+      note: string | null
+      created_at: string | Date
+    }[]
 
     return Response.json({
       members,
@@ -54,6 +72,17 @@ export async function GET(request: Request): Promise<Response> {
       listHeld,
       cutsRemaining,
       sizesHeld,
+      appointmentCount,
+      appointments: appointmentRows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        telephone: row.telephone ?? '',
+        productId: row.product_id ?? '',
+        size: row.size,
+        note: row.note ?? '',
+        createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : String(row.created_at),
+      })),
     })
   } catch (caught) {
     console.error(caught)

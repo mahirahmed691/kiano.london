@@ -1,7 +1,7 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
-import { products, thobeSizes } from '@/data/products'
+import { productLineName, products, thobeSizes } from '@/data/products'
 import { site } from '@/data/site'
 import { cn } from '@/lib/cn'
 
@@ -36,19 +36,36 @@ export function AppointmentForm() {
   const [size, setSize] = useState(params.get('size') ?? '')
   const [note, setNote] = useState('')
   const [sent, setSent] = useState(false)
+  const [keeping, setKeeping] = useState(false)
 
   const selected = useMemo(
     () => products.find((item) => item.id === piece),
     [piece],
   )
-  const selectedName = selected
-    ? selected.cut === 'Jubbah'
-      ? `${selected.name} · ${selected.colour}`
-      : selected.name
-    : undefined
+  const selectedName = selected ? productLineName(selected) : undefined
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (keeping) return
+    setKeeping(true)
+
+    try {
+      await fetch('/api/appointment', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          telephone,
+          productId: piece,
+          size,
+          note,
+        }),
+      })
+    } catch {
+      // The letter still opens. The diary is a copy, not a gate.
+    }
+
     const subject = selectedName
       ? `Appointment: ${selectedName}`
       : 'Appointment at Kiano London'
@@ -65,6 +82,7 @@ export function AppointmentForm() {
 
     window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
     setSent(true)
+    setKeeping(false)
   }
 
   if (sent) {
@@ -135,7 +153,7 @@ export function AppointmentForm() {
             <option value="">To be discussed</option>
             {products.map((item) => (
               <option key={item.id} value={item.id}>
-                {item.cut === 'Jubbah' ? `${item.name} · ${item.colour}` : item.name}
+                {item.cut === 'Jubbah' ? productLineName(item) : item.name}
               </option>
             ))}
           </select>
@@ -169,7 +187,9 @@ export function AppointmentForm() {
         />
       </Field>
 
-      <Button type="submit">Request an appointment</Button>
+      <Button type="submit" disabled={keeping}>
+        Request an appointment
+      </Button>
     </form>
   )
 }

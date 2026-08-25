@@ -1,5 +1,6 @@
 import { Show, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { RestockLedger } from '@/components/admin/RestockLedger'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -12,11 +13,23 @@ import {
   houseScope,
   houseVisualAudit,
 } from '@/data/house-board'
+import { getProduct, productLineName } from '@/data/products'
 import { isAdminEmail } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+
+type AppointmentRow = {
+  id: number
+  name: string
+  email: string
+  telephone: string
+  productId: string
+  size: number | null
+  note: string
+  createdAt: string
+}
 
 type Ledger = {
   members: number
@@ -26,6 +39,8 @@ type Ledger = {
   listHeld: number
   cutsRemaining: number
   sizesHeld: number
+  appointmentCount: number
+  appointments: AppointmentRow[]
 }
 
 function statusCopy(status: 'complete' | 'partial' | 'missing') {
@@ -34,7 +49,7 @@ function statusCopy(status: 'complete' | 'partial' | 'missing') {
   return 'Not yet'
 }
 
-function LedgerFigures() {
+function useLedger() {
   const { getToken, isSignedIn } = useAuth()
   const { user } = useUser()
   const [ledger, setLedger] = useState<Ledger | null>(null)
@@ -56,7 +71,11 @@ function LedgerFigures() {
           setError(data.error || 'The ledger could not be read.')
           return
         }
-        setLedger(data)
+        setLedger({
+          ...data,
+          appointmentCount: data.appointmentCount ?? 0,
+          appointments: data.appointments ?? [],
+        })
       } catch {
         if (!cancelled) setError('The ledger could not be read.')
       }
@@ -68,6 +87,10 @@ function LedgerFigures() {
     }
   }, [getToken, isSignedIn, user])
 
+  return { ledger, error }
+}
+
+function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string }) {
   if (error) {
     return (
       <p className="mt-8 text-[15px] font-light text-ink" role="alert">
@@ -87,6 +110,10 @@ function LedgerFigures() {
     { label: 'Sizes held', value: String(ledger.sizesHeld).padStart(2, '0') },
     { label: 'Members', value: String(ledger.members).padStart(2, '0') },
     { label: 'The list', value: `${ledger.listConfirmed} confirmed · ${ledger.listHeld} held` },
+    {
+      label: 'The diary',
+      value: String(ledger.appointmentCount ?? 0).padStart(2, '0'),
+    },
   ]
 
   return (
@@ -130,7 +157,74 @@ function ClosedBoard() {
   )
 }
 
+function appointmentPiece(row: AppointmentRow) {
+  const product = getProduct(row.productId)
+  if (product) return productLineName(product)
+  return 'To be discussed'
+}
+
+function formatDiaryDate(value: string) {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date)
+}
+
+function AppointmentDiary({ ledger }: { ledger: Ledger | null }) {
+  if (!ledger) return null
+
+  return (
+    <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
+      <Reveal>
+        <Eyebrow>The diary</Eyebrow>
+        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
+          Letters held.
+        </Display>
+        <Body className="mt-6">
+          Requests are copied here when the atelier can keep them. The visitor still
+          writes a letter. This is not a booking calendar.
+        </Body>
+      </Reveal>
+      {ledger.appointments.length === 0 ? (
+        <p className="mt-12 text-[15px] font-light leading-relaxed text-ink-soft">
+          No letters held yet. They still arrive by mail.
+        </p>
+      ) : (
+        <ul className="mt-12 divide-y divide-rule border-y border-ink">
+          {ledger.appointments.map((row) => (
+            <li key={row.id} className="grid gap-4 py-8 lg:grid-cols-12">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">
+                {formatDiaryDate(row.createdAt)}
+              </p>
+              <div className="lg:col-span-4">
+                <p className="font-display text-2xl font-light">{row.name}</p>
+                <p className="mt-2 text-[15px] font-light text-ink-soft">{row.email}</p>
+                {row.telephone ? (
+                  <p className="mt-1 text-[15px] font-light text-ink-soft">{row.telephone}</p>
+                ) : null}
+              </div>
+              <div className="lg:col-span-6">
+                <p className="text-[15px] font-light leading-relaxed text-ink-soft">
+                  {appointmentPiece(row)}
+                  {row.size ? ` · ${row.size}` : ' · to be fitted'}
+                </p>
+                {row.note ? (
+                  <p className="mt-3 text-[15px] font-light leading-relaxed text-ink">{row.note}</p>
+                ) : null}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 function OpenBoard() {
+  const { ledger, error } = useLedger()
   const ranked = [...houseFeatures].sort((a, b) => b.completion - a.completion)
   const mean = Math.round(
     houseFeatures.reduce((sum, feature) => sum + feature.completion, 0) / houseFeatures.length,
@@ -142,7 +236,23 @@ function OpenBoard() {
         A private reading of the house: what is kept, what is hooked, who else cuts a
         column, and how the rooms look on a screen. Mean completion {mean} of 100.
       </Body>
-      <LedgerFigures />
+      <LedgerFigures ledger={ledger} error={error} />
+
+      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
+        <Reveal>
+          <Eyebrow>Cuts</Eyebrow>
+          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
+            Remaining on the line.
+          </Display>
+          <Body className="mt-6">
+            Set a size when cloth returns. Leave the field and it is kept. The shop reads
+            these numbers; this page is the only place they are written.
+          </Body>
+        </Reveal>
+        <RestockLedger />
+      </div>
+
+      <AppointmentDiary ledger={ledger} />
 
       <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
         <Reveal>

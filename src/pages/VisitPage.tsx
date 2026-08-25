@@ -71,7 +71,8 @@ export function VisitPage() {
                 Request a time.
               </Display>
               <Body className="mt-6">
-                The form opens a letter to Kiano London. If you would rather write directly:{' '}
+                The form opens a letter to Kiano London. A copy is kept for the house when
+                it can be. If you would rather write directly:{' '}
                 <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
                   {site.email}
                 </a>

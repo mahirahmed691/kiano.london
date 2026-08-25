@@ -37,7 +37,7 @@ export function MobileNav({ open, onClose }: Props) {
       aria-hidden={!open}
     >
       <nav
-        className="flex h-full flex-col justify-center px-8"
+        className="flex h-full flex-col justify-center px-8 pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
         aria-label="Mobile"
       >
         <Monogram decorative className="mb-10 h-7 text-ink" />

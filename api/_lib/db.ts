@@ -88,6 +88,26 @@ async function migrate(db: Sql) {
       confirmed_at TIMESTAMPTZ
     )
   `
+  await db`
+    CREATE TABLE IF NOT EXISTS webhook_events (
+      svix_id TEXT PRIMARY KEY,
+      event_type TEXT NOT NULL,
+      processed_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
+  await db`
+    CREATE TABLE IF NOT EXISTS appointments (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      telephone TEXT,
+      product_id TEXT,
+      size INTEGER,
+      note TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
+  await db`CREATE INDEX IF NOT EXISTS appointments_created_at_idx ON appointments (created_at DESC)`
 
   for (const product of products) {
     for (const size of thobeSizes) {

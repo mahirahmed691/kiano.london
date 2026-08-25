@@ -392,6 +392,10 @@ export function getProduct(id: string | undefined) {
   return products.find((item) => item.id === id)
 }
 
+export function productLineName(product: Product) {
+  return product.cut === 'Jubbah' ? `${product.name} · ${product.colour}` : product.name
+}
+
 export function productPath(product: Product) {
   return product.cut === 'Jubbah' ? `/shop/${product.id}` : `/collection/${product.id}`
 }

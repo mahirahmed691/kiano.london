@@ -8,6 +8,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 const envKeys = [
   'STRIPE_SECRET_KEY',
   'STRIPE_WEBHOOK_SECRET',
+  'CLERK_WEBHOOK_SIGNING_SECRET',
   'SITE_URL',
   'DATABASE_URL',
   'POSTGRES_URL',
@@ -51,6 +52,26 @@ const routes: Route[] = [
     method: 'GET',
     path: '/api/admin-summary',
     load: async () => (await import('./api/admin-summary.ts')).GET,
+  },
+  {
+    method: 'GET',
+    path: '/api/admin-inventory',
+    load: async () => (await import('./api/admin-inventory.ts')).GET,
+  },
+  {
+    method: 'POST',
+    path: '/api/admin-inventory',
+    load: async () => (await import('./api/admin-inventory.ts')).POST,
+  },
+  {
+    method: 'POST',
+    path: '/api/appointment',
+    load: async () => (await import('./api/appointment.ts')).POST,
+  },
+  {
+    method: 'POST',
+    path: '/api/clerk-webhook',
+    load: async () => (await import('./api/clerk-webhook.ts')).POST,
   },
   {
     method: 'POST',
@@ -123,14 +144,18 @@ function atelierApi(env: Record<string, string>): Plugin {
                 chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
               }
             }
+            const headers: Record<string, string> = {}
+            for (const [key, value] of Object.entries(req.headers)) {
+              if (key === 'host' || key === 'content-length' || key === 'connection') continue
+              const next = headerValue(value)
+              if (next) headers[key] = next
+            }
+            if (!headers['content-type']) headers['content-type'] = 'application/json'
+            if (!headers.origin) headers.origin = originOf(req)
+
             const request = new Request(`${originOf(req)}${req.url}`, {
               method: route.method,
-              headers: {
-                'content-type': headerValue(req.headers['content-type']) || 'application/json',
-                origin: headerValue(req.headers.origin) || originOf(req),
-                authorization: headerValue(req.headers.authorization),
-                'stripe-signature': headerValue(req.headers['stripe-signature']),
-              },
+              headers,
               body: route.method === 'POST' ? Buffer.concat(chunks) : undefined,
             })
             const handler = await route.load()

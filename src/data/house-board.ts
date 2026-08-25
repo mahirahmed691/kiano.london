@@ -10,9 +10,9 @@ export type HouseFeature = {
 export const houseFeatures: HouseFeature[] = [
   {
     name: 'Editorial rooms',
-    completion: 92,
+    completion: 94,
     status: 'complete',
-    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first, type after.',
+    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first. The cookie strip waits until the plate has been seen.',
   },
   {
     name: 'The line',
@@ -28,15 +28,15 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Stock',
-    completion: 78,
-    status: 'partial',
-    note: 'Neon inventory is live per size. There is no restock screen yet. Seeded quantities only.',
+    completion: 90,
+    status: 'complete',
+    note: 'Neon inventory per size. Allowlisted members set remaining cuts on the ledger. The public inventory route is read-only.',
   },
   {
     name: 'Members',
-    completion: 80,
+    completion: 90,
     status: 'complete',
-    note: 'Clerk sign-in, account of reservations, token on checkout. No Clerk webhook yet.',
+    note: 'Clerk sign-in, account of reservations, token on checkout. Svix webhook keeps members in step when an account is written or deleted.',
   },
   {
     name: 'The list',
@@ -46,15 +46,15 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Visit',
-    completion: 70,
+    completion: 82,
     status: 'partial',
-    note: 'The form opens a letter. There is no diary, calendar, or confirmation loop.',
+    note: 'The form still opens a letter. A copy is held in Neon when the atelier can keep it, and shown on the ledger. No calendar widget.',
   },
   {
     name: 'Installable house',
-    completion: 75,
+    completion: 78,
     status: 'partial',
-    note: 'PWA on the site. Expo is a WebView of the live origin, not a native shop.',
+    note: 'PWA on the site. Expo is a WebView of the live origin. Header and notices respect the safe area; pinch-zoom on the piece stays.',
   },
   {
     name: 'Share and search',
@@ -76,9 +76,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'House ledger',
-    completion: 70,
+    completion: 86,
     status: 'partial',
-    note: 'This board. Live counts when signed in. Expo can open kiano://admin. No restock, refund, or letter-send from here.',
+    note: 'This board. Live counts, remaining cuts to set, diary letters. Expo can open kiano://admin. No refund or letter-send from here.',
   },
   {
     name: 'Analytics',
@@ -104,17 +104,17 @@ export const houseIntegrations = [
   },
   {
     name: 'Clerk',
-    state: 'Live, incomplete',
-    hook: 'None',
-    events: 'Members are written when an account is opened, not from Svix.',
-    note: 'Need CLERK_WEBHOOK_SIGNING_SECRET and a public /api/clerk-webhook before user.deleted can tidy Neon.',
+    state: 'Live',
+    hook: 'POST /api/clerk-webhook',
+    events: 'user.created, user.updated, user.deleted',
+    note: 'verifyWebhook from @clerk/backend/webhooks. Needs CLERK_WEBHOOK_SIGNING_SECRET. Deleted accounts leave the members table; paid orders stay, unlinked.',
   },
   {
     name: 'Neon Postgres',
     state: 'Live',
     hook: 'None',
-    events: 'inventory, members, orders, order_lines, subscribers',
-    note: 'Schema is created on first use. Restock is SQL, not a screen.',
+    events: 'inventory, members, orders, order_lines, subscribers, webhook_events, appointments',
+    note: 'Schema is created on first use. Remaining cuts are set from the ledger, not from SQL by hand.',
   },
   {
     name: 'Resend',
@@ -135,15 +135,15 @@ export const houseIntegrations = [
 export const houseDataNotes = [
   {
     title: 'What is counted',
-    copy: 'Paid reservations, remaining cuts, held sizes, members, confirmed and unconfirmed list rows. Currency is GBP pence.',
+    copy: 'Paid reservations, remaining cuts, held sizes, members, confirmed and unconfirmed list rows, appointment letters. Currency is GBP pence.',
   },
   {
     title: 'What is not counted',
-    copy: 'Sessions, bounce, cart abandonment, appointment letters, or refunds. London is the name of the house.',
+    copy: 'Sessions, bounce, cart abandonment, or refunds. London is the name of the house.',
   },
   {
     title: 'How it is read',
-    copy: 'The board fetches /api/admin-summary with a Clerk bearer token. Unsigned or unlisted emails see nothing of the ledger.',
+    copy: 'The board fetches /api/admin-summary and /api/admin-inventory with a Clerk bearer token. Unsigned or unlisted emails see nothing of the ledger. Inventory writes require requireAdmin.',
   },
 ] as const
 
@@ -190,14 +190,14 @@ export const houseVisualAudit = [
   {
     surface: 'Home, desktop',
     finding:
-      'First screen is a still of Hadīd. No video element, no player chrome. Type sits on ivory after the plate. Cookie bar covers the hem on a first visit.',
+      'First screen is a still of Hadīd. No video element, no player chrome. Type sits on ivory after the plate. Cookie consent waits until the still has been left.',
     rank: 'Hold',
   },
   {
     surface: 'Home, phone',
     finding:
-      'One still, mark and menu on the plate. The cookie bar takes the lower third on first visit. Both honest; both interrupt the still.',
-    rank: 'Watch',
+      'One still, mark and menu on the plate. The cookie strip is compact and stays off the first plate. Header respects the safe area in the PWA and under native chrome.',
+    rank: 'Hold',
   },
   {
     surface: 'Shop',
@@ -220,19 +220,19 @@ export const houseVisualAudit = [
   {
     surface: 'The ledger, desktop',
     finding:
-      'Signed-out: a type page, Sign in, return to the house. No cards, no gold, no table chrome. Allowlisted accounts see the ranked line after sign-in.',
+      'Signed-out: a type page, Sign in, return to the house. Remaining cuts are a line of sizes, not a grid. Allowlisted accounts see the ranked line after sign-in.',
     rank: 'Hold',
   },
   {
     surface: 'The ledger, phone',
     finding:
-      'Same type, stacked. Footer night band comes in quickly. Reach it from Account, from The ledger in the menu when listed, or from kiano://admin in the Expo shell.',
+      'Same type, stacked. Reach it from Account, from The ledger in the menu when listed, or from kiano://admin in the Expo shell.',
     rank: 'Hold',
   },
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView. /admin is the same ledger. Gestures and safe-area are the shell; chrome is the site.',
+      'The native app is the website in a WebView. /admin is the same ledger. Gestures and safe-area are the shell; chrome is the site. kiano://admin still opens the board.',
     rank: 'Watch',
   },
 ] as const
@@ -240,7 +240,6 @@ export const houseVisualAudit = [
 export const houseScope = [
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
-  'Clerk webhook to keep members in step with deleted accounts.',
-  'A restock line on this board, or a quiet inventory letter.',
-  'Appointment diary that does not become a booking widget.',
+  'Point the Clerk dashboard at POST /api/clerk-webhook and set CLERK_WEBHOOK_SIGNING_SECRET.',
+  'A confirmation letter for the visit, without becoming a booking widget.',
 ] as const

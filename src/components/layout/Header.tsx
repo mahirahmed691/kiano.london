@@ -36,6 +36,7 @@ export function Header() {
           inverted ? 'bg-transparent text-ivory' : 'bg-ivory/95 text-ink backdrop-blur-[2px]',
           !inverted && 'border-b border-rule/80',
         )}
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
         <div className="relative grid h-[5.25rem] grid-cols-[1fr_auto_1fr] items-center px-5 md:h-[5.75rem] md:px-12 lg:px-16">
           <nav className="hidden md:block" aria-label="Primary">

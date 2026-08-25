@@ -32,7 +32,7 @@ The logotype returns to the homepage. Collection pieces are driven from `src/dat
 - Tailwind CSS v4
 - React Router
 - Clerk (member accounts)
-- Neon Postgres (stock, orders, and the list)
+- Neon Postgres (stock, orders, members, the list, and appointment letters)
 - Resend (list confirmation, once the domain is verified)
 - Stripe Checkout
 - Semantic HTML, CSS transitions, `prefers-reduced-motion`
@@ -75,6 +75,8 @@ Optional: set `VITE_SITE_URL` to the live origin (no trailing slash) so Open Gra
 
 The house board at `/admin` is closed unless Clerk is on and the signed-in email is listed in `VITE_ADMIN_EMAILS` (comma-separated) and, on the server, `ADMIN_EMAILS` or the same `VITE_ADMIN_EMAILS`. On the site and in the Expo WebView, allowlisted accounts see **The ledger** in the header and **The house board** on Account. The native shell can also open `kiano://admin` (or set `EXPO_PUBLIC_HOUSE_URL` to a local Vite origin while developing).
 
+Clerk account sync: set `CLERK_WEBHOOK_SIGNING_SECRET` and add a Clerk webhook to `POST /api/clerk-webhook` for `user.created`, `user.updated`, and `user.deleted`.
+
 ## Project structure
 
 ```
@@ -100,5 +102,5 @@ Visual language, type, colour and spacing are recorded in `DESIGN.md`.
 | `npm run build` | Typecheck and production build |
 | `npm run preview` | Serve the production build |
 | `npm run lint` | Oxlint |
-| `npm run db:migrate` | Create inventory, members and orders tables |
+| `npm run db:migrate` | Create inventory, members, orders, list, webhook, and appointment tables |
 | `cd mobile && npm start` | Expo Go shell for the house app |
