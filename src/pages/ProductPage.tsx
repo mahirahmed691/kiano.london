@@ -1,6 +1,7 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { HowItArrives } from '@/components/editorial/HowItArrives'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { SizeGuide } from '@/components/product/SizeGuide'
@@ -9,6 +10,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
+import { packingNote } from '@/data/packing'
 import {
   colourVariants,
   getProduct,
@@ -208,7 +210,7 @@ export function ProductPage() {
                 {guideOpen ? <SizeGuide className="pb-4" compact /> : null}
                 <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
                   Carriage included. Made to order in London. Payment is taken before the cloth
-                  is cut.
+                  is cut. {packingNote}
                 </p>
                 <TextLink to={enquireTo}>Enquire to visit</TextLink>
               </div>
@@ -226,7 +228,8 @@ export function ProductPage() {
               <WovenLabel size="lg" className="mt-10" />
               <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
                 The K is woven, not printed, and set at the nape by hand after the last
-                press. The same mark is on every thobe and every jubbah.
+                press. Size is a separate tab. Care sits at the side seam. The same mark
+                is on every thobe and every jubbah.
               </p>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">
@@ -244,6 +247,8 @@ export function ProductPage() {
           </div>
         </Container>
       </Section>
+
+      <HowItArrives />
 
       <Section>
         <Container>

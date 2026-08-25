@@ -47,7 +47,7 @@ export function CollectionPage() {
             </p>
             <Body className="mt-6 max-w-xl">
               Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal,
-              grey, beige and bone. Cut in London for cooler air.
+              grey, beige and bone. Cut in London from the house block.
             </Body>
           </Reveal>
         </Container>

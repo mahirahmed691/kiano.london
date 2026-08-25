@@ -30,7 +30,7 @@ export function ShopPage() {
     description:
       'The jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, cut in London.',
     path: '/shop',
-    image: '/images/jubbah-sand.jpg',
+    image: '/images/jubbah-sand-02.jpg',
   })
 
   return (
@@ -125,7 +125,8 @@ export function ShopPage() {
           <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">
               {site.name} also cuts the thobe. The jubbah is the outer column; the thobe
-              is the one beneath.
+              is the one beneath. Each piece leaves unscented, in a garment bag and a
+              rigid box.
             </p>
             <Button to="/collection">The thobes</Button>
           </div>

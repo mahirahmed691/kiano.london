@@ -136,7 +136,8 @@ export function CartDrawer() {
                 <p className="font-display text-2xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
               <p className="mt-3 text-[12px] font-light leading-relaxed text-stone">
-                Carriage included. Cut to order, four to eight weeks.
+                Carriage included. Cut to order, four to eight weeks. Leaves unscented,
+                in a garment bag and a rigid box.
               </p>
               <Button
                 to="/checkout"

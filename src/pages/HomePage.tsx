@@ -51,7 +51,7 @@ export function HomePage() {
         objectPosition="68% 12%"
         kicker={`Established ${site.established} · ${site.city}`}
         title="Cut in London."
-        subtitle="Emirati thobes and jubbahs. Black, grey, beige. For cooler air."
+        subtitle="Emirati thobes and jubbahs, cut in London."
         priority
       >
         <div className="flex flex-wrap items-center gap-6">
@@ -68,11 +68,11 @@ export function HomePage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>Kiano</Eyebrow>
+              <Eyebrow>Kiano London</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl lg:text-6xl">
-                A quieter season,
+                A name, a room,
                 <br />
-                held by the stitch.
+                a long silhouette.
               </Display>
               <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
                 {site.lockup}
@@ -80,12 +80,13 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Lead>
-                We cut five thobes in London: Layl, Hadīd, Ghabār, Raml and Hajar.
-                Cloth chosen to last.
+                Kiano London is a cutting room for the modest garment. We cut five thobes,
+                and the jubbah in three colours. Cloth chosen to last.
               </Lead>
               <Body className="mt-6">
-                Nothing here is made for a campaign. A thobe should look as considered in
-                its tenth year as it did in its first. That is the only standard we keep.
+                The name is the house, not a translation. Nothing here is made for a
+                campaign. A thobe should look as considered in its tenth year as it did
+                in its first. That is the only standard we keep.
               </Body>
               <div className="mt-8">
                 <TextLink to="/story">The story</TextLink>

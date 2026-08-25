@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
+import { packingNote } from '@/data/packing'
 import { useCart } from '@/lib/cart'
 import {
   clearStoredCheckout,
@@ -145,7 +146,8 @@ export function OrderConfirmedPage() {
             </Display>
             <Body className="mt-8">
               Payment is held. Cloth will be cut from the house block in four to eight weeks. A
-              note will follow if a fitting is needed before it leaves the workroom.
+              note will follow if a fitting is needed before it leaves the workroom.{' '}
+              {packingNote}
             </Body>
             {order?.customerEmail ? (
               <Body className="mt-6">
@@ -211,7 +213,7 @@ export function OrderConfirmedPage() {
                   </div>
                 ) : null}
                 <p className="mt-8 text-[12px] font-light leading-relaxed text-stone">
-                  Carriage included. Cut to order, four to eight weeks.
+                  Carriage included. Cut to order, four to eight weeks. Leaves unscented.
                 </p>
               </div>
             </aside>

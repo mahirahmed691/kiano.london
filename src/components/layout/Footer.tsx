@@ -20,7 +20,9 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-ivory/45">{site.name}</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-ivory/45">
+              {site.fullName}
+            </p>
             <ul className="mt-4 space-y-2">
               {primaryNav.map((item) => (
                 <li key={item.to}>

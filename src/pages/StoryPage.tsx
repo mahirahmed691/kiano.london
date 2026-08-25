@@ -24,9 +24,9 @@ export function StoryPage() {
         image="/images/featured-overcoat.jpg"
         imageAlt="Hadīd: a charcoal Emirati thobe, worn at full length."
         objectPosition="center 62%"
-        kicker={`Est. ${site.established}`}
-        title="Cut in London."
-        subtitle="Kiano opened as a cutting room for the modest garment: a small workroom, and a long silhouette."
+        kicker={site.fullName}
+        title="The house."
+        subtitle="Kiano London is a cutting room for the modest garment: a name, a single address, a long silhouette."
         minHeight="tall"
         priority
       />
@@ -49,9 +49,10 @@ export function StoryPage() {
               long conversation, not a season.
             </Body>
             <Body className="mt-4">
-              London is where the work is done. Kiano is not a country myth, and
-              not a window display. We remain a single address, a small workroom, and
-              the same silhouette: ankle, shoulder, placket concealed.
+              The name is Kiano London. It is not a translation, and not a legend taken
+              from elsewhere. London is where the work is cut. We remain a single
+              address, a small workroom, and the same silhouette: ankle, shoulder,
+              placket concealed.
             </Body>
           </EditorialSplit>
         </Container>

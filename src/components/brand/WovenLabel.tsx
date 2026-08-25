@@ -13,7 +13,7 @@ type Props = {
 const sizeClass: Record<Size, string> = {
   sm: 'w-[4.25rem] px-2 py-2',
   md: 'w-[7.5rem] px-3 py-3',
-  lg: 'w-[11.5rem] px-5 py-6',
+  lg: 'w-[12.5rem] px-5 py-6',
 }
 
 const markClass: Record<Size, string> = {
@@ -34,6 +34,12 @@ const cityClass: Record<Size, string> = {
   lg: 'mt-1.5 text-[9px] tracking-[0.4em]',
 }
 
+const originClass: Record<Size, string> = {
+  sm: 'hidden',
+  md: 'hidden',
+  lg: 'mt-2.5 text-[8px] tracking-[0.32em] opacity-55',
+}
+
 export function WovenLabel({ size = 'sm', inverted = true, className }: Props) {
   return (
     <div
@@ -48,6 +54,7 @@ export function WovenLabel({ size = 'sm', inverted = true, className }: Props) {
       <Monogram className={markClass[size]} decorative />
       <p className={cn('font-display font-medium uppercase', wordClass[size])}>{site.name}</p>
       <p className={cn('uppercase opacity-70', cityClass[size])}>{site.lockup}</p>
+      <p className={cn('uppercase', originClass[size])}>Cut in London</p>
     </div>
   )
 }
