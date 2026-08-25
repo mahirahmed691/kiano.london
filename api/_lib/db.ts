@@ -108,6 +108,18 @@ async function migrate(db: Sql) {
     )
   `
   await db`CREATE INDEX IF NOT EXISTS appointments_created_at_idx ON appointments (created_at DESC)`
+  await db`
+    CREATE TABLE IF NOT EXISTS competitor_notes (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL UNIQUE,
+      url TEXT NOT NULL DEFAULT '',
+      notes TEXT NOT NULL DEFAULT '',
+      price_low_pence INTEGER,
+      price_high_pence INTEGER,
+      created_by TEXT NOT NULL DEFAULT '',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
 
   for (const product of products) {
     for (const size of thobeSizes) {

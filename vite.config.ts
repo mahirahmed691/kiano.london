@@ -64,6 +64,16 @@ const routes: Route[] = [
     load: async () => (await import('./api/admin-inventory.ts')).POST,
   },
   {
+    method: 'GET',
+    path: '/api/admin-competitors',
+    load: async () => (await import('./api/admin-competitors.ts')).GET,
+  },
+  {
+    method: 'POST',
+    path: '/api/admin-competitors',
+    load: async () => (await import('./api/admin-competitors.ts')).POST,
+  },
+  {
     method: 'POST',
     path: '/api/appointment',
     load: async () => (await import('./api/appointment.ts')).POST,

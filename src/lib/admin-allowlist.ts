@@ -1,6 +1,7 @@
 export const HOUSE_ADMIN_EMAILS = [
   'atelier@kiano.london',
   'mahirahmed691@gmail.com',
+  'kojoabayas@gmail.com',
 ] as const
 
 export function parseAdminEmails(raw: string | undefined) {

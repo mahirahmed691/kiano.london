@@ -73,7 +73,7 @@ This repository is ready for a standard Vite deployment.
 
 Optional: set `VITE_SITE_URL` to the live origin (no trailing slash) so Open Graph tags and canonical URLs match production.
 
-The house board at `/admin` is for listed emails: `atelier@kiano.london` and `mahirahmed691@gmail.com`. Set the same comma-separated list in `VITE_ADMIN_EMAILS` (client) and `ADMIN_EMAILS` (server). Vite only exposes `VITE_*`. If those env vars are empty, the same two addresses are the default. On Vercel, set both for Production, Preview, and Development. Allowlisted accounts see **The ledger** in the header and **The house board** on Account. The native shell can also open `kiano://admin` (or set `EXPO_PUBLIC_HOUSE_URL` to a local Vite origin while developing).
+The house board at `/admin` is for listed emails: `atelier@kiano.london`, `mahirahmed691@gmail.com`, and `kojoabayas@gmail.com`. Set the same comma-separated list in `VITE_ADMIN_EMAILS` (client) and `ADMIN_EMAILS` (server). Vite only exposes `VITE_*`. If those env vars are empty, the same three addresses are the default. On Vercel, set both for Production, Preview, and Development. Allowlisted accounts see **The ledger** in the header and **The house board** on Account. The native shell can also open `kiano://admin` (or set `EXPO_PUBLIC_HOUSE_URL` to a local Vite origin while developing).
 
 Clerk account sync: set `CLERK_WEBHOOK_SIGNING_SECRET` and add a Clerk webhook to `POST /api/clerk-webhook` for `user.created`, `user.updated`, and `user.deleted`.
 

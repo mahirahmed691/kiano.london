@@ -1,18 +1,20 @@
 import { Show, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { CompetitorField } from '@/components/admin/CompetitorField'
+import { CompetitorNoteForm } from '@/components/admin/CompetitorNoteForm'
 import { RestockLedger } from '@/components/admin/RestockLedger'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import {
-  houseCompetitors,
   houseDataNotes,
   houseFeatures,
   houseIntegrations,
   houseScope,
   houseVisualAudit,
 } from '@/data/house-board'
+import type { CompetitorLedgerNote } from '@/data/competitors'
 import { getProduct, productLineName } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
@@ -224,8 +226,50 @@ function AppointmentDiary({ ledger }: { ledger: Ledger | null }) {
   )
 }
 
+function useCompetitorNotes() {
+  const { getToken, isSignedIn } = useAuth()
+  const { user } = useUser()
+  const [notes, setNotes] = useState<CompetitorLedgerNote[]>([])
+
+  useEffect(() => {
+    if (!isSignedIn || !isAdminUser(user)) return
+    let cancelled = false
+
+    async function load() {
+      try {
+        const token = await getToken()
+        const response = await fetch('/api/admin-competitors', {
+          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+        })
+        const data = (await response.json()) as { notes?: CompetitorLedgerNote[] }
+        if (cancelled || !response.ok) return
+        setNotes(data.notes ?? [])
+      } catch {
+        if (!cancelled) setNotes([])
+      }
+    }
+
+    void load()
+    return () => {
+      cancelled = true
+    }
+  }, [getToken, isSignedIn, user])
+
+  function keepNote(note: CompetitorLedgerNote) {
+    setNotes((current) => {
+      const without = current.filter(
+        (entry) => entry.name.trim().toLowerCase() !== note.name.trim().toLowerCase(),
+      )
+      return [note, ...without]
+    })
+  }
+
+  return { notes, keepNote }
+}
+
 function OpenBoard() {
   const { ledger, error } = useLedger()
+  const { notes, keepNote } = useCompetitorNotes()
   const ranked = [...houseFeatures].sort((a, b) => b.completion - a.completion)
   const mean = Math.round(
     houseFeatures.reduce((sum, feature) => sum + feature.completion, 0) / houseFeatures.length,
@@ -348,32 +392,8 @@ function OpenBoard() {
       </div>
 
       <div id="ledger-field" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>04 · The field</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            Other houses of the column.
-          </Display>
-          <Body className="mt-6">
-            Not a market report. A map of who else sells an Emirati or Gulf column, so this
-            house does not become a catalogue by accident.
-          </Body>
-        </Reveal>
-        <ul className="mt-12 divide-y divide-rule border-y border-ink">
-          {houseCompetitors.map((house) => (
-            <li key={house.name} className="grid gap-4 py-8 lg:grid-cols-12">
-              <div className="lg:col-span-4">
-                <p className="font-display text-2xl font-light">{house.name}</p>
-                <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-stone">
-                  {house.where}
-                </p>
-              </div>
-              <div className="space-y-3 lg:col-span-7 lg:col-start-6">
-                <p className="text-[15px] font-light leading-relaxed text-ink-soft">{house.stance}</p>
-                <p className="text-[15px] font-light leading-relaxed text-ink">{house.vs}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <CompetitorField notes={notes} />
+        <CompetitorNoteForm onSaved={keepNote} />
       </div>
 
       <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">

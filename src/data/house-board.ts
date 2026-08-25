@@ -113,7 +113,7 @@ export const houseIntegrations = [
     name: 'Neon Postgres',
     state: 'Live',
     hook: 'None',
-    events: 'inventory, members, orders, order_lines, subscribers, webhook_events, appointments',
+    events: 'inventory, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes',
     note: 'Schema is created on first use. Remaining cuts are set from the ledger, not from SQL by hand.',
   },
   {
@@ -143,7 +143,7 @@ export const houseDataNotes = [
   },
   {
     title: 'How it is read',
-    copy: 'The board fetches /api/admin-summary and /api/admin-inventory with a Clerk bearer token. Unsigned or unlisted emails see nothing of the ledger. Inventory writes require requireAdmin.',
+    copy: 'The board fetches /api/admin-summary, /api/admin-inventory, and /api/admin-competitors with a Clerk bearer token. Unsigned or unlisted emails see nothing of the ledger. Inventory and field notes require requireAdmin.',
   },
 ] as const
 
