@@ -136,8 +136,8 @@ export function CraftsmanshipPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <Reveal>
               <ImageFrame
-                src="/images/featured-overcoat.jpg"
-                alt="An Emirati thobe at rest: the column of cloth these methods produce."
+                src="/images/thobe-hajar.jpg"
+                alt="The Hajar thobe at rest: the column of cloth these methods produce."
                 className="aspect-[4/5] w-full"
               />
             </Reveal>

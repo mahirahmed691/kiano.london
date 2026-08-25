@@ -110,8 +110,8 @@ export function ShopPage() {
               alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
             },
             {
-              src: '/images/obsidian.jpg',
-              alt: 'A black thobe at the window: the house silhouette, cut in London.',
+              src: '/images/atelier-rail.jpg',
+              alt: 'The house line on the rail: black, sand, and bone.',
               objectPosition: 'center 40%',
             },
             {

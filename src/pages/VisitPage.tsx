@@ -31,7 +31,7 @@ export function VisitPage() {
     description:
       'Appointments at the Kiano London atelier in Mayfair. See cloth, sit for a fitting, or walk the rooms.',
     path: '/visit',
-      image: '/images/obsidian.jpg',
+    image: '/images/cutting-room.jpg',
   })
 
   return (
@@ -56,8 +56,8 @@ export function VisitPage() {
 
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
-          src="/images/obsidian.jpg"
-          alt="A black thobe at the window in London: the house silhouette."
+          src="/images/cutting-room.jpg"
+          alt="The cutting room at Kiano London: paper, shears, and cloth in progress."
           className="object-[center_40%]"
           loading="eager"
           decoding="async"
@@ -134,8 +134,8 @@ export function VisitPage() {
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
               <ImageFrame
-                src="/images/jubbah-sand-02.jpg"
-                alt="The sand jubbah at rest, shown before it is cut from the house block."
+                src="/images/atelier-rail.jpg"
+                alt="The house line on the rail: black, sand, and bone, before a fitting."
                 className="aspect-[4/5] w-full"
                 caption="Cloth is shown in daylight."
               />

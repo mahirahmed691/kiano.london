@@ -49,9 +49,9 @@ export const products: Product[] = [
     mill: 'Compact cotton, 80s two-ply',
     price: '£70',
     pricePence: 7000,
-    image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The interior of the Layl thobe, the woven label set by hand.',
-    objectPosition: 'center 62%',
+    image: '/images/thobe-layl.jpg',
+    imageAlt: 'The Layl thobe: matte black compact cotton, band collar, hem to the ankle.',
+    objectPosition: 'center 12%',
     featured: true,
     description:
       'Layl is the black column. Compact Japanese cotton, matte so it does not shine under evening light, cut from the house block with a band collar and a placket that closes out of sight.',
@@ -65,6 +65,11 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
+        src: '/images/thobe-layl.jpg',
+        alt: 'The Layl thobe at full length: a black column, the placket concealed.',
+        objectPosition: 'center 12%',
+      },
+      {
         src: '/images/concealed-pocket.jpg',
         alt: 'The interior of the Layl thobe, the woven label set by hand.',
         objectPosition: 'center 62%',
@@ -72,10 +77,6 @@ export const products: Product[] = [
       {
         src: '/images/stitch-buttonhole.jpg',
         alt: 'A silk-twist buttonhole on dark cloth, the placket of the Layl thobe.',
-      },
-      {
-        src: '/images/worsted-wool.jpg',
-        alt: 'Close work: a needle and dark cloth, the stitch that holds the collar.',
       },
     ],
   },
@@ -131,9 +132,9 @@ export const products: Product[] = [
     mill: 'Albini compact cotton',
     price: '£60',
     pricePence: 6000,
-    image: '/images/jubbah-charcoal-cloth.jpg',
-    imageAlt: 'The Ghabār thobe: earth grey, a standing collar, the cloth held close.',
-    objectPosition: 'center 20%',
+    image: '/images/thobe-ghabar.jpg',
+    imageAlt: 'The Ghabār thobe: earth grey compact cotton, band collar, hem to the ankle.',
+    objectPosition: 'center 12%',
     featured: true,
     description:
       'Ghabār is earth grey: Albini compact cotton, dense without stiffness, named for dust rather than a season. It is the thobe that reads as colour only when you stand beside black.',
@@ -148,13 +149,13 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
-        src: '/images/jubbah-charcoal-cloth.jpg',
-        alt: 'The Ghabār thobe at the collar: earth grey, the placket concealed.',
-        objectPosition: 'center 20%',
+        src: '/images/thobe-ghabar.jpg',
+        alt: 'The Ghabār thobe at full length: earth grey, a standing column.',
+        objectPosition: 'center 12%',
       },
       {
-        src: '/images/stitch-buttonhole.jpg',
-        alt: 'A silk-twist buttonhole, the fastening set into the cloth.',
+        src: '/images/cloth-dust.jpg',
+        alt: 'Earth-grey compact cotton in the piece, the cloth of Ghabār.',
       },
       {
         src: '/images/worsted-wool.jpg',
@@ -172,9 +173,9 @@ export const products: Product[] = [
     mill: 'Giza 86, washed for drape',
     price: '£65',
     pricePence: 6500,
-    image: '/images/jubbah-sand-02.jpg',
-    imageAlt: 'The Raml thobe at rest: sand extra-long staple, the cloth to the ankle.',
-    objectPosition: 'center 28%',
+    image: '/images/thobe-raml.jpg',
+    imageAlt: 'The Raml thobe: sand extra-long staple cotton, band collar, hem to the ankle.',
+    objectPosition: 'center 12%',
     description:
       'Raml is sand. Extra-long staple Giza 86, washed so the fibre drapes rather than stands. It is the daylight thobe: pale, dry, named for the ground it resembles.',
     details: [
@@ -188,13 +189,13 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
-        src: '/images/jubbah-sand-02.jpg',
-        alt: 'Sand extra-long staple cotton, the Raml thobe draped to the ankle.',
-        objectPosition: 'center 28%',
+        src: '/images/thobe-raml.jpg',
+        alt: 'The Raml thobe at full length: sand extra-long staple, the cloth to the ankle.',
+        objectPosition: 'center 12%',
       },
       {
-        src: '/images/obsidian.jpg',
-        alt: 'A black column at the window: the house silhouette, cut in London.',
+        src: '/images/cloth-giza.jpg',
+        alt: 'Sand extra-long staple cotton in the piece, before it is chalked and cut.',
       },
       {
         src: '/images/concealed-pocket.jpg',
@@ -213,9 +214,9 @@ export const products: Product[] = [
     mill: 'Como cotton-silk',
     price: '£80',
     pricePence: 8000,
-    image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The interior of the Hajar thobe: the woven Kiano label, set by hand.',
-    objectPosition: 'center 62%',
+    image: '/images/thobe-hajar.jpg',
+    imageAlt: 'The Hajar thobe: bone cotton-silk, band collar, hem to the ankle.',
+    objectPosition: 'center 12%',
     description:
       'Hajar is bone: Como cotton-silk, washed, a cooler handle than Raml and a quieter light. The placket is the same concealed work as the rest of the line. The cloth is the distinction.',
     details: [
@@ -229,14 +230,13 @@ export const products: Product[] = [
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
-        src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of the Hajar thobe: pocket, lining, the woven label.',
-        objectPosition: 'center 62%',
+        src: '/images/thobe-hajar.jpg',
+        alt: 'The Hajar thobe at full length: bone cotton-silk, a quieter light.',
+        objectPosition: 'center 12%',
       },
       {
-        src: '/images/jubbah-sand-02.jpg',
-        alt: 'Pale cloth at full length, the daylight column of the house block.',
-        objectPosition: 'center 28%',
+        src: '/images/cloth-giza.jpg',
+        alt: 'Pale cloth in the piece, washed so the fibre drapes rather than stands.',
       },
       {
         src: '/images/stitch-buttonhole.jpg',
@@ -325,9 +325,8 @@ export const products: Product[] = [
         alt: 'The sand jubbah at rest: the cloth draped to the ankle.',
       },
       {
-        src: '/images/worsted-wool.jpg',
+        src: '/images/cloth-giza.jpg',
         alt: 'Sand extra-long staple cotton in the piece.',
-        objectPosition: '22% 50%',
       },
     ],
   },

@@ -34,9 +34,9 @@ export function StoryPage() {
       <Section>
         <Container>
           <EditorialSplit
-            image="/images/obsidian.jpg"
-            imageAlt="A black thobe at the window: London beyond the glass."
-            objectPosition="center 40%"
+            image="/images/thobe-layl.jpg"
+            imageAlt="The Layl thobe: a black column, cut in London."
+            objectPosition="center 12%"
             imageOn="right"
           >
             <Eyebrow>{site.established}</Eyebrow>
@@ -63,17 +63,17 @@ export function StoryPage() {
           <div className="grid gap-6 md:grid-cols-12">
             <Reveal className="md:col-span-7">
               <ImageFrame
-                src="/images/jubbah-sand-02.jpg"
-                alt="The sand jubbah at rest, the cloth to the ankle."
+                src="/images/cloth-giza.jpg"
+                alt="Extra-long staple cotton unrolled on the cutting table."
                 className="aspect-[4/3] w-full md:aspect-[16/10]"
-                objectPosition="center 28%"
+                objectPosition="center 40%"
                 caption="Cloth"
               />
             </Reveal>
             <Reveal delay={100} className="md:col-span-5 md:pt-16">
               <ImageFrame
-                src="/images/obsidian.jpg"
-                alt="A black thobe at the window: the workroom, and the city."
+                src="/images/cutting-room.jpg"
+                alt="The cutting room: paper for the house block, and London at the window."
                 className="aspect-[3/4] w-full"
                 objectPosition="center 40%"
                 caption="The workroom"

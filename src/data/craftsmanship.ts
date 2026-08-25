@@ -36,16 +36,16 @@ export const processSteps: ProcessStep[] = [
     title: 'Cloth',
     summary:
       'Japanese compact cotton, Super 150s wool-cotton, extra-long staple Giza. Weight and handle are chosen in the piece. An Emirati thobe lives or dies by the drape.',
-    image: '/images/jubbah-sand-02.jpg',
-    imageAlt: 'The sand jubbah at rest, the cloth to the ankle, before it is chalked and cut.',
+    image: '/images/cloth-giza.jpg',
+    imageAlt: 'Extra-long staple cotton unrolled on the cutting table, before it is chalked.',
   },
   {
     number: '02',
     title: 'Pattern',
     summary:
       'Each thobe is cut from the house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
-    image: '/images/obsidian.jpg',
-    imageAlt: 'The house silhouette at the window: a black column, cut in London.',
+    image: '/images/cutting-room.jpg',
+    imageAlt: 'The cutting room: paper for the house block, shears, and cloth on the bench.',
   },
   {
     number: '03',
@@ -140,8 +140,8 @@ export const detailSections: DetailSection[] = [
       'The collar stand of a thobe is pad-stitched by hand. The stitches are not decorative. They shape the roll of the neck and keep the stand from collapsing after a day’s wear.',
       'We work in silk twist, the tension set by eye. A fused collar is quicker. It is also why so many garments look tired by the third season.',
     ],
-    image: '/images/worsted-wool.jpg',
-    imageAlt: 'Close work: a needle and charcoal cloth, the stitch of a thobe.',
+    image: '/images/cloth-dust.jpg',
+    imageAlt: 'Earth-grey compact cotton and a needle, the stitch of a thobe.',
     imagePosition: 'left',
   },
   {

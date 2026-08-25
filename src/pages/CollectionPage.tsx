@@ -28,9 +28,9 @@ export function CollectionPage() {
   usePageMeta({
     title: 'The Collection — Kiano London',
     description:
-              'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, cut in London.',
+      'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, cut in London.',
     path: '/collection',
-      image: '/images/jubbah-sand-02.jpg',
+    image: '/images/thobe-raml.jpg',
   })
 
   return (
@@ -55,9 +55,9 @@ export function CollectionPage() {
 
       <div className="img-zoom relative aspect-[16/8] max-h-[520px] overflow-hidden bg-ivory-deep md:aspect-[21/8]">
         <img
-          src="/images/jubbah-sand-02.jpg"
-          alt="The sand jubbah at rest, the cloth of the daylight thobe."
-          className="object-[center_28%]"
+          src="/images/thobe-raml.jpg"
+          alt="The Raml thobe: sand extra-long staple, the daylight column."
+          className="object-[center_12%]"
           loading="eager"
           decoding="async"
         />
@@ -114,18 +114,18 @@ export function CollectionPage() {
           className="mt-24 md:mt-32"
           plates={[
             {
-              src: '/images/concealed-pocket.jpg',
-              alt: 'The interior of the Layl thobe, the woven label set by hand.',
-              objectPosition: 'center 62%',
+              src: '/images/cutting-room.jpg',
+              alt: 'The cutting room: paper for the house block, shears, and cloth.',
+              objectPosition: 'center 40%',
             },
             {
-              src: '/images/jubbah-sand-02.jpg',
-              alt: 'The sand jubbah at rest: extra-long staple, hem to the ankle.',
-              objectPosition: 'center 28%',
+              src: '/images/cloth-giza.jpg',
+              alt: 'Extra-long staple cotton unrolled on the cutting table.',
+              objectPosition: 'center 40%',
             },
             {
-              src: '/images/obsidian.jpg',
-              alt: 'A black thobe at the window: the house silhouette, cut in London.',
+              src: '/images/atelier-rail.jpg',
+              alt: 'The house line on the rail: black, sand, and bone.',
               objectPosition: 'center 40%',
             },
           ]}

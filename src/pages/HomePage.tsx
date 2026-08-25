@@ -15,20 +15,20 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 const lookbook = [
   {
-    src: '/images/concealed-pocket.jpg',
-    alt: 'The interior of the Layl thobe: the woven label set by hand.',
-    caption: 'The unseen',
-    objectPosition: 'center 62%',
+    src: '/images/thobe-layl.jpg',
+    alt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
+    caption: 'Layl',
+    objectPosition: 'center 12%',
   },
   {
-    src: '/images/jubbah-sand-02.jpg',
-    alt: 'The sand jubbah at rest: extra-long staple, the cloth to the ankle.',
+    src: '/images/cloth-giza.jpg',
+    alt: 'Extra-long staple cotton unrolled on the cutting table.',
     caption: 'Cloth in the piece',
-    objectPosition: 'center 28%',
+    objectPosition: 'center 40%',
   },
   {
-    src: '/images/obsidian.jpg',
-    alt: 'A black thobe at the window: London beyond the glass.',
+    src: '/images/atelier-rail.jpg',
+    alt: 'The house line on the rail: black, sand, and bone.',
     caption: 'The rooms',
     objectPosition: 'center 40%',
   },
@@ -147,8 +147,8 @@ export function HomePage() {
       <Section className="pt-0">
         <Container>
           <EditorialSplit
-            image="/images/worsted-wool.jpg"
-            imageAlt="A needle resting on charcoal worsted: the cloth of a winter thobe."
+            image="/images/cloth-dust.jpg"
+            imageAlt="Earth-grey compact cotton and a needle: the stitch of a thobe."
             objectPosition="center"
             imageOn="left"
           >
@@ -170,11 +170,11 @@ export function HomePage() {
 
       <section className="relative min-h-[70svh] overflow-hidden">
         <ImageFrame
-          src="/images/featured-overcoat.jpg"
-          alt="Hadīd at rest: a charcoal Emirati thobe, a column of cloth."
+          src="/images/thobe-ghabar.jpg"
+          alt="Ghabār at rest: an earth-grey Emirati thobe, a column of cloth."
           className="absolute inset-0 h-full w-full"
           imgClassName="h-full w-full object-cover"
-          objectPosition="center 58%"
+          objectPosition="center 18%"
         />
         <div className="absolute inset-0 bg-night/55" aria-hidden="true" />
         <div className="relative z-10 flex min-h-[70svh] items-center px-6 py-24 md:px-12 lg:px-16">
@@ -204,10 +204,10 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120}>
               <ImageFrame
-                src="/images/obsidian.jpg"
-                alt="A black thobe at the window: the house silhouette, cut in London."
+                src="/images/cutting-room.jpg"
+                alt="The cutting room: paper for the house block, shears, and cloth on the bench."
                 className="aspect-[4/5] w-full"
-                objectPosition="center 40%"
+                objectPosition="center 45%"
                 caption="Mayfair. By appointment."
               />
             </Reveal>
