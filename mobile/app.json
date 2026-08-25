@@ -7,6 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#F2EBDC",
     "scheme": "kiano",
     "splash": {
       "image": "./assets/images/splash-icon.png",
@@ -35,6 +36,20 @@
       "eas": {
         "projectId": "d1786b49-0e68-46d1-a5f7-37c57a92f025"
       }
-    }
+    },
+    "plugins": [
+      "expo-dev-client",
+      "expo-system-ui",
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F2EBDC",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ]
+    ]
   }
 }
