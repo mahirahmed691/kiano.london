@@ -16,13 +16,18 @@ function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
   el.setAttribute('content', content)
 }
 
-export function applyPageMeta({ title, description, path, image, imageAlt }: PageMeta) {
+export function applyPageMeta({ title, description, path, image, imageAlt, robots }: PageMeta) {
   const url = `${SITE_URL}${path}`
   const ogImage = image?.startsWith('http') ? image : `${SITE_URL}${image ?? '/images/og.jpg'}`
   const alt = imageAlt ?? 'Kiano London. Emirati thobes and jubbahs.'
 
   document.title = title
   upsertMeta('name', 'description', description)
+  if (robots) {
+    upsertMeta('name', 'robots', robots)
+  } else {
+    document.head.querySelector('meta[name="robots"]')?.remove()
+  }
   upsertMeta('property', 'og:locale', 'en_GB')
   upsertMeta('property', 'og:site_name', 'Kiano London')
   upsertMeta('property', 'og:title', title)

@@ -1,16 +1,14 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
-import { HouseFilm } from '@/components/editorial/HouseFilm'
 import { type ProductImage } from '@/data/products'
 import { cn } from '@/lib/cn'
 
 type Props = {
   image: ProductImage
-  film?: string
   first?: boolean
   onLook: () => void
 }
 
-export function ProductPlate({ image, film, first = false, onLook }: Props) {
+export function ProductPlate({ image, first = false, onLook }: Props) {
   return (
     <div
       className={cn(
@@ -18,25 +16,14 @@ export function ProductPlate({ image, film, first = false, onLook }: Props) {
         first ? 'xl:min-h-[calc(100svh-7rem)]' : 'xl:aspect-3/4',
       )}
     >
-      {film ? (
-        <HouseFilm
-          src={film}
-          poster={image.src}
-          alt={image.alt}
-          objectPosition={image.objectPosition}
-          priority={first}
-          className="absolute inset-0 h-full w-full"
-        />
-      ) : (
-        <img
-          src={image.src}
-          alt={image.alt}
-          loading={first ? 'eager' : 'lazy'}
-          decoding="async"
-          className="absolute inset-0 size-full object-cover"
-          style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
-        />
-      )}
+      <img
+        src={image.src}
+        alt={image.alt}
+        loading={first ? 'eager' : 'lazy'}
+        decoding="async"
+        className="absolute inset-0 size-full object-cover"
+        style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
+      />
       {first ? (
         <WovenLabel
           size="md"

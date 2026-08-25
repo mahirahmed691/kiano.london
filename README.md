@@ -16,6 +16,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/craftsmanship-details` | The making, in detail |
 | `/visit` | Atelier visit |
 | `/account` | Member reservations |
+| `/admin` | House ledger (signed-in allowlist) |
 | `/cookies` | Cookies |
 | `/privacy` | Privacy |
 | `/letters/confirmed` | List confirmation |
@@ -71,6 +72,8 @@ This repository is ready for a standard Vite deployment.
 `vercel.json` rewrites unknown routes to `index.html` so `/collection`, `/story` and the craftsmanship pages work on refresh.
 
 Optional: set `VITE_SITE_URL` to the live origin (no trailing slash) so Open Graph tags and canonical URLs match production.
+
+The house board at `/admin` is closed unless Clerk is on and the signed-in email is listed in `VITE_ADMIN_EMAILS` (comma-separated) and, on the server, `ADMIN_EMAILS` or the same `VITE_ADMIN_EMAILS`. On the site and in the Expo WebView, allowlisted accounts see **The ledger** in the header and **The house board** on Account. The native shell can also open `kiano://admin` (or set `EXPO_PUBLIC_HOUSE_URL` to a local Vite origin while developing).
 
 ## Project structure
 

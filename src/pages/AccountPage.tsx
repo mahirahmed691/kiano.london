@@ -5,6 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { getProduct, productPath } from '@/data/products'
+import { isAdminEmail } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { orderReference } from '@/lib/checkout'
 import { formatGbp } from '@/lib/money'
@@ -144,6 +145,16 @@ function AccountOrders() {
   )
 }
 
+function AccountLedgerLink() {
+  const { user } = useUser()
+  if (!isAdminEmail(user?.primaryEmailAddress?.emailAddress)) return null
+  return (
+    <div className="mt-10">
+      <TextLink to="/admin">The house board</TextLink>
+    </div>
+  )
+}
+
 export function AccountPage() {
   usePageMeta(getShareMeta('/account'))
 
@@ -173,6 +184,7 @@ export function AccountPage() {
                 Payment still reserves the cloth. These are the cuts held against this email.
               </Body>
               <AccountOrders />
+              <AccountLedgerLink />
               <div className="mt-12">
                 <SignOutButton>
                   <button

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { HouseMark } from '@/components/brand/HouseMark'
+import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { overlayPaths, primaryNav } from '@/data/navigation'
 import { useCart } from '@/lib/cart'
@@ -91,6 +92,12 @@ export function Header() {
           <HouseMark inverted={inverted} className="items-center text-center" />
 
           <div className="flex items-center justify-end gap-6 lg:gap-9">
+            <AdminNavLink
+              className={cn(
+                'hidden text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 md:inline',
+                inverted && 'drop-shadow-[0_1px_8px_rgba(20,18,16,0.55)]',
+              )}
+            />
             <NavLink
               to="/account"
               className={cn(

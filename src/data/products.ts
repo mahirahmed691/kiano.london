@@ -27,7 +27,6 @@ export type Product = {
   image: string
   imageAlt: string
   objectPosition?: string
-  film?: string
   featured?: boolean
   description: string
   details: string[]
@@ -51,7 +50,6 @@ export const products: Product[] = [
     price: '£70',
     pricePence: 7000,
     image: '/images/thobe-layl.jpg',
-    film: '/films/layl.mp4',
     imageAlt: 'The Layl thobe: matte black compact cotton, band collar, hem to the ankle.',
     objectPosition: 'center 12%',
     featured: true,
@@ -93,7 +91,6 @@ export const products: Product[] = [
     price: '£90',
     pricePence: 9000,
     image: '/images/featured-overcoat.jpg',
-    film: '/films/hadid.mp4',
     imageAlt: 'A charcoal Emirati thobe with a standing collar, worn at full length.',
     objectPosition: '72% 18%',
     featured: true,
@@ -136,7 +133,6 @@ export const products: Product[] = [
     price: '£60',
     pricePence: 6000,
     image: '/images/thobe-ghabar.jpg',
-    film: '/films/ghabar.mp4',
     imageAlt: 'The Ghabār thobe: earth grey compact cotton, band collar, hem to the ankle.',
     objectPosition: 'center 12%',
     featured: true,
@@ -178,7 +174,6 @@ export const products: Product[] = [
     price: '£65',
     pricePence: 6500,
     image: '/images/thobe-raml.jpg',
-    film: '/films/raml.mp4',
     imageAlt: 'The Raml thobe: sand extra-long staple cotton, band collar, hem to the ankle.',
     objectPosition: 'center 12%',
     description:
@@ -220,7 +215,6 @@ export const products: Product[] = [
     price: '£80',
     pricePence: 8000,
     image: '/images/thobe-hajar.jpg',
-    film: '/films/hajar.mp4',
     imageAlt: 'The Hajar thobe: bone cotton-silk, band collar, hem to the ankle.',
     objectPosition: 'center 12%',
     description:
@@ -263,7 +257,6 @@ export const products: Product[] = [
     price: '£85',
     pricePence: 8500,
     image: '/images/jubbah-black.jpg',
-    film: '/films/jubbah-black.mp4',
     imageAlt: 'A black Emirati jubbah worn at full length.',
     objectPosition: 'center 12%',
     featured: true,
@@ -307,7 +300,6 @@ export const products: Product[] = [
     price: '£85',
     pricePence: 8500,
     image: '/images/jubbah-sand.jpg',
-    film: '/films/jubbah-sand.mp4',
     imageAlt: 'A sand Emirati jubbah worn at full length in a sunlit plaster room.',
     objectPosition: 'center 8%',
     featured: true,
@@ -351,7 +343,6 @@ export const products: Product[] = [
     price: '£85',
     pricePence: 8500,
     image: '/images/jubbah-charcoal.jpg',
-    film: '/films/jubbah-charcoal.mp4',
     imageAlt: 'A charcoal Emirati jubbah worn at full length.',
     objectPosition: 'center 10%',
     featured: true,

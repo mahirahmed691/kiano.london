@@ -156,7 +156,6 @@ export function ProductPage() {
               <ProductPlate
                 key={`${image.src}-${index}`}
                 image={image}
-                film={index === 0 ? product.film : undefined}
                 first={index === 0}
                 onLook={() => setLooking(index)}
               />

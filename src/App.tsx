@@ -4,6 +4,7 @@ import { Layout } from '@/components/layout/Layout'
 import { CartProvider } from '@/lib/cart'
 import { QuickAddProvider } from '@/lib/quickAdd'
 import { AccountPage } from '@/pages/AccountPage'
+import { AdminPage } from '@/pages/AdminPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { CraftsmanshipDetailsPage } from '@/pages/CraftsmanshipDetailsPage'
@@ -41,6 +42,7 @@ export default function App() {
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
                 <Route path="/account" element={<AccountPage />} />
+                <Route path="/admin" element={<AdminPage />} />
                 <Route path="/cookies" element={<CookiesPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />

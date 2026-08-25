@@ -12,6 +12,8 @@ const envKeys = [
   'DATABASE_URL',
   'POSTGRES_URL',
   'CLERK_SECRET_KEY',
+  'ADMIN_EMAILS',
+  'VITE_ADMIN_EMAILS',
   'RESEND_API_KEY',
   'RESEND_FROM',
 ] as const
@@ -44,6 +46,11 @@ const routes: Route[] = [
     method: 'GET',
     path: '/api/orders',
     load: async () => (await import('./api/orders.ts')).GET,
+  },
+  {
+    method: 'GET',
+    path: '/api/admin-summary',
+    load: async () => (await import('./api/admin-summary.ts')).GET,
   },
   {
     method: 'POST',

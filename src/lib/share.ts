@@ -7,6 +7,7 @@ export type PageMeta = {
   path: string
   image?: string
   imageAlt?: string
+  robots?: string
 }
 
 const defaultImage = '/images/og.jpg'
@@ -87,6 +88,12 @@ const pages: Record<string, PageMeta> = {
     title: 'Account — Kiano London',
     description: 'Reservations placed with Kiano London.',
     path: '/account',
+  },
+  '/admin': {
+    title: 'The ledger — Kiano London',
+    description: 'A private reading of the house.',
+    path: '/admin',
+    robots: 'noindex, nofollow',
   },
   '/sign-in': {
     title: 'Sign in — Kiano London',
@@ -174,6 +181,7 @@ export function renderShareDocument(origin: string, pathname: string) {
     <meta charset="utf-8" />
     <title>${title}</title>
     <meta name="description" content="${description}" />
+    ${meta.robots ? `<meta name="robots" content="${escapeHtml(meta.robots)}" />` : ''}
     <link rel="canonical" href="${urlEsc}" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="website" />

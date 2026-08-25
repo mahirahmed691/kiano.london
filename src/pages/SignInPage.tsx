@@ -1,4 +1,5 @@
 import { SignIn } from '@clerk/react'
+import { useSearchParams } from 'react-router-dom'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { clerkEnabled } from '@/lib/clerk'
@@ -6,7 +7,12 @@ import { clerkAppearance } from '@/lib/clerkAppearance'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
+const allowedRedirects = new Set(['/admin', '/account', '/checkout'])
+
 export function SignInPage() {
+  const [params] = useSearchParams()
+  const requested = params.get('redirect_url')
+  const fallbackRedirectUrl = requested && allowedRedirects.has(requested) ? requested : '/account'
   usePageMeta(getShareMeta('/sign-in'))
 
   return (
@@ -25,7 +31,7 @@ export function SignInPage() {
               routing="path"
               path="/sign-in"
               signUpUrl="/sign-up"
-              fallbackRedirectUrl="/account"
+              fallbackRedirectUrl={fallbackRedirectUrl}
               appearance={clerkAppearance}
             />
           ) : (
