@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar'
 import * as Linking from 'expo-linking'
-import * as SplashScreen from 'expo-splash-screen'
 import * as SystemUI from 'expo-system-ui'
-import { useCallback, useEffect, useState } from 'react'
-import { Linking as RNLinking, SafeAreaView, StyleSheet } from 'react-native'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Linking as RNLinking, SafeAreaView, StyleSheet, View } from 'react-native'
 import { WebView, type WebViewNavigation } from 'react-native-webview'
+
+import { HouseSplash } from './HouseSplash'
 
 const DEFAULT_ORIGIN = 'https://www.kiano.london'
 
@@ -49,10 +50,11 @@ function shouldOpenOutside(url: string) {
 }
 
 void SystemUI.setBackgroundColorAsync('#F2EBDC')
-SplashScreen.setOptions({ duration: 400, fade: true })
 
 export default function App() {
   const [uri, setUri] = useState(houseOrigin)
+  const [houseReady, setHouseReady] = useState(false)
+  const firstLoad = useRef(true)
 
   useEffect(() => {
     void Linking.getInitialURL().then((url) => {
@@ -72,21 +74,32 @@ export default function App() {
     return true
   }, [])
 
+  const onHousePainted = useCallback(() => {
+    if (!firstLoad.current) return
+    firstLoad.current = false
+    setHouseReady(true)
+  }, [])
+
   return (
-    <SafeAreaView style={styles.shell}>
+    <View style={styles.shell}>
       <StatusBar style="dark" />
-      <WebView
-        source={{ uri }}
-        style={styles.frame}
-        originWhitelist={['https://*', 'http://*', 'about:*']}
-        onShouldStartLoadWithRequest={onNav}
-        allowsBackForwardNavigationGestures
-        sharedCookiesEnabled
-        thirdPartyCookiesEnabled
-        setSupportMultipleWindows={false}
-        decelerationRate="normal"
-      />
-    </SafeAreaView>
+      <SafeAreaView style={styles.shell}>
+        <WebView
+          source={{ uri }}
+          style={styles.frame}
+          originWhitelist={['https://*', 'http://*', 'about:*']}
+          onShouldStartLoadWithRequest={onNav}
+          onLoadEnd={onHousePainted}
+          onError={onHousePainted}
+          allowsBackForwardNavigationGestures
+          sharedCookiesEnabled
+          thirdPartyCookiesEnabled
+          setSupportMultipleWindows={false}
+          decelerationRate="normal"
+        />
+      </SafeAreaView>
+      <HouseSplash houseReady={houseReady} />
+    </View>
   )
 }
 

@@ -10,13 +10,24 @@
     "backgroundColor": "#F2EBDC",
     "scheme": "kiano",
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/images/splash-lockup.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F2EBDC"
+      "backgroundColor": "#F2EBDC",
+      "dark": {
+        "image": "./assets/images/splash-lockup.png",
+        "backgroundColor": "#F2EBDC"
+      }
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#F2EBDC",
+      "barStyle": "dark-content"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "london.kiano.app",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -45,9 +56,13 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#F2EBDC",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain"
+          "image": "./assets/images/splash-lockup.png",
+          "imageWidth": 252,
+          "resizeMode": "contain",
+          "dark": {
+            "backgroundColor": "#F2EBDC",
+            "image": "./assets/images/splash-lockup.png"
+          }
         }
       ]
     ]
