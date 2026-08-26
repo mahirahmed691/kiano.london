@@ -72,7 +72,8 @@ export function VisitPage() {
               </Display>
               <Body className="mt-6">
                 The form opens a letter to Kiano London. A copy is kept for the house when
-                it can be. If you would rather write directly:{' '}
+                it can be. A confirmation is sent to you: the letter is held, not a booking.
+                If you would rather write directly:{' '}
                 <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
                   {site.email}
                 </a>

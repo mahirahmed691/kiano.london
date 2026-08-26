@@ -47,6 +47,67 @@ export async function addToAudience(email: string) {
   }
 }
 
+export function escapeHtml(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+}
+
+function letterFrame(title: string, body: string, footer: string) {
+  return `<!doctype html>
+<html lang="en">
+  <body style="margin:0;background:#F2EBDC;color:#1B1714;font-family:Georgia,serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F2EBDC;padding:48px 24px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="480" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#6F675C;">Kiano London</td>
+            </tr>
+            <tr>
+              <td style="padding-top:24px;font-size:32px;font-weight:300;line-height:1.15;">${title}</td>
+            </tr>
+            <tr>
+              <td style="padding-top:20px;font-size:16px;font-weight:300;line-height:1.7;color:#3F3933;">
+                ${body}
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-top:32px;font-size:13px;color:#6F675C;line-height:1.6;">
+                ${footer}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`
+}
+
+export function visitLetterHtml(input: { name: string; piece: string; size: string }) {
+  const name = escapeHtml(input.name)
+  const piece = escapeHtml(input.piece)
+  const size = escapeHtml(input.size)
+  const named = `<p style="margin:16px 0 0;">You named ${piece}, ${size}.</p>`
+  return letterFrame(
+    'The letter is held.',
+    `<p style="margin:0;">${name}, the request is with the house. This is not a booking. We write when a morning can be kept.</p>${named}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function visitLetterText(input: { name: string; piece: string; size: string }) {
+  return [
+    `${input.name}, the request is with the house.`,
+    'This is not a booking. We write when a morning can be kept.',
+    `You named ${input.piece}, ${input.size}.`,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
 export function confirmLetterHtml(url: string) {
   return `<!doctype html>
 <html lang="en">

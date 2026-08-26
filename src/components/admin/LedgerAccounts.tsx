@@ -1,8 +1,7 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import { Button } from '@/components/ui/Button'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
 import { isAdminUser } from '@/lib/admin'
 import type { LedgerJournalRow, LedgerPeriod } from '@/lib/ledger'
 import { formatLedgerDate } from '@/lib/ledger'
@@ -97,79 +96,78 @@ export function LedgerAccounts() {
   const allTime = book?.allTime ?? emptyPeriod()
 
   return (
-    <div id="ledger-tax" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-      <Reveal>
-        <Eyebrow>Tax · Accounts</Eyebrow>
-        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-          The book in sterling.
-        </Display>
-        <Body className="mt-6">
-          Paid reservations only. A simple journal for the accountant, not a Sage clone.
-        </Body>
-      </Reveal>
+    <div className="mt-16">
       {error ? (
-        <p className="mt-8 text-[15px] font-light text-ink" role="alert">
+        <p className="mb-8 text-[15px] font-light text-ink" role="alert">
           {error}
         </p>
       ) : null}
-      <ul className="mt-12 grid gap-8 border-t border-ink pt-10 sm:grid-cols-2">
-        <li>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">This month</p>
-          <p className="mt-3 font-display text-3xl font-light">{formatGbpExact(month.grossPence)}</p>
-          <p className="mt-2 text-[13px] font-light text-ink-soft">
-            Net {formatGbpExact(month.netPence)} · VAT {formatGbpExact(month.vatPence)} ·{' '}
-            {month.count} sales
-          </p>
-        </li>
-        <li>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">All time</p>
-          <p className="mt-3 font-display text-3xl font-light">{formatGbpExact(allTime.grossPence)}</p>
-          <p className="mt-2 text-[13px] font-light text-ink-soft">
-            Net {formatGbpExact(allTime.netPence)} · VAT {formatGbpExact(allTime.vatPence)} ·{' '}
-            {allTime.count} sales
-          </p>
-        </li>
-      </ul>
-      {book?.vatNote ? (
-        <p className="mt-10 max-w-prose text-[13px] font-light leading-relaxed text-stone">
-          {book.vatNote}
-        </p>
-      ) : null}
-      {book?.refunds ? (
-        <p className="mt-4 max-w-prose text-[13px] font-light leading-relaxed text-stone">
-          {book.refunds}
-        </p>
-      ) : null}
-      <div className="mt-10 no-print">
-        <Button type="button" onClick={() => void copyCsv()} disabled={!book?.journal.length}>
-          Copy the book
-        </Button>
-        {copied ? (
-          <p className="mt-4 text-[13px] font-light text-ink-soft" role="status">
-            {copied}
-          </p>
-        ) : null}
-      </div>
-      <ul className="mt-12 divide-y divide-rule border-y border-ink">
-        {(book?.journal ?? []).map((row) => (
-          <li key={row.reference} className="grid gap-3 py-6 lg:grid-cols-12">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">
-              {formatLedgerDate(row.date)}
-            </p>
-            <div className="lg:col-span-4">
-              <p className="font-display text-2xl font-light">{row.reference}</p>
-              <p className="mt-2 text-[13px] font-light text-ink-soft">{row.email}</p>
-            </div>
-            <p className="text-[13px] font-light text-ink-soft lg:col-span-3">{row.description}</p>
-            <p className="text-[15px] font-light lg:col-span-3 lg:text-right">
-              {formatGbpExact(row.grossPence)}
-              <span className="mt-1 block text-[13px] text-ink-soft">
-                VAT {formatGbpExact(row.vatPence)}
-              </span>
+      <LedgerFold title="This month, and all time">
+        <ul className="grid gap-8 sm:grid-cols-2">
+          <li>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">This month</p>
+            <p className="mt-3 font-display text-3xl font-light">{formatGbpExact(month.grossPence)}</p>
+            <p className="mt-2 text-[13px] font-light text-ink-soft">
+              Net {formatGbpExact(month.netPence)} · VAT {formatGbpExact(month.vatPence)} ·{' '}
+              {month.count} sales
             </p>
           </li>
-        ))}
-      </ul>
+          <li>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">All time</p>
+            <p className="mt-3 font-display text-3xl font-light">{formatGbpExact(allTime.grossPence)}</p>
+            <p className="mt-2 text-[13px] font-light text-ink-soft">
+              Net {formatGbpExact(allTime.netPence)} · VAT {formatGbpExact(allTime.vatPence)} ·{' '}
+              {allTime.count} sales
+            </p>
+          </li>
+        </ul>
+      </LedgerFold>
+      <LedgerFold title="VAT method" defaultOpen={false}>
+        {book?.vatNote ? (
+          <p className="max-w-prose text-[15px] font-light leading-relaxed text-ink-soft">
+            {book.vatNote}
+          </p>
+        ) : (
+          <p className="text-[15px] font-light text-ink-soft">The method has not been read yet.</p>
+        )}
+        {book?.refunds ? (
+          <p className="mt-4 max-w-prose text-[15px] font-light leading-relaxed text-stone">
+            {book.refunds}
+          </p>
+        ) : null}
+      </LedgerFold>
+      <LedgerFold title="The journal" defaultOpen={false}>
+        <div className="no-print">
+          <Button type="button" onClick={() => void copyCsv()} disabled={!book?.journal.length}>
+            Copy the book
+          </Button>
+          {copied ? (
+            <p className="mt-4 text-[13px] font-light text-ink-soft" role="status">
+              {copied}
+            </p>
+          ) : null}
+        </div>
+        <ul className="mt-8 divide-y divide-rule border-y border-ink">
+          {(book?.journal ?? []).map((row) => (
+            <li key={row.reference} className="grid gap-3 py-6 lg:grid-cols-12">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">
+                {formatLedgerDate(row.date)}
+              </p>
+              <div className="lg:col-span-4">
+                <p className="font-display text-2xl font-light">{row.reference}</p>
+                <p className="mt-2 text-[13px] font-light text-ink-soft">{row.email}</p>
+              </div>
+              <p className="text-[13px] font-light text-ink-soft lg:col-span-3">{row.description}</p>
+              <p className="text-[15px] font-light lg:col-span-3 lg:text-right">
+                {formatGbpExact(row.grossPence)}
+                <span className="mt-1 block text-[13px] text-ink-soft">
+                  VAT {formatGbpExact(row.vatPence)}
+                </span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </LedgerFold>
     </div>
   )
 }

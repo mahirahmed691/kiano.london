@@ -1,8 +1,7 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import { TextLink } from '@/components/ui/Button'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
 import { isAdminUser } from '@/lib/admin'
 import { orderReference } from '@/lib/checkout'
 import type { LedgerOrder } from '@/lib/ledger'
@@ -42,25 +41,16 @@ export function LedgerOrders() {
   }, [getToken, isSignedIn, user])
 
   return (
-    <div id="ledger-orders" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-      <Reveal>
-        <Eyebrow>Reservations</Eyebrow>
-        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-          Paid cuts.
-        </Display>
-        <Body className="mt-6">
-          Each paid session is a reservation. A Clerk id is kept when the till carried one.
-        </Body>
-      </Reveal>
+    <LedgerFold title="Paid cuts" defaultOpen={false}>
       {error ? (
-        <p className="mt-8 text-[15px] font-light text-ink" role="alert">
+        <p className="text-[15px] font-light text-ink" role="alert">
           {error}
         </p>
       ) : null}
       {orders.length === 0 && !error ? (
-        <p className="mt-12 text-[15px] font-light text-ink-soft">No paid reservations yet.</p>
+        <p className="text-[15px] font-light text-ink-soft">No paid reservations yet.</p>
       ) : (
-        <ul className="mt-12 divide-y divide-rule border-y border-ink">
+        <ul className="divide-y divide-rule border-y border-ink">
           {orders.map((order) => (
             <li key={order.id} className="grid gap-4 py-8 lg:grid-cols-12">
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">
@@ -95,6 +85,6 @@ export function LedgerOrders() {
           ))}
         </ul>
       )}
-    </div>
+    </LedgerFold>
   )
 }

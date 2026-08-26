@@ -36,6 +36,7 @@ export function AppointmentForm() {
   const [size, setSize] = useState(params.get('size') ?? '')
   const [note, setNote] = useState('')
   const [sent, setSent] = useState(false)
+  const [written, setWritten] = useState(false)
   const [keeping, setKeeping] = useState(false)
 
   const selected = useMemo(
@@ -49,8 +50,9 @@ export function AppointmentForm() {
     if (keeping) return
     setKeeping(true)
 
+    let confirmationSent = false
     try {
-      await fetch('/api/appointment', {
+      const response = await fetch('/api/appointment', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
@@ -62,6 +64,12 @@ export function AppointmentForm() {
           note,
         }),
       })
+      try {
+        const data = (await response.json()) as { written?: boolean }
+        confirmationSent = Boolean(data.written)
+      } catch {
+        confirmationSent = false
+      }
     } catch {
       // The letter still opens. The diary is a copy, not a gate.
     }
@@ -81,6 +89,7 @@ export function AppointmentForm() {
       .join('\n')
 
     window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setWritten(confirmationSent)
     setSent(true)
     setKeeping(false)
   }
@@ -96,6 +105,9 @@ export function AppointmentForm() {
             {site.email}
           </a>
           .
+          {written
+            ? ' A confirmation has been sent to you. It is not a booking. We write when a morning can be kept.'
+            : ''}
         </p>
       </div>
     )

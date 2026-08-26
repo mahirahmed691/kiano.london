@@ -1,3 +1,5 @@
+import { CompetitorMark } from '@/components/admin/CompetitorMark'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import {
   channelsCopyFor,
   fieldReading,
@@ -7,8 +9,7 @@ import {
   type CompetitorHouse,
   type CompetitorLedgerNote,
 } from '@/data/competitors'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
+import { Body } from '@/components/ui/Heading'
 
 function BandPlot({ house, max }: { house: CompetitorHouse; max: number }) {
   const low = house.priceLowPence
@@ -42,13 +43,13 @@ function HouseBlock({ house, max }: { house: CompetitorHouse; max: number }) {
           : 'border-b border-rule py-10'
       }
     >
-      <div className="grid gap-6 lg:grid-cols-12 lg:items-baseline">
+      <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-4">
           {house.isKiano ? (
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">This house</p>
+            <p className="mb-3 text-[11px] uppercase tracking-[0.22em] text-stone">This house</p>
           ) : null}
-          <p className="font-display text-3xl font-light">{house.name}</p>
-          <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-stone">{house.origin}</p>
+          <CompetitorMark id={house.id} name={house.name} />
+          <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">{house.origin}</p>
           {house.url ? (
             <a
               href={house.url}
@@ -124,48 +125,57 @@ export function CompetitorField({ notes = [] }: { notes?: CompetitorLedgerNote[]
   })
 
   return (
-    <div>
-      <Reveal>
-        <Eyebrow>04 · The field</Eyebrow>
-        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-          Other houses of the column.
-        </Display>
-        <Body className="mt-6">{fieldReading}</Body>
-      </Reveal>
+    <div className="mt-16">
+      <LedgerFold title="The marks">
+        <ul className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {ranked.map((house) => (
+            <li key={house.id} className="border-t border-ink pt-6">
+              <CompetitorMark id={house.id} name={house.name} />
+              <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">{house.origin}</p>
+            </li>
+          ))}
+        </ul>
+      </LedgerFold>
 
-      <div className="mt-12 hidden border-t border-ink lg:grid lg:grid-cols-12 lg:gap-4 lg:py-4">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-3">House</p>
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">Sterling</p>
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">Channel</p>
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-3">Lead</p>
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">Fit</p>
-      </div>
-      <ul className="hidden divide-y divide-rule border-b border-ink lg:block">
-        {ranked.map((house) => (
-          <li key={house.id} className="py-6">
-            <div className="grid grid-cols-12 items-baseline gap-4">
-              <div className="col-span-3">
-                <p className="font-display text-2xl font-light">{house.name}</p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.22em] text-stone">{house.origin}</p>
+      <LedgerFold title="The reading" defaultOpen={false}>
+        <Body>{fieldReading}</Body>
+      </LedgerFold>
+
+      <LedgerFold title="The map" defaultOpen={false}>
+        <div className="hidden border-t border-ink lg:grid lg:grid-cols-12 lg:gap-4 lg:py-4">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-3">House</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">Sterling</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">Channel</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-3">Lead</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">Fit</p>
+        </div>
+        <ul className="hidden divide-y divide-rule border-b border-ink lg:block">
+          {ranked.map((house) => (
+            <li key={house.id} className="py-6">
+              <div className="grid grid-cols-12 items-center gap-4">
+                <div className="col-span-3">
+                  <CompetitorMark id={house.id} name={house.name} />
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-stone">{house.origin}</p>
+                </div>
+                <p className="col-span-2 font-display text-2xl font-light">{formatPriceBand(house)}</p>
+                <p className="col-span-2 text-[14px] font-light text-ink-soft">{channelsCopyFor(house)}</p>
+                <p className="col-span-3 text-[14px] font-light text-ink-soft">{house.lead}</p>
+                <p className="col-span-2 text-[14px] font-light text-ink-soft">{house.fitLabel}</p>
               </div>
-              <p className="col-span-2 font-display text-2xl font-light">{formatPriceBand(house)}</p>
-              <p className="col-span-2 text-[14px] font-light text-ink-soft">{channelsCopyFor(house)}</p>
-              <p className="col-span-3 text-[14px] font-light text-ink-soft">{house.lead}</p>
-              <p className="col-span-2 text-[14px] font-light text-ink-soft">{house.fitLabel}</p>
-            </div>
-            <BandPlot house={house} max={max} />
-          </li>
-        ))}
-      </ul>
-      <p className="mt-3 hidden text-[11px] uppercase tracking-[0.22em] text-stone lg:block">
-        Hairline is the published band, left to right against the dearest high in the field.
-      </p>
+              <BandPlot house={house} max={max} />
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 hidden text-[11px] uppercase tracking-[0.22em] text-stone lg:block">
+          Hairline is the published band, left to right against the dearest high in the field.
+        </p>
+      </LedgerFold>
 
-      <div className="mt-8 lg:mt-16">
+      <LedgerFold title="Each house">
         {ranked.map((house) => (
           <HouseBlock key={house.id} house={house} max={max} />
         ))}
-      </div>
+      </LedgerFold>
     </div>
   )
 }

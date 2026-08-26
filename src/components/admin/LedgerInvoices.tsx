@@ -1,8 +1,7 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import { TextLink } from '@/components/ui/Button'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
 import { isAdminUser } from '@/lib/admin'
 import { formatLedgerDate } from '@/lib/ledger'
 import { formatGbpExact } from '@/lib/money'
@@ -51,26 +50,16 @@ export function LedgerInvoices() {
   }, [getToken, isSignedIn, user])
 
   return (
-    <div id="ledger-invoices" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-      <Reveal>
-        <Eyebrow>Invoices</Eyebrow>
-        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-          A record of the cut.
-        </Display>
-        <Body className="mt-6">
-          Written when Stripe marks a session paid. Open one to print. Not a Making Tax Digital
-          suite.
-        </Body>
-      </Reveal>
+    <LedgerFold title="Records" className="mt-16">
       {error ? (
-        <p className="mt-8 text-[15px] font-light text-ink" role="alert">
+        <p className="text-[15px] font-light text-ink" role="alert">
           {error}
         </p>
       ) : null}
       {invoices.length === 0 && !error ? (
-        <p className="mt-12 text-[15px] font-light text-ink-soft">No records yet.</p>
+        <p className="text-[15px] font-light text-ink-soft">No records yet.</p>
       ) : (
-        <ul className="mt-12 divide-y divide-rule border-y border-ink">
+        <ul className="divide-y divide-rule border-y border-ink">
           {invoices.map((row) => (
             <li key={row.number} className="grid gap-4 py-6 lg:grid-cols-12 lg:items-baseline">
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">
@@ -93,6 +82,6 @@ export function LedgerInvoices() {
           ))}
         </ul>
       )}
-    </div>
+    </LedgerFold>
   )
 }

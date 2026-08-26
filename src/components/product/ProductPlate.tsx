@@ -12,8 +12,10 @@ export function ProductPlate({ image, first = false, onLook }: Props) {
   return (
     <div
       className={cn(
-        'relative w-full snap-start overflow-hidden bg-ivory-deep max-xl:min-h-[calc(100svh-5.25rem)] max-xl:scroll-mt-[5.25rem] md:max-xl:min-h-[calc(100svh-5.75rem)] md:max-xl:scroll-mt-[5.75rem]',
-        first ? 'xl:min-h-[calc(100svh-7rem)]' : 'xl:aspect-3/4',
+        'relative w-full snap-start overflow-hidden bg-ivory-deep',
+        first
+          ? 'max-xl:min-h-[calc(100svh-var(--header-offset))] max-xl:scroll-mt-[var(--header-offset)] xl:min-h-[calc(100svh-7rem)]'
+          : 'aspect-3/4',
       )}
     >
       <img

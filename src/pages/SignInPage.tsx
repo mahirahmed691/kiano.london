@@ -4,15 +4,14 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { clerkEnabled } from '@/lib/clerk'
 import { clerkAppearance } from '@/lib/clerkAppearance'
+import { isHouseRedirect } from '@/lib/house-redirect'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
-
-const allowedRedirects = new Set(['/admin', '/account', '/checkout'])
 
 export function SignInPage() {
   const [params] = useSearchParams()
   const requested = params.get('redirect_url')
-  const fallbackRedirectUrl = requested && allowedRedirects.has(requested) ? requested : '/account'
+  const fallbackRedirectUrl = isHouseRedirect(requested) ? requested : '/account'
   usePageMeta(getShareMeta('/sign-in'))
 
   return (

@@ -29,8 +29,8 @@ export function ShopPage() {
 
   return (
     <>
-      <section className="grid bg-ivory lg:min-h-[100dvh] lg:grid-cols-12">
-        <div className="relative order-1 min-h-[62svh] overflow-hidden bg-ivory-deep lg:order-2 lg:col-span-7 lg:min-h-[100dvh]">
+      <section className="grid bg-ivory pt-[var(--header-offset)] lg:min-h-[100dvh] lg:grid-cols-12">
+        <div className="relative order-1 min-h-[calc(62svh-var(--header-offset))] overflow-hidden bg-ivory-deep lg:order-2 lg:col-span-7 lg:min-h-[calc(100dvh-var(--header-offset))]">
           <img
             src="/images/jubbah-sand-02.jpg"
             alt="The sand jubbah at rest, the cloth to the ankle."

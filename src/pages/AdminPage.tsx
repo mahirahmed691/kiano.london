@@ -1,130 +1,15 @@
-import { Show, useAuth, useUser } from '@clerk/react'
-import { useEffect, useState } from 'react'
-import { CompetitorField } from '@/components/admin/CompetitorField'
-import { CompetitorNoteForm } from '@/components/admin/CompetitorNoteForm'
-import { LedgerAccounts } from '@/components/admin/LedgerAccounts'
-import { LedgerInvoices } from '@/components/admin/LedgerInvoices'
-import { LedgerOrders } from '@/components/admin/LedgerOrders'
-import { LedgerPrices } from '@/components/admin/LedgerPrices'
-import { RestockLedger } from '@/components/admin/RestockLedger'
-import { Button, TextLink } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
-import {
-  houseDataNotes,
-  houseFeatures,
-  houseIntegrations,
-  houseScope,
-  houseVisualAudit,
-} from '@/data/house-board'
-import type { CompetitorLedgerNote } from '@/data/competitors'
+import { Link } from 'react-router-dom'
+import { useLedger } from '@/components/admin/ledger-state'
+import { Body, Display } from '@/components/ui/Heading'
+import { ledgerNav } from '@/data/admin-nav'
+import { houseFeatures } from '@/data/house-board'
 import { getProduct, productLineName } from '@/data/products'
-import { isAdminUser } from '@/lib/admin'
-import { clerkEnabled } from '@/lib/clerk'
 import { formatGbp } from '@/lib/money'
-import { getShareMeta } from '@/lib/share'
-import { usePageMeta } from '@/lib/usePageMeta'
+import type { Ledger } from '@/components/admin/ledger-state'
 
-type AppointmentRow = {
-  id: number
-  name: string
-  email: string
-  telephone: string
-  productId: string
-  size: number | null
-  note: string
-  status: 'new' | 'seen'
-  createdAt: string
-}
-
-type Ledger = {
-  members: number
-  orders: number
-  reservedPence: number
-  listConfirmed: number
-  listHeld: number
-  cutsRemaining: number
-  sizesHeld: number
-  appointmentCount: number
-  appointments: AppointmentRow[]
-}
-
-function statusCopy(status: 'complete' | 'partial' | 'missing') {
-  if (status === 'complete') return 'Kept'
-  if (status === 'partial') return 'In hand'
-  return 'Not yet'
-}
-
-function useLedger() {
-  const { getToken, isSignedIn } = useAuth()
-  const { user } = useUser()
-  const [ledger, setLedger] = useState<Ledger | null>(null)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (!isSignedIn || !isAdminUser(user)) return
-    let cancelled = false
-
-    async function load() {
-      try {
-        const token = await getToken()
-        const response = await fetch('/api/admin-summary', {
-          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-        })
-        const data = (await response.json()) as Ledger & { error?: string }
-        if (cancelled) return
-        if (!response.ok) {
-          setError(data.error || 'The ledger could not be read.')
-          return
-        }
-        setLedger({
-          ...data,
-          appointmentCount: data.appointmentCount ?? 0,
-          appointments: (data.appointments ?? []).map((row) => ({
-            ...row,
-            status: row.status === 'seen' ? 'seen' : 'new',
-          })),
-        })
-      } catch {
-        if (!cancelled) setError('The ledger could not be read.')
-      }
-    }
-
-    void load()
-    return () => {
-      cancelled = true
-    }
-  }, [getToken, isSignedIn, user])
-
-  async function markSeen(id: number) {
-    try {
-      const token = await getToken()
-      const response = await fetch('/api/admin?section=diary', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ id, status: 'seen' }),
-      })
-      if (!response.ok) return
-      setLedger((current) =>
-        current
-          ? {
-              ...current,
-              appointments: current.appointments.map((row) =>
-                row.id === id ? { ...row, status: 'seen' } : row,
-              ),
-            }
-          : current,
-      )
-    } catch {
-      setError('The diary could not be kept.')
-    }
-  }
-
-  return { ledger, error, markSeen }
+function heldCutName(productId: string) {
+  const product = getProduct(productId)
+  return product ? productLineName(product) : productId
 }
 
 function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string }) {
@@ -140,417 +25,120 @@ function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string
     return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the house counts.</p>
   }
 
-  const figures = [
-    { label: 'Reserved', value: String(ledger.orders).padStart(2, '0') },
-    { label: 'Held', value: formatGbp(ledger.reservedPence) },
-    { label: 'Cuts remaining', value: String(ledger.cutsRemaining) },
-    { label: 'Sizes held', value: String(ledger.sizesHeld).padStart(2, '0') },
-    { label: 'Members', value: String(ledger.members).padStart(2, '0') },
-    { label: 'The list', value: `${ledger.listConfirmed} confirmed · ${ledger.listHeld} held` },
+  const newLetters = ledger.newLetters ?? 0
+  const diaryValue =
+    newLetters > 0
+      ? `${String(newLetters).padStart(2, '0')} new · ${String(ledger.appointmentCount ?? 0).padStart(2, '0')}`
+      : String(ledger.appointmentCount ?? 0).padStart(2, '0')
+
+  const figures: Array<{ label: string; value: string; to?: string }> = [
+    { label: 'Reserved', value: String(ledger.orders).padStart(2, '0'), to: '/admin/invoices' },
+    { label: 'Held', value: formatGbp(ledger.reservedPence), to: '/admin/accounts' },
+    {
+      label: 'Cuts remaining',
+      value: String(ledger.cutsRemaining),
+      to: '/admin/cuts',
+    },
+    {
+      label: 'Sizes held',
+      value: String(ledger.sizesHeld).padStart(2, '0'),
+      to: '/admin/cuts',
+    },
+    {
+      label: 'Members',
+      value: String(ledger.members).padStart(2, '0'),
+      to: '/admin/members',
+    },
+    {
+      label: 'The list',
+      value: `${ledger.listConfirmed} confirmed · ${ledger.listHeld} held`,
+      to: '/admin/list',
+    },
     {
       label: 'The diary',
-      value: String(ledger.appointmentCount ?? 0).padStart(2, '0'),
+      value: diaryValue,
+      to: '/admin/diary',
     },
   ]
 
   return (
-    <ul className="mt-12 grid gap-8 border-t border-ink pt-10 sm:grid-cols-2 lg:grid-cols-3">
-      {figures.map((figure) => (
-        <li key={figure.label}>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{figure.label}</p>
-          <p className="mt-3 font-display text-3xl font-light md:text-4xl">{figure.value}</p>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-function SignedOutBoard() {
-  return (
     <>
-      <Body className="mt-6">
-        The ledger is for the house. Sign in with atelier@kiano.london or the address
-        that keeps the house.
-      </Body>
-      <div className="mt-10">
-        <Button to="/sign-in?redirect_url=/admin" variant="solid">
-          Sign in
-        </Button>
-      </div>
-    </>
-  )
-}
+      <ul className="mt-12 grid gap-8 border-t border-ink pt-10 sm:grid-cols-2 lg:grid-cols-3">
+        {figures.map((figure) => {
+          const body = (
+            <>
+              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{figure.label}</p>
+              <p className="mt-3 font-display text-3xl font-light md:text-4xl">{figure.value}</p>
+            </>
+          )
 
-function ClosedBoard() {
-  return (
-    <>
-      <Body className="mt-6">
-        This account can shop. It cannot open the ledger. Sign in with
-        atelier@kiano.london, or the Gmail that keeps the house.
-      </Body>
-      <div className="mt-10">
-        <TextLink to="/account">Your cuts</TextLink>
-      </div>
-    </>
-  )
-}
-
-function appointmentPiece(row: AppointmentRow) {
-  const product = getProduct(row.productId)
-  if (product) return productLineName(product)
-  return 'To be discussed'
-}
-
-function formatDiaryDate(value: string) {
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return value
-  return new Intl.DateTimeFormat('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
-
-function AppointmentDiary({
-  ledger,
-  onSeen,
-}: {
-  ledger: Ledger | null
-  onSeen: (id: number) => void
-}) {
-  if (!ledger) return null
-
-  return (
-    <div id="ledger-diary" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-      <Reveal>
-        <Eyebrow>The diary</Eyebrow>
-        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-          Letters held.
-        </Display>
-        <Body className="mt-6">
-          Requests are copied here when the atelier can keep them. The visitor still
-          writes a letter. This is not a booking calendar.
-        </Body>
-      </Reveal>
-      {ledger.appointments.length === 0 ? (
-        <p className="mt-12 text-[15px] font-light leading-relaxed text-ink-soft">
-          No letters held yet. They still arrive by mail.
-        </p>
-      ) : (
-        <ul className="mt-12 divide-y divide-rule border-y border-ink">
-          {ledger.appointments.map((row) => (
-            <li key={row.id} className="grid gap-4 py-8 lg:grid-cols-12">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-2">
-                {formatDiaryDate(row.createdAt)}
-              </p>
-              <div className="lg:col-span-4">
-                <p className="font-display text-2xl font-light">{row.name}</p>
-                <p className="mt-2 text-[15px] font-light text-ink-soft">{row.email}</p>
-                {row.telephone ? (
-                  <p className="mt-1 text-[15px] font-light text-ink-soft">{row.telephone}</p>
-                ) : null}
-              </div>
-              <div className="lg:col-span-6">
-                <p className="text-[15px] font-light leading-relaxed text-ink-soft">
-                  {appointmentPiece(row)}
-                  {row.size ? ` · ${row.size}` : ' · to be fitted'}
-                </p>
-                {row.note ? (
-                  <p className="mt-3 text-[15px] font-light leading-relaxed text-ink">{row.note}</p>
-                ) : null}
-                <p className="mt-4 text-[11px] uppercase tracking-[0.22em] text-stone">
-                  {row.status === 'seen' ? 'Seen' : 'New'}
-                  {row.status === 'new' ? (
-                    <button
-                      type="button"
-                      onClick={() => onSeen(row.id)}
-                      className="ml-6 tracking-[0.22em] transition-opacity hover:opacity-70"
-                    >
-                      Mark seen
-                    </button>
-                  ) : null}
-                </p>
-              </div>
+          return (
+            <li key={figure.label}>
+              {figure.to ? (
+                <Link to={figure.to} className="block transition-opacity hover:opacity-70">
+                  {body}
+                </Link>
+              ) : (
+                body
+              )}
             </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  )
-}
-
-function useCompetitorNotes() {
-  const { getToken, isSignedIn } = useAuth()
-  const { user } = useUser()
-  const [notes, setNotes] = useState<CompetitorLedgerNote[]>([])
-
-  useEffect(() => {
-    if (!isSignedIn || !isAdminUser(user)) return
-    let cancelled = false
-
-    async function load() {
-      try {
-        const token = await getToken()
-        const response = await fetch('/api/admin-competitors', {
-          headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-        })
-        const data = (await response.json()) as { notes?: CompetitorLedgerNote[] }
-        if (cancelled || !response.ok) return
-        setNotes(data.notes ?? [])
-      } catch {
-        if (!cancelled) setNotes([])
-      }
-    }
-
-    void load()
-    return () => {
-      cancelled = true
-    }
-  }, [getToken, isSignedIn, user])
-
-  function keepNote(note: CompetitorLedgerNote) {
-    setNotes((current) => {
-      const without = current.filter(
-        (entry) => entry.name.trim().toLowerCase() !== note.name.trim().toLowerCase(),
-      )
-      return [note, ...without]
-    })
-  }
-
-  return { notes, keepNote }
-}
-
-function OpenBoard() {
-  const { ledger, error, markSeen } = useLedger()
-  const { notes, keepNote } = useCompetitorNotes()
-  const ranked = [...houseFeatures].sort((a, b) => b.completion - a.completion)
-  const mean = Math.round(
-    houseFeatures.reduce((sum, feature) => sum + feature.completion, 0) / houseFeatures.length,
-  )
-
-  return (
-    <>
-      <Body className="mt-6">
-        Open from The ledger in the header, from Account, from /admin, or kiano://admin.
-        Mean completion {mean} of 100.
-      </Body>
-      <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[11px] uppercase tracking-[0.22em] text-stone">
-        <li>
-          <a href="#ledger-cuts" className="transition-opacity hover:opacity-70">
-            Cuts
-          </a>
-        </li>
-        <li>
-          <a href="#ledger-prices" className="transition-opacity hover:opacity-70">
-            Prices
-          </a>
-        </li>
-        <li>
-          <a href="#ledger-tax" className="transition-opacity hover:opacity-70">
-            Tax
-          </a>
-        </li>
-        <li>
-          <a href="#ledger-invoices" className="transition-opacity hover:opacity-70">
-            Invoices
-          </a>
-        </li>
-        <li>
-          <a href="#ledger-orders" className="transition-opacity hover:opacity-70">
-            Reservations
-          </a>
-        </li>
-        <li>
-          <a href="#ledger-diary" className="transition-opacity hover:opacity-70">
-            The diary
-          </a>
-        </li>
-        <li>
-          <a href="#ledger-field" className="transition-opacity hover:opacity-70">
-            The field
-          </a>
-        </li>
+          )
+        })}
       </ul>
-      <LedgerFigures ledger={ledger} error={error} />
-
-      <div id="ledger-cuts" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>Cuts</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            Remaining on the line.
-          </Display>
-          <Body className="mt-6">
-            Set a size when cloth returns. Leave the field and it is kept. The shop reads
-            these numbers; this page is the only place they are written.
-          </Body>
-        </Reveal>
-        <RestockLedger />
-      </div>
-
-      <LedgerPrices />
-      <LedgerAccounts />
-      <LedgerInvoices />
-      <LedgerOrders />
-
-      <AppointmentDiary ledger={ledger} onSeen={markSeen} />
-
-      <div id="ledger-line" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>01 · The line of work</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            Ranked by how finished it is.
-          </Display>
-        </Reveal>
-        <ol className="mt-12 divide-y divide-rule border-y border-ink">
-          {ranked.map((feature, index) => (
-            <li key={feature.name} className="grid gap-4 py-8 lg:grid-cols-12 lg:items-baseline">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-1">
-                {String(index + 1).padStart(2, '0')}
-              </p>
-              <div className="lg:col-span-4">
-                <p className="font-display text-2xl font-light">{feature.name}</p>
-                <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-stone">
-                  {statusCopy(feature.status)} · {feature.completion}
-                </p>
-              </div>
-              <p className="text-[15px] font-light leading-relaxed text-ink-soft lg:col-span-7">
-                {feature.note}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>02 · Hooks</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            What is wired, and what is not.
-          </Display>
-        </Reveal>
-        <ul className="mt-12 space-y-12">
-          {houseIntegrations.map((item) => (
-            <li key={item.name} className="grid gap-4 border-t border-rule pt-8 lg:grid-cols-12">
-              <div className="lg:col-span-4">
-                <p className="font-display text-2xl font-light">{item.name}</p>
-                <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-stone">
-                  {item.state}
-                </p>
-                <p className="mt-4 text-[13px] font-light text-ink-soft">{item.hook}</p>
-              </div>
-              <div className="lg:col-span-7 lg:col-start-6">
-                <p className="text-[15px] font-light leading-relaxed text-ink-soft">{item.events}</p>
-                <p className="mt-4 text-[15px] font-light leading-relaxed text-ink-soft">{item.note}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>03 · The count</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            What the numbers can say.
-          </Display>
-        </Reveal>
-        <div className="mt-12 grid gap-12 lg:grid-cols-3">
-          {houseDataNotes.map((note) => (
-            <div key={note.title}>
-              <h3 className="font-display text-2xl font-light">{note.title}</h3>
-              <Body className="mt-4">{note.copy}</Body>
-            </div>
-          ))}
+      {ledger.heldCuts.length > 0 ? (
+        <div className="mt-12 border-t border-rule pt-10">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">At none</p>
+          <ul className="mt-6 divide-y divide-rule border-y border-rule">
+            {ledger.heldCuts.map((cut) => (
+              <li key={`${cut.productId}-${cut.size}`}>
+                <Link
+                  to="/admin/cuts"
+                  className="flex items-baseline justify-between gap-6 py-4 transition-opacity hover:opacity-70"
+                >
+                  <p className="text-[15px] font-light">{heldCutName(cut.productId)}</p>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{cut.size}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-
-      <div id="ledger-field" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <CompetitorField notes={notes} />
-        <CompetitorNoteForm onSaved={keepNote} />
-      </div>
-
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>05 · The screen</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            Visual reading, site and phone.
-          </Display>
-        </Reveal>
-        <ul className="mt-12 space-y-10">
-          {houseVisualAudit.map((item) => (
-            <li key={item.surface} className="grid gap-3 lg:grid-cols-12">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-3">
-                {item.surface}
-                <span className="mt-2 block">{item.rank}</span>
-              </p>
-              <p className="text-[15px] font-light leading-relaxed text-ink-soft lg:col-span-8">
-                {item.finding}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-        <Reveal>
-          <Eyebrow>06 · Next</Eyebrow>
-          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            Scope that still belongs to the house.
-          </Display>
-        </Reveal>
-        <ol className="mt-12 space-y-5">
-          {houseScope.map((line, index) => (
-            <li key={line} className="flex gap-6 text-[15px] font-light leading-relaxed text-ink-soft">
-              <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              {line}
-            </li>
-          ))}
-        </ol>
-      </div>
+      ) : null}
     </>
   )
 }
 
 export function AdminPage() {
-  usePageMeta(getShareMeta('/admin'))
-
-  return (
-    <Section className="pt-32 md:pt-40">
-      <Container>
-        <Eyebrow>The ledger</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
-          The house board.
-        </Display>
-        {clerkEnabled ? (
-          <AdminGate />
-        ) : (
-          <Body className="mt-6">
-            Account is not configured. Set Clerk, then list the house emails.
-          </Body>
-        )}
-        <div className="mt-16">
-          <TextLink to="/">Return to the house</TextLink>
-        </div>
-      </Container>
-    </Section>
+  const { ledger, error } = useLedger()
+  const mean = Math.round(
+    houseFeatures.reduce((sum, feature) => sum + feature.completion, 0) / houseFeatures.length,
   )
-}
-
-function AdminGate() {
-  const { user, isLoaded } = useUser()
-  if (!isLoaded) {
-    return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the house.</p>
-  }
-  const listed = isAdminUser(user)
+  const rooms = ledgerNav.filter((item) => item.to !== '/admin')
 
   return (
     <>
-      <Show when="signed-out">
-        <SignedOutBoard />
-      </Show>
-      <Show when="signed-in">{listed ? <OpenBoard /> : <ClosedBoard />}</Show>
+      <Display as="h1" className="mt-8 text-5xl md:text-6xl lg:text-7xl">
+        The house board.
+      </Display>
+      <Body className="mt-6">
+        The rooms of the house, counted. Mean completion {mean} of 100.
+      </Body>
+      <LedgerFigures ledger={ledger} error={error} />
+
+      <ul className="mt-16 divide-y divide-rule border-y border-ink">
+        {rooms.map((room) => (
+          <li key={room.to}>
+            <Link
+              to={room.to}
+              className="grid gap-2 py-7 transition-opacity hover:opacity-70 lg:grid-cols-12 lg:items-baseline"
+            >
+              <p className="text-[11px] uppercase tracking-[0.22em] text-stone lg:col-span-3">
+                {room.label}
+              </p>
+              <p className="font-display text-2xl font-light lg:col-span-8">{room.line}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }

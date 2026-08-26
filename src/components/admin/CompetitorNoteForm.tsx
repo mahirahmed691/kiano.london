@@ -1,7 +1,8 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useState, type FormEvent } from 'react'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import { Button } from '@/components/ui/Button'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
+import { Body } from '@/components/ui/Heading'
 import { isAdminUser } from '@/lib/admin'
 import type { CompetitorLedgerNote } from '@/data/competitors'
 
@@ -85,12 +86,8 @@ export function CompetitorNoteForm({
   }
 
   return (
-    <div className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-      <Eyebrow>Scope</Eyebrow>
-      <Display as="h3" className="mt-4 text-3xl md:text-4xl">
-        Add a house.
-      </Display>
-      <Body className="mt-6">
+    <LedgerFold title="Add a house" defaultOpen={false}>
+      <Body>
         The known field is kept in the house files. Use this when a new name should sit on
         the map, or when a published band should replace a conversion. Same name writes over
         the last note.
@@ -162,6 +159,6 @@ export function CompetitorNoteForm({
           {keeping ? 'Keeping' : 'Keep this house'}
         </Button>
       </form>
-    </div>
+    </LedgerFold>
   )
 }

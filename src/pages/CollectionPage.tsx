@@ -29,23 +29,32 @@ export function CollectionPage() {
 
   return (
     <>
-      <header className="bg-night pt-32 pb-20 md:pt-40 md:pb-28">
-        <Container>
+      <section className="grid bg-ivory pt-[var(--header-offset)] lg:min-h-[100dvh] lg:grid-cols-12">
+        <div className="relative order-1 min-h-[calc(62svh-var(--header-offset))] overflow-hidden bg-ivory-deep lg:order-2 lg:col-span-7 lg:min-h-[calc(100dvh-var(--header-offset))]">
+          <img
+            src="/images/thobe-layl.jpg"
+            alt="The Layl thobe: matte black, band collar, hem to the ankle."
+            className="absolute inset-0 h-full w-full object-cover object-[center_12%]"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div className="order-2 flex flex-col justify-center px-6 py-16 md:px-12 lg:order-1 lg:col-span-5 lg:px-16 lg:py-32">
           <Reveal>
-            <Eyebrow className="text-ivory/70">Emirati thobe</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl text-ivory md:text-6xl lg:text-7xl">
+            <Eyebrow>Emirati thobe</Eyebrow>
+            <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
               The Collection
             </Display>
-            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ivory/45">
+            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
               {site.lockup}
             </p>
-            <Body className="mt-6 max-w-xl text-ivory/75">
+            <Body className="mt-6 max-w-md">
               Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal,
               grey, beige and bone. Cut from the house block.
             </Body>
           </Reveal>
-        </Container>
-      </header>
+        </div>
+      </section>
 
       <Section>
         <Container>
@@ -82,6 +91,7 @@ export function CollectionPage() {
                 key={product.id}
                 product={product}
                 to={productPath(product)}
+                index={String(index + 1).padStart(2, '0')}
                 className={
                   index === 0
                     ? 'sm:col-span-2 lg:col-span-7'

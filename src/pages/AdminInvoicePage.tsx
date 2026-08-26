@@ -1,81 +1,24 @@
-import { Show, useAuth, useUser } from '@clerk/react'
+import { useAuth } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { InvoiceSheet } from '@/components/invoice/InvoiceSheet'
-import { Button, TextLink } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { isAdminUser } from '@/lib/admin'
-import { clerkEnabled } from '@/lib/clerk'
+import { TextLink } from '@/components/ui/Button'
+import { Display, Eyebrow } from '@/components/ui/Heading'
 import type { LedgerInvoice } from '@/lib/ledger'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function AdminInvoicePage() {
   const { number = '' } = useParams()
+  const { getToken } = useAuth()
+  const [invoice, setInvoice] = useState<LedgerInvoice | null>(null)
+  const [error, setError] = useState('')
+
   usePageMeta({
     ...getShareMeta('/admin'),
     title: number ? `${number} — Kiano London` : 'Invoice — Kiano London',
     robots: 'noindex, nofollow',
   })
-
-  return (
-    <Section className="pt-32 md:pt-40">
-      <Container>
-        {clerkEnabled ? (
-          <AdminInvoiceGate number={number} />
-        ) : (
-          <Body className="mt-6">Account is not configured.</Body>
-        )}
-      </Container>
-    </Section>
-  )
-}
-
-function AdminInvoiceGate({ number }: { number: string }) {
-  const { user, isLoaded } = useUser()
-  if (!isLoaded) {
-    return <p className="text-[15px] font-light text-ink-soft">Reading the house.</p>
-  }
-  const listed = isAdminUser(user)
-
-  return (
-    <>
-      <Show when="signed-out">
-        <Eyebrow>The ledger</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-          The ledger is for the house.
-        </Display>
-        <Body className="mt-6">Sign in with the address that keeps the house.</Body>
-        <div className="mt-10">
-          <Button to={`/sign-in?redirect_url=/admin/invoices/${encodeURIComponent(number)}`}>
-            Sign in
-          </Button>
-        </div>
-      </Show>
-      <Show when="signed-in">
-        {listed ? (
-          <OpenInvoice number={number} />
-        ) : (
-          <>
-            <Eyebrow>The ledger</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-              This account cannot open the record.
-            </Display>
-            <div className="mt-10">
-              <TextLink to="/account">Your cuts</TextLink>
-            </div>
-          </>
-        )}
-      </Show>
-    </>
-  )
-}
-
-function OpenInvoice({ number }: { number: string }) {
-  const { getToken } = useAuth()
-  const [invoice, setInvoice] = useState<LedgerInvoice | null>(null)
-  const [error, setError] = useState('')
 
   useEffect(() => {
     let cancelled = false
@@ -111,20 +54,20 @@ function OpenInvoice({ number }: { number: string }) {
           {error}
         </Display>
         <div className="mt-10">
-          <TextLink to="/admin">Return to the ledger</TextLink>
+          <TextLink to="/admin/invoices">Return to the records</TextLink>
         </div>
       </>
     )
   }
 
   if (!invoice) {
-    return <p className="text-[15px] font-light text-ink-soft">Reading the record.</p>
+    return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the record.</p>
   }
 
   return (
     <>
       <div className="no-print mb-12 flex flex-wrap items-center gap-6">
-        <TextLink to="/admin">The ledger</TextLink>
+        <TextLink to="/admin/invoices">The records</TextLink>
         <button
           type="button"
           onClick={() => window.print()}
@@ -135,8 +78,8 @@ function OpenInvoice({ number }: { number: string }) {
       </div>
       <InvoiceSheet invoice={invoice} />
       <p className="no-print mt-12">
-        <Link to="/admin" className="text-[11px] uppercase tracking-[0.22em] text-stone">
-          Return to the ledger
+        <Link to="/admin/invoices" className="text-[11px] uppercase tracking-[0.22em] text-stone">
+          Return to the records
         </Link>
       </p>
     </>

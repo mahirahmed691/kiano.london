@@ -14,6 +14,8 @@ type Section =
   | 'orders'
   | 'invoices'
   | 'diary'
+  | 'members'
+  | 'list'
 
 const sections = new Set<Section>([
   'summary',
@@ -24,6 +26,8 @@ const sections = new Set<Section>([
   'orders',
   'invoices',
   'diary',
+  'members',
+  'list',
 ])
 
 const allowedSizes = new Set<number>(thobeSizes)
@@ -137,6 +141,17 @@ async function getSummary(): Promise<Response> {
     const appointmentCount = asCount(
       (await sql`SELECT COUNT(*)::int AS n FROM appointments`) as { n: number }[],
     )
+    const newLetters = asCount(
+      (await sql`SELECT COUNT(*)::int AS n FROM appointments WHERE status = 'new'`) as {
+        n: number
+      }[],
+    )
+    const heldCutRows = (await sql`
+      SELECT product_id, size
+      FROM inventory
+      WHERE quantity <= 0
+      ORDER BY product_id, size
+    `) as { product_id: string; size: number }[]
     const appointmentRows = (await sql`
       SELECT id, name, email, telephone, product_id, size, note, status, created_at
       FROM appointments
@@ -163,6 +178,11 @@ async function getSummary(): Promise<Response> {
       cutsRemaining,
       sizesHeld,
       appointmentCount,
+      newLetters,
+      heldCuts: heldCutRows.map((row) => ({
+        productId: row.product_id,
+        size: row.size,
+      })),
       appointments: appointmentRows.map((row) => ({
         id: row.id,
         name: row.name,
@@ -626,6 +646,79 @@ async function getInvoices(request: Request): Promise<Response> {
   }
 }
 
+async function getMembers(): Promise<Response> {
+  try {
+    const sql = await withDb()
+    const rows = (await sql`
+      SELECT
+        m.email,
+        m.name,
+        m.created_at,
+        (
+          SELECT COUNT(*)::int FROM orders o
+          WHERE o.clerk_user_id = m.clerk_user_id AND o.status = 'paid'
+        ) AS orders,
+        (
+          SELECT MAX(o.created_at) FROM orders o
+          WHERE o.clerk_user_id = m.clerk_user_id AND o.status = 'paid'
+        ) AS last_paid_at
+      FROM members m
+      ORDER BY m.created_at DESC
+      LIMIT 200
+    `) as {
+      email: string
+      name: string | null
+      created_at: string | Date
+      orders: number
+      last_paid_at: string | Date | null
+    }[]
+
+    return Response.json({
+      members: rows.map((row) => ({
+        email: row.email,
+        name: row.name ?? '',
+        orders: Number(row.orders) || 0,
+        lastPaidAt: row.last_paid_at ? asIso(row.last_paid_at) : '',
+        createdAt: asIso(row.created_at),
+      })),
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The members could not be read.' }, { status: 503 })
+  }
+}
+
+async function getList(): Promise<Response> {
+  try {
+    const sql = await withDb()
+    const rows = (await sql`
+      SELECT email, confirmed, source, created_at, confirmed_at
+      FROM subscribers
+      ORDER BY confirmed DESC, created_at DESC
+      LIMIT 400
+    `) as {
+      email: string
+      confirmed: boolean
+      source: string
+      created_at: string | Date
+      confirmed_at: string | Date | null
+    }[]
+
+    return Response.json({
+      subscribers: rows.map((row) => ({
+        email: row.email,
+        confirmed: Boolean(row.confirmed),
+        source: row.source,
+        createdAt: asIso(row.created_at),
+        confirmedAt: row.confirmed_at ? asIso(row.confirmed_at) : '',
+      })),
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The list could not be read.' }, { status: 503 })
+  }
+}
+
 async function postDiary(request: Request): Promise<Response> {
   let body: { id?: unknown; status?: unknown }
   try {
@@ -678,6 +771,8 @@ async function handle(request: Request, method: Method): Promise<Response> {
     if (section === 'accounts') return getAccounts()
     if (section === 'orders') return getOrders()
     if (section === 'invoices') return getInvoices(request)
+    if (section === 'members') return getMembers()
+    if (section === 'list') return getList()
     return Response.json({ error: 'This page of the ledger is written, not read.' }, { status: 405 })
   }
 

@@ -1,7 +1,9 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import { getProduct, products, productLineName, thobeSizes } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
+import { cn } from '@/lib/cn'
 import type { StockMovement } from '@/lib/ledger'
 import { formatLedgerDate } from '@/lib/ledger'
 
@@ -135,18 +137,19 @@ export function RestockLedger() {
   }
 
   return (
-    <>
+    <div className="mt-16">
       {error ? (
-        <p className="mt-8 text-[15px] font-light text-ink" role="alert">
+        <p className="mb-8 text-[15px] font-light text-ink" role="alert">
           {error}
         </p>
       ) : null}
       {notice && !error ? (
-        <p className="mt-8 text-[15px] font-light text-ink-soft" role="status">
+        <p className="mb-8 text-[15px] font-light text-ink-soft" role="status">
           {notice}
         </p>
       ) : null}
-      <label className="mt-10 block max-w-xl">
+      <LedgerFold title="Cuts on the line">
+      <label className="block max-w-xl">
         <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
           A line for the book
         </span>
@@ -190,7 +193,12 @@ export function RestockLedger() {
                       onKeyDown={(event) => {
                         if (event.key === 'Enter') (event.target as HTMLInputElement).blur()
                       }}
-                      className="mt-1 block w-16 border-0 border-b border-rule bg-transparent py-1 font-display text-2xl font-light text-ink outline-none transition-colors duration-300 focus:border-ink"
+                      className={cn(
+                        'mt-1 block w-16 border-0 border-b border-rule bg-transparent py-1 font-display text-2xl font-light outline-none transition-colors duration-300 focus:border-ink',
+                        Number(book[product.id]?.[size] ?? '0') === 0
+                          ? 'text-stone'
+                          : 'text-ink',
+                      )}
                       aria-label={`${productLineName(product)}, size ${size}`}
                     />
                   </label>
@@ -200,10 +208,10 @@ export function RestockLedger() {
           </li>
         ))}
       </ul>
-      {movements.length > 0 ? (
-        <div className="mt-16">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Recent movements</p>
-          <ul className="mt-6 divide-y divide-rule border-y border-rule">
+      </LedgerFold>
+      <LedgerFold title="Recent movements" defaultOpen={false}>
+          {movements.length > 0 ? (
+          <ul className="divide-y divide-rule border-y border-rule">
             {movements.map((row) => {
               const product = getProduct(row.productId)
               const name = product ? productLineName(product) : row.productId
@@ -227,8 +235,10 @@ export function RestockLedger() {
               )
             })}
           </ul>
-        </div>
-      ) : null}
-    </>
+          ) : (
+            <p className="text-[15px] font-light text-ink-soft">No movements kept yet.</p>
+          )}
+      </LedgerFold>
+    </div>
   )
 }

@@ -1,5 +1,6 @@
-import { getProduct, thobeSizes } from '../src/data/products.ts'
+import { getProduct, productLineName, thobeSizes } from '../src/data/products.ts'
 import { databaseUrl, withDb } from './_lib/db.ts'
+import { sendMail, visitLetterHtml, visitLetterText } from './_lib/mail.ts'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const allowedSizes = new Set<number>(thobeSizes)
@@ -49,26 +50,38 @@ export async function POST(request: Request) {
     size = parsed
   }
 
-  if (!databaseUrl()) {
-    return Response.json({ ok: true, kept: false })
+  let kept = false
+  if (databaseUrl()) {
+    try {
+      const sql = await withDb()
+      await sql`
+        INSERT INTO appointments (name, email, telephone, product_id, size, note)
+        VALUES (
+          ${name},
+          ${email},
+          ${telephone || null},
+          ${productId || null},
+          ${size},
+          ${note || null}
+        )
+      `
+      kept = true
+    } catch (caught) {
+      console.error(caught)
+    }
   }
 
-  try {
-    const sql = await withDb()
-    await sql`
-      INSERT INTO appointments (name, email, telephone, product_id, size, note)
-      VALUES (
-        ${name},
-        ${email},
-        ${telephone || null},
-        ${productId || null},
-        ${size},
-        ${note || null}
-      )
-    `
-    return Response.json({ ok: true, kept: true })
-  } catch (caught) {
-    console.error(caught)
-    return Response.json({ ok: true, kept: false })
-  }
+  const product = productId ? getProduct(productId) : undefined
+  const piece = product ? productLineName(product) : 'a piece to be discussed'
+  const sizeLine = size ? `size ${size}` : 'to be fitted'
+  const day = new Date().toISOString().slice(0, 10)
+  const mail = await sendMail({
+    to: email,
+    subject: 'The letter is held — Kiano London',
+    text: visitLetterText({ name, piece, size: sizeLine }),
+    html: visitLetterHtml({ name, piece, size: sizeLine }),
+    idempotencyKey: `visit-confirm/${email}/${day}`,
+  })
+
+  return Response.json({ ok: true, kept, written: mail.sent })
 }

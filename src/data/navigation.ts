@@ -17,3 +17,17 @@ export const overlayPaths = [
   '/craftsmanship',
   '/craftsmanship-details',
 ] as const
+
+export function isShopSurface(pathname: string) {
+  return (
+    pathname === '/shop' ||
+    pathname === '/collection' ||
+    pathname.startsWith('/shop/') ||
+    pathname.startsWith('/collection/')
+  )
+}
+
+export function headerOverlays(pathname: string) {
+  if (isShopSurface(pathname)) return false
+  return (overlayPaths as readonly string[]).includes(pathname)
+}

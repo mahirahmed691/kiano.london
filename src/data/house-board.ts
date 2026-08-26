@@ -34,21 +34,21 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Members',
-    completion: 90,
+    completion: 92,
     status: 'complete',
-    note: 'Clerk sign-in, account of reservations, token on checkout. Svix webhook keeps members in step when an account is written or deleted.',
+    note: 'Clerk sign-in, account of reservations, token on checkout. Svix webhook keeps members in step. The ledger lists those who keep an account.',
   },
   {
     name: 'The list',
-    completion: 72,
+    completion: 80,
     status: 'partial',
-    note: 'Subscribe and confirm via Resend. Domain must be verified for letters to leave.',
+    note: 'Subscribe and confirm via Resend. The ledger reads confirmed and held. Domain must be verified for letters to leave.',
   },
   {
     name: 'Visit',
-    completion: 82,
+    completion: 90,
     status: 'partial',
-    note: 'The form still opens a letter. A copy is held in Neon when the atelier can keep it, and shown on the ledger. No calendar widget.',
+    note: 'The form still opens a letter. A copy is held in Neon, and a confirmation is sent: held, not booked. Shown on the ledger. No calendar widget.',
   },
   {
     name: 'Installable house',
@@ -76,9 +76,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'House ledger',
-    completion: 92,
+    completion: 94,
     status: 'complete',
-    note: 'This board. Cuts, prices, VAT, accounts, invoices, paid reservations, diary, and the field. Expo can open kiano://admin. Refunds stay in Stripe.',
+    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. Rooms stay under the header while you work. Expo can open kiano://admin. Refunds stay in Stripe.',
   },
   {
     name: 'Analytics',
@@ -121,7 +121,7 @@ export const houseIntegrations = [
     name: 'Resend',
     state: 'Wired',
     hook: 'None',
-    events: 'List confirm letters',
+    events: 'List confirm letters, visit confirmation (held, not booked)',
     note: 'From address must be a verified domain. Until then the list holds unconfirmed rows.',
   },
   {
@@ -136,7 +136,7 @@ export const houseIntegrations = [
 export const houseDataNotes = [
   {
     title: 'What is counted',
-    copy: 'Paid reservations, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters. Currency is GBP pence. VAT is round(gross × 20/120).',
+    copy: 'Paid reservations, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters. Currency is GBP pence. VAT is round(gross × 20/120). Sizes at none are named on the board.',
   },
   {
     title: 'What is not counted',
@@ -203,14 +203,20 @@ export const houseVisualAudit = [
   {
     surface: 'Shop',
     finding:
-      'Type beside the sand jubbah, then three colours. On a phone the lookbook stacks, one still at a time. Quick-add is on the card.',
+      'Type beside the sand jubbah, ivory header, then three colours. On a phone the lookbook stacks, one still at a time. Quick-add is on the card.',
+    rank: 'Hold',
+  },
+  {
+    surface: 'Collection',
+    finding:
+      'Layl beside the name of the room, same split as the shop. Five pieces numbered. Hajar still closes the page.',
     rank: 'Hold',
   },
   {
     surface: 'Piece page',
     finding:
-      'Full-height stills, pinch to look closer, nape monogram, packing as sentences. No film. Gallery stills repeat a stitch set on some pieces.',
-    rank: 'Watch',
+      'Stills start below the ivory header. On a phone the name, price and bag sit under the first plate; the sentences follow. Pinch to look closer. No film.',
+    rank: 'Hold',
   },
   {
     surface: 'Checkout',
@@ -221,19 +227,19 @@ export const houseVisualAudit = [
   {
     surface: 'The ledger, desktop',
     finding:
-      'Signed-out: a type page, Sign in, return to the house. Remaining cuts are a line of sizes, not a grid. Allowlisted accounts see the ranked line after sign-in.',
+      'The board is an index: counts open their rooms, rooms keep a sticky line under the house header. Remaining cuts at none sit in stone.',
     rank: 'Hold',
   },
   {
     surface: 'The ledger, phone',
     finding:
-      'Same type, stacked. Reach it from Account, from The ledger in the menu when listed, or from kiano://admin in the Expo shell.',
+      'Rooms scroll sideways and stay. Reach it from Account, from The ledger in the menu when listed, or from kiano://admin in the Expo shell.',
     rank: 'Hold',
   },
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView. /admin is the same ledger. Gestures and safe-area are the shell; chrome is the site. kiano://admin still opens the board.',
+      'The native app is the website in a WebView. /admin and /admin/cuts, /prices, /accounts, /invoices, /members, /list, /field, /diary, /line are the same ledger. Gestures and safe-area are the shell; chrome is the site. kiano://admin still opens the board.',
     rank: 'Watch',
   },
 ] as const
@@ -242,5 +248,4 @@ export const houseScope = [
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
   'Point the Clerk dashboard at POST /api/clerk-webhook and set CLERK_WEBHOOK_SIGNING_SECRET.',
-  'A confirmation letter for the visit, without becoming a booking widget.',
 ] as const

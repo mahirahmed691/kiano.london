@@ -92,6 +92,22 @@ export type LedgerPeriod = {
   count: number
 }
 
+export type LedgerMember = {
+  email: string
+  name: string
+  orders: number
+  lastPaidAt: string
+  createdAt: string
+}
+
+export type LedgerSubscriber = {
+  email: string
+  confirmed: boolean
+  source: string
+  createdAt: string
+  confirmedAt: string
+}
+
 export type PriceRow = {
   productId: string
   name: string

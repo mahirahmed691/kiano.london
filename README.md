@@ -16,7 +16,16 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/craftsmanship-details` | The making, in detail |
 | `/visit` | Atelier visit |
 | `/account` | Member reservations |
-| `/admin` | House ledger (signed-in allowlist) |
+| `/admin` | House ledger board (signed-in allowlist) |
+| `/admin/cuts` | Remaining cuts |
+| `/admin/prices` | The line in sterling |
+| `/admin/accounts` | Tax and the journal |
+| `/admin/invoices` | Records of the cut |
+| `/admin/members` | Those who keep an account |
+| `/admin/list` | The list, confirmed and held |
+| `/admin/field` | Other houses of the column |
+| `/admin/diary` | Appointment letters |
+| `/admin/line` | The line of work |
 | `/cookies` | Cookies |
 | `/privacy` | Privacy |
 | `/letters/confirmed` | List confirmation |

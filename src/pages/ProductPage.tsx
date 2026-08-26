@@ -19,6 +19,7 @@ import {
   productPath,
   relatedProducts,
   thobeSizes,
+  type Product,
   type ThobeSize,
 } from '@/data/products'
 import { useCart } from '@/lib/cart'
@@ -117,27 +118,14 @@ export function ProductPage() {
           }),
         }}
       />
-      <section className="xl:pt-32">
+      <section className="pt-[var(--header-offset)] xl:pt-32">
         <div className="grid xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)] xl:items-start">
-          <div className="order-2 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-1 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
+          <div className="order-4 border-t border-rule px-6 py-12 md:px-12 xl:order-1 xl:col-start-1 xl:border-t-0 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
             <Reveal>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                <Link
-                  to={product.cut === 'Jubbah' ? '/shop' : '/collection'}
-                  className="transition-opacity hover:opacity-70"
-                >
-                  {product.cut === 'Jubbah' ? 'The Shop' : 'The Collection'}
-                </Link>
-                <span aria-hidden="true"> · </span>
-                {product.colour}
-              </p>
-              <Display as="h1" className="mt-6 text-4xl md:text-5xl">
-                {product.name}
-              </Display>
-              <p lang="ar" dir="rtl" className="mt-3 font-arabic text-2xl text-ink/55">
-                {product.arabicName}
-              </p>
-              <ul className="mt-10 space-y-3">
+              <div className="hidden xl:block">
+                <PieceHeading product={product} />
+              </div>
+              <ul className="space-y-3 max-xl:mt-0 xl:mt-10">
                 {product.details.map((line) => (
                   <li
                     key={line}
@@ -151,19 +139,25 @@ export function ProductPage() {
             </Reveal>
           </div>
 
-          <div className="order-1 xl:order-2">
-            {product.gallery.map((image, index) => (
-              <ProductPlate
-                key={`${image.src}-${index}`}
-                image={image}
-                first={index === 0}
-                onLook={() => setLooking(index)}
-              />
-            ))}
+          <div className="order-1 xl:order-2 xl:col-start-2">
+            <ProductPlate
+              image={
+                product.gallery[0] ?? {
+                  src: product.image,
+                  alt: product.imageAlt,
+                  objectPosition: product.objectPosition,
+                }
+              }
+              first
+              onLook={() => setLooking(0)}
+            />
           </div>
 
-          <div className="order-3 px-6 py-12 md:px-12 xl:sticky xl:top-28 xl:py-16 xl:pr-16 xl:pl-10">
+          <div className="order-2 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:py-16 xl:pr-16 xl:pl-10">
             <Reveal>
+              <div className="mb-10 xl:hidden">
+                <PieceHeading product={product} />
+              </div>
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{product.mill}</p>
               <p className="mt-4 font-display text-4xl font-light">{product.price}</p>
               <p className="mt-3 text-[14px] font-light text-ink-soft">
@@ -255,6 +249,18 @@ export function ProductPage() {
               </div>
             </Reveal>
           </div>
+
+          {product.gallery.length > 1 ? (
+            <div className="order-3 xl:order-4 xl:col-start-2">
+              {product.gallery.slice(1).map((image, index) => (
+                <ProductPlate
+                  key={`${image.src}-${index + 1}`}
+                  image={image}
+                  onLook={() => setLooking(index + 1)}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -344,6 +350,29 @@ export function ProductPage() {
           onClose={() => setLooking(null)}
         />
       ) : null}
+    </>
+  )
+}
+
+function PieceHeading({ product }: { product: Product }) {
+  return (
+    <>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+        <Link
+          to={product.cut === 'Jubbah' ? '/shop' : '/collection'}
+          className="transition-opacity hover:opacity-70"
+        >
+          {product.cut === 'Jubbah' ? 'The Shop' : 'The Collection'}
+        </Link>
+        <span aria-hidden="true"> · </span>
+        {product.colour}
+      </p>
+      <Display as="h1" className="mt-6 text-4xl md:text-5xl">
+        {product.name}
+      </Display>
+      <p lang="ar" dir="rtl" className="mt-3 font-arabic text-2xl text-ink/55">
+        {product.arabicName}
+      </p>
     </>
   )
 }

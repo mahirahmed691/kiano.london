@@ -1,7 +1,6 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
+import { LedgerFold } from '@/components/admin/LedgerFold'
 import { isAdminUser } from '@/lib/admin'
 import type { PriceRow } from '@/lib/ledger'
 import { formatGbpExact } from '@/lib/money'
@@ -45,24 +44,14 @@ export function LedgerPrices() {
   }, [getToken, isSignedIn, user])
 
   return (
-    <div id="ledger-prices" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
-      <Reveal>
-        <Eyebrow>Prices</Eyebrow>
-        <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-          The line in sterling.
-        </Display>
-        <Body className="mt-6">
-          VAT-inclusive. The shop and the till read the catalogue. This page does not overwrite
-          them.
-        </Body>
-      </Reveal>
+    <LedgerFold title="The catalogue" className="mt-16">
       {error ? (
-        <p className="mt-8 text-[15px] font-light text-ink" role="alert">
+        <p className="text-[15px] font-light text-ink" role="alert">
           {error}
         </p>
       ) : null}
-      {note ? <p className="mt-8 text-[15px] font-light leading-relaxed text-ink-soft">{note}</p> : null}
-      <ul className="mt-12 divide-y divide-rule border-y border-ink">
+      {note ? <p className="text-[15px] font-light leading-relaxed text-ink-soft">{note}</p> : null}
+      <ul className="mt-8 divide-y divide-rule border-y border-ink">
         {prices.map((row) => (
           <li key={row.productId} className="grid gap-4 py-6 lg:grid-cols-12 lg:items-baseline">
             <div className="lg:col-span-5">
@@ -83,6 +72,6 @@ export function LedgerPrices() {
           </li>
         ))}
       </ul>
-    </div>
+    </LedgerFold>
   )
 }

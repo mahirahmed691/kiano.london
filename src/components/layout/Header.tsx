@@ -4,7 +4,7 @@ import { HouseMark } from '@/components/brand/HouseMark'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
-import { overlayPaths } from '@/data/navigation'
+import { headerOverlays } from '@/data/navigation'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
 
@@ -13,7 +13,7 @@ export function Header() {
   const { count, setOpen } = useCart()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const overlay = overlayPaths.includes(pathname as (typeof overlayPaths)[number])
+  const overlay = headerOverlays(pathname)
   const inverted = overlay && !scrolled && !menuOpen
 
   useEffect(() => {
@@ -34,13 +34,18 @@ export function Header() {
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-colors duration-500',
-          inverted ? 'bg-transparent text-ivory' : 'bg-ivory/95 text-ink backdrop-blur-[2px]',
-          !inverted && 'border-b border-rule/80',
+          inverted ? 'bg-transparent text-ivory' : 'bg-ivory text-ink',
         )}
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="relative grid h-[5.25rem] grid-cols-[1fr_auto_1fr] items-center px-5 md:h-[5.75rem] md:px-12 lg:px-16">
+        <div
+          className={cn(
+            'relative grid h-[5.25rem] grid-cols-[1fr_auto_1fr] items-center border-b border-transparent px-5 md:h-[5.75rem] md:px-12 lg:px-16',
+            !inverted && 'border-rule/80',
+          )}
+        >
           <MegaMenu key={pathname} inverted={inverted} />
+
 
           <button
             type="button"
