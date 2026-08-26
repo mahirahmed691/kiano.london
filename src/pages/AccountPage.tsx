@@ -7,10 +7,13 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { getProduct, productPath } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
+import { cn } from '@/lib/cn'
 import { orderReference } from '@/lib/checkout'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { formatNoticeWhen } from '@/lib/word'
+import { useWord } from '@/lib/word-state'
 
 type AccountOrder = {
   id: string
@@ -145,6 +148,41 @@ function AccountOrders() {
   )
 }
 
+function AccountWord() {
+  const { notices, unread, markRead } = useWord()
+  if (notices.length === 0) return null
+
+  return (
+    <div className="mt-16">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+        Word{unread ? ` · ${String(unread).padStart(2, '0')}` : ''}
+      </p>
+      <ul className="mt-6 divide-y divide-rule border-t border-ink">
+        {notices.slice(0, 8).map((notice) => (
+          <li key={notice.id} className="py-6">
+            <Link
+              to={notice.href || '/account'}
+              className="block transition-opacity hover:opacity-70"
+              onClick={() => {
+                if (!notice.read) void markRead(notice.id)
+              }}
+            >
+              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                {formatNoticeWhen(notice.createdAt)}
+                {notice.audience === 'admin' ? ' · Ledger' : ''}
+              </p>
+              <p className={cn('mt-2 font-display text-2xl font-light', notice.read && 'opacity-55')}>
+                {notice.title}
+              </p>
+              <p className="mt-2 text-[15px] font-light text-ink-soft">{notice.body}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 function AccountLedgerLink() {
   const { user } = useUser()
   if (!isAdminUser(user)) return null
@@ -184,6 +222,7 @@ export function AccountPage() {
                 Payment still reserves the cloth. These are the cuts held against this email.
               </Body>
               <AccountOrders />
+              <AccountWord />
               <AccountLedgerLink />
               <div className="mt-12">
                 <SignOutButton>

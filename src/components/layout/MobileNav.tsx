@@ -2,6 +2,7 @@ import { Monogram } from '@/components/brand/Monogram'
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
+import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
@@ -136,6 +137,12 @@ export function MobileNav({ open, onClose }: Props) {
           </li>
           <li>
             <AdminNavLink
+              onClick={onClose}
+              className="block font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"
+            />
+          </li>
+          <li>
+            <WordLink
               onClick={onClose}
               className="block font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"
             />

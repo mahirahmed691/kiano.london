@@ -4,6 +4,7 @@ import { HouseMark } from '@/components/brand/HouseMark'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
+import { WordLink } from '@/components/notices/WordLink'
 import { headerOverlays } from '@/data/navigation'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
@@ -93,6 +94,12 @@ export function Header() {
             >
               Account
             </NavLink>
+            <WordLink
+              className={cn(
+                'text-[11px] uppercase tracking-[0.22em]',
+                inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
+              )}
+            />
             <button
               type="button"
               className={cn(

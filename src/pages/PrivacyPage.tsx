@@ -50,6 +50,14 @@ export function PrivacyPage() {
               about cloth and when a piece can be reserved. Leave by writing to {site.email}.
             </Body>
           </li>
+          <li>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Word from the house</p>
+            <Body className="mt-3">
+              If you keep an account, notices of a reserved cut sit against it. The ledger receives
+              word of visits, the list, and remaining cuts. On the installable app, that word can
+              also arrive as a device notice, if you allow it.
+            </Body>
+          </li>
           {social.length ? (
             <li>
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Elsewhere</p>

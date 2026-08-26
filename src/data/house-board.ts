@@ -54,7 +54,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Installable house',
     completion: 78,
     status: 'partial',
-    note: 'PWA on the site. Expo is a WebView of the live origin. Header and notices respect the safe area; pinch-zoom on the piece stays.',
+    note: 'PWA on the site. Expo is a WebView of the live origin. Header and notices respect the safe area; pinch-zoom on the piece stays. Word from the house can push once a native build holds the token.',
   },
   {
     name: 'Share and search',
@@ -79,6 +79,12 @@ export const houseFeatures: HouseFeature[] = [
     completion: 94,
     status: 'complete',
     note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. Rooms stay under the header while you work. Expo can open kiano://admin. Refunds stay in Stripe.',
+  },
+  {
+    name: 'Word from the house',
+    completion: 88,
+    status: 'complete',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, and a new account. Expo can push the same word to a signed-in device.',
   },
   {
     name: 'Analytics',
@@ -114,7 +120,7 @@ export const houseIntegrations = [
     state: 'Live',
     hook: 'None',
     events:
-      'inventory, stock_movements, invoices, invoice_lines, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes',
+      'inventory, stock_movements, invoices, invoice_lines, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes, notices, notice_reads, push_tokens',
     note: 'Schema is created on first use. Remaining cuts, movements, and invoices are written from the ledger and from paid Stripe sessions.',
   },
   {
@@ -123,6 +129,13 @@ export const houseIntegrations = [
     hook: 'None',
     events: 'List confirm letters, visit confirmation (held, not booked)',
     note: 'From address must be a verified domain. Until then the list holds unconfirmed rows.',
+  },
+  {
+    name: 'Expo push',
+    state: 'Wired',
+    hook: 'POST /api/notices',
+    events: 'A signed-in device keeps an Expo token. Word is sent through exp.host when a notice is written.',
+    note: 'Needs a native build, not Expo Go on Android. iOS asks on the next EAS archive. Android also needs FCM in EAS credentials.',
   },
   {
     name: 'Vercel',
@@ -136,7 +149,7 @@ export const houseIntegrations = [
 export const houseDataNotes = [
   {
     title: 'What is counted',
-    copy: 'Paid reservations, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters. Currency is GBP pence. VAT is round(gross × 20/120). Sizes at none are named on the board.',
+    copy: 'Paid reservations, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters, word from the house. Currency is GBP pence. VAT is round(gross × 20/120). Sizes at none are named on the board.',
   },
   {
     title: 'What is not counted',
@@ -239,7 +252,7 @@ export const houseVisualAudit = [
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView. /admin and /admin/cuts, /prices, /accounts, /invoices, /members, /list, /field, /diary, /line are the same ledger. Gestures and safe-area are the shell; chrome is the site. kiano://admin still opens the board.',
+      'The native app is the website in a WebView. /admin and /admin/cuts, /prices, /accounts, /invoices, /members, /list, /field, /diary, /line are the same ledger. Word from the house is the site inbox; a signed-in device can take a push. Gestures and safe-area are the shell; chrome is the site. kiano://admin still opens the board.',
     rank: 'Watch',
   },
 ] as const

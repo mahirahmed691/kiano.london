@@ -2,6 +2,7 @@ import { getProduct, productLineName, products, thobeSizes } from '../src/data/p
 import { vatMethodNote, splitVat } from '../src/lib/vat.ts'
 import { requireAdmin } from './_lib/admin.ts'
 import { withDb } from './_lib/db.ts'
+import { recordNotice } from './_lib/notices.ts'
 import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.ts'
 
 type Method = 'GET' | 'POST'
@@ -327,6 +328,25 @@ async function postInventory(request: Request, email: string): Promise<Response>
           ${email}
         )
       `
+      const piece = getProduct(productId)
+      const cutName = piece ? productLineName(piece) : productId
+      if (before > 0 && row.quantity <= 0) {
+        await recordNotice({
+          audience: 'admin',
+          kind: 'cut',
+          title: 'A size is held at none',
+          body: `${cutName}, size ${size} is no longer on the line.`,
+          href: '/admin/cuts',
+        })
+      } else if (before <= 0 && row.quantity > 0) {
+        await recordNotice({
+          audience: 'admin',
+          kind: 'cut',
+          title: 'A size is back on the line',
+          body: `${cutName}, size ${size} · ${row.quantity} remaining.`,
+          href: '/admin/cuts',
+        })
+      }
     }
 
     return Response.json({

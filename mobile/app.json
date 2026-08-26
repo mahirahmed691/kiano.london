@@ -53,6 +53,13 @@
       "expo-system-ui",
       "expo-web-browser",
       [
+        "expo-notifications",
+        {
+          "color": "#1B1714",
+          "defaultChannel": "word"
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "backgroundColor": "#F2EBDC",

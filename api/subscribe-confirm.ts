@@ -1,5 +1,6 @@
 import { withDb } from './_lib/db.ts'
 import { addToAudience, sendMail } from './_lib/mail.ts'
+import { recordNotice } from './_lib/notices.ts'
 import { site } from '../src/data/site.ts'
 
 function originFrom(request: Request) {
@@ -30,6 +31,13 @@ export async function GET(request: Request) {
     }
 
     await addToAudience(email)
+    await recordNotice({
+      audience: 'admin',
+      kind: 'list',
+      title: 'The list has a name',
+      body: `${email} confirmed.`,
+      href: '/admin/list',
+    })
     await sendMail({
       to: site.email,
       subject: `List: ${email}`,

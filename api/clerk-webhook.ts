@@ -1,5 +1,6 @@
 import { verifyWebhook } from '@clerk/backend/webhooks'
 import { withDb } from './_lib/db.ts'
+import { recordNotice } from './_lib/notices.ts'
 
 function memberName(first?: string | null, last?: string | null) {
   return `${first ?? ''} ${last ?? ''}`.trim()
@@ -56,6 +57,15 @@ export async function POST(request: Request) {
           SET clerk_user_id = ${clerkUserId}
           WHERE clerk_user_id IS NULL AND lower(email) = lower(${email})
         `
+        if (evt.type === 'user.created') {
+          await recordNotice({
+            audience: 'admin',
+            kind: 'member',
+            title: 'A member has an account',
+            body: name ? `${name} · ${email}` : email,
+            href: '/admin/members',
+          })
+        }
       }
     }
 
@@ -69,6 +79,15 @@ export async function POST(request: Request) {
         `
         await sql`
           DELETE FROM members WHERE clerk_user_id = ${clerkUserId}
+        `
+        await sql`
+          DELETE FROM push_tokens WHERE clerk_user_id = ${clerkUserId}
+        `
+        await sql`
+          DELETE FROM notice_reads WHERE clerk_user_id = ${clerkUserId}
+        `
+        await sql`
+          DELETE FROM notices WHERE audience = 'member' AND clerk_user_id = ${clerkUserId}
         `
       }
     }

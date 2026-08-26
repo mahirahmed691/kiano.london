@@ -5,6 +5,7 @@ import { QuickAddDialog } from '@/components/product/QuickAddDialog'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { HouseNotices } from '@/components/notices/HouseNotices'
+import { WordDrawer } from '@/components/notices/WordDrawer'
 import { HouseSchema } from '@/components/seo/HouseSchema'
 
 function ScrollToTop() {
@@ -35,6 +36,7 @@ export function Layout() {
       {quiet ? null : <Footer />}
       <QuickAddDialog />
       <CartDrawer />
+      <WordDrawer />
       <HouseNotices />
     </>
   )

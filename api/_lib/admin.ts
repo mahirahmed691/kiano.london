@@ -27,19 +27,9 @@ function clerkUserEmails(user: {
   ]
 }
 
-export async function requireAdmin(request: Request): Promise<AdminOk | AdminDenied> {
-  const clerkUserId = await clerkUserIdFrom(request)
-  if (!clerkUserId) {
-    return {
-      ok: false,
-      error: Response.json({ error: 'Sign in to open the ledger.' }, { status: 401 }),
-    }
-  }
-
+export async function adminEmailFor(clerkUserId: string): Promise<string> {
   const allowed = adminAllowlist()
-  if (allowed.length === 0) {
-    return { ok: false, error: Response.json({ error: 'The ledger is closed.' }, { status: 403 }) }
-  }
+  if (allowed.length === 0) return ''
 
   const matched = new Set<string>()
   const secret = process.env.CLERK_SECRET_KEY
@@ -66,7 +56,23 @@ export async function requireAdmin(request: Request): Promise<AdminOk | AdminDen
     }
   }
 
-  const email = [...matched].find((entry) => allowed.includes(entry)) ?? ''
+  return [...matched].find((entry) => allowed.includes(entry)) ?? ''
+}
+
+export async function requireAdmin(request: Request): Promise<AdminOk | AdminDenied> {
+  const clerkUserId = await clerkUserIdFrom(request)
+  if (!clerkUserId) {
+    return {
+      ok: false,
+      error: Response.json({ error: 'Sign in to open the ledger.' }, { status: 401 }),
+    }
+  }
+
+  if (adminAllowlist().length === 0) {
+    return { ok: false, error: Response.json({ error: 'The ledger is closed.' }, { status: 403 }) }
+  }
+
+  const email = await adminEmailFor(clerkUserId)
   if (!email) {
     return {
       ok: false,

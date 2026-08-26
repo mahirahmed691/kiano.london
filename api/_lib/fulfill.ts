@@ -1,7 +1,8 @@
 import type Stripe from 'stripe'
-import { thobeSizes } from '../../src/data/products.ts'
+import { getProduct, productLineName, thobeSizes } from '../../src/data/products.ts'
 import { withDb } from './db.ts'
 import { ensureInvoiceForOrder } from './invoice.ts'
+import { recordNotice } from './notices.ts'
 
 const allowedSizes = new Set<number>(thobeSizes)
 
@@ -142,6 +143,17 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
         ${session.id}
       )
     `
+    if ((remaining[0]?.quantity ?? 0) <= 0) {
+      const piece = getProduct(line.productId)
+      const name = piece ? productLineName(piece) : line.description
+      await recordNotice({
+        audience: 'admin',
+        kind: 'cut',
+        title: 'A size is held at none',
+        body: `${name}, size ${line.size} is no longer on the line.`,
+        href: '/admin/cuts',
+      })
+    }
   }
 
   try {
@@ -164,4 +176,38 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
       WHERE clerk_user_id IS NULL AND lower(email) = lower(${email})
     `
   }
+
+  const memberId =
+    clerkUserId ||
+    (
+      (await sql`
+        SELECT clerk_user_id FROM members WHERE lower(email) = lower(${email}) LIMIT 1
+      `) as { clerk_user_id: string }[]
+    )[0]?.clerk_user_id
+
+  const lines = linesFromSession(session)
+  const first = lines[0]
+  const piece = first ? getProduct(first.productId) : undefined
+  const cutName = piece ? productLineName(piece) : first?.description || 'a cut'
+  const sizeLine = first ? `size ${first.size}` : 'a size'
+  const more = lines.length > 1 ? `, and ${lines.length - 1} more` : ''
+
+  if (memberId) {
+    await recordNotice({
+      audience: 'member',
+      clerkUserId: memberId,
+      kind: 'order',
+      title: 'The cut is reserved',
+      body: `${cutName}, ${sizeLine}${more}. It is held against the account.`,
+      href: '/account',
+    })
+  }
+
+  await recordNotice({
+    audience: 'admin',
+    kind: 'order',
+    title: 'A cut is reserved',
+    body: `${cutName}, ${sizeLine}${more} · ${email}`,
+    href: '/admin/invoices',
+  })
 }

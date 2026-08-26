@@ -1,6 +1,7 @@
 import { getProduct, productLineName, thobeSizes } from '../src/data/products.ts'
 import { databaseUrl, withDb } from './_lib/db.ts'
 import { sendMail, visitLetterHtml, visitLetterText } from './_lib/mail.ts'
+import { recordNotice } from './_lib/notices.ts'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const allowedSizes = new Set<number>(thobeSizes)
@@ -50,6 +51,9 @@ export async function POST(request: Request) {
     size = parsed
   }
 
+  const product = productId ? getProduct(productId) : undefined
+  const piece = product ? productLineName(product) : 'a piece to be discussed'
+
   let kept = false
   if (databaseUrl()) {
     try {
@@ -66,13 +70,17 @@ export async function POST(request: Request) {
         )
       `
       kept = true
+      await recordNotice({
+        audience: 'admin',
+        kind: 'visit',
+        title: 'A letter is held',
+        body: `${name} wrote for ${piece}.`,
+        href: '/admin/diary',
+      })
     } catch (caught) {
       console.error(caught)
     }
   }
-
-  const product = productId ? getProduct(productId) : undefined
-  const piece = product ? productLineName(product) : 'a piece to be discussed'
   const sizeLine = size ? `size ${size}` : 'to be fitted'
   const day = new Date().toISOString().slice(0, 10)
   const mail = await sendMail({

@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AppProviders } from '@/components/auth/AppProviders'
 import { Layout } from '@/components/layout/Layout'
 import { CartProvider } from '@/lib/cart'
+import { WordProvider } from '@/lib/word-state'
 import { QuickAddProvider } from '@/lib/quickAdd'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import { AccountPage } from '@/pages/AccountPage'
@@ -38,9 +39,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <AppProviders>
-        <CartProvider>
-          <QuickAddProvider>
-            <Routes>
+        <WordProvider>
+          <CartProvider>
+            <QuickAddProvider>
+              <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/shop" element={<ShopPage />} />
@@ -76,8 +78,9 @@ export default function App() {
                 <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>
-          </QuickAddProvider>
-        </CartProvider>
+            </QuickAddProvider>
+          </CartProvider>
+        </WordProvider>
       </AppProviders>
     </BrowserRouter>
   )

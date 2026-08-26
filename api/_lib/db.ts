@@ -171,6 +171,37 @@ async function migrate(db: Sql) {
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     )
   `
+  await db`
+    CREATE TABLE IF NOT EXISTS notices (
+      id SERIAL PRIMARY KEY,
+      audience TEXT NOT NULL,
+      clerk_user_id TEXT,
+      kind TEXT NOT NULL,
+      title TEXT NOT NULL,
+      body TEXT NOT NULL,
+      href TEXT NOT NULL DEFAULT '',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
+  await db`CREATE INDEX IF NOT EXISTS notices_member_idx ON notices (clerk_user_id, created_at DESC)`
+  await db`CREATE INDEX IF NOT EXISTS notices_audience_idx ON notices (audience, created_at DESC)`
+  await db`
+    CREATE TABLE IF NOT EXISTS notice_reads (
+      notice_id INTEGER NOT NULL REFERENCES notices(id) ON DELETE CASCADE,
+      clerk_user_id TEXT NOT NULL,
+      read_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      PRIMARY KEY (notice_id, clerk_user_id)
+    )
+  `
+  await db`
+    CREATE TABLE IF NOT EXISTS push_tokens (
+      clerk_user_id TEXT NOT NULL,
+      token TEXT NOT NULL,
+      platform TEXT NOT NULL DEFAULT '',
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      PRIMARY KEY (clerk_user_id, token)
+    )
+  `
 
   for (const product of products) {
     for (const size of thobeSizes) {

@@ -10,3 +10,8 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+interface Window {
+  __KIANO_EXPO_PUSH?: string
+  ReactNativeWebView?: { postMessage: (message: string) => void }
+}
