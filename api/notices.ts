@@ -1,7 +1,7 @@
-import { adminEmailFor } from './_lib/admin.ts'
-import { clerkUserIdFrom } from './_lib/clerk.ts'
-import { withDb } from './_lib/db.ts'
-import { houseHref, isExpoPushToken } from './_lib/notices.ts'
+import { adminEmailFor } from './_lib/admin.js'
+import { clerkUserIdFrom } from './_lib/clerk.js'
+import { withDb } from './_lib/db.js'
+import { houseHref, isExpoPushToken } from './_lib/notices.js'
 
 type NoticeRow = {
   id: number

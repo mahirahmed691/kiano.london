@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto'
-import { withDb } from './_lib/db.ts'
-import { confirmLetterHtml, sendMail } from './_lib/mail.ts'
-import { site } from '../src/data/site.ts'
+import { withDb } from './_lib/db.js'
+import { confirmLetterHtml, sendMail } from './_lib/mail.js'
+import { site } from '../src/data/site.js'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 

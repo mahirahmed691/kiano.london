@@ -1,6 +1,6 @@
 import { verifyWebhook } from '@clerk/backend/webhooks'
-import { withDb } from './_lib/db.ts'
-import { recordNotice } from './_lib/notices.ts'
+import { withDb } from './_lib/db.js'
+import { recordNotice } from './_lib/notices.js'
 
 function memberName(first?: string | null, last?: string | null) {
   return `${first ?? ''} ${last ?? ''}`.trim()

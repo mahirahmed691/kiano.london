@@ -1,6 +1,6 @@
 import Stripe from 'stripe'
-import { fulfillPaidSession } from './_lib/fulfill.ts'
-import { applyChargeRefund } from './_lib/refund.ts'
+import { fulfillPaidSession } from './_lib/fulfill.js'
+import { applyChargeRefund } from './_lib/refund.js'
 
 export async function POST(request: Request) {
   const secret = process.env.STRIPE_SECRET_KEY

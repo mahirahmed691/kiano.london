@@ -1,5 +1,5 @@
-import { getProduct, thobeSizes } from '../src/data/products.ts'
-import { withDb } from './_lib/db.ts'
+import { getProduct, thobeSizes } from '../src/data/products.js'
+import { withDb } from './_lib/db.js'
 
 export async function GET(request: Request) {
   const productId = new URL(request.url).searchParams.get('product_id') ?? ''

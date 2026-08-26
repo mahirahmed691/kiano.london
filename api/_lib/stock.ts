@@ -1,5 +1,5 @@
-import { getProduct } from '../../src/data/products.ts'
-import { withDb } from './db.ts'
+import { getProduct } from '../../src/data/products.js'
+import { withDb } from './db.js'
 
 export class StockError extends Error {
   constructor(message: string) {

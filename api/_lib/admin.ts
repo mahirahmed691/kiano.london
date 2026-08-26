@@ -1,7 +1,7 @@
 import { createClerkClient } from '@clerk/backend'
-import { resolveAdminEmails } from '../../src/lib/admin-allowlist.ts'
-import { clerkUserIdFrom } from './clerk.ts'
-import { withDb } from './db.ts'
+import { resolveAdminEmails } from '../../src/lib/admin-allowlist.js'
+import { clerkUserIdFrom } from './clerk.js'
+import { withDb } from './db.js'
 
 export function adminAllowlist() {
   return resolveAdminEmails(process.env.ADMIN_EMAILS || process.env.VITE_ADMIN_EMAILS)

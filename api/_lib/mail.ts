@@ -1,5 +1,5 @@
 import { Resend } from 'resend'
-import { site } from '../../src/data/site.ts'
+import { site } from '../../src/data/site.js'
 
 function fromAddress() {
   return process.env.RESEND_FROM || 'Kiano London <atelier@kiano.london>'

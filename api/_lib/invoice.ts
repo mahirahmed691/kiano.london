@@ -1,7 +1,7 @@
 import type { NeonQueryFunction } from '@neondatabase/serverless'
-import { site } from '../../src/data/site.ts'
-import type { LedgerInvoice } from '../../src/lib/ledger.ts'
-import { splitVat } from '../../src/lib/vat.ts'
+import { site } from '../../src/data/site.js'
+import type { LedgerInvoice } from '../../src/lib/ledger.js'
+import { splitVat } from '../../src/lib/vat.js'
 
 type Sql = NeonQueryFunction<false, false>
 

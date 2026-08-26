@@ -1,5 +1,5 @@
-import { adminAllowlist } from './admin.ts'
-import { withDb } from './db.ts'
+import { adminAllowlist } from './admin.js'
+import { withDb } from './db.js'
 
 export type NoticeAudience = 'member' | 'admin'
 export type NoticeKind = 'order' | 'visit' | 'list' | 'cut' | 'member' | 'work' | 'return'

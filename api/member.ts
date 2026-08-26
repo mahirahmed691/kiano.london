@@ -1,5 +1,5 @@
-import { clerkUserIdFrom } from './_lib/clerk.ts'
-import { withDb } from './_lib/db.ts'
+import { clerkUserIdFrom } from './_lib/clerk.js'
+import { withDb } from './_lib/db.js'
 
 export async function POST(request: Request) {
   const clerkUserId = await clerkUserIdFrom(request)

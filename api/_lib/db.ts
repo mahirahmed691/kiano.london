@@ -1,5 +1,5 @@
 import { neon, type NeonQueryFunction } from '@neondatabase/serverless'
-import { products, thobeSizes } from '../../src/data/products.ts'
+import { products, thobeSizes } from '../../src/data/products.js'
 
 type Sql = NeonQueryFunction<false, false>
 

@@ -1,7 +1,7 @@
-import { getProduct, productLineName, thobeSizes } from '../src/data/products.ts'
-import { databaseUrl, withDb } from './_lib/db.ts'
-import { sendMail, visitLetterHtml, visitLetterText } from './_lib/mail.ts'
-import { recordNotice } from './_lib/notices.ts'
+import { getProduct, productLineName, thobeSizes } from '../src/data/products.js'
+import { databaseUrl, withDb } from './_lib/db.js'
+import { sendMail, visitLetterHtml, visitLetterText } from './_lib/mail.js'
+import { recordNotice } from './_lib/notices.js'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const allowedSizes = new Set<number>(thobeSizes)

@@ -1,8 +1,8 @@
 import type Stripe from 'stripe'
-import { getProduct, productLineName, thobeSizes } from '../../src/data/products.ts'
-import { withDb } from './db.ts'
-import { ensureInvoiceForOrder } from './invoice.ts'
-import { recordNotice } from './notices.ts'
+import { getProduct, productLineName, thobeSizes } from '../../src/data/products.js'
+import { withDb } from './db.js'
+import { ensureInvoiceForOrder } from './invoice.js'
+import { recordNotice } from './notices.js'
 
 const allowedSizes = new Set<number>(thobeSizes)
 

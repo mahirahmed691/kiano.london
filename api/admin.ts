@@ -1,10 +1,10 @@
-import { getProduct, productLineName, products, thobeSizes } from '../src/data/products.ts'
-import { vatMethodNote, splitVat } from '../src/lib/vat.ts'
-import { requireAdmin } from './_lib/admin.ts'
-import { withDb } from './_lib/db.ts'
-import { recordNotice } from './_lib/notices.ts'
-import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.ts'
-import { asCarrier, asTrackingCode, asTrackingHref, asWorkStage, dispatchLine, isFullyReturned, isWorkStage, workCopy } from '../src/lib/work.ts'
+import { getProduct, productLineName, products, thobeSizes } from '../src/data/products.js'
+import { vatMethodNote, splitVat } from '../src/lib/vat.js'
+import { requireAdmin } from './_lib/admin.js'
+import { withDb } from './_lib/db.js'
+import { recordNotice } from './_lib/notices.js'
+import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.js'
+import { asCarrier, asTrackingCode, asTrackingHref, asWorkStage, dispatchLine, isFullyReturned, isWorkStage, workCopy } from '../src/lib/work.js'
 
 type Method = 'GET' | 'POST'
 type Section =

@@ -3,10 +3,10 @@ import {
   paymentStatusOf,
   type CheckoutOrder,
   type CheckoutOrderAddress,
-} from '../src/data/shipping.ts'
-import { withDb } from './_lib/db.ts'
-import { fulfillPaidSession } from './_lib/fulfill.ts'
-import { ensureInvoiceForOrder, invoicePublicView } from './_lib/invoice.ts'
+} from '../src/data/shipping.js'
+import { withDb } from './_lib/db.js'
+import { fulfillPaidSession } from './_lib/fulfill.js'
+import { ensureInvoiceForOrder, invoicePublicView } from './_lib/invoice.js'
 
 function addressFrom(
   name: string | null | undefined,

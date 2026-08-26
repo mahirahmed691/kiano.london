@@ -1,8 +1,8 @@
 import type Stripe from 'stripe'
-import { getProduct, productLineName } from '../../src/data/products.ts'
-import { isFullyReturned } from '../../src/lib/work.ts'
-import { withDb } from './db.ts'
-import { recordNotice } from './notices.ts'
+import { getProduct, productLineName } from '../../src/data/products.js'
+import { isFullyReturned } from '../../src/lib/work.js'
+import { withDb } from './db.js'
+import { recordNotice } from './notices.js'
 
 type OrderRow = {
   id: string

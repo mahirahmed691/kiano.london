@@ -1,6 +1,6 @@
-import { clerkUserIdFrom } from './_lib/clerk.ts'
-import { withDb } from './_lib/db.ts'
-import { asTrackingHref, asWorkStage, dispatchLine, isFullyReturned } from '../src/lib/work.ts'
+import { clerkUserIdFrom } from './_lib/clerk.js'
+import { withDb } from './_lib/db.js'
+import { asTrackingHref, asWorkStage, dispatchLine, isFullyReturned } from '../src/lib/work.js'
 
 type OrderRow = {
   id: string

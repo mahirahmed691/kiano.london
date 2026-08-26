@@ -1,12 +1,12 @@
 import Stripe from 'stripe'
-import { getProduct, thobeSizes } from '../src/data/products.ts'
+import { getProduct, thobeSizes } from '../src/data/products.js'
 import {
   parseCheckoutDetails,
   shippingCountryCodes,
   type CheckoutDetails,
-} from '../src/data/shipping.ts'
-import { clerkUserIdFrom } from './_lib/clerk.ts'
-import { assertStock, StockError } from './_lib/stock.ts'
+} from '../src/data/shipping.js'
+import { clerkUserIdFrom } from './_lib/clerk.js'
+import { assertStock, StockError } from './_lib/stock.js'
 
 type BasketItem = {
   productId: string

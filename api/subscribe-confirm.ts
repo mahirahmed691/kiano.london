@@ -1,7 +1,7 @@
-import { withDb } from './_lib/db.ts'
-import { addToAudience, sendMail } from './_lib/mail.ts'
-import { recordNotice } from './_lib/notices.ts'
-import { site } from '../src/data/site.ts'
+import { withDb } from './_lib/db.js'
+import { addToAudience, sendMail } from './_lib/mail.js'
+import { recordNotice } from './_lib/notices.js'
+import { site } from '../src/data/site.js'
 
 function originFrom(request: Request) {
   return new URL(request.url).origin
