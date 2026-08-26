@@ -77,5 +77,6 @@ export const quietLetterPaths = [
   '/account',
   '/cookies',
   '/privacy',
+  '/returns',
   '/letters/confirmed',
 ]

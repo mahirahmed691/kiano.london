@@ -12,6 +12,7 @@ interface ImportMeta {
 }
 
 interface Window {
+  __KIANO_NATIVE?: boolean
   __KIANO_EXPO_PUSH?: string
   ReactNativeWebView?: { postMessage: (message: string) => void }
 }

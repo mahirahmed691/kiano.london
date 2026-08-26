@@ -17,6 +17,7 @@ import { AdminListPage } from '@/pages/AdminListPage'
 import { AdminMembersPage } from '@/pages/AdminMembersPage'
 import { AdminPage } from '@/pages/AdminPage'
 import { AdminPricesPage } from '@/pages/AdminPricesPage'
+import { AdminWorkPage } from '@/pages/AdminWorkPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { CraftsmanshipDetailsPage } from '@/pages/CraftsmanshipDetailsPage'
@@ -29,6 +30,7 @@ import { OrderConfirmedPage } from '@/pages/OrderConfirmedPage'
 import { OrderInvoicePage } from '@/pages/OrderInvoicePage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
 import { ProductPage } from '@/pages/ProductPage'
+import { ReturnsPage } from '@/pages/ReturnsPage'
 import { ShopPage } from '@/pages/ShopPage'
 import { SignInPage } from '@/pages/SignInPage'
 import { SignUpPage } from '@/pages/SignUpPage'
@@ -64,6 +66,7 @@ export default function App() {
                   <Route path="accounts" element={<AdminAccountsPage />} />
                   <Route path="invoices" element={<AdminInvoicesPage />} />
                   <Route path="invoices/:number" element={<AdminInvoicePage />} />
+                  <Route path="work" element={<AdminWorkPage />} />
                   <Route path="members" element={<AdminMembersPage />} />
                   <Route path="list" element={<AdminListPage />} />
                   <Route path="field" element={<AdminFieldPage />} />
@@ -72,6 +75,7 @@ export default function App() {
                 </Route>
                 <Route path="/cookies" element={<CookiesPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/returns" element={<ReturnsPage />} />
                 <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />
                 <Route path="/sign-in/*" element={<SignInPage />} />
                 <Route path="/sign-up/*" element={<SignUpPage />} />

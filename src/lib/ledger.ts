@@ -66,6 +66,7 @@ export type LedgerOrder = {
   currency: string
   createdAt: string
   invoiceNumber: string
+  stage?: string
   lines: {
     productId: string
     size: number

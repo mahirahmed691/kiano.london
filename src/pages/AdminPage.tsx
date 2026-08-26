@@ -59,6 +59,11 @@ function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string
       value: diaryValue,
       to: '/admin/diary',
     },
+    {
+      label: 'The work',
+      value: `${String(ledger.workCutting ?? 0).padStart(2, '0')} cutting · ${String(ledger.workPacked ?? 0).padStart(2, '0')} packed`,
+      to: '/admin/work',
+    },
   ]
 
   return (

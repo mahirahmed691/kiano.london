@@ -21,6 +21,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/admin/prices` | The line in sterling |
 | `/admin/accounts` | Tax and the journal |
 | `/admin/invoices` | Records of the cut |
+| `/admin/work` | Reserved, on the table, packed, left the house |
 | `/admin/members` | Those who keep an account |
 | `/admin/list` | The list, confirmed and held |
 | `/admin/field` | Other houses of the column |
@@ -28,6 +29,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/admin/line` | The line of work |
 | `/cookies` | Cookies |
 | `/privacy` | Privacy |
+| `/returns` | If a reserved cut must return |
 | `/letters/confirmed` | List confirmation |
 | `/sign-in` | Member sign in |
 | `/sign-up` | Open an account |

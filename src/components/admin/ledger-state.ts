@@ -30,6 +30,9 @@ export type Ledger = {
   sizesHeld: number
   appointmentCount: number
   newLetters: number
+  workCutting: number
+  workPacked: number
+  workSent: number
   heldCuts: HeldCut[]
   appointments: AppointmentRow[]
 }
@@ -60,6 +63,9 @@ export function useLedger() {
           ...data,
           appointmentCount: data.appointmentCount ?? 0,
           newLetters: data.newLetters ?? 0,
+          workCutting: data.workCutting ?? 0,
+          workPacked: data.workPacked ?? 0,
+          workSent: data.workSent ?? 0,
           heldCuts: data.heldCuts ?? [],
           appointments: (data.appointments ?? []).map((row) => ({
             ...row,

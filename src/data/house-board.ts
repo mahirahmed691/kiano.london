@@ -54,7 +54,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Installable house',
     completion: 78,
     status: 'partial',
-    note: 'PWA on the site. Expo is a WebView of the live origin. Header and notices respect the safe area; pinch-zoom on the piece stays. Word from the house can push once a native build holds the token.',
+    note: 'PWA on the site keeps the editorial header. Expo is a WebView of the live origin with its own tabs: House, Line, Bag, Account, and Word. Header, footer, and cookie notices stay on the site.',
   },
   {
     name: 'Share and search',
@@ -78,13 +78,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. Rooms stay under the header while you work. Expo can open kiano://admin. Refunds stay in Stripe.',
+    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. Rooms stay under the header while you work. Expo can open kiano://admin. Refunds stay in Stripe.',
   },
   {
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, and a new account. Expo can push the same word to a signed-in device.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, a new account, and when a paid cut moves on the table, into the box, or leaves the house. Expo can push the same word to a signed-in device.',
   },
   {
     name: 'Analytics',
@@ -94,9 +94,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Returns and refunds',
-    completion: 0,
-    status: 'missing',
-    note: 'Stripe Dashboard only. No house copy or flow.',
+    completion: 55,
+    status: 'partial',
+    note: 'House copy at /returns: fourteen days from arrival, packing, write to the atelier. A refund, if agreed, is still made in Stripe. No dispute flow on the site.',
   },
 ]
 
@@ -252,7 +252,7 @@ export const houseVisualAudit = [
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView. /admin and /admin/cuts, /prices, /accounts, /invoices, /members, /list, /field, /diary, /line are the same ledger. Word from the house is the site inbox; a signed-in device can take a push. Gestures and safe-area are the shell; chrome is the site. kiano://admin still opens the board.',
+      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, Account, and Word. /admin and /admin/cuts, /prices, /accounts, /invoices, /work, /members, /list, /field, /diary, /line are the same ledger. A signed-in device can take a push. kiano://admin still opens the board.',
     rank: 'Watch',
   },
 ] as const
@@ -261,4 +261,5 @@ export const houseScope = [
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
   'Point the Clerk dashboard at POST /api/clerk-webhook and set CLERK_WEBHOOK_SIGNING_SECRET.',
+  'A house refund, written on the ledger, instead of Stripe Dashboard alone.',
 ] as const

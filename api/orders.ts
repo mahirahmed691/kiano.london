@@ -1,10 +1,12 @@
 import { clerkUserIdFrom } from './_lib/clerk.ts'
 import { withDb } from './_lib/db.ts'
+import { asWorkStage } from '../src/lib/work.ts'
 
 type OrderRow = {
   id: string
   email: string
   status: string
+  stage: string | null
   amount_pence: number
   currency: string
   created_at: string
@@ -41,7 +43,7 @@ export async function GET(request: Request) {
     }
 
     const orders = (await sql`
-      SELECT id, email, status, amount_pence, currency, created_at
+      SELECT id, email, status, stage, amount_pence, currency, created_at
       FROM orders
       WHERE clerk_user_id = ${clerkUserId}
       ORDER BY created_at DESC
@@ -66,6 +68,7 @@ export async function GET(request: Request) {
         id: order.id,
         email: order.email,
         status: order.status,
+        stage: asWorkStage(order.stage),
         amountPence: order.amount_pence,
         currency: order.currency,
         createdAt: order.created_at,

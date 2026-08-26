@@ -9,6 +9,7 @@ export const ledgerNav: ReadonlyArray<{
   { label: 'Prices', to: '/admin/prices', line: 'The line in sterling, VAT already in.' },
   { label: 'Accounts', to: '/admin/accounts', line: 'The journal for the accountant.' },
   { label: 'Invoices', to: '/admin/invoices', line: 'A numbered record of each cut reserved.' },
+  { label: 'The work', to: '/admin/work', line: 'Reserved, on the table, packed, left the house.' },
   { label: 'Members', to: '/admin/members', line: 'Those who keep an account.' },
   { label: 'The list', to: '/admin/list', line: 'Confirmed, and those still held.' },
   { label: 'The field', to: '/admin/field', line: 'Other houses of the column, with their marks.' },

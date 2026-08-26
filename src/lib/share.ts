@@ -79,6 +79,11 @@ const pages: Record<string, PageMeta> = {
     description: 'How Kiano London holds a name, an email, and a reservation.',
     path: '/privacy',
   },
+  '/returns': {
+    title: 'If it must return — Kiano London',
+    description: 'How to write if a reserved cut cannot be worn. Fourteen days from arrival.',
+    path: '/returns',
+  },
   '/letters/confirmed': {
     title: 'The list — Kiano London',
     description: 'Your address is on the Kiano London list.',

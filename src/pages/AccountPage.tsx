@@ -14,6 +14,7 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { formatNoticeWhen } from '@/lib/word'
 import { useWord } from '@/lib/word-state'
+import { asWorkStage, workCopy, workStages } from '@/lib/work'
 
 type AccountOrder = {
   id: string
@@ -21,6 +22,7 @@ type AccountOrder = {
   amountPence: number
   currency: string
   status: string
+  stage?: string
   lines: {
     productId: string
     size: number
@@ -142,6 +144,24 @@ function AccountOrders() {
                 )
               })}
           </ul>
+          <ol className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+            {workStages.map((step) => {
+              const current = asWorkStage(order.stage)
+              const reached = workStages.indexOf(step) <= workStages.indexOf(current)
+              return (
+                <li
+                  key={step}
+                  className={cn(
+                    'text-[11px] uppercase tracking-[0.22em]',
+                    reached ? 'text-ink' : 'text-stone',
+                  )}
+                >
+                  {workCopy[step].label}
+                </li>
+              )
+            })}
+          </ol>
+          <p className="mt-3 text-[14px] font-light text-ink-soft">{workCopy[asWorkStage(order.stage)].line}</p>
         </li>
       ))}
     </ul>
@@ -239,7 +259,8 @@ export function AccountPage() {
         ) : (
           <Body className="mt-6">Account is not configured yet. Write to the atelier.</Body>
         )}
-        <div className="mt-16">
+        <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
+          <TextLink to="/returns">If it must return</TextLink>
           <TextLink to="/shop">Return to the shop</TextLink>
         </div>
       </Container>

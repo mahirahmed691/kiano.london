@@ -156,6 +156,31 @@ select {
   }
 }
 
+html.shell-app {
+  --header-offset: 1.25rem;
+  --app-tab: 0px;
+}
+
+html.shell-app .pt-32 {
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  html.shell-app {
+    --header-offset: 1.5rem;
+  }
+
+  html.shell-app .md\:pt-40 {
+    padding-top: 1.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  html.shell-app .xl\:pt-32 {
+    padding-top: 1.5rem;
+  }
+}
+
 html.snap-product {
   scroll-snap-type: y proximity;
 }

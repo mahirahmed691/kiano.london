@@ -78,6 +78,7 @@ async function migrate(db: Sql) {
   `
   await db`CREATE INDEX IF NOT EXISTS orders_clerk_user_id_idx ON orders (clerk_user_id)`
   await db`CREATE INDEX IF NOT EXISTS orders_email_idx ON orders (lower(email))`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS stage TEXT NOT NULL DEFAULT 'reserved'`
   await db`
     CREATE TABLE IF NOT EXISTS subscribers (
       email TEXT PRIMARY KEY,

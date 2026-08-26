@@ -113,6 +113,12 @@ function WordProviderInner({ children }: { children: ReactNode }) {
   }, [getToken, refresh])
 
   useEffect(() => {
+    const openWord = () => setOpen(true)
+    window.addEventListener('kiano-open-word', openWord)
+    return () => window.removeEventListener('kiano-open-word', openWord)
+  }, [])
+
+  useEffect(() => {
     void refresh()
     if (!isSignedIn) return
     const onFocus = () => void refresh()

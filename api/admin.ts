@@ -4,6 +4,7 @@ import { requireAdmin } from './_lib/admin.ts'
 import { withDb } from './_lib/db.ts'
 import { recordNotice } from './_lib/notices.ts'
 import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.ts'
+import { asWorkStage, isWorkStage, workCopy } from '../src/lib/work.ts'
 
 type Method = 'GET' | 'POST'
 type Section =
@@ -17,6 +18,7 @@ type Section =
   | 'diary'
   | 'members'
   | 'list'
+  | 'work'
 
 const sections = new Set<Section>([
   'summary',
@@ -29,6 +31,7 @@ const sections = new Set<Section>([
   'diary',
   'members',
   'list',
+  'work',
 ])
 
 const allowedSizes = new Set<number>(thobeSizes)
@@ -147,6 +150,21 @@ async function getSummary(): Promise<Response> {
         n: number
       }[],
     )
+    const workCutting = asCount(
+      (await sql`
+        SELECT COUNT(*)::int AS n FROM orders WHERE status = 'paid' AND stage = 'cutting'
+      `) as { n: number }[],
+    )
+    const workPacked = asCount(
+      (await sql`
+        SELECT COUNT(*)::int AS n FROM orders WHERE status = 'paid' AND stage = 'packed'
+      `) as { n: number }[],
+    )
+    const workSent = asCount(
+      (await sql`
+        SELECT COUNT(*)::int AS n FROM orders WHERE status = 'paid' AND stage = 'sent'
+      `) as { n: number }[],
+    )
     const heldCutRows = (await sql`
       SELECT product_id, size
       FROM inventory
@@ -180,6 +198,9 @@ async function getSummary(): Promise<Response> {
       sizesHeld,
       appointmentCount,
       newLetters,
+      workCutting,
+      workPacked,
+      workSent,
       heldCuts: heldCutRows.map((row) => ({
         productId: row.product_id,
         size: row.size,
@@ -549,7 +570,7 @@ async function getOrders(): Promise<Response> {
   try {
     const sql = await backfillInvoices()
     const orders = (await sql`
-      SELECT o.id, o.email, o.clerk_user_id, o.status, o.amount_pence, o.currency, o.created_at,
+      SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.currency, o.created_at,
              i.number AS invoice_number
       FROM orders o
       LEFT JOIN invoices i ON i.order_id = o.id
@@ -561,6 +582,7 @@ async function getOrders(): Promise<Response> {
       email: string
       clerk_user_id: string | null
       status: string
+      stage: string | null
       amount_pence: number
       currency: string
       created_at: string | Date
@@ -594,6 +616,7 @@ async function getOrders(): Promise<Response> {
         email: order.email,
         clerkUserId: order.clerk_user_id ?? '',
         status: order.status,
+        stage: asWorkStage(order.stage),
         amountPence: order.amount_pence,
         currency: order.currency,
         createdAt: asIso(order.created_at),
@@ -774,6 +797,63 @@ async function postDiary(request: Request): Promise<Response> {
   }
 }
 
+async function postWork(request: Request): Promise<Response> {
+  let body: { orderId?: unknown; stage?: unknown }
+  try {
+    body = (await request.json()) as { orderId?: unknown; stage?: unknown }
+  } catch {
+    return Response.json({ error: 'The work could not be read.' }, { status: 400 })
+  }
+
+  const orderId = typeof body.orderId === 'string' ? body.orderId.trim() : ''
+  const stage = typeof body.stage === 'string' ? body.stage.trim() : ''
+  if (!orderId) {
+    return Response.json({ error: 'A reservation is needed.' }, { status: 400 })
+  }
+  if (!isWorkStage(stage)) {
+    return Response.json({ error: 'That stage is not kept.' }, { status: 400 })
+  }
+
+  try {
+    const sql = await withDb()
+    const current = (await sql`
+      SELECT id, stage, clerk_user_id, email
+      FROM orders
+      WHERE id = ${orderId} AND status = 'paid'
+    `) as { id: string; stage: string; clerk_user_id: string | null; email: string }[]
+    const row = current[0]
+    if (!row) {
+      return Response.json({ error: 'That reservation is not held.' }, { status: 404 })
+    }
+
+    const before = asWorkStage(row.stage)
+    if (before === stage) {
+      return Response.json({ ok: true, orderId: row.id, stage })
+    }
+
+    await sql`
+      UPDATE orders SET stage = ${stage} WHERE id = ${orderId} AND status = 'paid'
+    `
+
+    if (stage !== 'reserved' && row.clerk_user_id) {
+      const copy = workCopy[stage]
+      await recordNotice({
+        audience: 'member',
+        clerkUserId: row.clerk_user_id,
+        kind: 'work',
+        title: copy.memberTitle,
+        body: copy.memberBody,
+        href: '/account',
+      })
+    }
+
+    return Response.json({ ok: true, orderId: row.id, stage })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The work could not be kept.' }, { status: 503 })
+  }
+}
+
 async function handle(request: Request, method: Method): Promise<Response> {
   const section = sectionOf(request)
   if (!section) {
@@ -793,12 +873,14 @@ async function handle(request: Request, method: Method): Promise<Response> {
     if (section === 'invoices') return getInvoices(request)
     if (section === 'members') return getMembers()
     if (section === 'list') return getList()
+    if (section === 'work') return getOrders()
     return Response.json({ error: 'This page of the ledger is written, not read.' }, { status: 405 })
   }
 
   if (section === 'inventory') return postInventory(request, gate.email)
   if (section === 'competitors') return postCompetitors(request, gate.email)
   if (section === 'diary') return postDiary(request)
+  if (section === 'work') return postWork(request)
   return Response.json({ error: 'This page of the ledger is read only.' }, { status: 405 })
 }
 

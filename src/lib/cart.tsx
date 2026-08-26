@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -61,6 +62,12 @@ function persist(lines: BagLine[]) {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<BagLine[]>(readStored)
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const openBag = () => setOpen(true)
+    window.addEventListener('kiano-open-bag', openBag)
+    return () => window.removeEventListener('kiano-open-bag', openBag)
+  }, [])
 
   const update = useCallback((next: BagLine[]) => {
     setLines(next)
