@@ -4,6 +4,7 @@ import { Layout } from '@/components/layout/Layout'
 import { CartProvider } from '@/lib/cart'
 import { QuickAddProvider } from '@/lib/quickAdd'
 import { AccountPage } from '@/pages/AccountPage'
+import { AdminInvoicePage } from '@/pages/AdminInvoicePage'
 import { AdminPage } from '@/pages/AdminPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
@@ -14,6 +15,7 @@ import { HomePage } from '@/pages/HomePage'
 import { LettersConfirmedPage } from '@/pages/LettersConfirmedPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { OrderConfirmedPage } from '@/pages/OrderConfirmedPage'
+import { OrderInvoicePage } from '@/pages/OrderInvoicePage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
 import { ProductPage } from '@/pages/ProductPage'
 import { ShopPage } from '@/pages/ShopPage'
@@ -41,8 +43,10 @@ export default function App() {
                 <Route path="/visit" element={<VisitPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
+                <Route path="/order/invoice" element={<OrderInvoicePage />} />
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/invoices/:number" element={<AdminInvoicePage />} />
                 <Route path="/cookies" element={<CookiesPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />

@@ -1,6 +1,7 @@
 import type Stripe from 'stripe'
 import { thobeSizes } from '../../src/data/products.ts'
 import { withDb } from './db.ts'
+import { ensureInvoiceForOrder } from './invoice.ts'
 
 const allowedSizes = new Set<number>(thobeSizes)
 
@@ -97,7 +98,14 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     RETURNING id
   `) as { id: string }[]
 
-  if (claimed.length === 0) return
+  if (claimed.length === 0) {
+    try {
+      await ensureInvoiceForOrder(sql, session.id)
+    } catch (caught) {
+      console.error(caught)
+    }
+    return
+  }
 
   for (const line of linesFromSession(session)) {
     await sql`
@@ -113,11 +121,33 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
         ${line.description}
       )
     `
-    await sql`
+    const remaining = (await sql`
       UPDATE inventory
       SET quantity = GREATEST(0, quantity - ${line.quantity})
       WHERE product_id = ${line.productId} AND size = ${line.size}
+      RETURNING quantity
+    `) as { quantity: number }[]
+    await sql`
+      INSERT INTO stock_movements (
+        product_id, size, kind, quantity_delta, quantity_after, note, admin_email, order_id
+      )
+      VALUES (
+        ${line.productId},
+        ${line.size},
+        'sale',
+        ${-line.quantity},
+        ${remaining[0]?.quantity ?? 0},
+        '',
+        '',
+        ${session.id}
+      )
     `
+  }
+
+  try {
+    await ensureInvoiceForOrder(sql, session.id)
+  } catch (caught) {
+    console.error(caught)
   }
 
   if (clerkUserId) {

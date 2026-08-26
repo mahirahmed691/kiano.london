@@ -1,7 +1,9 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
-import { products, productLineName, thobeSizes } from '@/data/products'
+import { getProduct, products, productLineName, thobeSizes } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
+import type { StockMovement } from '@/lib/ledger'
+import { formatLedgerDate } from '@/lib/ledger'
 
 type Cut = {
   productId: string
@@ -25,6 +27,8 @@ export function RestockLedger() {
   const [saved, setSaved] = useState<Record<string, Record<number, number>>>({})
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
+  const [note, setNote] = useState('')
+  const [movements, setMovements] = useState<StockMovement[]>([])
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
@@ -37,7 +41,11 @@ export function RestockLedger() {
         const response = await fetch('/api/admin-inventory', {
           headers: token ? { Authorization: `Bearer ${token}` } : undefined,
         })
-        const data = (await response.json()) as { cuts?: Cut[]; error?: string }
+        const data = (await response.json()) as {
+          cuts?: Cut[]
+          movements?: StockMovement[]
+          error?: string
+        }
         if (cancelled) return
         if (!response.ok) {
           setError(data.error || 'Remaining cuts could not be read.')
@@ -54,6 +62,7 @@ export function RestockLedger() {
         }
         setBook(next)
         setSaved(snapshot)
+        setMovements(data.movements ?? [])
         setReady(true)
       } catch {
         if (!cancelled) setError('Remaining cuts could not be read.')
@@ -90,7 +99,7 @@ export function RestockLedger() {
           'content-type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ productId, size, quantity }),
+        body: JSON.stringify({ productId, size, quantity, note: note.trim() }),
       })
       const data = (await response.json()) as { error?: string }
       if (!response.ok) {
@@ -103,6 +112,11 @@ export function RestockLedger() {
       }))
       setError('')
       setNotice(`Kept ${quantity} in ${size}.`)
+      const bookResponse = await fetch('/api/admin-inventory', {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      })
+      const bookData = (await bookResponse.json()) as { movements?: StockMovement[] }
+      if (bookResponse.ok) setMovements(bookData.movements ?? [])
     } catch {
       setError('The cut could not be kept.')
     }
@@ -132,6 +146,18 @@ export function RestockLedger() {
           {notice}
         </p>
       ) : null}
+      <label className="mt-10 block max-w-xl">
+        <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
+          A line for the book
+        </span>
+        <input
+          type="text"
+          value={note}
+          onChange={(event) => setNote(event.target.value)}
+          className="mt-2 block w-full border-0 border-b border-rule bg-transparent py-2 text-[15px] font-light text-ink outline-none transition-colors duration-300 focus:border-ink"
+          placeholder="Cloth returned, or a size taken to none."
+        />
+      </label>
       <ul className="mt-12 divide-y divide-rule border-y border-ink">
         {products.map((product) => (
           <li key={product.id} className="grid gap-6 py-8 lg:grid-cols-12 lg:items-baseline">
@@ -174,6 +200,35 @@ export function RestockLedger() {
           </li>
         ))}
       </ul>
+      {movements.length > 0 ? (
+        <div className="mt-16">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Recent movements</p>
+          <ul className="mt-6 divide-y divide-rule border-y border-rule">
+            {movements.map((row) => {
+              const product = getProduct(row.productId)
+              const name = product ? productLineName(product) : row.productId
+              return (
+                <li key={row.id} className="grid gap-2 py-5 sm:grid-cols-12">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-stone sm:col-span-3">
+                    {formatLedgerDate(row.createdAt)}
+                  </p>
+                  <p className="text-[15px] font-light sm:col-span-5">
+                    {name} · {row.size} · {row.kind}
+                    {row.note ? ` · ${row.note}` : ''}
+                  </p>
+                  <p className="text-[15px] font-light sm:col-span-4 sm:text-right">
+                    {row.quantityDelta > 0 ? '+' : ''}
+                    {row.quantityDelta} → {row.quantityAfter}
+                    {row.adminEmail ? (
+                      <span className="mt-1 block text-[13px] text-ink-soft">{row.adminEmail}</span>
+                    ) : null}
+                  </p>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ) : null}
     </>
   )
 }

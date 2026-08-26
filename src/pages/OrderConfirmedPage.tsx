@@ -156,7 +156,13 @@ export function OrderConfirmedPage() {
             ) : null}
             <div className="mt-12 flex flex-wrap items-center gap-6">
               <Button to="/collection">The Collection</Button>
-              <TextLink to="/visit">Visit by appointment</TextLink>
+              {sessionId ? (
+                <TextLink to={`/order/invoice?session_id=${encodeURIComponent(sessionId)}`}>
+                  A record of the cut
+                </TextLink>
+              ) : (
+                <TextLink to="/visit">Visit by appointment</TextLink>
+              )}
             </div>
           </div>
 

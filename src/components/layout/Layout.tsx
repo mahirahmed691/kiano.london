@@ -17,13 +17,18 @@ function ScrollToTop() {
 
 export function Layout() {
   const { pathname } = useLocation()
-  const quiet = pathname === '/checkout' || pathname === '/order/confirmed'
+  const invoicePrint =
+    pathname.startsWith('/admin/invoices/') || pathname === '/order/invoice'
+  const quiet =
+    pathname === '/checkout' || pathname === '/order/confirmed' || invoicePrint
 
   return (
     <>
       <ScrollToTop />
       <HouseSchema />
-      <Header />
+      <div className={invoicePrint ? 'print:hidden' : undefined}>
+        <Header />
+      </div>
       <main id="main-content" className="page-enter" key={pathname}>
         <Outlet />
       </main>

@@ -1,9 +1,30 @@
-import { getProduct, thobeSizes } from '../src/data/products.ts'
+import { getProduct, productLineName, products, thobeSizes } from '../src/data/products.ts'
+import { vatMethodNote, splitVat } from '../src/lib/vat.ts'
 import { requireAdmin } from './_lib/admin.ts'
 import { withDb } from './_lib/db.ts'
+import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.ts'
 
 type Method = 'GET' | 'POST'
-type Section = 'summary' | 'inventory' | 'competitors'
+type Section =
+  | 'summary'
+  | 'inventory'
+  | 'competitors'
+  | 'prices'
+  | 'accounts'
+  | 'orders'
+  | 'invoices'
+  | 'diary'
+
+const sections = new Set<Section>([
+  'summary',
+  'inventory',
+  'competitors',
+  'prices',
+  'accounts',
+  'orders',
+  'invoices',
+  'diary',
+])
 
 const allowedSizes = new Set<number>(thobeSizes)
 const maxQuantity = 999
@@ -25,14 +46,16 @@ type NoteRow = {
 function sectionOf(request: Request): Section | null {
   const url = new URL(request.url)
   const section = url.searchParams.get('section')
-  if (section === 'summary' || section === 'inventory' || section === 'competitors') {
-    return section
-  }
+  if (section && sections.has(section as Section)) return section as Section
   const path = url.pathname.replace(/\/$/, '')
   if (path.endsWith('/admin-inventory')) return 'inventory'
   if (path.endsWith('/admin-competitors')) return 'competitors'
   if (path.endsWith('/admin-summary') || path.endsWith('/admin')) return 'summary'
   return null
+}
+
+function asIso(value: string | Date) {
+  return value instanceof Date ? value.toISOString() : String(value)
 }
 
 function asCount(rows: { n?: string | number | bigint }[]) {
@@ -115,7 +138,7 @@ async function getSummary(): Promise<Response> {
       (await sql`SELECT COUNT(*)::int AS n FROM appointments`) as { n: number }[],
     )
     const appointmentRows = (await sql`
-      SELECT id, name, email, telephone, product_id, size, note, created_at
+      SELECT id, name, email, telephone, product_id, size, note, status, created_at
       FROM appointments
       ORDER BY created_at DESC
       LIMIT 20
@@ -127,6 +150,7 @@ async function getSummary(): Promise<Response> {
       product_id: string | null
       size: number | null
       note: string | null
+      status: string | null
       created_at: string | Date
     }[]
 
@@ -147,7 +171,8 @@ async function getSummary(): Promise<Response> {
         productId: row.product_id ?? '',
         size: row.size,
         note: row.note ?? '',
-        createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : String(row.created_at),
+        status: row.status === 'seen' ? 'seen' : 'new',
+        createdAt: asIso(row.created_at),
       })),
     })
   } catch (caught) {
@@ -165,11 +190,41 @@ async function getInventory(): Promise<Response> {
       ORDER BY product_id, size
     `) as { product_id: string; size: number; quantity: number }[]
 
+    const movements = (await sql`
+      SELECT id, product_id, size, kind, quantity_delta, quantity_after, note, admin_email, order_id, created_at
+      FROM stock_movements
+      ORDER BY created_at DESC, id DESC
+      LIMIT 40
+    `) as {
+      id: number
+      product_id: string
+      size: number
+      kind: string
+      quantity_delta: number
+      quantity_after: number
+      note: string
+      admin_email: string
+      order_id: string | null
+      created_at: string | Date
+    }[]
+
     return Response.json({
       cuts: rows.map((row) => ({
         productId: row.product_id,
         size: row.size,
         quantity: row.quantity,
+      })),
+      movements: movements.map((row) => ({
+        id: row.id,
+        productId: row.product_id,
+        size: row.size,
+        kind: row.kind,
+        quantityDelta: row.quantity_delta,
+        quantityAfter: row.quantity_after,
+        note: row.note,
+        adminEmail: row.admin_email,
+        orderId: row.order_id ?? '',
+        createdAt: asIso(row.created_at),
       })),
     })
   } catch (caught) {
@@ -178,10 +233,10 @@ async function getInventory(): Promise<Response> {
   }
 }
 
-async function postInventory(request: Request): Promise<Response> {
-  let body: { productId?: unknown; size?: unknown; quantity?: unknown }
+async function postInventory(request: Request, email: string): Promise<Response> {
+  let body: { productId?: unknown; size?: unknown; quantity?: unknown; note?: unknown }
   try {
-    body = (await request.json()) as { productId?: unknown; size?: unknown; quantity?: unknown }
+    body = (await request.json()) as typeof body
   } catch {
     return Response.json({ error: 'The cut could not be read.' }, { status: 400 })
   }
@@ -196,13 +251,33 @@ async function postInventory(request: Request): Promise<Response> {
     return Response.json({ error: 'That size is not cut.' }, { status: 400 })
   }
 
-  const quantity = Number(body.quantity)
-  if (!Number.isInteger(quantity) || quantity < 0 || quantity > maxQuantity) {
+  const requested = Number(body.quantity)
+  if (!Number.isInteger(requested) || requested > maxQuantity) {
     return Response.json({ error: 'A whole number of remaining cuts is needed.' }, { status: 400 })
   }
 
+  const note = asText(body.note, 400)
+  if (requested < 0 && !note) {
+    return Response.json(
+      { error: 'A note is needed to take a cut below none.' },
+      { status: 400 },
+    )
+  }
+
+  const quantity = Math.max(0, requested)
+  const kind = requested < 0 ? 'adjust' : undefined
+
   try {
     const sql = await withDb()
+    const current = (await sql`
+      SELECT quantity FROM inventory
+      WHERE product_id = ${productId} AND size = ${size}
+    `) as { quantity: number }[]
+    const before = current[0]?.quantity
+    if (before == null) {
+      return Response.json({ error: 'This cut is not on the line.' }, { status: 404 })
+    }
+
     const updated = (await sql`
       UPDATE inventory
       SET quantity = ${quantity}
@@ -213,6 +288,25 @@ async function postInventory(request: Request): Promise<Response> {
     const row = updated[0]
     if (!row) {
       return Response.json({ error: 'This cut is not on the line.' }, { status: 404 })
+    }
+
+    const delta = row.quantity - before
+    if (delta !== 0) {
+      const movementKind = kind ?? (delta > 0 ? 'restock' : 'adjust')
+      await sql`
+        INSERT INTO stock_movements (
+          product_id, size, kind, quantity_delta, quantity_after, note, admin_email
+        )
+        VALUES (
+          ${productId},
+          ${size},
+          ${movementKind},
+          ${delta},
+          ${row.quantity},
+          ${note},
+          ${email}
+        )
+      `
     }
 
     return Response.json({
@@ -307,6 +401,266 @@ async function postCompetitors(request: Request, email: string): Promise<Respons
   }
 }
 
+function getPrices(): Response {
+  return Response.json({
+    vatNote: vatMethodNote,
+    source: 'The shop and Stripe read prices from the catalogue. This list is the same page.',
+    prices: products.map((product) => {
+      const split = splitVat(product.pricePence)
+      return {
+        productId: product.id,
+        name: productLineName(product),
+        cut: product.cut,
+        colour: product.colour,
+        pricePence: product.pricePence,
+        ...split,
+      }
+    }),
+  })
+}
+
+async function backfillInvoices() {
+  const sql = await withDb()
+  const missing = (await sql`
+    SELECT o.id
+    FROM orders o
+    LEFT JOIN invoices i ON i.order_id = o.id
+    WHERE o.status = 'paid' AND i.id IS NULL
+    ORDER BY o.created_at
+    LIMIT 80
+  `) as { id: string }[]
+  for (const row of missing) {
+    try {
+      await ensureInvoiceForOrder(sql, row.id)
+    } catch (caught) {
+      console.error(caught)
+    }
+  }
+  return sql
+}
+
+async function getAccounts(): Promise<Response> {
+  try {
+    const sql = await backfillInvoices()
+    const rows = (await sql`
+      SELECT number, email, customer_name, issued_at, net_pence, vat_pence, gross_pence
+      FROM invoices
+      ORDER BY issued_at DESC, id DESC
+      LIMIT 200
+    `) as {
+      number: string
+      email: string
+      customer_name: string | null
+      issued_at: string | Date
+      net_pence: number
+      vat_pence: number
+      gross_pence: number
+    }[]
+
+    const journal = rows.map((row) => ({
+      date: asIso(row.issued_at),
+      reference: row.number,
+      description: `Sale · ${row.customer_name || row.email}`,
+      email: row.email,
+      netPence: row.net_pence,
+      vatPence: row.vat_pence,
+      grossPence: row.gross_pence,
+    }))
+
+    const allTime = journal.reduce(
+      (sum, row) => ({
+        netPence: sum.netPence + row.netPence,
+        vatPence: sum.vatPence + row.vatPence,
+        grossPence: sum.grossPence + row.grossPence,
+        count: sum.count + 1,
+      }),
+      { netPence: 0, vatPence: 0, grossPence: 0, count: 0 },
+    )
+
+    const monthStart = new Date()
+    monthStart.setUTCDate(1)
+    monthStart.setUTCHours(0, 0, 0, 0)
+    const month = journal
+      .filter((row) => new Date(row.date) >= monthStart)
+      .reduce(
+        (sum, row) => ({
+          netPence: sum.netPence + row.netPence,
+          vatPence: sum.vatPence + row.vatPence,
+          grossPence: sum.grossPence + row.grossPence,
+          count: sum.count + 1,
+        }),
+        { netPence: 0, vatPence: 0, grossPence: 0, count: 0 },
+      )
+
+    return Response.json({
+      vatNote: vatMethodNote,
+      refunds: 'Refunds stay in the Stripe dashboard. They are not written on this book.',
+      month,
+      allTime,
+      journal,
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The accounts could not be read.' }, { status: 503 })
+  }
+}
+
+async function getOrders(): Promise<Response> {
+  try {
+    const sql = await backfillInvoices()
+    const orders = (await sql`
+      SELECT o.id, o.email, o.clerk_user_id, o.status, o.amount_pence, o.currency, o.created_at,
+             i.number AS invoice_number
+      FROM orders o
+      LEFT JOIN invoices i ON i.order_id = o.id
+      WHERE o.status = 'paid'
+      ORDER BY o.created_at DESC
+      LIMIT 80
+    `) as {
+      id: string
+      email: string
+      clerk_user_id: string | null
+      status: string
+      amount_pence: number
+      currency: string
+      created_at: string | Date
+      invoice_number: string | null
+    }[]
+
+    const lines = (await sql`
+      SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
+      FROM order_lines l
+      INNER JOIN orders o ON o.id = l.order_id
+      WHERE o.status = 'paid'
+    `) as {
+      order_id: string
+      product_id: string
+      size: number
+      quantity: number
+      amount_pence: number
+      description: string
+    }[]
+
+    const linesByOrder = new Map<string, typeof lines>()
+    for (const line of lines) {
+      const current = linesByOrder.get(line.order_id) ?? []
+      current.push(line)
+      linesByOrder.set(line.order_id, current)
+    }
+
+    return Response.json({
+      orders: orders.map((order) => ({
+        id: order.id,
+        email: order.email,
+        clerkUserId: order.clerk_user_id ?? '',
+        status: order.status,
+        amountPence: order.amount_pence,
+        currency: order.currency,
+        createdAt: asIso(order.created_at),
+        invoiceNumber: order.invoice_number ?? '',
+        lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
+          productId: line.product_id,
+          size: line.size,
+          quantity: line.quantity,
+          amountPence: line.amount_pence,
+          description: line.description,
+        })),
+      })),
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The reservations could not be read.' }, { status: 503 })
+  }
+}
+
+async function getInvoices(request: Request): Promise<Response> {
+  try {
+    const sql = await backfillInvoices()
+    const url = new URL(request.url)
+    const raw = (url.searchParams.get('id') ?? url.searchParams.get('number') ?? '').trim()
+    if (raw) {
+      const numeric = Number(raw)
+      const invoice =
+        raw.startsWith('KL-')
+          ? await loadInvoice(sql, { number: raw })
+          : Number.isInteger(numeric) && numeric > 0
+            ? await loadInvoice(sql, { id: numeric })
+            : null
+      if (!invoice) {
+        return Response.json({ error: 'That record could not be found.' }, { status: 404 })
+      }
+      return Response.json({ invoice: invoicePublicView(invoice) })
+    }
+
+    const rows = (await sql`
+      SELECT id, number, email, customer_name, issued_at, net_pence, vat_pence, gross_pence
+      FROM invoices
+      ORDER BY issued_at DESC, id DESC
+      LIMIT 80
+    `) as {
+      id: number
+      number: string
+      email: string
+      customer_name: string | null
+      issued_at: string | Date
+      net_pence: number
+      vat_pence: number
+      gross_pence: number
+    }[]
+
+    return Response.json({
+      invoices: rows.map((row) => ({
+        id: row.id,
+        number: row.number,
+        email: row.email,
+        customerName: row.customer_name ?? row.email,
+        issuedAt: asIso(row.issued_at),
+        netPence: row.net_pence,
+        vatPence: row.vat_pence,
+        grossPence: row.gross_pence,
+      })),
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The records could not be read.' }, { status: 503 })
+  }
+}
+
+async function postDiary(request: Request): Promise<Response> {
+  let body: { id?: unknown; status?: unknown }
+  try {
+    body = (await request.json()) as typeof body
+  } catch {
+    return Response.json({ error: 'The letter could not be read.' }, { status: 400 })
+  }
+
+  const id = Number(body.id)
+  if (!Number.isInteger(id) || id < 1) {
+    return Response.json({ error: 'That letter is not held.' }, { status: 400 })
+  }
+  const status = body.status === 'seen' ? 'seen' : body.status === 'new' ? 'new' : ''
+  if (!status) {
+    return Response.json({ error: 'A letter is new or seen.' }, { status: 400 })
+  }
+
+  try {
+    const sql = await withDb()
+    const rows = (await sql`
+      UPDATE appointments
+      SET status = ${status}
+      WHERE id = ${id}
+      RETURNING id, status
+    `) as { id: number; status: string }[]
+    if (!rows[0]) {
+      return Response.json({ error: 'That letter is not held.' }, { status: 404 })
+    }
+    return Response.json({ ok: true, id: rows[0].id, status: rows[0].status })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The diary could not be kept.' }, { status: 503 })
+  }
+}
+
 async function handle(request: Request, method: Method): Promise<Response> {
   const section = sectionOf(request)
   if (!section) {
@@ -319,11 +673,17 @@ async function handle(request: Request, method: Method): Promise<Response> {
   if (method === 'GET') {
     if (section === 'summary') return getSummary()
     if (section === 'inventory') return getInventory()
-    return getCompetitors()
+    if (section === 'competitors') return getCompetitors()
+    if (section === 'prices') return getPrices()
+    if (section === 'accounts') return getAccounts()
+    if (section === 'orders') return getOrders()
+    if (section === 'invoices') return getInvoices(request)
+    return Response.json({ error: 'This page of the ledger is written, not read.' }, { status: 405 })
   }
 
-  if (section === 'inventory') return postInventory(request)
+  if (section === 'inventory') return postInventory(request, gate.email)
   if (section === 'competitors') return postCompetitors(request, gate.email)
+  if (section === 'diary') return postDiary(request)
   return Response.json({ error: 'This page of the ledger is read only.' }, { status: 405 })
 }
 

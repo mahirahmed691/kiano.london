@@ -4,7 +4,9 @@ import {
   type CheckoutOrder,
   type CheckoutOrderAddress,
 } from '../src/data/shipping.ts'
+import { withDb } from './_lib/db.ts'
 import { fulfillPaidSession } from './_lib/fulfill.ts'
+import { ensureInvoiceForOrder, invoicePublicView } from './_lib/invoice.ts'
 
 function addressFrom(
   name: string | null | undefined,
@@ -49,7 +51,7 @@ function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
   }
 }
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<Response> {
   const secret = process.env.STRIPE_SECRET_KEY
   if (!secret || secret === 'undefined') {
     return Response.json(
@@ -74,7 +76,32 @@ export async function GET(request: Request) {
     } catch (caught) {
       console.error(caught)
     }
-    return Response.json(toCheckoutOrder(session))
+
+    const order = toCheckoutOrder(session)
+    if (order.paymentStatus !== 'paid' && order.paymentStatus !== 'no_payment_required') {
+      return Response.json(order)
+    }
+
+    try {
+      const sql = await withDb()
+      const invoice = await ensureInvoiceForOrder(sql, session.id)
+      return Response.json({
+        ...order,
+        invoice: invoice
+          ? {
+              number: invoice.number,
+              issuedAt: invoice.issuedAt,
+              netPence: invoice.netPence,
+              vatPence: invoice.vatPence,
+              grossPence: invoice.grossPence,
+            }
+          : null,
+        record: invoice ? invoicePublicView(invoice) : null,
+      })
+    } catch (caught) {
+      console.error(caught)
+      return Response.json(order)
+    }
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The reservation could not be found.' }, { status: 404 })

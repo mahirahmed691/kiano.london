@@ -2,6 +2,10 @@ import { Show, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { CompetitorField } from '@/components/admin/CompetitorField'
 import { CompetitorNoteForm } from '@/components/admin/CompetitorNoteForm'
+import { LedgerAccounts } from '@/components/admin/LedgerAccounts'
+import { LedgerInvoices } from '@/components/admin/LedgerInvoices'
+import { LedgerOrders } from '@/components/admin/LedgerOrders'
+import { LedgerPrices } from '@/components/admin/LedgerPrices'
 import { RestockLedger } from '@/components/admin/RestockLedger'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -30,6 +34,7 @@ type AppointmentRow = {
   productId: string
   size: number | null
   note: string
+  status: 'new' | 'seen'
   createdAt: string
 }
 
@@ -76,7 +81,10 @@ function useLedger() {
         setLedger({
           ...data,
           appointmentCount: data.appointmentCount ?? 0,
-          appointments: data.appointments ?? [],
+          appointments: (data.appointments ?? []).map((row) => ({
+            ...row,
+            status: row.status === 'seen' ? 'seen' : 'new',
+          })),
         })
       } catch {
         if (!cancelled) setError('The ledger could not be read.')
@@ -89,7 +97,34 @@ function useLedger() {
     }
   }, [getToken, isSignedIn, user])
 
-  return { ledger, error }
+  async function markSeen(id: number) {
+    try {
+      const token = await getToken()
+      const response = await fetch('/api/admin?section=diary', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ id, status: 'seen' }),
+      })
+      if (!response.ok) return
+      setLedger((current) =>
+        current
+          ? {
+              ...current,
+              appointments: current.appointments.map((row) =>
+                row.id === id ? { ...row, status: 'seen' } : row,
+              ),
+            }
+          : current,
+      )
+    } catch {
+      setError('The diary could not be kept.')
+    }
+  }
+
+  return { ledger, error, markSeen }
 }
 
 function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string }) {
@@ -176,7 +211,13 @@ function formatDiaryDate(value: string) {
   }).format(date)
 }
 
-function AppointmentDiary({ ledger }: { ledger: Ledger | null }) {
+function AppointmentDiary({
+  ledger,
+  onSeen,
+}: {
+  ledger: Ledger | null
+  onSeen: (id: number) => void
+}) {
   if (!ledger) return null
 
   return (
@@ -217,6 +258,18 @@ function AppointmentDiary({ ledger }: { ledger: Ledger | null }) {
                 {row.note ? (
                   <p className="mt-3 text-[15px] font-light leading-relaxed text-ink">{row.note}</p>
                 ) : null}
+                <p className="mt-4 text-[11px] uppercase tracking-[0.22em] text-stone">
+                  {row.status === 'seen' ? 'Seen' : 'New'}
+                  {row.status === 'new' ? (
+                    <button
+                      type="button"
+                      onClick={() => onSeen(row.id)}
+                      className="ml-6 tracking-[0.22em] transition-opacity hover:opacity-70"
+                    >
+                      Mark seen
+                    </button>
+                  ) : null}
+                </p>
               </div>
             </li>
           ))}
@@ -268,7 +321,7 @@ function useCompetitorNotes() {
 }
 
 function OpenBoard() {
-  const { ledger, error } = useLedger()
+  const { ledger, error, markSeen } = useLedger()
   const { notes, keepNote } = useCompetitorNotes()
   const ranked = [...houseFeatures].sort((a, b) => b.completion - a.completion)
   const mean = Math.round(
@@ -288,13 +341,28 @@ function OpenBoard() {
           </a>
         </li>
         <li>
-          <a href="#ledger-diary" className="transition-opacity hover:opacity-70">
-            The diary
+          <a href="#ledger-prices" className="transition-opacity hover:opacity-70">
+            Prices
           </a>
         </li>
         <li>
-          <a href="#ledger-line" className="transition-opacity hover:opacity-70">
-            The line
+          <a href="#ledger-tax" className="transition-opacity hover:opacity-70">
+            Tax
+          </a>
+        </li>
+        <li>
+          <a href="#ledger-invoices" className="transition-opacity hover:opacity-70">
+            Invoices
+          </a>
+        </li>
+        <li>
+          <a href="#ledger-orders" className="transition-opacity hover:opacity-70">
+            Reservations
+          </a>
+        </li>
+        <li>
+          <a href="#ledger-diary" className="transition-opacity hover:opacity-70">
+            The diary
           </a>
         </li>
         <li>
@@ -319,7 +387,12 @@ function OpenBoard() {
         <RestockLedger />
       </div>
 
-      <AppointmentDiary ledger={ledger} />
+      <LedgerPrices />
+      <LedgerAccounts />
+      <LedgerInvoices />
+      <LedgerOrders />
+
+      <AppointmentDiary ledger={ledger} onSeen={markSeen} />
 
       <div id="ledger-line" className="mt-24 border-t border-rule pt-16 md:mt-32 md:pt-20">
         <Reveal>

@@ -108,6 +108,57 @@ async function migrate(db: Sql) {
     )
   `
   await db`CREATE INDEX IF NOT EXISTS appointments_created_at_idx ON appointments (created_at DESC)`
+  await db`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`
+  await db`
+    CREATE TABLE IF NOT EXISTS stock_movements (
+      id SERIAL PRIMARY KEY,
+      product_id TEXT NOT NULL,
+      size INTEGER NOT NULL,
+      kind TEXT NOT NULL,
+      quantity_delta INTEGER NOT NULL,
+      quantity_after INTEGER NOT NULL,
+      note TEXT NOT NULL DEFAULT '',
+      admin_email TEXT NOT NULL DEFAULT '',
+      order_id TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
+  await db`CREATE INDEX IF NOT EXISTS stock_movements_created_at_idx ON stock_movements (created_at DESC)`
+  await db`
+    CREATE TABLE IF NOT EXISTS invoice_counters (
+      year INTEGER PRIMARY KEY,
+      last_n INTEGER NOT NULL DEFAULT 0
+    )
+  `
+  await db`
+    CREATE TABLE IF NOT EXISTS invoices (
+      id SERIAL PRIMARY KEY,
+      number TEXT NOT NULL UNIQUE,
+      order_id TEXT NOT NULL UNIQUE REFERENCES orders(id) ON DELETE CASCADE,
+      email TEXT NOT NULL,
+      customer_name TEXT,
+      issued_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      net_pence INTEGER NOT NULL,
+      vat_pence INTEGER NOT NULL,
+      gross_pence INTEGER NOT NULL,
+      currency TEXT NOT NULL DEFAULT 'gbp',
+      shipping JSONB
+    )
+  `
+  await db`CREATE INDEX IF NOT EXISTS invoices_issued_at_idx ON invoices (issued_at DESC)`
+  await db`
+    CREATE TABLE IF NOT EXISTS invoice_lines (
+      id SERIAL PRIMARY KEY,
+      invoice_id INTEGER NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
+      product_id TEXT NOT NULL,
+      size INTEGER NOT NULL,
+      quantity INTEGER NOT NULL,
+      description TEXT NOT NULL,
+      net_pence INTEGER NOT NULL,
+      vat_pence INTEGER NOT NULL,
+      gross_pence INTEGER NOT NULL
+    )
+  `
   await db`
     CREATE TABLE IF NOT EXISTS competitor_notes (
       id SERIAL PRIMARY KEY,

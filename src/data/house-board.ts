@@ -30,7 +30,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Stock',
     completion: 90,
     status: 'complete',
-    note: 'Neon inventory per size. Allowlisted members set remaining cuts on the ledger. The public inventory route is read-only.',
+    note: 'Neon inventory per size, with a movement book for sale, restock, and adjust. Allowlisted members set remaining cuts. The public inventory route is read-only.',
   },
   {
     name: 'Members',
@@ -76,9 +76,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'House ledger',
-    completion: 86,
-    status: 'partial',
-    note: 'This board. Live counts, remaining cuts to set, diary letters. Expo can open kiano://admin. No refund or letter-send from here.',
+    completion: 92,
+    status: 'complete',
+    note: 'This board. Cuts, prices, VAT, accounts, invoices, paid reservations, diary, and the field. Expo can open kiano://admin. Refunds stay in Stripe.',
   },
   {
     name: 'Analytics',
@@ -113,8 +113,9 @@ export const houseIntegrations = [
     name: 'Neon Postgres',
     state: 'Live',
     hook: 'None',
-    events: 'inventory, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes',
-    note: 'Schema is created on first use. Remaining cuts are set from the ledger, not from SQL by hand.',
+    events:
+      'inventory, stock_movements, invoices, invoice_lines, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes',
+    note: 'Schema is created on first use. Remaining cuts, movements, and invoices are written from the ledger and from paid Stripe sessions.',
   },
   {
     name: 'Resend',
@@ -135,7 +136,7 @@ export const houseIntegrations = [
 export const houseDataNotes = [
   {
     title: 'What is counted',
-    copy: 'Paid reservations, remaining cuts, held sizes, members, confirmed and unconfirmed list rows, appointment letters. Currency is GBP pence.',
+    copy: 'Paid reservations, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters. Currency is GBP pence. VAT is round(gross × 20/120).',
   },
   {
     title: 'What is not counted',
@@ -143,7 +144,7 @@ export const houseDataNotes = [
   },
   {
     title: 'How it is read',
-    copy: 'The board fetches /api/admin-summary, /api/admin-inventory, and /api/admin-competitors with a Clerk bearer token. Unsigned or unlisted emails see nothing of the ledger. Inventory and field notes require requireAdmin.',
+    copy: 'The board fetches /api/admin with a Clerk bearer token. Unsigned or unlisted emails see nothing of the ledger. Writes require requireAdmin. A customer invoice opens only with a Stripe session id.',
   },
 ] as const
 

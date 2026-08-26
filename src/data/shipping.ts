@@ -50,6 +50,14 @@ export type CheckoutOrderAddress = {
   country: string | null
 }
 
+export type CheckoutInvoiceSummary = {
+  number: string
+  issuedAt: string
+  netPence: number
+  vatPence: number
+  grossPence: number
+}
+
 export type CheckoutOrder = {
   id: string
   paymentStatus: 'paid' | 'unpaid' | 'no_payment_required'
@@ -61,6 +69,7 @@ export type CheckoutOrder = {
   shipping: CheckoutOrderAddress | null
   note: string | null
   lines: CheckoutOrderLine[]
+  invoice?: CheckoutInvoiceSummary | null
 }
 
 export const emptyCheckoutDetails: CheckoutDetails = {

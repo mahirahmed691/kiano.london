@@ -95,6 +95,12 @@ const pages: Record<string, PageMeta> = {
     path: '/admin',
     robots: 'noindex, nofollow',
   },
+  '/order/invoice': {
+    title: 'A record of the cut — Kiano London',
+    description: 'A simple tax invoice for a Kiano London reservation.',
+    path: '/order/invoice',
+    robots: 'noindex, nofollow',
+  },
   '/sign-in': {
     title: 'Sign in — Kiano London',
     description: 'Sign in to see reservations placed with the atelier.',
@@ -127,6 +133,7 @@ export function getShareMeta(pathname: string): PageMeta {
 
   if (path.startsWith('/sign-in')) return pages['/sign-in']!
   if (path.startsWith('/sign-up')) return pages['/sign-up']!
+  if (path.startsWith('/admin')) return pages['/admin']!
 
   const productHit = path.match(/^\/(shop|collection)\/([^/]+)$/)
   if (productHit) {
