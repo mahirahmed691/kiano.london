@@ -36,13 +36,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Members',
     completion: 92,
     status: 'complete',
-    note: 'Clerk sign-in, account of reservations, token on checkout. Svix webhook keeps members in step. The ledger lists those who keep an account.',
+    note: 'Clerk sign-in, account of reservations, token on checkout. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
   },
   {
     name: 'The list',
     completion: 80,
     status: 'partial',
-    note: 'Subscribe and confirm via Resend. The ledger reads confirmed and held. Domain must be verified for letters to leave.',
+    note: 'Subscribe and confirm via Resend. The ledger reads confirmed and held. RESEND_API_KEY is not on Vercel yet. Domain must be verified for letters to leave.',
   },
   {
     name: 'Visit',
@@ -54,7 +54,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Installable house',
     completion: 78,
     status: 'partial',
-    note: 'PWA on the site keeps the editorial header. Expo is a WebView of the live origin with its own tabs: House, Line, Bag, Account, and Word. Header, footer, and cookie notices stay on the site.',
+    note: 'PWA on the site keeps the editorial header. Expo is a WebView with house tabs. The last iOS store archive is build 3, cut before the tabs and Word. Android still needs FCM in EAS. A new native archive is required for push.',
   },
   {
     name: 'Share and search',
@@ -78,13 +78,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. Rooms stay under the header while you work. Expo can open kiano://admin. Refunds stay in Stripe.',
+    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, a new account, and when a paid cut moves on the table, into the box, or leaves the house. Expo can push the same word to a signed-in device.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when the till is returned.',
   },
   {
     name: 'Analytics',
@@ -94,9 +94,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Returns and refunds',
-    completion: 55,
+    completion: 78,
     status: 'partial',
-    note: 'House copy at /returns: fourteen days from arrival, packing, write to the atelier. A refund, if agreed, is still made in Stripe. No dispute flow on the site.',
+    note: 'House copy at /returns. A full Stripe refund is written on the book and restocks the size. Partial refunds are pence only. The atelier still agrees the return by letter.',
   },
 ]
 
@@ -105,15 +105,15 @@ export const houseIntegrations = [
     name: 'Stripe Checkout',
     state: 'Live',
     hook: 'POST /api/stripe-webhook',
-    events: 'checkout.session.completed, checkout.session.async_payment_succeeded',
-    note: 'Verifies the Stripe signature. Writes the order, takes stock, links a member if the session carried one.',
+    events: 'checkout.session.completed, checkout.session.async_payment_succeeded, charge.refunded',
+    note: 'Verifies the Stripe signature. Writes the order, takes stock, links a member if the session carried one. A full refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Clerk',
     state: 'Live',
     hook: 'POST /api/clerk-webhook',
     events: 'user.created, user.updated, user.deleted',
-    note: 'verifyWebhook from @clerk/backend/webhooks. Needs CLERK_WEBHOOK_SIGNING_SECRET. Deleted accounts leave the members table; paid orders stay, unlinked.',
+    note: 'verifyWebhook from @clerk/backend/webhooks. Needs CLERK_WEBHOOK_SIGNING_SECRET on Vercel and an endpoint in the Clerk Dashboard at https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Deleted accounts leave the members table; paid orders stay, unlinked.',
   },
   {
     name: 'Neon Postgres',
@@ -128,14 +128,14 @@ export const houseIntegrations = [
     state: 'Wired',
     hook: 'None',
     events: 'List confirm letters, visit confirmation (held, not booked)',
-    note: 'From address must be a verified domain. Until then the list holds unconfirmed rows.',
+    note: 'From address must be a verified domain. RESEND_API_KEY is not on Vercel yet. Until then the list holds unconfirmed rows.',
   },
   {
     name: 'Expo push',
     state: 'Wired',
     hook: 'POST /api/notices',
     events: 'A signed-in device keeps an Expo token. Word is sent through exp.host when a notice is written.',
-    note: 'Needs a native build, not Expo Go on Android. iOS asks on the next EAS archive. Android also needs FCM in EAS credentials.',
+    note: 'Needs a native build with this chrome, not Expo Go on Android. The last iOS store archive is build 3, before tabs and Word. Android also needs FCM in EAS credentials.',
   },
   {
     name: 'Vercel',
@@ -149,11 +149,11 @@ export const houseIntegrations = [
 export const houseDataNotes = [
   {
     title: 'What is counted',
-    copy: 'Paid reservations, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters, word from the house. Currency is GBP pence. VAT is round(gross × 20/120). Sizes at none are named on the board.',
+    copy: 'Paid reservations less what Stripe has returned, remaining cuts, movements, VAT-inclusive prices, invoices, members, the list, appointment letters, word from the house. Currency is GBP pence. VAT is round(gross × 20/120). Sizes at none are named on the board.',
   },
   {
     title: 'What is not counted',
-    copy: 'Sessions, bounce, cart abandonment, or refunds. London is the name of the house.',
+    copy: 'Sessions, bounce, or cart abandonment. London is the name of the house.',
   },
   {
     title: 'How it is read',
@@ -252,14 +252,16 @@ export const houseVisualAudit = [
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, Account, and Word. /admin and /admin/cuts, /prices, /accounts, /invoices, /work, /members, /list, /field, /diary, /line are the same ledger. A signed-in device can take a push. kiano://admin still opens the board.',
+      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, Account, and Word. A signed-in device can take a push once a new archive is cut. kiano://admin still opens the board.',
     rank: 'Watch',
   },
 ] as const
 
 export const houseScope = [
+  'In Clerk Dashboard (production instance): add endpoint https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Put the signing secret on Vercel as CLERK_WEBHOOK_SIGNING_SECRET for Production, Preview, and Development, then redeploy.',
+  'Add RESEND_API_KEY and RESEND_FROM on Vercel. Verify kiano.london (or the from-domain) in Resend so list and visit letters leave.',
+  'Cut a new iOS EAS production archive so TestFlight holds the house tabs and Word. Add FCM to EAS before an Android store build.',
+  'In Stripe Dashboard, listen to charge.refunded on the same webhook as checkout.session.completed (POST /api/stripe-webhook).',
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
-  'Point the Clerk dashboard at POST /api/clerk-webhook and set CLERK_WEBHOOK_SIGNING_SECRET.',
-  'A house refund, written on the ledger, instead of Stripe Dashboard alone.',
 ] as const

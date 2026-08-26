@@ -1,5 +1,6 @@
 import Stripe from 'stripe'
 import { fulfillPaidSession } from './_lib/fulfill.ts'
+import { applyChargeRefund } from './_lib/refund.ts'
 
 export async function POST(request: Request) {
   const secret = process.env.STRIPE_SECRET_KEY
@@ -34,6 +35,15 @@ export async function POST(request: Request) {
     } catch (caught) {
       console.error(caught)
       return Response.json({ error: 'The reservation could not be recorded.' }, { status: 500 })
+    }
+  }
+
+  if (event.type === 'charge.refunded') {
+    try {
+      await applyChargeRefund(stripe, event.data.object as Stripe.Charge, event.id)
+    } catch (caught) {
+      console.error(caught)
+      return Response.json({ error: 'The return could not be written.' }, { status: 500 })
     }
   }
 

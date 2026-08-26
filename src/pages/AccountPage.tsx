@@ -14,7 +14,7 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { formatNoticeWhen } from '@/lib/word'
 import { useWord } from '@/lib/word-state'
-import { asWorkStage, workCopy, workStages } from '@/lib/work'
+import { asWorkStage, dispatchLine, isFullyReturned, workCopy, workStages } from '@/lib/work'
 
 type AccountOrder = {
   id: string
@@ -23,6 +23,12 @@ type AccountOrder = {
   currency: string
   status: string
   stage?: string
+  refundedPence?: number
+  returned?: boolean
+  carrier?: string
+  tracking?: string
+  trackingHref?: string
+  dispatch?: string
   lines: {
     productId: string
     size: number
@@ -161,7 +167,23 @@ function AccountOrders() {
               )
             })}
           </ol>
-          <p className="mt-3 text-[14px] font-light text-ink-soft">{workCopy[asWorkStage(order.stage)].line}</p>
+          <p className="mt-3 text-[14px] font-light text-ink-soft">
+            {isFullyReturned(order.amountPence, order.refundedPence ?? 0)
+              ? 'The till has been returned.'
+              : asWorkStage(order.stage) === 'sent'
+                ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
+                : workCopy[asWorkStage(order.stage)].line}
+          </p>
+          {order.trackingHref && asWorkStage(order.stage) === 'sent' ? (
+            <p className="mt-4">
+              <a
+                href={order.trackingHref}
+                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+              >
+                Follow it
+              </a>
+            </p>
+          ) : null}
         </li>
       ))}
     </ul>

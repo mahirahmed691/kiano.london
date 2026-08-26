@@ -10,6 +10,7 @@ import { formatGbpExact } from '@/lib/money'
 type Accounts = {
   vatNote: string
   refunds: string
+  refundedPence?: number
   month: LedgerPeriod
   allTime: LedgerPeriod
   journal: LedgerJournalRow[]
@@ -60,6 +61,7 @@ export function LedgerAccounts() {
         setBook({
           vatNote: data.vatNote,
           refunds: data.refunds,
+          refundedPence: data.refundedPence ?? 0,
           month: data.month ?? emptyPeriod(),
           allTime: data.allTime ?? emptyPeriod(),
           journal: data.journal ?? [],
@@ -133,6 +135,7 @@ export function LedgerAccounts() {
         {book?.refunds ? (
           <p className="mt-4 max-w-prose text-[15px] font-light leading-relaxed text-stone">
             {book.refunds}
+            {book.refundedPence ? ` ${formatGbpExact(book.refundedPence)} returned so far.` : ''}
           </p>
         ) : null}
       </LedgerFold>

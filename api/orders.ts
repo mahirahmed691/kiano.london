@@ -1,6 +1,6 @@
 import { clerkUserIdFrom } from './_lib/clerk.ts'
 import { withDb } from './_lib/db.ts'
-import { asWorkStage } from '../src/lib/work.ts'
+import { asTrackingHref, asWorkStage, dispatchLine, isFullyReturned } from '../src/lib/work.ts'
 
 type OrderRow = {
   id: string
@@ -8,7 +8,11 @@ type OrderRow = {
   status: string
   stage: string | null
   amount_pence: number
+  refunded_pence: number
   currency: string
+  carrier: string | null
+  tracking: string | null
+  tracking_href: string | null
   created_at: string
 }
 
@@ -43,7 +47,8 @@ export async function GET(request: Request) {
     }
 
     const orders = (await sql`
-      SELECT id, email, status, stage, amount_pence, currency, created_at
+      SELECT id, email, status, stage, amount_pence, refunded_pence, currency,
+             carrier, tracking, tracking_href, created_at
       FROM orders
       WHERE clerk_user_id = ${clerkUserId}
       ORDER BY created_at DESC
@@ -70,7 +75,13 @@ export async function GET(request: Request) {
         status: order.status,
         stage: asWorkStage(order.stage),
         amountPence: order.amount_pence,
+        refundedPence: order.refunded_pence ?? 0,
+        returned: isFullyReturned(order.amount_pence, order.refunded_pence ?? 0),
         currency: order.currency,
+        carrier: order.carrier ?? '',
+        tracking: order.tracking ?? '',
+        trackingHref: asTrackingHref(order.tracking_href ?? ''),
+        dispatch: dispatchLine(order.carrier ?? '', order.tracking ?? ''),
         createdAt: order.created_at,
         lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
           productId: line.product_id,

@@ -8,7 +8,8 @@ export function AdminAccountsPage() {
         The book in sterling.
       </Display>
       <Body className="mt-6">
-        Paid reservations only. A simple journal for the accountant, not a Sage clone.
+        Paid reservations only. A simple journal for the accountant, not a Sage clone. A full
+        return is written when Stripe refunds it.
       </Body>
       <LedgerAccounts />
     </>

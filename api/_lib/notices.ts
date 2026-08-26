@@ -2,9 +2,9 @@ import { adminAllowlist } from './admin.ts'
 import { withDb } from './db.ts'
 
 export type NoticeAudience = 'member' | 'admin'
-export type NoticeKind = 'order' | 'visit' | 'list' | 'cut' | 'member' | 'work'
+export type NoticeKind = 'order' | 'visit' | 'list' | 'cut' | 'member' | 'work' | 'return'
 
-const kinds = new Set<NoticeKind>(['order', 'visit', 'list', 'cut', 'member', 'work'])
+const kinds = new Set<NoticeKind>(['order', 'visit', 'list', 'cut', 'member', 'work', 'return'])
 const expoToken = /^(Expo(nent)?PushToken)\[[^\s[\]]+]$/
 const expoPushUrl = 'https://exp.host/--/api/v2/push/send'
 

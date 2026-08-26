@@ -79,6 +79,10 @@ async function migrate(db: Sql) {
   await db`CREATE INDEX IF NOT EXISTS orders_clerk_user_id_idx ON orders (clerk_user_id)`
   await db`CREATE INDEX IF NOT EXISTS orders_email_idx ON orders (lower(email))`
   await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS stage TEXT NOT NULL DEFAULT 'reserved'`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS refunded_pence INTEGER NOT NULL DEFAULT 0`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS carrier TEXT NOT NULL DEFAULT ''`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking TEXT NOT NULL DEFAULT ''`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_href TEXT NOT NULL DEFAULT ''`
   await db`
     CREATE TABLE IF NOT EXISTS subscribers (
       email TEXT PRIMARY KEY,

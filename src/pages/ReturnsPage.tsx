@@ -37,8 +37,9 @@ export function ReturnsPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The till</p>
             <Body className="mt-3">
-              A return, if agreed, is a refund in Stripe. It is not written on the house book
-              until the atelier has seen the cloth. Do not open a dispute before you have written.
+              A return, if agreed, is a refund in Stripe. When Stripe has returned the till, the
+              house book is written and the size is put back on the line. Do not open a dispute
+              before you have written.
             </Body>
           </li>
         </ul>

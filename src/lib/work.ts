@@ -40,3 +40,39 @@ export function asWorkStage(value: string | null | undefined): WorkStage {
   if (value && isWorkStage(value)) return value
   return 'reserved'
 }
+
+export function asCarrier(value: string | null | undefined) {
+  return (value ?? '').trim().replace(/\s+/g, ' ').slice(0, 40)
+}
+
+export function asTrackingCode(value: string | null | undefined) {
+  const trimmed = (value ?? '').trim()
+  if (/^https?:\/\//i.test(trimmed)) return ''
+  return trimmed.slice(0, 80)
+}
+
+export function asTrackingHref(value: string | null | undefined) {
+  const trimmed = (value ?? '').trim()
+  if (!trimmed) return ''
+  try {
+    const url = new URL(trimmed)
+    if (url.protocol !== 'https:') return ''
+    if (url.username || url.password) return ''
+    return url.toString().slice(0, 300)
+  } catch {
+    return ''
+  }
+}
+
+export function dispatchLine(carrier: string, tracking: string) {
+  const how = asCarrier(carrier)
+  const code = asTrackingCode(tracking)
+  if (how && code) return `${how} · ${code}`
+  if (how) return how
+  if (code) return code
+  return workCopy.sent.line
+}
+
+export function isFullyReturned(amountPence: number, refundedPence: number) {
+  return refundedPence > 0 && refundedPence >= amountPence
+}

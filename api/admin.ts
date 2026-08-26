@@ -4,7 +4,7 @@ import { requireAdmin } from './_lib/admin.ts'
 import { withDb } from './_lib/db.ts'
 import { recordNotice } from './_lib/notices.ts'
 import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.ts'
-import { asWorkStage, isWorkStage, workCopy } from '../src/lib/work.ts'
+import { asCarrier, asTrackingCode, asTrackingHref, asWorkStage, dispatchLine, isFullyReturned, isWorkStage, workCopy } from '../src/lib/work.ts'
 
 type Method = 'GET' | 'POST'
 type Section =
@@ -121,7 +121,7 @@ async function getSummary(): Promise<Response> {
     )
     const reservedPence = asCount(
       (await sql`
-        SELECT COALESCE(SUM(amount_pence), 0)::int AS n
+        SELECT COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence)), 0)::int AS n
         FROM orders
         WHERE status = 'paid'
       `) as { n: number }[],
@@ -152,17 +152,20 @@ async function getSummary(): Promise<Response> {
     )
     const workCutting = asCount(
       (await sql`
-        SELECT COUNT(*)::int AS n FROM orders WHERE status = 'paid' AND stage = 'cutting'
+        SELECT COUNT(*)::int AS n FROM orders
+        WHERE status = 'paid' AND stage = 'cutting' AND refunded_pence < amount_pence
       `) as { n: number }[],
     )
     const workPacked = asCount(
       (await sql`
-        SELECT COUNT(*)::int AS n FROM orders WHERE status = 'paid' AND stage = 'packed'
+        SELECT COUNT(*)::int AS n FROM orders
+        WHERE status = 'paid' AND stage = 'packed' AND refunded_pence < amount_pence
       `) as { n: number }[],
     )
     const workSent = asCount(
       (await sql`
-        SELECT COUNT(*)::int AS n FROM orders WHERE status = 'paid' AND stage = 'sent'
+        SELECT COUNT(*)::int AS n FROM orders
+        WHERE status = 'paid' AND stage = 'sent' AND refunded_pence < amount_pence
       `) as { n: number }[],
     )
     const heldCutRows = (await sql`
@@ -553,9 +556,17 @@ async function getAccounts(): Promise<Response> {
         { netPence: 0, vatPence: 0, grossPence: 0, count: 0 },
       )
 
+    const refundedPence = asCount(
+      (await sql`
+        SELECT COALESCE(SUM(refunded_pence), 0)::int AS n FROM orders WHERE status = 'paid'
+      `) as { n: number }[],
+    )
+
     return Response.json({
       vatNote: vatMethodNote,
-      refunds: 'Refunds stay in the Stripe dashboard. They are not written on this book.',
+      refunds:
+        'A full return, once Stripe has refunded it, is written here and the size is put back on the line.',
+      refundedPence,
       month,
       allTime,
       journal,
@@ -570,7 +581,8 @@ async function getOrders(): Promise<Response> {
   try {
     const sql = await backfillInvoices()
     const orders = (await sql`
-      SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.currency, o.created_at,
+      SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
+             o.currency, o.carrier, o.tracking, o.tracking_href, o.created_at,
              i.number AS invoice_number
       FROM orders o
       LEFT JOIN invoices i ON i.order_id = o.id
@@ -584,7 +596,11 @@ async function getOrders(): Promise<Response> {
       status: string
       stage: string | null
       amount_pence: number
+      refunded_pence: number
       currency: string
+      carrier: string | null
+      tracking: string | null
+      tracking_href: string | null
       created_at: string | Date
       invoice_number: string | null
     }[]
@@ -618,7 +634,11 @@ async function getOrders(): Promise<Response> {
         status: order.status,
         stage: asWorkStage(order.stage),
         amountPence: order.amount_pence,
+        refundedPence: order.refunded_pence ?? 0,
         currency: order.currency,
+        carrier: order.carrier ?? '',
+        tracking: order.tracking ?? '',
+        trackingHref: asTrackingHref(order.tracking_href ?? ''),
         createdAt: asIso(order.created_at),
         invoiceNumber: order.invoice_number ?? '',
         lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
@@ -798,9 +818,21 @@ async function postDiary(request: Request): Promise<Response> {
 }
 
 async function postWork(request: Request): Promise<Response> {
-  let body: { orderId?: unknown; stage?: unknown }
+  let body: {
+    orderId?: unknown
+    stage?: unknown
+    carrier?: unknown
+    tracking?: unknown
+    trackingHref?: unknown
+  }
   try {
-    body = (await request.json()) as { orderId?: unknown; stage?: unknown }
+    body = (await request.json()) as {
+      orderId?: unknown
+      stage?: unknown
+      carrier?: unknown
+      tracking?: unknown
+      trackingHref?: unknown
+    }
   } catch {
     return Response.json({ error: 'The work could not be read.' }, { status: 400 })
   }
@@ -814,35 +846,67 @@ async function postWork(request: Request): Promise<Response> {
     return Response.json({ error: 'That stage is not kept.' }, { status: 400 })
   }
 
+  const carrier = stage === 'sent' ? asCarrier(typeof body.carrier === 'string' ? body.carrier : '') : ''
+  const tracking = stage === 'sent' ? asTrackingCode(typeof body.tracking === 'string' ? body.tracking : '') : ''
+  const trackingHref =
+    stage === 'sent' ? asTrackingHref(typeof body.trackingHref === 'string' ? body.trackingHref : '') : ''
+
   try {
     const sql = await withDb()
     const current = (await sql`
-      SELECT id, stage, clerk_user_id, email
+      SELECT id, stage, clerk_user_id, email, carrier, tracking, tracking_href, amount_pence, refunded_pence
       FROM orders
       WHERE id = ${orderId} AND status = 'paid'
-    `) as { id: string; stage: string; clerk_user_id: string | null; email: string }[]
+    `) as {
+      id: string
+      stage: string
+      clerk_user_id: string | null
+      email: string
+      carrier: string | null
+      tracking: string | null
+      tracking_href: string | null
+      amount_pence: number
+      refunded_pence: number
+    }[]
     const row = current[0]
     if (!row) {
       return Response.json({ error: 'That reservation is not held.' }, { status: 404 })
     }
+    if (isFullyReturned(row.amount_pence, row.refunded_pence ?? 0)) {
+      return Response.json({ error: 'That cut has been returned.' }, { status: 409 })
+    }
 
     const before = asWorkStage(row.stage)
-    if (before === stage) {
+    const dispatchChanged =
+      stage === 'sent' &&
+      (asCarrier(row.carrier) !== carrier ||
+        asTrackingCode(row.tracking) !== tracking ||
+        asTrackingHref(row.tracking_href) !== trackingHref)
+
+    if (before === stage && !dispatchChanged) {
       return Response.json({ ok: true, orderId: row.id, stage })
     }
 
     await sql`
-      UPDATE orders SET stage = ${stage} WHERE id = ${orderId} AND status = 'paid'
+      UPDATE orders
+      SET
+        stage = ${stage},
+        carrier = ${carrier},
+        tracking = ${tracking},
+        tracking_href = ${trackingHref}
+      WHERE id = ${orderId} AND status = 'paid'
     `
 
-    if (stage !== 'reserved' && row.clerk_user_id) {
+    if (stage !== 'reserved' && row.clerk_user_id && (before !== stage || dispatchChanged)) {
       const copy = workCopy[stage]
+      const bodyLine =
+        stage === 'sent' ? dispatchLine(carrier, tracking) : copy.memberBody
       await recordNotice({
         audience: 'member',
         clerkUserId: row.clerk_user_id,
         kind: 'work',
         title: copy.memberTitle,
-        body: copy.memberBody,
+        body: bodyLine,
         href: '/account',
       })
     }

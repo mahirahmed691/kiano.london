@@ -86,7 +86,11 @@ Optional: set `VITE_SITE_URL` to the live origin (no trailing slash) so Open Gra
 
 The house board at `/admin` is for listed emails: `atelier@kiano.london`, `mahirahmed691@gmail.com`, and `kojoabayas@gmail.com`. Set the same comma-separated list in `VITE_ADMIN_EMAILS` (client) and `ADMIN_EMAILS` (server). Vite only exposes `VITE_*`. If those env vars are empty, the same three addresses are the default. On Vercel, set both for Production, Preview, and Development. Allowlisted accounts see **The ledger** in the header and **The house board** on Account. The native shell can also open `kiano://admin` (or set `EXPO_PUBLIC_HOUSE_URL` to a local Vite origin while developing).
 
-Clerk account sync: set `CLERK_WEBHOOK_SIGNING_SECRET` and add a Clerk webhook to `POST /api/clerk-webhook` for `user.created`, `user.updated`, and `user.deleted`.
+Clerk account sync: in the Clerk Dashboard (production), add `https://www.kiano.london/api/clerk-webhook` for `user.created`, `user.updated`, and `user.deleted`. Set `CLERK_WEBHOOK_SIGNING_SECRET` on Vercel.
+
+Stripe: the same webhook as checkout (`POST /api/stripe-webhook`) must also receive `charge.refunded` so a full return restocks the size.
+
+List letters: set `RESEND_API_KEY` and `RESEND_FROM` on Vercel after the sending domain is verified in Resend.
 
 ## Project structure
 

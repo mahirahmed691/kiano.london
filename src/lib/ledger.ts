@@ -67,6 +67,10 @@ export type LedgerOrder = {
   createdAt: string
   invoiceNumber: string
   stage?: string
+  refundedPence?: number
+  carrier?: string
+  tracking?: string
+  trackingHref?: string
   lines: {
     productId: string
     size: number

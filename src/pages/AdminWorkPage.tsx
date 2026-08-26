@@ -8,8 +8,8 @@ export function AdminWorkPage() {
         The work.
       </Display>
       <Body className="mt-6">
-        A paid cut moves from reserved, to the table, to the house box, then leaves. The member
-        is told when the stage changes. Refunds stay in Stripe.
+        A paid cut moves from reserved, to the table, to the house box, then leaves. Name how it
+        left when it goes. A full return from Stripe puts the size back on the line.
       </Body>
       <LedgerWork />
     </>
