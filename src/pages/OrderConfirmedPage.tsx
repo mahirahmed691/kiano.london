@@ -1,10 +1,11 @@
 import { Show } from '@clerk/react'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
+import { getProduct, productPath } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import {
   clearStoredCheckout,
@@ -18,6 +19,31 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 type View = 'loading' | 'missing' | 'unpaid' | 'paid'
+
+function keepAccountHref(email: string | null) {
+  const query = new URLSearchParams({ redirect_url: '/account' })
+  if (email) query.set('email', email)
+  return `/sign-up?${query.toString()}`
+}
+
+function visitHrefFor(order: CheckoutOrder) {
+  const first = order.lines.find((line) => line.productId)
+  if (!first?.productId) return '/visit'
+  const query = new URLSearchParams({ piece: first.productId })
+  if (first.size && first.size > 0) query.set('size', String(first.size))
+  return `/visit?${query.toString()}`
+}
+
+function ReservedName({ line }: { line: CheckoutOrder['lines'][number] }) {
+  const product = getProduct(line.productId)
+  const label = `${line.description}${line.quantity > 1 ? ` × ${line.quantity}` : ''}`
+  if (!product) return <>{label}</>
+  return (
+    <Link to={productPath(product)} className="transition-opacity hover:opacity-70">
+      {label}
+    </Link>
+  )
+}
 
 export function OrderConfirmedPage() {
   const { clear } = useCart()
@@ -181,8 +207,7 @@ export function OrderConfirmedPage() {
                       key={`${line.description}-${index}`}
                       className="border-b border-rule py-3 text-[15px] font-light leading-relaxed"
                     >
-                      {line.description}
-                      {line.quantity > 1 ? ` × ${line.quantity}` : ''}
+                      <ReservedName line={line} />
                     </li>
                   ))}
                 </ul>
@@ -195,7 +220,9 @@ export function OrderConfirmedPage() {
                     <Button to="/account">Account</Button>
                   </Show>
                   <Show when="signed-out">
-                    <Button to="/sign-in">Keep it on the account</Button>
+                    <Button to={keepAccountHref(order?.customerEmail ?? null)}>
+                      Keep it on the account
+                    </Button>
                   </Show>
                 </>
               ) : (
@@ -205,6 +232,9 @@ export function OrderConfirmedPage() {
                 <TextLink to={`/order/invoice?session_id=${encodeURIComponent(sessionId)}`}>
                   A record of the cut
                 </TextLink>
+              ) : null}
+              {order ? (
+                <TextLink to={visitHrefFor(order)}>Enquire to visit</TextLink>
               ) : (
                 <TextLink to="/visit">Visit by appointment</TextLink>
               )}
@@ -224,8 +254,7 @@ export function OrderConfirmedPage() {
                       className="flex items-baseline justify-between gap-4 border-t border-rule py-4"
                     >
                       <p className="text-[14px] font-light leading-relaxed">
-                        {line.description}
-                        {line.quantity > 1 ? ` × ${line.quantity}` : ''}
+                        <ReservedName line={line} />
                       </p>
                       <p className="shrink-0 text-[13px] tracking-[0.06em]">
                         {formatGbp(line.amount)}

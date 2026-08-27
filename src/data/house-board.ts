@@ -18,13 +18,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'The line',
     completion: 90,
     status: 'complete',
-    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide.',
+    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide with how to take a measure.',
   },
   {
     name: 'Bag and checkout',
     completion: 88,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation waits for payment, then offers the account so the cut can be kept. A paid session now writes a house letter as well as Word. Live keys are not on Vercel yet.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A paid session writes a house letter as well as Word. Test Checkout is open. Live keys wait on onboarding.',
   },
   {
     name: 'Stock',
@@ -106,7 +106,7 @@ export const houseIntegrations = [
     state: 'Wired',
     hook: 'POST /api/stripe-webhook',
     events: 'checkout.session.completed, checkout.session.async_payment_succeeded, charge.refunded',
-    note: 'Verifies the Stripe signature. Writes the order, takes stock, links a member if the session carried one, and sends a house letter. A full refund restocks the size, is written as returned pence, and writes as well. Live Kiano London is linked; charges are not enabled until onboarding finishes, and STRIPE_SECRET_KEY is not on Vercel. Stripe does not export the dashboard secret through the API.',
+    note: 'Verifies the Stripe signature. Writes the order, takes stock, links a member if the session carried one, and sends a house letter. A full refund restocks the size, is written as returned pence, and writes as well. Test restricted key and webhook secret are on Vercel. Live Kiano London is linked; charges stay off until onboarding finishes, then the live restricted key replaces STRIPE_SECRET_KEY.',
   },
   {
     name: 'Clerk',
@@ -261,7 +261,7 @@ export const houseScope = [
   'In Clerk Dashboard (production instance): add endpoint https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Put the signing secret on Vercel as CLERK_WEBHOOK_SIGNING_SECRET for Production, Preview, and Development, then redeploy.',
   'Add the Resend DNS on kiano.london (resend._domainkey TXT, send MX, send SPF) so list, visit, and reservation letters leave. RESEND_API_KEY is already on Vercel.',
   'Cut a new iOS EAS production archive so TestFlight holds Word as a mark, and so later shell JS can arrive without another store pass. Add FCM to EAS before an Android store build.',
-  'In Stripe Dashboard, finish Kiano London live onboarding (business, representative, bank, terms) so charges can be taken. Copy the live restricted key into Vercel as STRIPE_SECRET_KEY. Add endpoint https://www.kiano.london/api/stripe-webhook for checkout.session.completed, checkout.session.async_payment_succeeded, and charge.refunded, then put STRIPE_WEBHOOK_SECRET on Vercel.',
+  'In Stripe Dashboard, finish Kiano London live onboarding (business, representative, bank, terms) so live charges can be taken. Then put the live restricted key on Vercel as STRIPE_SECRET_KEY, add a live webhook at https://www.kiano.london/api/stripe-webhook for checkout.session.completed, checkout.session.async_payment_succeeded, and charge.refunded, and put the live STRIPE_WEBHOOK_SECRET on Vercel.',
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
 ] as const

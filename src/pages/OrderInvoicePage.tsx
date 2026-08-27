@@ -27,8 +27,8 @@ function invoiceFromOrder(order: CheckoutOrder): LedgerInvoice | null {
     currency: order.currency,
     shipping: order.shipping,
     lines: order.lines.map((line) => ({
-      productId: '',
-      size: 0,
+      productId: line.productId ?? '',
+      size: line.size ?? 0,
       quantity: line.quantity,
       description: line.description,
       ...splitVat(line.amount),

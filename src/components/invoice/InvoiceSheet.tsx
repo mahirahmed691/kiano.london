@@ -73,10 +73,16 @@ export function InvoiceSheet({ invoice, reference }: Props) {
           <li key={`${line.description}-${index}`} className="grid gap-2 py-5 sm:grid-cols-12">
             <div className="sm:col-span-7">
               <p className="text-[15px] font-light">{line.description}</p>
-              <p className="mt-1 text-[13px] font-light text-ink-soft">
-                Size {line.size}
-                {line.quantity > 1 ? ` · ${line.quantity}` : ''}
-              </p>
+              {line.size > 0 || line.quantity > 1 ? (
+                <p className="mt-1 text-[13px] font-light text-ink-soft">
+                  {[
+                    line.size > 0 ? `Size ${line.size}` : null,
+                    line.quantity > 1 ? String(line.quantity) : null,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </p>
+              ) : null}
             </div>
             <p className="text-[15px] font-light sm:col-span-5 sm:text-right">
               {formatGbpExact(line.grossPence)}

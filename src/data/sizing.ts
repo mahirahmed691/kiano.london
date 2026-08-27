@@ -15,6 +15,21 @@ export const sizeChart: SizeRow[] = [
   { size: 60, chest: '128 cm', length: '156 cm', shoulder: '50 cm' },
 ]
 
+export const sizeMeasures = [
+  {
+    title: 'Chest',
+    copy: 'Around the fullest of the chest. Tape level, not tight. Breathe out.',
+  },
+  {
+    title: 'Length',
+    copy: 'From the high point of the shoulder, down the front, to where the hem should sit.',
+  },
+  {
+    title: 'Shoulder',
+    copy: 'Seam to seam across the back, where a well-set sleeve would sit.',
+  },
+] as const
+
 export const sizeNote =
   'Chest, length and shoulder as cut. A fitting will move a centimetre where it matters. If you are between sizes, write; we cut from the larger and take in.'
 

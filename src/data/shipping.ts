@@ -38,6 +38,8 @@ export type CheckoutOrderLine = {
   description: string
   quantity: number
   amount: number
+  productId?: string
+  size?: number
 }
 
 export type CheckoutOrderAddress = {

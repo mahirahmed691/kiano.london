@@ -185,6 +185,18 @@ function AccountOrders() {
             >
               A record of the cut
             </Link>
+            {order.lines[0]?.productId ? (
+              <Link
+                to={
+                  order.lines[0].size
+                    ? `/visit?piece=${encodeURIComponent(order.lines[0].productId)}&size=${order.lines[0].size}`
+                    : `/visit?piece=${encodeURIComponent(order.lines[0].productId)}`
+                }
+                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+              >
+                Enquire to visit
+              </Link>
+            ) : null}
             <a
               href={returnLetterHref(orderReference(order.id))}
               className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"

@@ -34,18 +34,17 @@ function asRecord(value: unknown): Record<string, string> {
   return record
 }
 
-function lineLabel(line: Stripe.LineItem) {
+function lineMeta(line: Stripe.LineItem) {
   const product = line.price?.product
   const metadata =
     product && typeof product !== 'string' && !product.deleted ? asRecord(product.metadata) : {}
-  const fromProduct =
-    product && typeof product !== 'string' && !product.deleted ? product.name : ''
   const size = Number(metadata.size)
-  return reservedCutName(
-    metadata.product_id,
-    Number.isFinite(size) && size > 0 ? size : undefined,
-    line.description || fromProduct || 'Piece',
-  )
+  return {
+    productId: metadata.product_id || undefined,
+    size: Number.isFinite(size) && size > 0 ? size : undefined,
+    fromProduct:
+      product && typeof product !== 'string' && !product.deleted ? product.name : '',
+  }
 }
 
 function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
@@ -67,11 +66,20 @@ function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
     customerPhone: session.customer_details?.phone ?? null,
     shipping,
     note: session.metadata?.note || null,
-    lines: lineItems.map((line) => ({
-      description: lineLabel(line),
-      quantity: line.quantity ?? 1,
-      amount: line.amount_total ?? 0,
-    })),
+    lines: lineItems.map((line) => {
+      const meta = lineMeta(line)
+      return {
+        description: reservedCutName(
+          meta.productId,
+          meta.size,
+          line.description || meta.fromProduct || 'Piece',
+        ),
+        quantity: line.quantity ?? 1,
+        amount: line.amount_total ?? 0,
+        productId: meta.productId,
+        size: meta.size,
+      }
+    }),
   }
 }
 

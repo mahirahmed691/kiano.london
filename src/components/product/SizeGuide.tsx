@@ -1,4 +1,4 @@
-import { sizeChart, sizeNote } from '@/data/sizing'
+import { sizeChart, sizeMeasures, sizeNote } from '@/data/sizing'
 import { cn } from '@/lib/cn'
 
 type Props = {
@@ -30,8 +30,16 @@ export function SizeGuide({ className, compact = false }: Props) {
           ))}
         </tbody>
       </table>
+      <div className="mt-8 grid gap-6 sm:grid-cols-3">
+        {sizeMeasures.map((item) => (
+          <div key={item.title}>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{item.title}</p>
+            <p className="mt-2 text-[13px] font-light leading-relaxed text-ink-soft">{item.copy}</p>
+          </div>
+        ))}
+      </div>
       {compact ? null : (
-        <p className="mt-6 max-w-xl text-[13px] font-light leading-relaxed text-stone">{sizeNote}</p>
+        <p className="mt-8 max-w-xl text-[13px] font-light leading-relaxed text-stone">{sizeNote}</p>
       )}
     </div>
   )
