@@ -54,7 +54,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Installable house',
     completion: 78,
     status: 'partial',
-    note: 'PWA on the site keeps the editorial header. Expo is a WebView with house tabs. The last iOS store archive is build 3, cut before the tabs and Word. Android still needs FCM in EAS. A new native archive is required for push.',
+    note: 'PWA on the site keeps the editorial header. Expo is a WebView with house tabs: House, Line, Bag, Account. Word sits as a hairline mark. Android still needs FCM in EAS.',
   },
   {
     name: 'Share and search',
@@ -135,7 +135,7 @@ export const houseIntegrations = [
     state: 'Wired',
     hook: 'POST /api/notices',
     events: 'A signed-in device keeps an Expo token. Word is sent through exp.host when a notice is written.',
-    note: 'Needs a native build with this chrome, not Expo Go on Android. The last iOS store archive is build 3, before tabs and Word. Android also needs FCM in EAS credentials.',
+    note: 'Needs a store archive with this chrome, not Expo Go on Android. Android also needs FCM in EAS credentials.',
   },
   {
     name: 'Vercel',
@@ -252,7 +252,7 @@ export const houseVisualAudit = [
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, Account, and Word. A signed-in device can take a push once a new archive is cut. kiano://admin still opens the board.',
+      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, and Account sit on the bar. Word is a hairline mark with an unread count. kiano://admin still opens the board.',
     rank: 'Watch',
   },
 ] as const
@@ -260,7 +260,7 @@ export const houseVisualAudit = [
 export const houseScope = [
   'In Clerk Dashboard (production instance): add endpoint https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Put the signing secret on Vercel as CLERK_WEBHOOK_SIGNING_SECRET for Production, Preview, and Development, then redeploy.',
   'Add RESEND_API_KEY and RESEND_FROM on Vercel. Verify kiano.london (or the from-domain) in Resend so list and visit letters leave.',
-  'Cut a new iOS EAS production archive so TestFlight holds the house tabs and Word. Add FCM to EAS before an Android store build.',
+  'Cut a new iOS EAS production archive so TestFlight holds Word as a mark. Add FCM to EAS before an Android store build.',
   'In Stripe Dashboard, listen to charge.refunded on the same webhook as checkout.session.completed (POST /api/stripe-webhook).',
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',

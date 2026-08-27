@@ -1,19 +1,18 @@
-import { Platform, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
-export type HouseTab = 'house' | 'line' | 'account'
+export type HouseTab = 'house' | 'line' | 'bag' | 'account'
 
 type Props = {
   path: string
   tab: HouseTab
   bag: number
-  word: number
+  inset: number
   onHouse: () => void
   onLine: () => void
   onShop: () => void
   onCollection: () => void
   onBag: () => void
   onAccount: () => void
-  onWord: () => void
 }
 
 function pad(value: number) {
@@ -35,71 +34,90 @@ export function tabFromPath(pathname: string): HouseTab {
   return 'house'
 }
 
+export function quietChrome(pathname: string) {
+  return pathname.startsWith('/checkout') || pathname.startsWith('/order')
+}
+
+function Tab({
+  label,
+  selected,
+  onPress,
+  accessibilityLabel,
+  role = 'tab',
+}: {
+  label: string
+  selected: boolean
+  onPress: () => void
+  accessibilityLabel?: string
+  role?: 'tab' | 'button'
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole={role}
+      accessibilityState={role === 'tab' ? { selected } : undefined}
+      accessibilityLabel={accessibilityLabel}
+      hitSlop={4}
+      style={({ pressed }) => [styles.tab, pressed && styles.pressed]}
+    >
+      <Text style={[styles.label, selected ? styles.active : styles.quiet]}>{label}</Text>
+      <View style={[styles.mark, selected ? styles.markOn : styles.markOff]} />
+    </Pressable>
+  )
+}
+
 export function HouseChrome({
   path,
   tab,
   bag,
-  word,
+  inset,
   onHouse,
   onLine,
   onShop,
   onCollection,
   onBag,
   onAccount,
-  onWord,
 }: Props) {
-  const shop = path.startsWith('/shop') || (!path.startsWith('/collection') && tab === 'line')
+  const line = tabFromPath(path) === 'line'
   const collection = path.startsWith('/collection')
+  const shop = path.startsWith('/shop') || (line && !collection)
 
   return (
-    <View style={styles.chrome}>
-      <View style={styles.overlay}>
-        {tab === 'line' ? (
-          <View style={styles.segment}>
-            <Pressable
-              onPress={onShop}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: shop && !collection }}
-              hitSlop={8}
-            >
-              <Text style={[styles.label, shop && !collection ? styles.active : styles.quiet]}>
-                Shop
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={onCollection}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: collection }}
-              hitSlop={8}
-            >
-              <Text style={[styles.label, collection ? styles.active : styles.quiet]}>
-                Collection
-              </Text>
-            </Pressable>
-          </View>
-        ) : (
-          <View />
-        )}
-        <Pressable onPress={onWord} accessibilityRole="button" accessibilityLabel="Word from the house" hitSlop={8}>
-          <Text style={styles.label}>
-            Word{word > 0 ? ` · ${pad(word)}` : ''}
-          </Text>
-        </Pressable>
-      </View>
+    <View style={[styles.chrome, { paddingBottom: Math.max(inset, 10) }]}>
+      {line ? (
+        <View style={styles.segment}>
+          <Pressable
+            onPress={onShop}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: shop }}
+            hitSlop={8}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <Text style={[styles.sub, shop ? styles.active : styles.quiet]}>Shop</Text>
+          </Pressable>
+          <Pressable
+            onPress={onCollection}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: collection }}
+            hitSlop={8}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <Text style={[styles.sub, collection ? styles.active : styles.quiet]}>Collection</Text>
+          </Pressable>
+        </View>
+      ) : null}
 
       <View style={styles.tabs}>
-        <Pressable onPress={onHouse} accessibilityRole="tab" accessibilityState={{ selected: tab === 'house' }} style={styles.tab}>
-          <Text style={[styles.label, tab === 'house' ? styles.active : styles.quiet]}>House</Text>
-        </Pressable>
-        <Pressable onPress={onLine} accessibilityRole="tab" accessibilityState={{ selected: tab === 'line' }} style={styles.tab}>
-          <Text style={[styles.label, tab === 'line' ? styles.active : styles.quiet]}>Line</Text>
-        </Pressable>
-        <Pressable onPress={onBag} accessibilityRole="button" accessibilityLabel="Bag" style={styles.tab}>
-          <Text style={styles.label}>Bag{bag > 0 ? ` · ${pad(bag)}` : ''}</Text>
-        </Pressable>
-        <Pressable onPress={onAccount} accessibilityRole="tab" accessibilityState={{ selected: tab === 'account' }} style={styles.tab}>
-          <Text style={[styles.label, tab === 'account' ? styles.active : styles.quiet]}>Account</Text>
-        </Pressable>
+        <Tab label="House" selected={tab === 'house'} onPress={onHouse} />
+        <Tab label="Line" selected={tab === 'line'} onPress={onLine} />
+        <Tab
+          label={bag > 0 ? `Bag · ${pad(bag)}` : 'Bag'}
+          selected={tab === 'bag'}
+          onPress={onBag}
+          role="button"
+          accessibilityLabel={bag > 0 ? `Bag, ${bag} pieces` : 'Bag'}
+        />
+        <Tab label="Account" selected={tab === 'account'} onPress={onAccount} />
       </View>
     </View>
   )
@@ -110,34 +128,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2EBDC',
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#D4CBB8',
-    paddingBottom: Platform.OS === 'ios' ? 28 : 12,
-  },
-  overlay: {
-    minHeight: 36,
-    paddingHorizontal: 24,
-    paddingTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   segment: {
     flexDirection: 'row',
-    gap: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 28,
+    paddingTop: 12,
+    paddingBottom: 2,
   },
   tabs: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    paddingHorizontal: 8,
-    paddingBottom: 4,
+    paddingHorizontal: 4,
+    paddingTop: 4,
   },
   tab: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 44,
+    paddingTop: 8,
+    paddingBottom: 6,
+  },
+  pressed: {
+    opacity: 0.55,
+    transform: [{ scale: 0.97 }],
   },
   label: {
-    color: '#1B1714',
+    fontSize: 11,
+    fontWeight: '400',
+    letterSpacing: 2.2,
+    textTransform: 'uppercase',
+  },
+  sub: {
     fontSize: 11,
     fontWeight: '400',
     letterSpacing: 2.2,
@@ -148,5 +172,16 @@ const styles = StyleSheet.create({
   },
   quiet: {
     color: '#6F675C',
+  },
+  mark: {
+    marginTop: 7,
+    height: StyleSheet.hairlineWidth,
+    width: 12,
+  },
+  markOn: {
+    backgroundColor: '#1B1714',
+  },
+  markOff: {
+    backgroundColor: 'transparent',
   },
 })

@@ -114,8 +114,13 @@ function WordProviderInner({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const openWord = () => setOpen(true)
+    const closeWord = () => setOpen(false)
     window.addEventListener('kiano-open-word', openWord)
-    return () => window.removeEventListener('kiano-open-word', openWord)
+    window.addEventListener('kiano-close-word', closeWord)
+    return () => {
+      window.removeEventListener('kiano-open-word', openWord)
+      window.removeEventListener('kiano-close-word', closeWord)
+    }
   }, [])
 
   useEffect(() => {

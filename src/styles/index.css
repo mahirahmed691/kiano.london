@@ -162,7 +162,7 @@ html.shell-app {
 }
 
 html.shell-app .pt-32 {
-  padding-top: 1.5rem;
+  padding-top: var(--header-offset);
 }
 
 @media (min-width: 768px) {
@@ -171,7 +171,7 @@ html.shell-app .pt-32 {
   }
 
   html.shell-app .md\:pt-40 {
-    padding-top: 1.75rem;
+    padding-top: var(--header-offset);
   }
 }
 

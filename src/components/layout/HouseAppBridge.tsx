@@ -5,8 +5,8 @@ import { useWord } from '@/lib/word-state'
 
 export function HouseAppBridge() {
   const app = useHouseApp()
-  const { count } = useCart()
-  const { unread } = useWord()
+  const { count, open: bagOpen } = useCart()
+  const { unread, open: wordOpen } = useWord()
 
   useEffect(() => {
     if (!app) {
@@ -20,9 +20,15 @@ export function HouseAppBridge() {
   useEffect(() => {
     if (!app) return
     window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: 'kiano-chrome', bag: count, word: unread }),
+      JSON.stringify({
+        type: 'kiano-chrome',
+        bag: count,
+        word: unread,
+        bagOpen,
+        wordOpen,
+      }),
     )
-  }, [app, count, unread])
+  }, [app, bagOpen, count, unread, wordOpen])
 
   return null
 }

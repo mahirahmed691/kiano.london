@@ -89,8 +89,8 @@ async function pushNotice(input: NoticeInput, title: string, body: string, href:
     to: token,
     title,
     body,
-    sound: 'default' as const,
     channelId: 'word',
+    badge: 1,
     data: { href },
   }))
 

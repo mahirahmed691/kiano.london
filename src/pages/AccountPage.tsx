@@ -13,6 +13,7 @@ import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { formatNoticeWhen } from '@/lib/word'
+import { useHouseApp } from '@/lib/shell'
 import { useWord } from '@/lib/word-state'
 import { asWorkStage, dispatchLine, isFullyReturned, workCopy, workStages } from '@/lib/work'
 
@@ -225,6 +226,42 @@ function AccountWord() {
   )
 }
 
+function AccountDeviceWord() {
+  const app = useHouseApp()
+  const [allowed, setAllowed] = useState(
+    () => typeof window !== 'undefined' && Boolean(window.__KIANO_EXPO_PUSH),
+  )
+
+  useEffect(() => {
+    const sync = () => setAllowed(Boolean(window.__KIANO_EXPO_PUSH))
+    sync()
+    window.addEventListener('kiano-expo-push', sync)
+    return () => window.removeEventListener('kiano-expo-push', sync)
+  }, [])
+
+  if (!app) return null
+
+  if (allowed) {
+    return (
+      <p className="mt-10 text-[11px] uppercase tracking-[0.22em] text-stone">
+        This device takes word.
+      </p>
+    )
+  }
+
+  return (
+    <button
+      type="button"
+      className="mt-10 text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+      onClick={() => {
+        window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'kiano-request-push' }))
+      }}
+    >
+      Allow word on this device
+    </button>
+  )
+}
+
 function AccountLedgerLink() {
   const { user } = useUser()
   if (!isAdminUser(user)) return null
@@ -265,6 +302,7 @@ export function AccountPage() {
               </Body>
               <AccountOrders />
               <AccountWord />
+              <AccountDeviceWord />
               <AccountLedgerLink />
               <div className="mt-12">
                 <SignOutButton>

@@ -65,8 +65,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const openBag = () => setOpen(true)
+    const closeBag = () => setOpen(false)
     window.addEventListener('kiano-open-bag', openBag)
-    return () => window.removeEventListener('kiano-open-bag', openBag)
+    window.addEventListener('kiano-close-bag', closeBag)
+    return () => {
+      window.removeEventListener('kiano-open-bag', openBag)
+      window.removeEventListener('kiano-close-bag', closeBag)
+    }
   }, [])
 
   const update = useCallback((next: BagLine[]) => {

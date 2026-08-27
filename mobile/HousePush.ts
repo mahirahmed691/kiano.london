@@ -21,6 +21,10 @@ export function pathFromNotificationResponse(response: Notifications.Notificatio
   return housePathFromNotification(response.notification)
 }
 
+export async function setHouseBadge(count: number) {
+  await Notifications.setBadgeCountAsync(Math.max(0, count)).catch(() => undefined)
+}
+
 export async function registerHousePush() {
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('word', {
