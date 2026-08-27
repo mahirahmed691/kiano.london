@@ -252,7 +252,7 @@ export const houseVisualAudit = [
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, and Account sit on the bar. Word is a hairline mark with an unread count. kiano://admin still opens the board.',
+      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, and Account sit on the bar. Word is a hairline mark with an unread count. kiano://admin still opens the board. After the next store archive, shell JS can arrive on the production channel; new native modules still need a binary.',
     rank: 'Watch',
   },
 ] as const
@@ -260,7 +260,7 @@ export const houseVisualAudit = [
 export const houseScope = [
   'In Clerk Dashboard (production instance): add endpoint https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Put the signing secret on Vercel as CLERK_WEBHOOK_SIGNING_SECRET for Production, Preview, and Development, then redeploy.',
   'Add RESEND_API_KEY and RESEND_FROM on Vercel. Verify kiano.london (or the from-domain) in Resend so list and visit letters leave.',
-  'Cut a new iOS EAS production archive so TestFlight holds Word as a mark. Add FCM to EAS before an Android store build.',
+  'Cut a new iOS EAS production archive so TestFlight holds Word as a mark, and so later shell JS can arrive without another store pass. Add FCM to EAS before an Android store build.',
   'In Stripe Dashboard, listen to charge.refunded on the same webhook as checkout.session.completed (POST /api/stripe-webhook).',
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
