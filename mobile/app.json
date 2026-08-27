@@ -10,7 +10,7 @@
     "backgroundColor": "#F2EBDC",
     "scheme": "kiano",
     "runtimeVersion": {
-      "policy": "fingerprint"
+      "policy": "appVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/d1786b49-0e68-46d1-a5f7-37c57a92f025"

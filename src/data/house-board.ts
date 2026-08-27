@@ -252,7 +252,7 @@ export const houseVisualAudit = [
   {
     surface: 'Expo shell',
     finding:
-      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, and Account sit on the bar. Word is a hairline mark with an unread count. kiano://admin still opens the board. After the next store archive, shell JS can arrive on the production channel; new native modules still need a binary.',
+      'The native app is the website in a WebView, with house tabs instead of the site header. House, Line (shop or collection), Bag, and Account sit on the bar. Word is a hairline mark with an unread count. kiano://admin still opens the board. After the next store archive, shell JS can arrive on the production channel while the app version is unchanged; new native modules still need a binary.',
     rank: 'Watch',
   },
 ] as const
