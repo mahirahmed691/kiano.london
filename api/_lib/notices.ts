@@ -1,3 +1,4 @@
+import { getProduct } from '../../src/data/products.js'
 import { adminAllowlist } from './admin.js'
 import { withDb } from './db.js'
 
@@ -15,6 +16,21 @@ type NoticeInput = {
   title: string
   body: string
   href?: string
+  productIds?: string[]
+}
+
+export function storedProductIds(ids: string[] | undefined) {
+  return [...new Set((ids ?? []).map((id) => id.trim()).filter((id) => Boolean(getProduct(id))))]
+    .slice(0, 8)
+    .join(',')
+}
+
+export function parsedProductIds(raw: string | null | undefined) {
+  if (!raw) return []
+  return raw
+    .split(',')
+    .map((id) => id.trim())
+    .filter(Boolean)
 }
 
 export function houseHref(value: string | undefined) {
@@ -34,19 +50,21 @@ export async function recordNotice(input: NoticeInput) {
   const title = input.title.trim().slice(0, 160)
   const body = input.body.trim().slice(0, 400)
   const href = houseHref(input.href)
+  const productIds = storedProductIds(input.productIds)
   if (!title || !body) return
 
   try {
     const sql = await withDb()
     await sql`
-      INSERT INTO notices (audience, clerk_user_id, kind, title, body, href)
+      INSERT INTO notices (audience, clerk_user_id, kind, title, body, href, product_ids)
       VALUES (
         ${input.audience},
         ${input.audience === 'member' ? input.clerkUserId : null},
         ${input.kind},
         ${title},
         ${body},
-        ${href}
+        ${href},
+        ${productIds}
       )
     `
   } catch (caught) {

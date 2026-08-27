@@ -76,6 +76,7 @@ export async function POST(request: Request) {
         title: 'A letter is held',
         body: `${name} wrote for ${piece}.`,
         href: '/admin/diary',
+        productIds: productId ? [productId] : undefined,
       })
     } catch (caught) {
       console.error(caught)

@@ -62,11 +62,12 @@ export function CheckoutPage() {
     writeStoredCheckout(details)
   }, [details])
 
-  const onPrefill = useCallback((patch: Pick<CheckoutDetails, 'name' | 'email'>) => {
+  const onPrefill = useCallback((patch: Pick<CheckoutDetails, 'name' | 'email' | 'telephone'>) => {
     setDetails((current) => ({
       ...current,
       name: current.name || patch.name,
       email: current.email || patch.email,
+      telephone: current.telephone || patch.telephone,
     }))
   }, [])
 
@@ -171,6 +172,7 @@ export function CheckoutPage() {
 
             <form
               id="checkout-form"
+              autoComplete="on"
               onSubmit={(event) => void onSubmit(event)}
               className="mt-14 space-y-14"
             >
@@ -183,7 +185,7 @@ export function CheckoutPage() {
                     <input
                       id="checkout-name"
                       name="name"
-                      autoComplete="name"
+                      autoComplete="shipping name"
                       required
                       value={details.name}
                       onChange={(event) => setField('name', event.target.value)}
@@ -207,9 +209,10 @@ export function CheckoutPage() {
                   <Field id="checkout-telephone" label="Telephone">
                     <input
                       id="checkout-telephone"
-                      name="telephone"
+                      name="tel"
                       type="tel"
-                      autoComplete="tel"
+                      inputMode="tel"
+                      autoComplete="shipping tel"
                       required
                       value={details.telephone}
                       onChange={(event) => setField('telephone', event.target.value)}
@@ -227,8 +230,8 @@ export function CheckoutPage() {
                   <Field id="checkout-line1" label="Address">
                     <input
                       id="checkout-line1"
-                      name="line1"
-                      autoComplete="address-line1"
+                      name="address-line1"
+                      autoComplete="shipping address-line1"
                       required
                       value={details.line1}
                       onChange={(event) => setField('line1', event.target.value)}
@@ -238,8 +241,8 @@ export function CheckoutPage() {
                   <Field id="checkout-line2" label="Flat, building (optional)">
                     <input
                       id="checkout-line2"
-                      name="line2"
-                      autoComplete="address-line2"
+                      name="address-line2"
+                      autoComplete="shipping address-line2"
                       value={details.line2}
                       onChange={(event) => setField('line2', event.target.value)}
                       className={fieldClass}
@@ -249,8 +252,8 @@ export function CheckoutPage() {
                     <Field id="checkout-city" label="City">
                       <input
                         id="checkout-city"
-                        name="city"
-                        autoComplete="address-level2"
+                        name="address-level2"
+                        autoComplete="shipping address-level2"
                         required
                         value={details.city}
                         onChange={(event) => setField('city', event.target.value)}
@@ -260,8 +263,8 @@ export function CheckoutPage() {
                     <Field id="checkout-postal" label="Postcode">
                       <input
                         id="checkout-postal"
-                        name="postalCode"
-                        autoComplete="postal-code"
+                        name="postal-code"
+                        autoComplete="shipping postal-code"
                         required
                         value={details.postalCode}
                         onChange={(event) => setField('postalCode', event.target.value)}
@@ -273,8 +276,8 @@ export function CheckoutPage() {
                     <Field id="checkout-region" label="County / region (optional)">
                       <input
                         id="checkout-region"
-                        name="region"
-                        autoComplete="address-level1"
+                        name="address-level1"
+                        autoComplete="shipping address-level1"
                         value={details.region}
                         onChange={(event) => setField('region', event.target.value)}
                         className={fieldClass}
@@ -284,7 +287,7 @@ export function CheckoutPage() {
                       <select
                         id="checkout-country"
                         name="country"
-                        autoComplete="country"
+                        autoComplete="shipping country"
                         required
                         value={details.country}
                         onChange={(event) =>

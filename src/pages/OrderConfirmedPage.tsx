@@ -27,11 +27,15 @@ function keepAccountHref(email: string | null) {
 }
 
 function visitHrefFor(order: CheckoutOrder) {
+  const query = new URLSearchParams()
   const first = order.lines.find((line) => line.productId)
-  if (!first?.productId) return '/visit'
-  const query = new URLSearchParams({ piece: first.productId })
-  if (first.size && first.size > 0) query.set('size', String(first.size))
-  return `/visit?${query.toString()}`
+  if (first?.productId) query.set('piece', first.productId)
+  if (first?.size && first.size > 0) query.set('size', String(first.size))
+  if (order.customerName) query.set('name', order.customerName.slice(0, 80))
+  if (order.customerEmail) query.set('email', order.customerEmail)
+  if (order.customerPhone) query.set('tel', order.customerPhone)
+  const qs = query.toString()
+  return qs ? `/visit?${qs}` : '/visit'
 }
 
 function ReservedName({ line }: { line: CheckoutOrder['lines'][number] }) {

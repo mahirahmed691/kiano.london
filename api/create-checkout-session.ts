@@ -3,6 +3,7 @@ import { getProduct, thobeSizes } from '../src/data/products.js'
 import {
   parseCheckoutDetails,
   shippingCountryCodes,
+  asE164,
   type CheckoutDetails,
 } from '../src/data/shipping.js'
 import { clerkUserIdFrom } from './_lib/clerk.js'
@@ -35,14 +36,15 @@ function stripeAddress(details: CheckoutDetails) {
 
 async function upsertCustomer(stripe: Stripe, details: CheckoutDetails) {
   const existing = await stripe.customers.list({ email: details.email, limit: 1 })
+  const phone = asE164(details.telephone, details.country)
   const payload: Stripe.CustomerCreateParams = {
     name: details.name,
     email: details.email,
-    phone: details.telephone,
+    phone,
     address: stripeAddress(details),
     shipping: {
       name: details.name,
-      phone: details.telephone,
+      phone,
       address: stripeAddress(details),
     },
     metadata: details.note ? { note: details.note } : undefined,

@@ -114,6 +114,7 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
           title: 'A size is back on the line',
           body: `${name}, size ${line.size} · ${after} remaining.`,
           href: '/admin/cuts',
+          productIds: [line.product_id],
         })
       }
     }
@@ -124,6 +125,11 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
       SELECT description FROM order_lines WHERE order_id = ${order.id} ORDER BY id LIMIT 1
     `) as { description: string }[]
   )[0]
+  const cutIds = (
+    (await sql`
+      SELECT DISTINCT product_id FROM order_lines WHERE order_id = ${order.id}
+    `) as { product_id: string }[]
+  ).map((row) => row.product_id)
   const cutName = first?.description || 'a cut'
   const full = isFullyReturned(next.amount_pence, next.refunded_pence)
 
@@ -137,6 +143,7 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
         ? `${cutName} is no longer held against the account.`
         : `${cutName} · a part of the reservation has been returned.`,
       href: '/account',
+      productIds: cutIds,
     })
   }
 
@@ -146,6 +153,7 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
     title: full ? 'A cut has been returned' : 'A part of a cut has been returned',
     body: `${cutName} · ${next.email}`,
     href: '/admin/accounts',
+    productIds: cutIds,
   })
 
   try {

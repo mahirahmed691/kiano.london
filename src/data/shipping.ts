@@ -21,6 +21,34 @@ export function shippingCountryName(code: string | null | undefined) {
   return shippingCountries.find((country) => country.code === code)?.name ?? code
 }
 
+const dialCodes: Record<ShippingCountryCode, string> = {
+  GB: '44',
+  AE: '971',
+  SA: '966',
+  KW: '965',
+  QA: '974',
+  BH: '973',
+  OM: '968',
+  US: '1',
+  FR: '33',
+  DE: '49',
+  IT: '39',
+}
+
+export function asE164(raw: string, country: string) {
+  const trimmed = raw.trim()
+  if (!trimmed) return trimmed
+  const digits = trimmed.replace(/\D/g, '')
+  if (!digits) return trimmed
+  if (trimmed.startsWith('+')) return `+${digits}`
+  if (trimmed.startsWith('00')) return `+${digits.replace(/^00/, '')}`
+  const cc = dialCodes[country as ShippingCountryCode]
+  if (!cc) return trimmed
+  if (digits.startsWith(cc)) return `+${digits}`
+  if (digits.startsWith('0')) return `+${cc}${digits.slice(1)}`
+  return `+${cc}${digits}`
+}
+
 export type CheckoutDetails = {
   name: string
   email: string

@@ -1,8 +1,10 @@
-import { useMemo, useState, type FormEvent, type ReactNode } from 'react'
+import { useUser } from '@clerk/react'
+import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { productLineName, products, thobeSizes } from '@/data/products'
 import { site } from '@/data/site'
+import { clerkContact, clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
 
 const fieldClass =
@@ -27,11 +29,28 @@ function Field({
   )
 }
 
+function VisitMember({
+  onPrefill,
+}: {
+  onPrefill: (patch: { name: string; email: string; telephone: string }) => void
+}) {
+  const { isSignedIn, user } = useUser()
+
+  useEffect(() => {
+    if (!isSignedIn || !user) return
+    onPrefill(clerkContact(user))
+  }, [isSignedIn, onPrefill, user])
+
+  return null
+}
+
 export function AppointmentForm() {
   const [params] = useSearchParams()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [telephone, setTelephone] = useState('')
+  const [name, setName] = useState(() => params.get('name')?.trim() ?? '')
+  const [email, setEmail] = useState(() => params.get('email')?.trim() ?? '')
+  const [telephone, setTelephone] = useState(
+    () => params.get('tel')?.trim() || params.get('telephone')?.trim() || '',
+  )
   const [piece, setPiece] = useState(params.get('piece') ?? '')
   const [size, setSize] = useState(params.get('size') ?? '')
   const [note, setNote] = useState('')
@@ -39,6 +58,15 @@ export function AppointmentForm() {
   const [written, setWritten] = useState(false)
   const [kept, setKept] = useState(false)
   const [keeping, setKeeping] = useState(false)
+
+  const onPrefill = useCallback(
+    (patch: { name: string; email: string; telephone: string }) => {
+      setName((current) => current || patch.name)
+      setEmail((current) => current || patch.email)
+      setTelephone((current) => current || patch.telephone)
+    },
+    [],
+  )
 
   const selected = useMemo(
     () => products.find((item) => item.id === piece),
@@ -129,7 +157,8 @@ export function AppointmentForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
+    <form autoComplete="on" onSubmit={onSubmit} className="space-y-8">
+      {clerkEnabled ? <VisitMember onPrefill={onPrefill} /> : null}
       <div className="grid gap-8 sm:grid-cols-2">
         <Field id="visit-name" label="Name">
           <input
@@ -159,8 +188,9 @@ export function AppointmentForm() {
       <Field id="visit-telephone" label="Telephone (optional)">
         <input
           id="visit-telephone"
-          name="telephone"
+          name="tel"
           type="tel"
+          inputMode="tel"
           autoComplete="tel"
           value={telephone}
           onChange={(event) => setTelephone(event.target.value)}

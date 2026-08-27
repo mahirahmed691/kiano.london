@@ -13,6 +13,7 @@ import { orderReference, returnLetterHref } from '@/lib/checkout'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { WordPlates } from '@/components/notices/WordPlates'
 import { formatNoticeWhen } from '@/lib/word'
 import { useHouseApp } from '@/lib/shell'
 import { useWord } from '@/lib/word-state'
@@ -230,18 +231,25 @@ function AccountWord() {
       <ul className="mt-6 divide-y divide-rule border-t border-ink">
         {notices.slice(0, 8).map((notice) => (
           <li key={notice.id} className="py-6">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+              {formatNoticeWhen(notice.createdAt)}
+              {notice.audience === 'admin' ? ' · Ledger' : ''}
+            </p>
+            <WordPlates
+              notice={notice}
+              className="mt-4"
+              onOpen={() => {
+                if (!notice.read) void markRead(notice.id)
+              }}
+            />
             <Link
               to={notice.href || '/account'}
-              className="block transition-opacity hover:opacity-70"
+              className="mt-4 block transition-opacity hover:opacity-70"
               onClick={() => {
                 if (!notice.read) void markRead(notice.id)
               }}
             >
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                {formatNoticeWhen(notice.createdAt)}
-                {notice.audience === 'admin' ? ' · Ledger' : ''}
-              </p>
-              <p className={cn('mt-2 font-display text-2xl font-light', notice.read && 'opacity-55')}>
+              <p className={cn('font-display text-2xl font-light', notice.read && 'opacity-55')}>
                 {notice.title}
               </p>
               <p className="mt-2 text-[15px] font-light text-ink-soft">{notice.body}</p>

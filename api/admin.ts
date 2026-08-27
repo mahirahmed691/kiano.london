@@ -361,6 +361,7 @@ async function postInventory(request: Request, email: string): Promise<Response>
           title: 'A size is held at none',
           body: `${cutName}, size ${size} is no longer on the line.`,
           href: '/admin/cuts',
+          productIds: [productId],
         })
       } else if (before <= 0 && row.quantity > 0) {
         await recordNotice({
@@ -369,6 +370,7 @@ async function postInventory(request: Request, email: string): Promise<Response>
           title: 'A size is back on the line',
           body: `${cutName}, size ${size} · ${row.quantity} remaining.`,
           href: '/admin/cuts',
+          productIds: [productId],
         })
       }
     }
@@ -901,6 +903,11 @@ async function postWork(request: Request): Promise<Response> {
       const copy = workCopy[stage]
       const bodyLine =
         stage === 'sent' ? dispatchLine(carrier, tracking) : copy.memberBody
+      const cuts = (
+        (await sql`
+          SELECT DISTINCT product_id FROM order_lines WHERE order_id = ${orderId}
+        `) as { product_id: string }[]
+      ).map((line) => line.product_id)
       await recordNotice({
         audience: 'member',
         clerkUserId: row.clerk_user_id,
@@ -908,6 +915,7 @@ async function postWork(request: Request): Promise<Response> {
         title: copy.memberTitle,
         body: bodyLine,
         href: '/account',
+        productIds: cuts,
       })
     }
 

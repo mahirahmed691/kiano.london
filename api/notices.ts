@@ -1,7 +1,7 @@
 import { adminEmailFor } from './_lib/admin.js'
 import { clerkUserIdFrom } from './_lib/clerk.js'
 import { withDb } from './_lib/db.js'
-import { houseHref, isExpoPushToken } from './_lib/notices.js'
+import { houseHref, isExpoPushToken, parsedProductIds } from './_lib/notices.js'
 
 type NoticeRow = {
   id: number
@@ -10,6 +10,7 @@ type NoticeRow = {
   title: string
   body: string
   href: string
+  product_ids: string | null
   created_at: string | Date
   read_at: string | Date | null
 }
@@ -26,6 +27,7 @@ function asNotice(row: NoticeRow) {
     title: row.title,
     body: row.body,
     href: houseHref(row.href),
+    productIds: parsedProductIds(row.product_ids),
     createdAt: asIso(row.created_at),
     read: Boolean(row.read_at),
   }
@@ -51,7 +53,7 @@ export async function GET(request: Request) {
     const rows = (
       gate.admin
         ? await sql`
-            SELECT n.id, n.audience, n.kind, n.title, n.body, n.href, n.created_at, r.read_at
+            SELECT n.id, n.audience, n.kind, n.title, n.body, n.href, n.product_ids, n.created_at, r.read_at
             FROM notices n
             LEFT JOIN notice_reads r
               ON r.notice_id = n.id AND r.clerk_user_id = ${gate.clerkUserId}
@@ -62,7 +64,7 @@ export async function GET(request: Request) {
             LIMIT 40
           `
         : await sql`
-            SELECT n.id, n.audience, n.kind, n.title, n.body, n.href, n.created_at, r.read_at
+            SELECT n.id, n.audience, n.kind, n.title, n.body, n.href, n.product_ids, n.created_at, r.read_at
             FROM notices n
             LEFT JOIN notice_reads r
               ON r.notice_id = n.id AND r.clerk_user_id = ${gate.clerkUserId}

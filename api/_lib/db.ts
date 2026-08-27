@@ -190,6 +190,7 @@ async function migrate(db: Sql) {
   `
   await db`CREATE INDEX IF NOT EXISTS notices_member_idx ON notices (clerk_user_id, created_at DESC)`
   await db`CREATE INDEX IF NOT EXISTS notices_audience_idx ON notices (audience, created_at DESC)`
+  await db`ALTER TABLE notices ADD COLUMN IF NOT EXISTS product_ids TEXT NOT NULL DEFAULT ''`
   await db`
     CREATE TABLE IF NOT EXISTS notice_reads (
       notice_id INTEGER NOT NULL REFERENCES notices(id) ON DELETE CASCADE,

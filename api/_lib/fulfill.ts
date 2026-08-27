@@ -159,6 +159,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
         title: 'A size is held at none',
         body: `${name}, size ${line.size} is no longer on the line.`,
         href: '/admin/cuts',
+        productIds: [line.productId],
       })
     }
   }
@@ -201,6 +202,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     ) + (line.quantity > 1 ? ` × ${line.quantity}` : ''),
   )
   const reservedLine = reserved.join(' · ') || 'A cut'
+  const productIds = lines.map((line) => line.productId)
 
   if (memberId) {
     await recordNotice({
@@ -210,6 +212,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
       title: 'The cut is reserved',
       body: `${reservedLine}. It is held against the account.`,
       href: '/account',
+      productIds,
     })
   }
 
@@ -219,6 +222,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     title: 'A cut is reserved',
     body: `${reservedLine} · ${email}`,
     href: '/admin/invoices',
+    productIds,
   })
 
   const reference = reservationReference(session.id)

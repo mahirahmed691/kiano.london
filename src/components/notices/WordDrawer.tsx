@@ -5,6 +5,7 @@ import { Monogram } from '@/components/brand/Monogram'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
 import { clerkEnabled } from '@/lib/clerk'
+import { WordPlates } from '@/components/notices/WordPlates'
 import { formatNoticeWhen } from '@/lib/word'
 import { useWord } from '@/lib/word-state'
 
@@ -87,6 +88,14 @@ export function WordDrawer() {
 
                 return (
                   <li key={notice.id} className="border-b border-rule py-6 first:pt-4">
+                    <WordPlates
+                      notice={notice}
+                      className="mb-4"
+                      onOpen={() => {
+                        if (!notice.read) void markRead(notice.id)
+                        setOpen(false)
+                      }}
+                    />
                     {notice.href ? (
                       <Link
                         to={notice.href}

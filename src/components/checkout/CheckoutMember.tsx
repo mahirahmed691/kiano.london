@@ -2,9 +2,10 @@ import { useAuth, useUser } from '@clerk/react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import type { CheckoutDetails } from '@/lib/checkout'
+import { clerkContact } from '@/lib/clerk'
 
 type Props = {
-  onPrefill: (patch: Pick<CheckoutDetails, 'name' | 'email'>) => void
+  onPrefill: (patch: Pick<CheckoutDetails, 'name' | 'email' | 'telephone'>) => void
   onToken: (getToken: () => Promise<string | null>) => void
 }
 
@@ -18,10 +19,7 @@ export function CheckoutMember({ onPrefill, onToken }: Props) {
 
   useEffect(() => {
     if (!isSignedIn || !user) return
-    onPrefill({
-      name: user.fullName || '',
-      email: user.primaryEmailAddress?.emailAddress || '',
-    })
+    onPrefill(clerkContact(user))
   }, [isSignedIn, onPrefill, user])
 
   if (isSignedIn) {
