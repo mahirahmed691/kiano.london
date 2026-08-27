@@ -202,7 +202,7 @@ export const fieldHouses: CompetitorHouse[] = [
     id: 'al-qamees',
     name: 'Al Qamees',
     url: 'https://alqamees.com/collection/emirati-omani/',
-    origin: 'Web, worldwide; WhatsApp till',
+    origin: 'Web, worldwide; WhatsApp payment',
     channels: ['web', 'whatsapp'],
     garment: 'mixed-modest',
     garmentLabel: 'Emirati and Omani kandura, jalabiya, custom qamees',

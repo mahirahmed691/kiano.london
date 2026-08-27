@@ -24,7 +24,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Bag and checkout',
     completion: 88,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation waits for the till, then offers the account so the cut can be kept. A paid session now writes a house letter as well as Word. Stripe is the till; live keys are not on Vercel yet.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation waits for payment, then offers the account so the cut can be kept. A paid session now writes a house letter as well as Word. Live keys are not on Vercel yet.',
   },
   {
     name: 'Stock',
@@ -60,7 +60,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Share and search',
     completion: 82,
     status: 'complete',
-    note: 'Open Graph, canonical URLs, share bots get a document. No on-site search.',
+    note: 'Open Graph, canonical URLs, share bots get a document. Home names the line. Shop and collection keep colour in the address. No type-ahead search.',
   },
   {
     name: 'Cloth at touching distance',
@@ -84,7 +84,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when the till is returned.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when a reservation is returned.',
   },
   {
     name: 'Analytics',
@@ -234,7 +234,7 @@ export const houseVisualAudit = [
   {
     surface: 'Checkout',
     finding:
-      'Ledger voice on the site; Stripe is the next page. That hop will always feel like software. Keep copy short.',
+      'Ledger voice on the site; Stripe takes payment. That hop will always feel like software. Keep copy short.',
     rank: 'Hold',
   },
   {

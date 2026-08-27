@@ -156,7 +156,9 @@ export function reservationLetterText(input: {
 
 export function returnLetterHtml(input: { cut: string; full: boolean }) {
   const cut = escapeHtml(input.cut)
-  const title = input.full ? 'The till has been returned.' : 'Part of the till has been returned.'
+  const title = input.full
+    ? 'The reservation has been returned.'
+    : 'Part of the reservation has been returned.'
   const line = input.full
     ? `${cut} is no longer held against the account.`
     : `A part of the reservation for ${cut} has been returned.`

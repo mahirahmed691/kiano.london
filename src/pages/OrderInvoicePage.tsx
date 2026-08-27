@@ -94,7 +94,7 @@ export function OrderInvoicePage() {
             This record could not be found.
           </Display>
           <Body className="mt-8">
-            Open it from the confirmation, with the session the till returned.
+            Open it from the confirmation, with the session from payment.
           </Body>
           <div className="mt-12">
             <TextLink to="/">Return to the house</TextLink>

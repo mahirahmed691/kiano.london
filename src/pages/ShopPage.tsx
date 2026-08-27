@@ -1,25 +1,21 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { LookbookStrip } from '@/components/editorial/LookbookStrip'
+import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
-import {
-  jubbahColours,
-  jubbahs,
-  productPath,
-  type ProductColour,
-} from '@/data/products'
-import { cn } from '@/lib/cn'
+import { jubbahColours, jubbahs, productPath } from '@/data/products'
+import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
-const filters: Array<'All' | ProductColour> = ['All', ...jubbahColours]
+const filters = ['All', ...jubbahColours] as const
 
 export function ShopPage() {
-  const [colour, setColour] = useState<'All' | ProductColour>('All')
+  const [colour, setColour] = useColourFilter(jubbahColours)
   const shown = useMemo(
     () => (colour === 'All' ? jubbahs : jubbahs.filter((item) => item.colour === colour)),
     [colour],
@@ -67,33 +63,25 @@ export function ShopPage() {
             </p>
           </div>
 
-          <div className="mb-12 flex flex-wrap gap-x-8 gap-y-3 md:mb-16">
-            {filters.map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setColour(value)}
-                className={cn(
-                  'relative text-[11px] uppercase tracking-[0.22em] transition-opacity',
-                  colour === value ? 'opacity-100' : 'opacity-45 hover:opacity-100',
-                  colour === value &&
-                    'after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:bg-current',
-                )}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
+          <ColourFilter
+            value={colour}
+            options={[...filters]}
+            onChange={setColour}
+          />
 
-          <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-            {shown.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                to={productPath(product)}
-              />
-            ))}
-          </div>
+          {shown.length === 0 ? (
+            <p className="text-[15px] font-light text-ink-soft">No jubbah in this colour.</p>
+          ) : (
+            <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+              {shown.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  to={productPath(product)}
+                />
+              ))}
+            </div>
+          )}
         </Container>
         <LookbookStrip
           className="mt-24 md:mt-32"

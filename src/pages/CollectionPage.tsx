@@ -1,25 +1,21 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
-import { Button } from '@/components/ui/Button'
+import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import {
-  productColours,
-  productPath,
-  thobes,
-  type ProductColour,
-} from '@/data/products'
+import { productColours, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
-import { cn } from '@/lib/cn'
+import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
-const filters: Array<'All' | ProductColour> = ['All', ...productColours]
+const filters = ['All', ...productColours] as const
 
 export function CollectionPage() {
-  const [colour, setColour] = useState<'All' | ProductColour>('All')
+  const [colour, setColour] = useColourFilter(productColours)
   const shown = useMemo(
     () => (colour === 'All' ? thobes : thobes.filter((item) => item.colour === colour)),
     [colour],
@@ -67,41 +63,33 @@ export function CollectionPage() {
             </p>
           </div>
 
-          <div className="mb-12 flex flex-wrap gap-x-8 gap-y-3 md:mb-16">
-            {filters.map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setColour(value)}
-                className={cn(
-                  'relative text-[11px] uppercase tracking-[0.22em] transition-opacity',
-                  colour === value ? 'opacity-100' : 'opacity-45 hover:opacity-100',
-                  colour === value &&
-                    'after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:bg-current',
-                )}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
+          <ColourFilter
+            value={colour}
+            options={[...filters]}
+            onChange={setColour}
+          />
 
-          <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-12">
-            {shown.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                to={productPath(product)}
-                index={String(index + 1).padStart(2, '0')}
-                className={
-                  index === 0
-                    ? 'sm:col-span-2 lg:col-span-7'
-                    : index === 1
-                      ? 'lg:col-span-5'
-                      : 'lg:col-span-4'
-                }
-              />
-            ))}
-          </div>
+          {shown.length === 0 ? (
+            <p className="text-[15px] font-light text-ink-soft">No thobe in this colour.</p>
+          ) : (
+            <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-12">
+              {shown.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  to={productPath(product)}
+                  index={String(index + 1).padStart(2, '0')}
+                  className={
+                    index === 0
+                      ? 'sm:col-span-2 lg:col-span-7'
+                      : index === 1
+                        ? 'lg:col-span-5'
+                        : 'lg:col-span-4'
+                  }
+                />
+              ))}
+            </div>
+          )}
         </Container>
       </Section>
 
@@ -116,8 +104,9 @@ export function CollectionPage() {
                 as Layl. Fittings are by appointment. Come if you wish to see a cloth
                 before it is reserved.
               </Body>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/visit">Visit by appointment</Button>
+                <TextLink to="/shop">The Shop</TextLink>
               </div>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">

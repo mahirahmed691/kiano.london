@@ -23,6 +23,11 @@ import { usePageMeta } from '@/lib/usePageMeta'
 const fieldClass =
   'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
 
+function asPaymentError(message?: string) {
+  if (message && !/till/i.test(message)) return message
+  return 'Payment could not be opened. Write to the atelier.'
+}
+
 function Field({
   id,
   label,
@@ -107,11 +112,11 @@ export function CheckoutPage() {
         throw new Error('The payment page could not be opened.')
       }
       if (!response.ok || !data.url) {
-        throw new Error(data.error || 'The payment page could not be opened.')
+        throw new Error(asPaymentError(data.error))
       }
       window.location.href = data.url
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'The payment page could not be opened.')
+      setError(caught instanceof Error ? caught.message : asPaymentError())
       setBusy(false)
     }
   }
@@ -125,8 +130,9 @@ export function CheckoutPage() {
             Nothing is held.
           </Display>
           <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap items-center gap-6">
             <Button to="/shop">The Shop</Button>
+            <TextLink to="/collection">The Collection</TextLink>
           </div>
         </Container>
       </Section>
@@ -415,8 +421,8 @@ export function CheckoutPage() {
                 <p className="font-display text-4xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
               <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
-                Card, Apple Pay and Google Pay on the next page. You return here when the cut
-                is reserved.
+                Pay with card, Apple Pay, or Google Pay. A confirmation follows when the cut is
+                reserved.
               </p>
               {error ? (
                 <p className="mt-5 hidden text-[14px] font-light text-ink lg:block" role="alert">

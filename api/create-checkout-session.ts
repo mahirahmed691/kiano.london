@@ -134,7 +134,7 @@ async function createSession(request: Request) {
   const secret = process.env.STRIPE_SECRET_KEY
   if (!secret || secret === 'undefined') {
     return Response.json(
-      { error: 'The till could not be opened. Write to the atelier.' },
+      { error: 'Payment could not be opened. Write to the atelier.' },
       { status: 503 },
     )
   }

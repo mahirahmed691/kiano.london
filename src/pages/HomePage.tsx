@@ -5,6 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
+import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -73,10 +74,54 @@ export function HomePage() {
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/shop">The Shop</Button>
+                <TextLink to="/collection">The Collection</TextLink>
                 <TextLink to="/visit">Visit by appointment</TextLink>
               </div>
             </Reveal>
           </div>
+        </Container>
+      </Section>
+
+      <Section className="border-y border-rule">
+        <Container>
+          <Reveal>
+            <Eyebrow>The line</Eyebrow>
+            <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Shop</p>
+                <ul className="mt-5 space-y-3">
+                  {jubbahs.map((piece) => (
+                    <li key={piece.id}>
+                      <Link
+                        to={productPath(piece)}
+                        className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
+                      >
+                        {productLineName(piece)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Collection</p>
+                <ol className="mt-5 space-y-3">
+                  {thobes.map((piece, index) => (
+                    <li key={piece.id} className="flex items-baseline gap-4">
+                      <span className="w-6 shrink-0 text-[11px] uppercase tracking-[0.22em] text-stone">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <Link
+                        to={productPath(piece)}
+                        className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
+                      >
+                        {piece.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </Reveal>
         </Container>
       </Section>
 
@@ -94,7 +139,9 @@ export function HomePage() {
             <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-16 md:px-12 lg:px-16">
               <Link to={plate.to} className="inline-block text-ivory transition-opacity hover:opacity-80">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">{plate.kicker}</p>
-                <p className="mt-2 font-display text-3xl font-light md:text-4xl">{plate.name}</p>
+                <p className="mt-2 font-display text-3xl font-light md:text-4xl">
+                  The {plate.name} Thobe
+                </p>
               </Link>
             </figcaption>
           </figure>

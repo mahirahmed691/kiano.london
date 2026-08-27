@@ -8,7 +8,7 @@ export function AdminPricesPage() {
         The line in sterling.
       </Display>
       <Body className="mt-6">
-        VAT-inclusive. The shop and the till read the catalogue. This page does not overwrite
+        VAT-inclusive. The shop and Stripe read the catalogue. This page does not overwrite
         them.
       </Body>
       <LedgerPrices />

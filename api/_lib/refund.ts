@@ -132,7 +132,7 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
       audience: 'member',
       clerkUserId: next.clerk_user_id,
       kind: 'return',
-      title: full ? 'The till has been returned' : 'Part of the till has been returned',
+      title: full ? 'The reservation has been returned' : 'Part of the reservation has been returned',
       body: full
         ? `${cutName} is no longer held against the account.`
         : `${cutName} · a part of the reservation has been returned.`,
@@ -152,8 +152,8 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
     await sendMail({
       to: next.email,
       subject: full
-        ? 'The till has been returned — Kiano London'
-        : 'Part of the till has been returned — Kiano London',
+        ? 'The reservation has been returned — Kiano London'
+        : 'Part of the reservation has been returned — Kiano London',
       text: returnLetterText({ cut: cutName, full }),
       html: returnLetterHtml({ cut: cutName, full }),
       idempotencyKey: `return/${next.id}/${next.refunded_pence}`,

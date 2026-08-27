@@ -176,7 +176,7 @@ export function LedgerWork() {
                 </ul>
                 <p className="mt-4 text-[14px] font-light text-ink-soft">
                   {returned
-                    ? 'The till has been returned. The size is back on the line.'
+                    ? 'The reservation has been returned. The size is back on the line.'
                     : stage === 'sent'
                       ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
                       : workCopy[stage].line}

@@ -171,9 +171,9 @@ function AccountOrders() {
           </ol>
           <p className="mt-3 text-[14px] font-light text-ink-soft">
             {isFullyReturned(order.amountPence, order.refundedPence ?? 0)
-              ? 'The till has been returned.'
+              ? 'The reservation has been returned.'
               : isPartReturned(order.amountPence, order.refundedPence ?? 0)
-                ? `The till has been returned in part · ${formatGbp(order.refundedPence ?? 0)}.`
+                ? `The reservation has been returned in part · ${formatGbp(order.refundedPence ?? 0)}.`
                 : asWorkStage(order.stage) === 'sent'
                   ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
                   : workCopy[asWorkStage(order.stage)].line}

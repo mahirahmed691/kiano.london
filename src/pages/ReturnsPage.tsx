@@ -35,9 +35,9 @@ export function ReturnsPage() {
             <Body className="mt-3">{packingNote}</Body>
           </li>
           <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The till</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The refund</p>
             <Body className="mt-3">
-              A return, if agreed, is a refund in Stripe. When Stripe has returned the till, the
+              A return, if agreed, is a refund in Stripe. When Stripe has returned the payment, the
               house book is written and the size is put back on the line. Do not open a dispute
               before you have written.
             </Body>

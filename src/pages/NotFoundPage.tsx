@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Button, TextLink } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { Display, Body } from '@/components/ui/Heading'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -18,12 +18,11 @@ export function NotFoundPage() {
           This room is empty.
         </Display>
         <Body className="mt-6">The page you asked for is not under Kiano London.</Body>
-        <Link
-          to="/"
-          className="mt-10 inline-flex text-[11px] uppercase tracking-[0.22em] underline underline-offset-4"
-        >
-          Return home
-        </Link>
+        <div className="mt-10 flex flex-wrap items-center gap-6">
+          <Button to="/shop">The Shop</Button>
+          <TextLink to="/collection">The Collection</TextLink>
+          <TextLink to="/visit">Visit</TextLink>
+        </div>
       </Container>
     </section>
   )
