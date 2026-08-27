@@ -55,7 +55,7 @@ export async function GET(request: Request): Promise<Response> {
   const secret = process.env.STRIPE_SECRET_KEY
   if (!secret || secret === 'undefined') {
     return Response.json(
-      { error: 'Payment is not configured. Add STRIPE_SECRET_KEY to the environment.' },
+      { error: 'The reservation could not be read.' },
       { status: 503 },
     )
   }

@@ -169,7 +169,7 @@ export function OrderConfirmedPage() {
             </Body>
             {order?.customerEmail ? (
               <Body className="mt-6">
-                A receipt has been sent to {order.customerEmail}.
+                A receipt, and a letter from the house, have been sent to {order.customerEmail}.
               </Body>
             ) : null}
             <div className="mt-12 flex flex-wrap items-center gap-6">

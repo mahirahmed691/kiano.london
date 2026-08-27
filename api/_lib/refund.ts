@@ -2,6 +2,7 @@ import type Stripe from 'stripe'
 import { getProduct, productLineName } from '../../src/data/products.js'
 import { isFullyReturned } from '../../src/lib/work.js'
 import { withDb } from './db.js'
+import { returnLetterHtml, returnLetterText, sendMail } from './mail.js'
 import { recordNotice } from './notices.js'
 
 type OrderRow = {
@@ -146,4 +147,18 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
     body: `${cutName} · ${next.email}`,
     href: '/admin/accounts',
   })
+
+  try {
+    await sendMail({
+      to: next.email,
+      subject: full
+        ? 'The till has been returned — Kiano London'
+        : 'Part of the till has been returned — Kiano London',
+      text: returnLetterText({ cut: cutName, full }),
+      html: returnLetterHtml({ cut: cutName, full }),
+      idempotencyKey: `return/${next.id}/${next.refunded_pence}`,
+    })
+  } catch (caught) {
+    console.error(caught)
+  }
 }

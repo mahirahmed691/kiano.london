@@ -24,7 +24,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Bag and checkout',
     completion: 88,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation waits for the till, then offers the account so the cut can be kept. Stripe is the till.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation waits for the till, then offers the account so the cut can be kept. A paid session now writes a house letter as well as Word. Stripe is the till; live keys are not on Vercel yet.',
   },
   {
     name: 'Stock',
@@ -42,13 +42,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'The list',
     completion: 80,
     status: 'partial',
-    note: 'Subscribe and confirm via Resend. The ledger reads confirmed and held. RESEND_API_KEY is not on Vercel yet. Domain must be verified for letters to leave.',
+    note: 'Subscribe and confirm via Resend. The ledger reads confirmed and held. RESEND_API_KEY is on Vercel. kiano.london is still pending DNS (resend._domainkey, send MX, send SPF).',
   },
   {
     name: 'Visit',
     completion: 90,
     status: 'partial',
-    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. Confirmation still needs Resend. Held, not booked. No calendar widget.',
+    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. Confirmation letters wait on kiano.london DNS. Held, not booked. No calendar widget.',
   },
   {
     name: 'Installable house',
@@ -96,17 +96,17 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Returns and refunds',
     completion: 78,
     status: 'partial',
-    note: 'House copy at /returns. A full Stripe refund is written on the book and restocks the size. Partial refunds are pence only. The atelier still agrees the return by letter.',
+    note: 'House copy at /returns. A full Stripe refund is written on the book, restocks the size, and writes to the email on the reservation. Partial refunds are pence and a letter. The atelier still agrees the return by letter.',
   },
 ]
 
 export const houseIntegrations = [
   {
     name: 'Stripe Checkout',
-    state: 'Live',
+    state: 'Wired',
     hook: 'POST /api/stripe-webhook',
     events: 'checkout.session.completed, checkout.session.async_payment_succeeded, charge.refunded',
-    note: 'Verifies the Stripe signature. Writes the order, takes stock, links a member if the session carried one. A full refund restocks the size and is written as returned pence.',
+    note: 'Verifies the Stripe signature. Writes the order, takes stock, links a member if the session carried one, and sends a house letter. A full refund restocks the size, is written as returned pence, and writes as well. Live Kiano London is linked; charges are not enabled until onboarding finishes, and STRIPE_SECRET_KEY is not on Vercel. Stripe does not export the dashboard secret through the API.',
   },
   {
     name: 'Clerk',
@@ -127,8 +127,8 @@ export const houseIntegrations = [
     name: 'Resend',
     state: 'Wired',
     hook: 'None',
-    events: 'List confirm letters, visit confirmation (held, not booked)',
-    note: 'From address must be a verified domain. RESEND_API_KEY is not on Vercel yet. Until then the list holds unconfirmed rows.',
+    events: 'List confirm letters, visit confirmation (held, not booked), reservation and return letters',
+    note: 'From address must be a verified domain. RESEND_API_KEY is on Vercel. kiano.london verification is pending DNS.',
   },
   {
     name: 'Expo push',
@@ -259,9 +259,9 @@ export const houseVisualAudit = [
 
 export const houseScope = [
   'In Clerk Dashboard (production instance): add endpoint https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Put the signing secret on Vercel as CLERK_WEBHOOK_SIGNING_SECRET for Production, Preview, and Development, then redeploy.',
-  'Add RESEND_API_KEY and RESEND_FROM on Vercel. Verify kiano.london (or the from-domain) in Resend so list and visit letters leave.',
+  'Add the Resend DNS on kiano.london (resend._domainkey TXT, send MX, send SPF) so list, visit, and reservation letters leave. RESEND_API_KEY is already on Vercel.',
   'Cut a new iOS EAS production archive so TestFlight holds Word as a mark, and so later shell JS can arrive without another store pass. Add FCM to EAS before an Android store build.',
-  'In Stripe Dashboard, listen to charge.refunded on the same webhook as checkout.session.completed (POST /api/stripe-webhook).',
+  'In Stripe Dashboard, finish Kiano London live onboarding (business, representative, bank, terms) so charges can be taken. Copy the live restricted key into Vercel as STRIPE_SECRET_KEY. Add endpoint https://www.kiano.london/api/stripe-webhook for checkout.session.completed, checkout.session.async_payment_succeeded, and charge.refunded, then put STRIPE_WEBHOOK_SECRET on Vercel.',
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'Photographs of the bag, tissue, and box, so packing is an object.',
 ] as const

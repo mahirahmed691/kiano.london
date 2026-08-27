@@ -108,6 +108,74 @@ export function visitLetterText(input: { name: string; piece: string; size: stri
   ].join('\n\n')
 }
 
+function houseOrigin() {
+  return (process.env.SITE_URL || 'https://www.kiano.london').replace(/\/$/, '')
+}
+
+export function reservationReference(id: string) {
+  return id.slice(-8).toUpperCase()
+}
+
+export function reservationLetterHtml(input: {
+  name: string
+  cut: string
+  reference: string
+  invoiceUrl: string
+  accountUrl: string
+}) {
+  const name = input.name.trim()
+  const cut = escapeHtml(input.cut)
+  const reference = escapeHtml(input.reference)
+  const invoiceUrl = escapeHtml(input.invoiceUrl)
+  const accountUrl = escapeHtml(input.accountUrl)
+  const open = name ? `${escapeHtml(name)}, payment holds the cloth.` : 'Payment holds the cloth.'
+  return letterFrame(
+    'The cut is reserved.',
+    `<p style="margin:0;">${open} ${cut}. Reference ${reference}.</p><p style="margin:16px 0 0;">Cloth is cut from the house block in four to eight weeks.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">A record of the cut</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function reservationLetterText(input: {
+  name: string
+  cut: string
+  reference: string
+  invoiceUrl: string
+  accountUrl: string
+}) {
+  return [
+    input.name.trim() ? `${input.name.trim()}, payment holds the cloth.` : 'Payment holds the cloth.',
+    `${input.cut}.`,
+    `Reference ${input.reference}.`,
+    'Cloth is cut from the house block in four to eight weeks.',
+    `A record of the cut: ${input.invoiceUrl}`,
+    `Account: ${input.accountUrl}`,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
+export function returnLetterHtml(input: { cut: string; full: boolean }) {
+  const cut = escapeHtml(input.cut)
+  const title = input.full ? 'The till has been returned.' : 'Part of the till has been returned.'
+  const line = input.full
+    ? `${cut} is no longer held against the account.`
+    : `A part of the reservation for ${cut} has been returned.`
+  return letterFrame(title, `<p style="margin:0;">${line}</p>`, `Questions: ${site.email}.`)
+}
+
+export function returnLetterText(input: { cut: string; full: boolean }) {
+  return [
+    input.full
+      ? `${input.cut} is no longer held against the account.`
+      : `A part of the reservation for ${input.cut} has been returned.`,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
+export function housePath(path: string) {
+  return `${houseOrigin()}${path.startsWith('/') ? path : `/${path}`}`
+}
+
 export function confirmLetterHtml(url: string) {
   return `<!doctype html>
 <html lang="en">

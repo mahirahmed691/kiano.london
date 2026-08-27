@@ -2,6 +2,13 @@ import type Stripe from 'stripe'
 import { getProduct, productLineName, thobeSizes } from '../../src/data/products.js'
 import { withDb } from './db.js'
 import { ensureInvoiceForOrder } from './invoice.js'
+import {
+  housePath,
+  reservationLetterHtml,
+  reservationLetterText,
+  reservationReference,
+  sendMail,
+} from './mail.js'
 import { recordNotice } from './notices.js'
 
 const allowedSizes = new Set<number>(thobeSizes)
@@ -210,4 +217,30 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     body: `${cutName}, ${sizeLine}${more} · ${email}`,
     href: '/admin/invoices',
   })
+
+  const reference = reservationReference(session.id)
+  const guestName = name?.trim() || ''
+  try {
+    await sendMail({
+      to: email,
+      subject: 'The cut is reserved — Kiano London',
+      text: reservationLetterText({
+        name: guestName,
+        cut: `${cutName}, ${sizeLine}${more}`,
+        reference,
+        invoiceUrl: housePath(`/order/invoice?session_id=${encodeURIComponent(session.id)}`),
+        accountUrl: housePath('/account'),
+      }),
+      html: reservationLetterHtml({
+        name: guestName,
+        cut: `${cutName}, ${sizeLine}${more}`,
+        reference,
+        invoiceUrl: housePath(`/order/invoice?session_id=${encodeURIComponent(session.id)}`),
+        accountUrl: housePath('/account'),
+      }),
+      idempotencyKey: `reservation/${session.id}`,
+    })
+  } catch (caught) {
+    console.error(caught)
+  }
 }
