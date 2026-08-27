@@ -1,4 +1,5 @@
 import Stripe from 'stripe'
+import { reservedCutName } from '../src/data/products.js'
 import {
   paymentStatusOf,
   type CheckoutOrder,
@@ -24,6 +25,29 @@ function addressFrom(
   }
 }
 
+function asRecord(value: unknown): Record<string, string> {
+  if (!value || typeof value !== 'object') return {}
+  const record: Record<string, string> = {}
+  for (const [key, entry] of Object.entries(value as Record<string, unknown>)) {
+    if (typeof entry === 'string') record[key] = entry
+  }
+  return record
+}
+
+function lineLabel(line: Stripe.LineItem) {
+  const product = line.price?.product
+  const metadata =
+    product && typeof product !== 'string' && !product.deleted ? asRecord(product.metadata) : {}
+  const fromProduct =
+    product && typeof product !== 'string' && !product.deleted ? product.name : ''
+  const size = Number(metadata.size)
+  return reservedCutName(
+    metadata.product_id,
+    Number.isFinite(size) && size > 0 ? size : undefined,
+    line.description || fromProduct || 'Piece',
+  )
+}
+
 function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
   const shipping =
     addressFrom(
@@ -44,7 +68,7 @@ function toCheckoutOrder(session: Stripe.Checkout.Session): CheckoutOrder {
     shipping,
     note: session.metadata?.note || null,
     lines: lineItems.map((line) => ({
-      description: line.description ?? 'Piece',
+      description: lineLabel(line),
       quantity: line.quantity ?? 1,
       amount: line.amount_total ?? 0,
     })),

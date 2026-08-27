@@ -396,6 +396,16 @@ export function productLineName(product: Product) {
   return product.cut === 'Jubbah' ? `${product.name} · ${product.colour}` : product.name
 }
 
+export function reservedCutName(
+  productId: string | undefined,
+  size: number | undefined,
+  fallback = 'A cut',
+) {
+  const piece = getProduct(productId)
+  const name = piece ? productLineName(piece) : fallback
+  return size ? `${name}, size ${size}` : name
+}
+
 export function productPath(product: Product) {
   return product.cut === 'Jubbah' ? `/shop/${product.id}` : `/collection/${product.id}`
 }

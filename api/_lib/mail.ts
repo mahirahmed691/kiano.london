@@ -118,34 +118,38 @@ export function reservationReference(id: string) {
 
 export function reservationLetterHtml(input: {
   name: string
-  cut: string
+  lines: string[]
   reference: string
   invoiceUrl: string
   accountUrl: string
 }) {
   const name = input.name.trim()
-  const cut = escapeHtml(input.cut)
+  const cuts = (input.lines.length ? input.lines : ['A cut']).map((line) => escapeHtml(line))
   const reference = escapeHtml(input.reference)
   const invoiceUrl = escapeHtml(input.invoiceUrl)
   const accountUrl = escapeHtml(input.accountUrl)
   const open = name ? `${escapeHtml(name)}, payment holds the cloth.` : 'Payment holds the cloth.'
+  const list = cuts
+    .map((line) => `<li style="margin:0 0 8px;">${line}.</li>`)
+    .join('')
   return letterFrame(
     'The cut is reserved.',
-    `<p style="margin:0;">${open} ${cut}. Reference ${reference}.</p><p style="margin:16px 0 0;">Cloth is cut from the house block in four to eight weeks.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">A record of the cut</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
+    `<p style="margin:0;">${open}</p><ul style="margin:16px 0 0;padding:0;list-style:none;">${list}</ul><p style="margin:16px 0 0;">Reference ${reference}.</p><p style="margin:16px 0 0;">Cloth is cut from the house block in four to eight weeks.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">A record of the cut</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
     `Questions: ${site.email}.`,
   )
 }
 
 export function reservationLetterText(input: {
   name: string
-  cut: string
+  lines: string[]
   reference: string
   invoiceUrl: string
   accountUrl: string
 }) {
+  const cuts = input.lines.length ? input.lines : ['A cut']
   return [
     input.name.trim() ? `${input.name.trim()}, payment holds the cloth.` : 'Payment holds the cloth.',
-    `${input.cut}.`,
+    cuts.map((line) => `${line}.`).join('\n'),
     `Reference ${input.reference}.`,
     'Cloth is cut from the house block in four to eight weeks.',
     `A record of the cut: ${input.invoiceUrl}`,

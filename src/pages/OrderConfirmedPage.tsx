@@ -172,6 +172,22 @@ export function OrderConfirmedPage() {
                 A receipt, and a letter from the house, have been sent to {order.customerEmail}.
               </Body>
             ) : null}
+            {order && order.lines.length > 0 ? (
+              <div className="mt-10 max-w-prose lg:hidden">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Reserved</p>
+                <ul className="mt-4 border-t border-rule">
+                  {order.lines.map((line, index) => (
+                    <li
+                      key={`${line.description}-${index}`}
+                      className="border-b border-rule py-3 text-[15px] font-light leading-relaxed"
+                    >
+                      {line.description}
+                      {line.quantity > 1 ? ` × ${line.quantity}` : ''}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
             <div className="mt-12 flex flex-wrap items-center gap-6">
               {clerkEnabled ? (
                 <>

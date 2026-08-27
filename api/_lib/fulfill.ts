@@ -1,5 +1,5 @@
 import type Stripe from 'stripe'
-import { getProduct, productLineName, thobeSizes } from '../../src/data/products.js'
+import { getProduct, productLineName, reservedCutName, thobeSizes } from '../../src/data/products.js'
 import { withDb } from './db.js'
 import { ensureInvoiceForOrder } from './invoice.js'
 import {
@@ -48,7 +48,7 @@ function linesFromSession(session: Stripe.Checkout.Session): FulfillLine[] {
         size,
         quantity: Math.max(1, line.quantity ?? 1),
         amount: line.amount_total ?? 0,
-        description: line.description ?? productId,
+        description: reservedCutName(productId, size, line.description ?? productId),
       },
     ]
   })
@@ -193,11 +193,14 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     )[0]?.clerk_user_id
 
   const lines = linesFromSession(session)
-  const first = lines[0]
-  const piece = first ? getProduct(first.productId) : undefined
-  const cutName = piece ? productLineName(piece) : first?.description || 'a cut'
-  const sizeLine = first ? `size ${first.size}` : 'a size'
-  const more = lines.length > 1 ? `, and ${lines.length - 1} more` : ''
+  const reserved = lines.map((line) =>
+    reservedCutName(
+      line.productId,
+      line.size,
+      line.description,
+    ) + (line.quantity > 1 ? ` × ${line.quantity}` : ''),
+  )
+  const reservedLine = reserved.join(' · ') || 'A cut'
 
   if (memberId) {
     await recordNotice({
@@ -205,7 +208,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
       clerkUserId: memberId,
       kind: 'order',
       title: 'The cut is reserved',
-      body: `${cutName}, ${sizeLine}${more}. It is held against the account.`,
+      body: `${reservedLine}. It is held against the account.`,
       href: '/account',
     })
   }
@@ -214,7 +217,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     audience: 'admin',
     kind: 'order',
     title: 'A cut is reserved',
-    body: `${cutName}, ${sizeLine}${more} · ${email}`,
+    body: `${reservedLine} · ${email}`,
     href: '/admin/invoices',
   })
 
@@ -226,14 +229,14 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
       subject: 'The cut is reserved — Kiano London',
       text: reservationLetterText({
         name: guestName,
-        cut: `${cutName}, ${sizeLine}${more}`,
+        lines: reserved,
         reference,
         invoiceUrl: housePath(`/order/invoice?session_id=${encodeURIComponent(session.id)}`),
         accountUrl: housePath('/account'),
       }),
       html: reservationLetterHtml({
         name: guestName,
-        cut: `${cutName}, ${sizeLine}${more}`,
+        lines: reserved,
         reference,
         invoiceUrl: housePath(`/order/invoice?session_id=${encodeURIComponent(session.id)}`),
         accountUrl: housePath('/account'),
