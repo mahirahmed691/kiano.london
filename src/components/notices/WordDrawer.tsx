@@ -1,8 +1,10 @@
+import { useAuth } from '@clerk/react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Monogram } from '@/components/brand/Monogram'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
+import { clerkEnabled } from '@/lib/clerk'
 import { formatNoticeWhen } from '@/lib/word'
 import { useWord } from '@/lib/word-state'
 
@@ -54,17 +56,11 @@ export function WordDrawer() {
         </div>
 
         {notices.length === 0 ? (
-          <div className="flex flex-1 flex-col justify-center px-8">
-            <p className="font-display text-3xl font-light">Nothing is waiting.</p>
-            <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-              When a cut is reserved, or the house has word for the ledger, it will sit here.
-            </p>
-            <div className="mt-8">
-              <Button to="/account" onClick={() => setOpen(false)}>
-                Account
-              </Button>
-            </div>
-          </div>
+          clerkEnabled ? (
+            <WordEmptyAuth onClose={() => setOpen(false)} />
+          ) : (
+            <WordEmptyGuest onClose={() => setOpen(false)} />
+          )
         ) : (
           <>
             <ul className="flex-1 overflow-y-auto px-6 py-2">
@@ -131,6 +127,44 @@ export function WordDrawer() {
           </>
         )}
       </aside>
+    </div>
+  )
+}
+
+function WordEmptyAuth({ onClose }: { onClose: () => void }) {
+  const { isSignedIn } = useAuth()
+  if (!isSignedIn) {
+    return (
+      <div className="flex flex-1 flex-col justify-center px-8">
+        <p className="font-display text-3xl font-light">Word follows the account.</p>
+        <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
+          Sign in with the email used at checkout. A reserved cut, and when it moves, will sit
+          here.
+        </p>
+        <div className="mt-8">
+          <Button to="/sign-in" onClick={onClose}>
+            Sign in
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  return <WordEmptyGuest onClose={onClose} />
+}
+
+function WordEmptyGuest({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="flex flex-1 flex-col justify-center px-8">
+      <p className="font-display text-3xl font-light">Nothing is waiting.</p>
+      <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
+        When a cut is reserved, or the house has word for the ledger, it will sit here.
+      </p>
+      <div className="mt-8">
+        <Button to="/account" onClick={onClose}>
+          Account
+        </Button>
+      </div>
     </div>
   )
 }

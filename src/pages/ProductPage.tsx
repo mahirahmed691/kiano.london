@@ -315,10 +315,9 @@ export function ProductPage() {
 
       <div
         className={cn(
-          'fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
+          'shell-lift fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
           showBar && !open && looking === null ? 'translate-y-0' : 'translate-y-full',
         )}
-        style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         aria-hidden={!showBar}
       >
         <div className="flex items-center gap-4">

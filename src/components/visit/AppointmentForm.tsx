@@ -37,6 +37,7 @@ export function AppointmentForm() {
   const [note, setNote] = useState('')
   const [sent, setSent] = useState(false)
   const [written, setWritten] = useState(false)
+  const [kept, setKept] = useState(false)
   const [keeping, setKeeping] = useState(false)
 
   const selected = useMemo(
@@ -50,6 +51,7 @@ export function AppointmentForm() {
     if (keeping) return
     setKeeping(true)
 
+    let kept = false
     let confirmationSent = false
     try {
       const response = await fetch('/api/appointment', {
@@ -65,30 +67,36 @@ export function AppointmentForm() {
         }),
       })
       try {
-        const data = (await response.json()) as { written?: boolean }
+        const data = (await response.json()) as { kept?: boolean; written?: boolean }
+        kept = Boolean(data.kept)
         confirmationSent = Boolean(data.written)
       } catch {
+        kept = false
         confirmationSent = false
       }
     } catch {
-      // The letter still opens. The diary is a copy, not a gate.
+      kept = false
     }
 
-    const subject = selectedName
-      ? `Appointment: ${selectedName}`
-      : 'Appointment at Kiano London'
-    const body = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      telephone ? `Telephone: ${telephone}` : null,
-      selectedName ? `Piece: ${selectedName}` : 'Piece: to be discussed',
-      size ? `Size: ${size}` : 'Size: to be fitted',
-      note ? `Note:\n${note}` : null,
-    ]
-      .filter(Boolean)
-      .join('\n')
+    if (!kept) {
+      const subject = selectedName
+        ? `Appointment: ${selectedName}`
+        : 'Appointment at Kiano London'
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        telephone ? `Telephone: ${telephone}` : null,
+        selectedName ? `Piece: ${selectedName}` : 'Piece: to be discussed',
+        size ? `Size: ${size}` : 'Size: to be fitted',
+        note ? `Note:\n${note}` : null,
+      ]
+        .filter(Boolean)
+        .join('\n')
 
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    }
+
+    setKept(kept)
     setWritten(confirmationSent)
     setSent(true)
     setKeeping(false)
@@ -97,17 +105,24 @@ export function AppointmentForm() {
   if (sent) {
     return (
       <div className="border-t border-rule pt-8">
-        <p className="font-display text-3xl font-light">The letter is ready.</p>
+        <p className="font-display text-3xl font-light">
+          {kept ? 'The letter is held.' : 'The letter is ready.'}
+        </p>
         <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
-          Your mail application should open with the appointment written in. If it does
-          not, write to us at{' '}
-          <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
-            {site.email}
-          </a>
-          .
-          {written
-            ? ' A confirmation has been sent to you. It is not a booking. We write when a morning can be kept.'
-            : ''}
+          {kept
+            ? written
+              ? 'A confirmation has been sent to you. It is not a booking. We write when a morning can be kept.'
+              : 'The house has the letter. A confirmation will follow when it can be sent. It is not a booking.'
+            : (
+              <>
+                Your mail application should open with the appointment written in. If it does
+                not, write to us at{' '}
+                <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
+                  {site.email}
+                </a>
+                .
+              </>
+            )}
         </p>
       </div>
     )

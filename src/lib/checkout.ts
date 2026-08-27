@@ -8,6 +8,7 @@ import {
   type CheckoutOrderAddress,
   type ShippingCountryCode,
 } from '@/data/shipping'
+import { site } from '@/data/site'
 
 export {
   emptyCheckoutDetails,
@@ -46,6 +47,18 @@ export function clearStoredCheckout() {
 
 export function orderReference(id: string) {
   return id.slice(-8).toUpperCase()
+}
+
+export function returnLetterHref(reference: string) {
+  const subject = `Return: ${reference}`
+  const body = [
+    `Reservation ${reference}`,
+    '',
+    'The piece cannot be worn as reserved.',
+    'Size:',
+    '',
+  ].join('\n')
+  return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 export function formatOrderAddress(address: CheckoutOrderAddress) {

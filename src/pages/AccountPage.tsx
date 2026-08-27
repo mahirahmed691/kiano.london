@@ -1,6 +1,7 @@
 import { Show, SignOutButton, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -8,14 +9,14 @@ import { getProduct, productPath } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
-import { orderReference } from '@/lib/checkout'
+import { orderReference, returnLetterHref } from '@/lib/checkout'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { formatNoticeWhen } from '@/lib/word'
 import { useHouseApp } from '@/lib/shell'
 import { useWord } from '@/lib/word-state'
-import { asWorkStage, dispatchLine, isFullyReturned, workCopy, workStages } from '@/lib/work'
+import { asWorkStage, dispatchLine, isFullyReturned, isPartReturned, workCopy, workStages } from '@/lib/work'
 
 type AccountOrder = {
   id: string
@@ -171,20 +172,34 @@ function AccountOrders() {
           <p className="mt-3 text-[14px] font-light text-ink-soft">
             {isFullyReturned(order.amountPence, order.refundedPence ?? 0)
               ? 'The till has been returned.'
-              : asWorkStage(order.stage) === 'sent'
-                ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
-                : workCopy[asWorkStage(order.stage)].line}
+              : isPartReturned(order.amountPence, order.refundedPence ?? 0)
+                ? `The till has been returned in part · ${formatGbp(order.refundedPence ?? 0)}.`
+                : asWorkStage(order.stage) === 'sent'
+                  ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
+                  : workCopy[asWorkStage(order.stage)].line}
           </p>
-          {order.trackingHref && asWorkStage(order.stage) === 'sent' ? (
-            <p className="mt-4">
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
+            <Link
+              to={`/order/invoice?session_id=${encodeURIComponent(order.id)}`}
+              className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+            >
+              A record of the cut
+            </Link>
+            <a
+              href={returnLetterHref(orderReference(order.id))}
+              className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+            >
+              Write if it must return
+            </a>
+            {order.trackingHref && asWorkStage(order.stage) === 'sent' ? (
               <a
                 href={order.trackingHref}
                 className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
               >
                 Follow it
               </a>
-            </p>
-          ) : null}
+            ) : null}
+          </div>
         </li>
       ))}
     </ul>
@@ -262,6 +277,23 @@ function AccountDeviceWord() {
   )
 }
 
+function AccountList() {
+  const app = useHouseApp()
+  if (!app) return null
+
+  return (
+    <div className="mt-16 border-t border-rule pt-10">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The list</p>
+      <Body className="mt-4">
+        Cloth and when a piece can be reserved. A few letters a year.
+      </Body>
+      <div className="mt-6 max-w-sm">
+        <SubscribeForm idPrefix="letters-account" source="account" />
+      </div>
+    </div>
+  )
+}
+
 function AccountLedgerLink() {
   const { user } = useUser()
   if (!isAdminUser(user)) return null
@@ -319,6 +351,7 @@ export function AccountPage() {
         ) : (
           <Body className="mt-6">Account is not configured yet. Write to the atelier.</Body>
         )}
+        <AccountList />
         <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
           <TextLink to="/returns">If it must return</TextLink>
           <TextLink to="/shop">Return to the shop</TextLink>

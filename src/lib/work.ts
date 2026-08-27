@@ -76,3 +76,7 @@ export function dispatchLine(carrier: string, tracking: string) {
 export function isFullyReturned(amountPence: number, refundedPence: number) {
   return refundedPence > 0 && refundedPence >= amountPence
 }
+
+export function isPartReturned(amountPence: number, refundedPence: number) {
+  return refundedPence > 0 && refundedPence < amountPence
+}

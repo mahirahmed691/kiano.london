@@ -158,7 +158,24 @@ select {
 
 html.shell-app {
   --header-offset: 1.25rem;
+  --app-tab: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+html.shell-app.shell-quiet {
   --app-tab: 0px;
+}
+
+html.shell-app .shell-app-main {
+  padding-bottom: var(--app-tab);
+}
+
+.shell-lift {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+html.shell-app .shell-lift {
+  bottom: var(--app-tab);
+  padding-bottom: 0.75rem;
 }
 
 html.shell-app .pt-32 {

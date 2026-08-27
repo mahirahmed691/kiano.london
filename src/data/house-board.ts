@@ -24,7 +24,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Bag and checkout',
     completion: 88,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. Stripe is the till.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation waits for the till, then offers the account so the cut can be kept. Stripe is the till.',
   },
   {
     name: 'Stock',
@@ -48,13 +48,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Visit',
     completion: 90,
     status: 'partial',
-    note: 'The form still opens a letter. A copy is held in Neon, and a confirmation is sent: held, not booked. Shown on the ledger. No calendar widget.',
+    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. Confirmation still needs Resend. Held, not booked. No calendar widget.',
   },
   {
     name: 'Installable house',
     completion: 78,
     status: 'partial',
-    note: 'PWA on the site keeps the editorial header. Expo is a WebView with house tabs: House, Line, Bag, Account. Word sits as a hairline mark. Android still needs FCM in EAS.',
+    note: 'PWA on the site keeps the editorial header. Expo is a WebView with house tabs: House, Line, Bag, Account. Word sits as a hairline mark. The buy bar and notices sit above the tabs. Android still needs FCM in EAS.',
   },
   {
     name: 'Share and search',

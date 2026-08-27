@@ -36,7 +36,7 @@ export function SubscribeDialog({ open, onClose }: Props) {
         className={`absolute inset-0 bg-night/45 transition-opacity duration-500 ${open ? 'opacity-100' : 'opacity-0'}`}
         onClick={onClose}
       />
-      <div className="pointer-events-none absolute inset-0 flex items-end justify-center md:items-center md:p-8">
+      <div className="pointer-events-none absolute inset-0 flex items-end justify-center pb-[var(--app-tab,0px)] md:items-center md:p-8 md:pb-8">
         <div
           className={`pointer-events-auto max-h-[92svh] w-full overflow-y-auto border-t border-rule bg-ivory transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:w-[min(52rem,calc(100vw-3rem))] md:border ${
             open ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'

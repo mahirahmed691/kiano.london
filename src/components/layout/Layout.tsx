@@ -48,7 +48,7 @@ export function Layout() {
       <QuickAddDialog />
       <CartDrawer />
       <WordDrawer />
-      {app ? null : <HouseNotices />}
+      <HouseNotices />
     </>
   )
 }

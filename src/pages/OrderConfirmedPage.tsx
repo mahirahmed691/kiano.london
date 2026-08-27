@@ -1,3 +1,4 @@
+import { Show } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Button, TextLink } from '@/components/ui/Button'
@@ -11,6 +12,7 @@ import {
   orderReference,
   type CheckoutOrder,
 } from '@/lib/checkout'
+import { clerkEnabled } from '@/lib/clerk'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -39,6 +41,9 @@ export function OrderConfirmedPage() {
     }
 
     let cancelled = false
+    let attempt = 0
+    const waits = [0, 800, 1200, 1600, 2000, 2500, 3000, 4000]
+    let timer = 0
 
     async function load() {
       try {
@@ -50,12 +55,12 @@ export function OrderConfirmedPage() {
         try {
           data = JSON.parse(text) as CheckoutOrder & { error?: string }
         } catch {
-          if (!cancelled) setView('missing')
+          if (!cancelled) retryOr('missing')
           return
         }
         if (cancelled) return
         if (!response.ok) {
-          setView('missing')
+          retryOr(response.status >= 500 ? 'missing' : 'missing')
           return
         }
         setOrder(data)
@@ -65,15 +70,28 @@ export function OrderConfirmedPage() {
           setView('paid')
           return
         }
-        setView('unpaid')
+        retryOr('unpaid')
       } catch {
-        if (!cancelled) setView('missing')
+        if (!cancelled) retryOr('missing')
       }
+    }
+
+    function retryOr(next: View) {
+      if (cancelled) return
+      if (attempt < waits.length - 1) {
+        attempt += 1
+        timer = window.setTimeout(() => {
+          void load()
+        }, waits[attempt])
+        return
+      }
+      setView(next)
     }
 
     void load()
     return () => {
       cancelled = true
+      window.clearTimeout(timer)
     }
   }, [sessionId, clear])
 
@@ -155,7 +173,18 @@ export function OrderConfirmedPage() {
               </Body>
             ) : null}
             <div className="mt-12 flex flex-wrap items-center gap-6">
-              <Button to="/collection">The Collection</Button>
+              {clerkEnabled ? (
+                <>
+                  <Show when="signed-in">
+                    <Button to="/account">Account</Button>
+                  </Show>
+                  <Show when="signed-out">
+                    <Button to="/sign-in">Keep it on the account</Button>
+                  </Show>
+                </>
+              ) : (
+                <Button to="/collection">The Collection</Button>
+              )}
               {sessionId ? (
                 <TextLink to={`/order/invoice?session_id=${encodeURIComponent(sessionId)}`}>
                   A record of the cut
