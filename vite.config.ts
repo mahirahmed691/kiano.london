@@ -19,7 +19,7 @@ const envKeys = [
   'RESEND_FROM',
 ] as const
 
-type Method = 'GET' | 'POST'
+type Method = 'GET' | 'POST' | 'PATCH'
 
 type Route = {
   method: Method
@@ -113,6 +113,21 @@ const routes: Route[] = [
     path: '/api/subscribe-confirm',
     load: async () => (await import('./api/subscribe-confirm.ts')).GET,
   },
+  {
+    method: 'GET',
+    path: '/api/notices',
+    load: async () => (await import('./api/notices.ts')).GET,
+  },
+  {
+    method: 'PATCH',
+    path: '/api/notices',
+    load: async () => (await import('./api/notices.ts')).PATCH,
+  },
+  {
+    method: 'POST',
+    path: '/api/notices',
+    load: async () => (await import('./api/notices.ts')).POST,
+  },
 ]
 
 function originOf(req: IncomingMessage) {
@@ -159,7 +174,8 @@ function atelierApi(env: Record<string, string>): Plugin {
           }
           try {
             const chunks: Buffer[] = []
-            if (route.method === 'POST') {
+            const hasBody = route.method === 'POST' || route.method === 'PATCH'
+            if (hasBody) {
               for await (const chunk of req) {
                 chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
               }
@@ -176,7 +192,7 @@ function atelierApi(env: Record<string, string>): Plugin {
             const request = new Request(`${originOf(req)}${req.url}`, {
               method: route.method,
               headers,
-              body: route.method === 'POST' ? Buffer.concat(chunks) : undefined,
+              body: hasBody ? Buffer.concat(chunks) : undefined,
             })
             const handler = await route.load()
             await writeJson(res, await handler(request))

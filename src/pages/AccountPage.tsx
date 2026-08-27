@@ -324,6 +324,50 @@ function AccountLedgerLink() {
   )
 }
 
+function AccountGate() {
+  const { isLoaded } = useAuth()
+
+  if (!isLoaded) {
+    return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the house.</p>
+  }
+
+  return (
+    <>
+      <Show when="signed-out">
+        <Body className="mt-6">
+          The shop is public. Sign in to keep reservations in one place, against the email
+          you use at checkout.
+        </Body>
+        <div className="mt-10 flex flex-wrap gap-4">
+          <Button to="/sign-in" variant="solid">
+            Sign in
+          </Button>
+          <Button to="/sign-up">Open an account</Button>
+        </div>
+      </Show>
+      <Show when="signed-in">
+        <Body className="mt-6">
+          Payment still reserves the cloth. These are the cuts held against this email.
+        </Body>
+        <AccountOrders />
+        <AccountWord />
+        <AccountDeviceWord />
+        <AccountLedgerLink />
+        <div className="mt-12">
+          <SignOutButton>
+            <button
+              type="button"
+              className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+            >
+              Sign out
+            </button>
+          </SignOutButton>
+        </div>
+      </Show>
+    </>
+  )
+}
+
 export function AccountPage() {
   usePageMeta(getShareMeta('/account'))
 
@@ -335,39 +379,7 @@ export function AccountPage() {
           Your cuts.
         </Display>
         {clerkEnabled ? (
-          <>
-            <Show when="signed-out">
-              <Body className="mt-6">
-                The shop is public. Sign in to keep reservations in one place, against the email
-                you use at checkout.
-              </Body>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Button to="/sign-in" variant="solid">
-                  Sign in
-                </Button>
-                <Button to="/sign-up">Open an account</Button>
-              </div>
-            </Show>
-            <Show when="signed-in">
-              <Body className="mt-6">
-                Payment still reserves the cloth. These are the cuts held against this email.
-              </Body>
-              <AccountOrders />
-              <AccountWord />
-              <AccountDeviceWord />
-              <AccountLedgerLink />
-              <div className="mt-12">
-                <SignOutButton>
-                  <button
-                    type="button"
-                    className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-                  >
-                    Sign out
-                  </button>
-                </SignOutButton>
-              </div>
-            </Show>
-          </>
+          <AccountGate />
         ) : (
           <Body className="mt-6">Account is not configured yet. Write to the atelier.</Body>
         )}

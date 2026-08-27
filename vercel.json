@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "kiano.london" }],
+      "destination": "https://www.kiano.london/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/api/admin-summary", "destination": "/api/admin?section=summary" },
     { "source": "/api/admin-inventory", "destination": "/api/admin?section=inventory" },

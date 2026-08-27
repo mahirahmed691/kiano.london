@@ -27,7 +27,7 @@ export async function GET(request: Request) {
 
     const email = rows[0]?.email
     if (!email) {
-      return Response.redirect(done, 302)
+      return Response.redirect(`${origin}/privacy`, 302)
     }
 
     await addToAudience(email)

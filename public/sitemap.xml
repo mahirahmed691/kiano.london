@@ -76,6 +76,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.kiano.london/returns</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://www.kiano.london/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
