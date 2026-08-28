@@ -46,9 +46,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Visit',
-    completion: 90,
-    status: 'partial',
-    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. Confirmation letters wait on kiano.london DNS. Held, not booked. No calendar widget.',
+    completion: 94,
+    status: 'complete',
+    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. The house names a morning, or writes that it cannot be kept, on the account. Confirmation letters wait on kiano.london DNS. Held, not booked. No calendar widget.',
   },
   {
     name: 'Installable house',
@@ -84,7 +84,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when a reservation is returned.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when a reservation is returned.',
   },
   {
     name: 'Analytics',
@@ -94,9 +94,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Returns and refunds',
-    completion: 78,
+    completion: 86,
     status: 'partial',
-    note: 'House copy at /returns. A full Stripe refund is written on the book, restocks the size, and writes to the email on the reservation. Partial refunds are pence and a letter. The atelier still agrees the return by letter.',
+    note: 'House copy at /returns. A letter is held in the diary; it is not a refund. A full Stripe refund is written on the book, restocks the size, and writes to the email on the reservation. Partial refunds are pence and a letter. The atelier still agrees the return by letter.',
   },
 ]
 
@@ -127,7 +127,7 @@ export const houseIntegrations = [
     name: 'Resend',
     state: 'Wired',
     hook: 'None',
-    events: 'List confirm letters, visit confirmation (held, not booked), reservation and return letters',
+    events: 'List confirm letters, visit confirmation (held, not booked), a named morning or a refusal, return letters (held, not refunded), reservation and refund letters',
     note: 'From address must be a verified domain. RESEND_API_KEY is on Vercel. kiano.london verification is pending DNS.',
   },
   {

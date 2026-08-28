@@ -12,7 +12,7 @@ const visitSteps = [
   {
     number: '01',
     title: 'Write',
-    copy: 'Name the piece if you know it, and a size if you have one. If you do not, say so. The diary is kept small on purpose.',
+    copy: 'Name the piece if you know it, and a size if you have one. If you do not, say so. The house names a morning. There is no calendar to pick from.',
   },
   {
     number: '02',
@@ -71,8 +71,8 @@ export function VisitPage() {
                 Request a time.
               </Display>
               <Body className="mt-6">
-                The house keeps the letter in the diary. It is held, not a booking. A
-                confirmation is sent when the house can send. If you would rather write
+                The house keeps the letter in the diary. It is held, not a booking. The house
+                names a morning, or writes that it cannot be kept. If you would rather write
                 directly:{' '}
                 <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
                   {site.email}

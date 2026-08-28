@@ -108,6 +108,84 @@ export function visitLetterText(input: { name: string; piece: string; size: stri
   ].join('\n\n')
 }
 
+export function visitNamedLetterHtml(input: {
+  name: string
+  day: string
+  note?: string
+}) {
+  const name = escapeHtml(input.name)
+  const day = escapeHtml(input.day)
+  const note = input.note?.trim()
+    ? `<p style="margin:16px 0 0;">${escapeHtml(input.note.trim())}</p>`
+    : ''
+  return letterFrame(
+    'A morning is named.',
+    `<p style="margin:0;">${name}, the house can keep the morning of ${day}. This is not a public calendar. Write if that morning cannot be kept.</p>${note}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function visitNamedLetterText(input: { name: string; day: string; note?: string }) {
+  return [
+    `${input.name}, the house can keep the morning of ${input.day}.`,
+    'This is not a public calendar. Write if that morning cannot be kept.',
+    input.note?.trim() || null,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
+export function visitRefusedLetterHtml(input: { name: string; note?: string }) {
+  const name = escapeHtml(input.name)
+  const note = input.note?.trim()
+    ? `<p style="margin:16px 0 0;">${escapeHtml(input.note.trim())}</p>`
+    : ''
+  return letterFrame(
+    'A morning cannot be kept.',
+    `<p style="margin:0;">${name}, the house cannot keep a morning for this letter.</p>${note}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function visitRefusedLetterText(input: { name: string; note?: string }) {
+  return [
+    `${input.name}, the house cannot keep a morning for this letter.`,
+    input.note?.trim() || null,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
+export function returnRefusedLetterHtml(input: { name: string; reference: string; note?: string }) {
+  const name = escapeHtml(input.name)
+  const reference = escapeHtml(input.reference)
+  const note = input.note?.trim()
+    ? `<p style="margin:16px 0 0;">${escapeHtml(input.note.trim())}</p>`
+    : ''
+  return letterFrame(
+    'The return cannot be taken.',
+    `<p style="margin:0;">${name}, the house cannot take this return. Reservation ${reference}. It is not a refund.</p>${note}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function returnRefusedLetterText(input: {
+  name: string
+  reference: string
+  note?: string
+}) {
+  return [
+    `${input.name}, the house cannot take this return.`,
+    `Reservation ${input.reference}. It is not a refund.`,
+    input.note?.trim() || null,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
 function houseOrigin() {
   return (process.env.SITE_URL || 'https://www.kiano.london').replace(/\/$/, '')
 }
@@ -174,6 +252,37 @@ export function returnLetterText(input: { cut: string; full: boolean }) {
     input.full
       ? `${input.cut} is no longer held against the account.`
       : `A part of the reservation for ${input.cut} has been returned.`,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
+export function returnAskLetterHtml(input: {
+  name: string
+  piece: string
+  size: string
+  reference: string
+}) {
+  const name = escapeHtml(input.name)
+  const piece = escapeHtml(input.piece)
+  const size = escapeHtml(input.size)
+  const reference = escapeHtml(input.reference)
+  return letterFrame(
+    'The letter is held.',
+    `<p style="margin:0;">${name}, the request is with the house. This is not a refund. We write if the return can be agreed.</p><p style="margin:16px 0 0;">You named ${piece}, ${size}. Reservation ${reference}.</p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function returnAskLetterText(input: {
+  name: string
+  piece: string
+  size: string
+  reference: string
+}) {
+  return [
+    `${input.name}, the request is with the house.`,
+    'This is not a refund. We write if the return can be agreed.',
+    `You named ${input.piece}, ${input.size}. Reservation ${input.reference}.`,
     `Questions: ${site.email}.`,
   ].join('\n\n')
 }

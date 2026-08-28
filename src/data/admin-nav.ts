@@ -13,6 +13,6 @@ export const ledgerNav: ReadonlyArray<{
   { label: 'Members', to: '/admin/members', line: 'Those who keep an account.' },
   { label: 'The list', to: '/admin/list', line: 'Confirmed, and those still held.' },
   { label: 'The field', to: '/admin/field', line: 'Other houses of the column, with their marks.' },
-  { label: 'The diary', to: '/admin/diary', line: 'Letters held. Not a booking calendar.' },
+    { label: 'The diary', to: '/admin/diary', line: 'Letters held. The house names a morning.' },
   { label: 'The line', to: '/admin/line', line: 'What is finished, what is wired, what is next.' },
 ] as const

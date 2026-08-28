@@ -59,14 +59,16 @@ export async function POST(request: Request) {
     try {
       const sql = await withDb()
       await sql`
-        INSERT INTO appointments (name, email, telephone, product_id, size, note)
+        INSERT INTO appointments (name, email, telephone, product_id, size, note, kind, reference)
         VALUES (
           ${name},
           ${email},
           ${telephone || null},
           ${productId || null},
           ${size},
-          ${note || null}
+          ${note || null},
+          ${'visit'},
+          ${''}
         )
       `
       kept = true

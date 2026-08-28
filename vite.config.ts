@@ -90,6 +90,11 @@ const routes: Route[] = [
   },
   {
     method: 'POST',
+    path: '/api/return',
+    load: async () => (await import('./api/return.ts')).POST,
+  },
+  {
+    method: 'POST',
     path: '/api/clerk-webhook',
     load: async () => (await import('./api/clerk-webhook.ts')).POST,
   },

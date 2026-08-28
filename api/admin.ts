@@ -3,7 +3,25 @@ import { vatMethodNote, splitVat } from '../src/lib/vat.js'
 import { requireAdmin } from './_lib/admin.js'
 import { withDb } from './_lib/db.js'
 import { recordNotice } from './_lib/notices.js'
+import {
+  returnRefusedLetterHtml,
+  returnRefusedLetterText,
+  sendMail,
+  visitNamedLetterHtml,
+  visitNamedLetterText,
+  visitRefusedLetterHtml,
+  visitRefusedLetterText,
+} from './_lib/mail.js'
 import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.js'
+import {
+  asLetterKind,
+  asLetterReply,
+  asLetterStatus,
+  asNamedDay,
+  formatNamedDay,
+  isLetterStatus,
+  storedNamedFor,
+} from '../src/lib/letters.js'
 import { asCarrier, asTrackingCode, asTrackingHref, asWorkStage, dispatchLine, isFullyReturned, isWorkStage, workCopy } from '../src/lib/work.js'
 
 type Method = 'GET' | 'POST'
@@ -175,7 +193,8 @@ async function getSummary(): Promise<Response> {
       ORDER BY product_id, size
     `) as { product_id: string; size: number }[]
     const appointmentRows = (await sql`
-      SELECT id, name, email, telephone, product_id, size, note, status, created_at
+      SELECT id, name, email, telephone, product_id, size, note, status, kind, reference,
+             named_for, reply, created_at
       FROM appointments
       ORDER BY created_at DESC
       LIMIT 20
@@ -188,6 +207,10 @@ async function getSummary(): Promise<Response> {
       size: number | null
       note: string | null
       status: string | null
+      kind: string | null
+      reference: string | null
+      named_for: string | Date | null
+      reply: string | null
       created_at: string | Date
     }[]
 
@@ -216,7 +239,11 @@ async function getSummary(): Promise<Response> {
         productId: row.product_id ?? '',
         size: row.size,
         note: row.note ?? '',
-        status: row.status === 'seen' ? 'seen' : 'new',
+        kind: asLetterKind(row.kind),
+        reference: row.reference ?? '',
+        status: asLetterStatus(row.status),
+        namedFor: storedNamedFor(row.named_for),
+        reply: row.reply ?? '',
         createdAt: asIso(row.created_at),
       })),
     })
@@ -785,7 +812,7 @@ async function getList(): Promise<Response> {
 }
 
 async function postDiary(request: Request): Promise<Response> {
-  let body: { id?: unknown; status?: unknown }
+  let body: { id?: unknown; status?: unknown; namedFor?: unknown; reply?: unknown }
   try {
     body = (await request.json()) as typeof body
   } catch {
@@ -796,23 +823,139 @@ async function postDiary(request: Request): Promise<Response> {
   if (!Number.isInteger(id) || id < 1) {
     return Response.json({ error: 'That letter is not held.' }, { status: 400 })
   }
-  const status = body.status === 'seen' ? 'seen' : body.status === 'new' ? 'new' : ''
-  if (!status) {
-    return Response.json({ error: 'A letter is new or seen.' }, { status: 400 })
+  const requested = typeof body.status === 'string' ? body.status.trim() : ''
+  if (!isLetterStatus(requested)) {
+    return Response.json({ error: 'A letter is new, seen, named, or refused.' }, { status: 400 })
   }
+  const status = requested
+  const namedFor = asNamedDay(body.namedFor)
+  const reply = asLetterReply(body.reply)
 
   try {
     const sql = await withDb()
-    const rows = (await sql`
-      UPDATE appointments
-      SET status = ${status}
+    const held = (await sql`
+      SELECT id, name, email, kind, status, product_id, reference
+      FROM appointments
       WHERE id = ${id}
-      RETURNING id, status
-    `) as { id: number; status: string }[]
-    if (!rows[0]) {
+    `) as {
+      id: number
+      name: string
+      email: string
+      kind: string | null
+      status: string | null
+      product_id: string | null
+      reference: string | null
+    }[]
+    const row = held[0]
+    if (!row) {
       return Response.json({ error: 'That letter is not held.' }, { status: 404 })
     }
-    return Response.json({ ok: true, id: rows[0].id, status: rows[0].status })
+
+    const kind = asLetterKind(row.kind)
+    const before = asLetterStatus(row.status)
+
+    if ((status === 'new' || status === 'seen') && (before === 'named' || before === 'refused')) {
+      return Response.json({ error: 'The letter has already been answered.' }, { status: 400 })
+    }
+    if (status === 'named' && kind !== 'visit') {
+      return Response.json({ error: 'A morning is named for a visit.' }, { status: 400 })
+    }
+    if (status === 'named' && !namedFor) {
+      return Response.json({ error: 'A morning is needed.' }, { status: 400 })
+    }
+
+    const storedDay = status === 'named' ? namedFor : ''
+    const storedReply = status === 'named' || status === 'refused' ? reply : ''
+
+    const updated = (await sql`
+      UPDATE appointments
+      SET
+        status = ${status},
+        named_for = ${storedDay || null},
+        reply = ${storedReply}
+      WHERE id = ${id}
+      RETURNING id, status, named_for, reply
+    `) as {
+      id: number
+      status: string
+      named_for: string | Date | null
+      reply: string | null
+    }[]
+    const kept = updated[0]
+    if (!kept) {
+      return Response.json({ error: 'That letter is not held.' }, { status: 404 })
+    }
+
+    if (status === 'named' || status === 'refused') {
+      const day = formatNamedDay(storedDay)
+      if (status === 'named') {
+        await sendMail({
+          to: row.email,
+          subject: 'A morning is named — Kiano London',
+          text: visitNamedLetterText({ name: row.name, day, note: storedReply }),
+          html: visitNamedLetterHtml({ name: row.name, day, note: storedReply }),
+          idempotencyKey: `visit-named/${row.id}/${storedDay}`,
+        })
+      } else if (kind === 'return') {
+        await sendMail({
+          to: row.email,
+          subject: 'The return cannot be taken — Kiano London',
+          text: returnRefusedLetterText({
+            name: row.name,
+            reference: row.reference ?? '',
+            note: storedReply,
+          }),
+          html: returnRefusedLetterHtml({
+            name: row.name,
+            reference: row.reference ?? '',
+            note: storedReply,
+          }),
+          idempotencyKey: `return-refused/${row.id}`,
+        })
+      } else {
+        await sendMail({
+          to: row.email,
+          subject: 'A morning cannot be kept — Kiano London',
+          text: visitRefusedLetterText({ name: row.name, note: storedReply }),
+          html: visitRefusedLetterHtml({ name: row.name, note: storedReply }),
+          idempotencyKey: `visit-refused/${row.id}`,
+        })
+      }
+
+      const members = (await sql`
+        SELECT clerk_user_id FROM members WHERE lower(email) = lower(${row.email}) LIMIT 1
+      `) as { clerk_user_id: string | null }[]
+      const clerkUserId = members[0]?.clerk_user_id
+      if (clerkUserId) {
+        await recordNotice({
+          audience: 'member',
+          clerkUserId,
+          kind: kind === 'return' ? 'return' : 'visit',
+          title:
+            status === 'named'
+              ? 'A morning is named'
+              : kind === 'return'
+                ? 'The return cannot be taken'
+                : 'A morning cannot be kept',
+          body:
+            status === 'named'
+              ? `The house can keep the morning of ${day}.`
+              : kind === 'return'
+                ? 'The house cannot take this return.'
+                : 'The house cannot keep a morning.',
+          href: '/account',
+          productIds: row.product_id ? [row.product_id] : undefined,
+        })
+      }
+    }
+
+    return Response.json({
+      ok: true,
+      id: kept.id,
+      status: asLetterStatus(kept.status),
+      namedFor: storedNamedFor(kept.named_for),
+      reply: kept.reply ?? '',
+    })
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The diary could not be kept.' }, { status: 503 })

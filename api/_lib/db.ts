@@ -114,6 +114,10 @@ async function migrate(db: Sql) {
   `
   await db`CREATE INDEX IF NOT EXISTS appointments_created_at_idx ON appointments (created_at DESC)`
   await db`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`
+  await db`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS kind TEXT NOT NULL DEFAULT 'visit'`
+  await db`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS reference TEXT NOT NULL DEFAULT ''`
+  await db`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS named_for DATE`
+  await db`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS reply TEXT NOT NULL DEFAULT ''`
   await db`
     CREATE TABLE IF NOT EXISTS stock_movements (
       id SERIAL PRIMARY KEY,

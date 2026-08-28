@@ -1,5 +1,6 @@
 import { clerkUserIdFrom } from './_lib/clerk.js'
 import { withDb } from './_lib/db.js'
+import { asLetterKind, asLetterStatus, storedNamedFor } from '../src/lib/letters.js'
 import { asTrackingHref, asWorkStage, dispatchLine, isFullyReturned } from '../src/lib/work.js'
 
 type OrderRow = {
@@ -68,6 +69,26 @@ export async function GET(request: Request) {
       linesByOrder.set(line.order_id, current)
     }
 
+    const letterRows = email
+      ? ((await sql`
+          SELECT id, kind, status, named_for, reply, product_id, size, reference, created_at
+          FROM appointments
+          WHERE lower(email) = lower(${email})
+          ORDER BY created_at DESC
+          LIMIT 20
+        `) as {
+          id: number
+          kind: string | null
+          status: string | null
+          named_for: string | Date | null
+          reply: string | null
+          product_id: string | null
+          size: number | null
+          reference: string | null
+          created_at: string | Date
+        }[])
+      : []
+
     return Response.json({
       orders: orders.map((order) => ({
         id: order.id,
@@ -90,6 +111,18 @@ export async function GET(request: Request) {
           amountPence: line.amount_pence,
           description: line.description,
         })),
+      })),
+      letters: letterRows.map((row) => ({
+        id: row.id,
+        kind: asLetterKind(row.kind),
+        status: asLetterStatus(row.status),
+        namedFor: storedNamedFor(row.named_for),
+        reply: row.reply ?? '',
+        productId: row.product_id ?? '',
+        size: row.size,
+        reference: row.reference ?? '',
+        createdAt:
+          row.created_at instanceof Date ? row.created_at.toISOString() : String(row.created_at),
       })),
     })
   } catch (caught) {

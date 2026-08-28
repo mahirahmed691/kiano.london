@@ -2,6 +2,7 @@ import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import type { CompetitorLedgerNote } from '@/data/competitors'
 import { isAdminUser } from '@/lib/admin'
+import { asLetterKind, asLetterStatus, storedNamedFor, type LetterStatus } from '@/lib/letters'
 
 export type AppointmentRow = {
   id: number
@@ -11,8 +12,19 @@ export type AppointmentRow = {
   productId: string
   size: number | null
   note: string
-  status: 'new' | 'seen'
+  kind: 'visit' | 'return'
+  reference: string
+  status: LetterStatus
+  namedFor: string
+  reply: string
   createdAt: string
+}
+
+export type LetterKeep = {
+  id: number
+  status: LetterStatus
+  namedFor?: string
+  reply?: string
 }
 
 export type HeldCut = {
@@ -69,7 +81,11 @@ export function useLedger() {
           heldCuts: data.heldCuts ?? [],
           appointments: (data.appointments ?? []).map((row) => ({
             ...row,
-            status: row.status === 'seen' ? 'seen' : 'new',
+            kind: asLetterKind(row.kind),
+            reference: row.reference ?? '',
+            status: asLetterStatus(row.status),
+            namedFor: storedNamedFor(row.namedFor),
+            reply: row.reply ?? '',
           })),
         })
       } catch {
@@ -83,7 +99,7 @@ export function useLedger() {
     }
   }, [getToken, isSignedIn, user])
 
-  async function markSeen(id: number) {
+  async function keepLetter(input: LetterKeep) {
     try {
       const token = await getToken()
       const response = await fetch('/api/admin?section=diary', {
@@ -92,15 +108,37 @@ export function useLedger() {
           'content-type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ id, status: 'seen' }),
+        body: JSON.stringify({
+          id: input.id,
+          status: input.status,
+          namedFor: input.namedFor ?? '',
+          reply: input.reply ?? '',
+        }),
       })
-      if (!response.ok) return
+      if (!response.ok) {
+        const data = (await response.json().catch(() => ({}))) as { error?: string }
+        setError(data.error || 'The diary could not be kept.')
+        return
+      }
+      const data = (await response.json()) as {
+        status?: string
+        namedFor?: string
+        reply?: string
+      }
+      setError('')
       setLedger((current) =>
         current
           ? {
               ...current,
               appointments: current.appointments.map((row) =>
-                row.id === id ? { ...row, status: 'seen' } : row,
+                row.id === input.id
+                  ? {
+                      ...row,
+                      status: asLetterStatus(data.status ?? input.status),
+                      namedFor: storedNamedFor(data.namedFor ?? input.namedFor ?? ''),
+                      reply: data.reply ?? input.reply ?? '',
+                    }
+                  : row,
               ),
             }
           : current,
@@ -110,7 +148,7 @@ export function useLedger() {
     }
   }
 
-  return { ledger, error, markSeen }
+  return { ledger, error, keepLetter }
 }
 
 export function useCompetitorNotes() {

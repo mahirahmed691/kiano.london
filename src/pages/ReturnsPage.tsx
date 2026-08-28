@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/Button'
+import { ReturnForm } from '@/components/visit/ReturnForm'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { site } from '@/data/site'
@@ -19,15 +19,16 @@ export function ReturnsPage() {
         </Display>
         <Body className="mt-6">
           A cut is made when you ask for it. If the piece cannot be worn as reserved, write. Do
-          not drop it at a shop window. There is no shop window.
+          not drop it at a shop window. There is no shop window. The letter is held; it is not a
+          refund.
         </Body>
 
         <ul className="mt-14 space-y-10">
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Fourteen days</p>
             <Body className="mt-3">
-              From the day it arrives, fourteen days to write to {site.email} with the reservation
-              and the size. Unworn, with the house card, the bag, and the box.
+              From the day it arrives, fourteen days to write with the reservation and the size.
+              Unworn, with the house card, the bag, and the box.
             </Body>
           </li>
           <li>
@@ -44,10 +45,24 @@ export function ReturnsPage() {
           </li>
         </ul>
 
-        <div className="mt-14">
-          <Button href={`mailto:${site.email}`}>Write to the atelier</Button>
+        <div className="mt-16 border-t border-rule pt-12">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The letter</p>
+          <Display as="h2" className="mt-4 text-4xl md:text-5xl">
+            Write first.
+          </Display>
+          <Body className="mt-6">
+            The house keeps the letter in the diary. If you would rather write directly:{' '}
+            <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+            .
+          </Body>
+          <div className="mt-10">
+            <ReturnForm />
+          </div>
         </div>
-        <p className="mt-10">
+
+        <p className="mt-16">
           <Link to="/account" className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70">
             Account
           </Link>
