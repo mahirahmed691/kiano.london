@@ -238,6 +238,11 @@ export function OrderConfirmedPage() {
                   A record of the cut
                 </TextLink>
               ) : null}
+              {sessionId ? (
+                <TextLink to={`/order/card?session_id=${encodeURIComponent(sessionId)}`}>
+                  The house card
+                </TextLink>
+              ) : null}
               {order ? (
                 <TextLink
                   to={reservationPath({
@@ -300,7 +305,7 @@ export function OrderConfirmedPage() {
                 {order.note ? (
                   <div className="mt-8">
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                      A note
+                      On the house card
                     </p>
                     <p className="mt-3 text-[14px] font-light leading-relaxed text-ink-soft">
                       {order.note}

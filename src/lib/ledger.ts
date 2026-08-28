@@ -73,6 +73,7 @@ export type LedgerOrder = {
   readyWeek?: string
   trackingHref?: string
   stageNote?: string
+  note?: string
   lines: {
     productId: string
     size: number

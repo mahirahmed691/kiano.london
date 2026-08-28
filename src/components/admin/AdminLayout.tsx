@@ -12,21 +12,21 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function AdminLayout() {
   const { pathname } = useLocation()
-  const invoiceSheet = /^\/admin\/invoices\/.+/.test(pathname)
+  const printSheet = /^\/admin\/invoices\/.+/.test(pathname) || pathname === '/admin/work/card'
   usePageMeta(getShareMeta('/admin'))
 
   return (
-    <Section className={cn('pt-32 md:pt-40', invoiceSheet && 'print:py-8')}>
+    <Section className={cn('pt-32 md:pt-40', printSheet && 'print:py-8')}>
       <Container>
-        {invoiceSheet ? null : <Eyebrow>The ledger</Eyebrow>}
+        {printSheet ? null : <Eyebrow>The ledger</Eyebrow>}
         {clerkEnabled ? (
-          <AdminGate invoiceSheet={invoiceSheet} />
+          <AdminGate printSheet={printSheet} />
         ) : (
           <Body className="mt-6">
             Account is not configured. Set Clerk, then list the house emails.
           </Body>
         )}
-        {invoiceSheet ? null : (
+        {printSheet ? null : (
           <div className="mt-16">
             <TextLink to="/">Return to the house</TextLink>
           </div>
@@ -36,7 +36,7 @@ export function AdminLayout() {
   )
 }
 
-function AdminGate({ invoiceSheet }: { invoiceSheet: boolean }) {
+function AdminGate({ printSheet }: { printSheet: boolean }) {
   const { user, isLoaded } = useUser()
   const { pathname } = useLocation()
 
@@ -52,7 +52,7 @@ function AdminGate({ invoiceSheet }: { invoiceSheet: boolean }) {
       <Show when="signed-in">
         {isAdminUser(user) ? (
           <>
-            {invoiceSheet ? null : <AdminSubnav />}
+            {printSheet ? null : <AdminSubnav />}
             <Outlet />
           </>
         ) : (

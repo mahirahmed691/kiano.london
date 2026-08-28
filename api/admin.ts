@@ -15,6 +15,10 @@ import {
   visitRefusedLetterText,
   waitRefusedLetterHtml,
   waitRefusedLetterText,
+  packedLetterHtml,
+  packedLetterText,
+  sentLetterHtml,
+  sentLetterText,
   workBackLetterHtml,
   workBackLetterText,
   workWeekLetterHtml,
@@ -615,19 +619,52 @@ async function getAccounts(): Promise<Response> {
   }
 }
 
-async function getOrders(): Promise<Response> {
+function asOrderId(value: string) {
+  return value.startsWith('cs_') && value.length >= 20 ? value : ''
+}
+
+function namedCuts(
+  lines: ReadonlyArray<{ description: string; size: number; quantity: number }>,
+) {
+  return lines
+    .map((line) =>
+      [
+        line.description,
+        line.size > 0 ? `size ${line.size}` : null,
+        line.quantity > 1 ? String(line.quantity) : null,
+      ]
+        .filter(Boolean)
+        .join(', '),
+    )
+    .join('\n')
+}
+
+async function getOrders(request?: Request): Promise<Response> {
   try {
     const sql = await backfillInvoices()
-    const orders = (await sql`
-      SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
-             o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.created_at,
-             i.number AS invoice_number
-      FROM orders o
-      LEFT JOIN invoices i ON i.order_id = o.id
-      WHERE o.status = 'paid'
-      ORDER BY o.created_at DESC
-      LIMIT 80
-    `) as {
+    const wanted = request ? asOrderId(new URL(request.url).searchParams.get('id') ?? '') : ''
+    const orders = (
+      wanted
+        ? await sql`
+            SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
+                   o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
+                   o.created_at, i.number AS invoice_number
+            FROM orders o
+            LEFT JOIN invoices i ON i.order_id = o.id
+            WHERE o.status = 'paid' AND o.id = ${wanted}
+            LIMIT 1
+          `
+        : await sql`
+            SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
+                   o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
+                   o.created_at, i.number AS invoice_number
+            FROM orders o
+            LEFT JOIN invoices i ON i.order_id = o.id
+            WHERE o.status = 'paid'
+            ORDER BY o.created_at DESC
+            LIMIT 80
+          `
+    ) as {
       id: string
       email: string
       clerk_user_id: string | null
@@ -641,16 +678,25 @@ async function getOrders(): Promise<Response> {
       tracking_href: string | null
       ready_week: string | Date | null
       stage_note: string | null
+      note: string | null
       created_at: string | Date
       invoice_number: string | null
     }[]
 
-    const lines = (await sql`
-      SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
-      FROM order_lines l
-      INNER JOIN orders o ON o.id = l.order_id
-      WHERE o.status = 'paid'
-    `) as {
+    const lines = (
+      wanted
+        ? await sql`
+            SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
+            FROM order_lines l
+            WHERE l.order_id = ${wanted}
+          `
+        : await sql`
+            SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
+            FROM order_lines l
+            INNER JOIN orders o ON o.id = l.order_id
+            WHERE o.status = 'paid'
+          `
+    ) as {
       order_id: string
       product_id: string
       size: number
@@ -681,6 +727,7 @@ async function getOrders(): Promise<Response> {
         trackingHref: asTrackingHref(order.tracking_href ?? ''),
         readyWeek: storedNamedFor(order.ready_week),
         stageNote: order.stage_note ?? '',
+        note: order.note ?? '',
         createdAt: asIso(order.created_at),
         invoiceNumber: order.invoice_number ?? '',
         lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
@@ -1076,7 +1123,7 @@ async function postWork(request: Request): Promise<Response> {
     const sql = await withDb()
     const current = (await sql`
       SELECT id, stage, clerk_user_id, email, carrier, tracking, tracking_href,
-             ready_week, stage_note, amount_pence, refunded_pence
+             ready_week, stage_note, note, amount_pence, refunded_pence
       FROM orders
       WHERE id = ${orderId} AND status = 'paid'
     `) as {
@@ -1089,6 +1136,7 @@ async function postWork(request: Request): Promise<Response> {
       tracking_href: string | null
       ready_week: string | Date | null
       stage_note: string | null
+      note: string | null
       amount_pence: number
       refunded_pence: number
     }[]
@@ -1141,11 +1189,11 @@ async function postWork(request: Request): Promise<Response> {
       WHERE id = ${orderId} AND status = 'paid'
     `
 
-    const cuts = (
-      (await sql`
-        SELECT DISTINCT product_id FROM order_lines WHERE order_id = ${orderId}
-      `) as { product_id: string }[]
-    ).map((line) => line.product_id)
+    const held = (await sql`
+      SELECT product_id, description, size, quantity FROM order_lines WHERE order_id = ${orderId}
+    `) as { product_id: string; description: string; size: number; quantity: number }[]
+    const cuts = [...new Set(held.map((line) => line.product_id))]
+    const cutsText = namedCuts(held)
 
     if (row.clerk_user_id && (before !== stage || dispatchChanged || weekChanged)) {
       if (backwards) {
@@ -1184,23 +1232,46 @@ async function postWork(request: Request): Promise<Response> {
       }
     }
 
-    if (backwards) {
-      await sendMail({
-        to: row.email,
-        subject: 'The cut has been held back — Kiano London',
-        text: workBackLetterText({ stage: workCopy[stage].line, reason }),
-        html: workBackLetterHtml({ stage: workCopy[stage].line, reason }),
-        idempotencyKey: `work-back/${row.id}/${before}/${stage}`,
-      })
-    } else if (weekChanged) {
-      const week = formatNamedWeek(namedWeek)
-      await sendMail({
-        to: row.email,
-        subject: 'A week is named — Kiano London',
-        text: workWeekLetterText({ week }),
-        html: workWeekLetterHtml({ week }),
-        idempotencyKey: `work-week/${row.id}/${namedWeek}`,
-      })
+    if (row.email) {
+      if (backwards) {
+        await sendMail({
+          to: row.email,
+          subject: 'The cut has been held back — Kiano London',
+          text: workBackLetterText({ stage: workCopy[stage].line, reason }),
+          html: workBackLetterHtml({ stage: workCopy[stage].line, reason }),
+          idempotencyKey: `work-back/${row.id}/${before}/${stage}`,
+        })
+      } else {
+        if (weekChanged) {
+          const week = formatNamedWeek(namedWeek)
+          await sendMail({
+            to: row.email,
+            subject: 'A week is named — Kiano London',
+            text: workWeekLetterText({ week }),
+            html: workWeekLetterHtml({ week }),
+            idempotencyKey: `work-week/${row.id}/${namedWeek}`,
+          })
+        }
+        if (before !== stage && stage === 'packed') {
+          await sendMail({
+            to: row.email,
+            subject: 'It is in the house box — Kiano London',
+            text: packedLetterText({ cuts: cutsText, note: row.note ?? '' }),
+            html: packedLetterHtml({ cuts: cutsText, note: row.note ?? '' }),
+            idempotencyKey: `work-packed/${row.id}/${before}`,
+          })
+        }
+        if (stage === 'sent' && (before !== stage || dispatchChanged)) {
+          const how = dispatchLine(carrier, tracking)
+          await sendMail({
+            to: row.email,
+            subject: 'It has left the house — Kiano London',
+            text: sentLetterText({ how, cuts: cutsText }),
+            html: sentLetterHtml({ how, cuts: cutsText }),
+            idempotencyKey: `work-sent/${row.id}/${carrier}/${tracking}`,
+          })
+        }
+      }
     }
 
     return Response.json({
@@ -1235,7 +1306,7 @@ async function handle(request: Request, method: Method): Promise<Response> {
     if (section === 'invoices') return getInvoices(request)
     if (section === 'members') return getMembers()
     if (section === 'list') return getList()
-    if (section === 'work') return getOrders()
+    if (section === 'work') return getOrders(request)
     return Response.json({ error: 'This page of the ledger is written, not read.' }, { status: 405 })
   }
 

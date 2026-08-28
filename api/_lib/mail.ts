@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { careLine } from '../../src/data/packing.js'
 import { site } from '../../src/data/site.js'
 
 function fromAddress() {
@@ -252,6 +253,59 @@ export function workBackLetterText(input: { stage: string; reason: string }) {
     input.reason,
     `Questions: ${site.email}.`,
   ].join('\n\n')
+}
+
+function cutsMarkup(cuts: string) {
+  const lines = cuts
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+  if (lines.length === 0) return ''
+  return `<p style="margin:16px 0 0;">${lines.map((line) => escapeHtml(line)).join('<br/>')}</p>`
+}
+
+export function packedLetterHtml(input: { cuts: string; note?: string }) {
+  const line = input.note?.trim()
+  const written = line
+    ? `<p style="margin:16px 0 0;">A line you wrote is on the card.</p><p style="margin:16px 0 0;">${escapeHtml(line)}</p>`
+    : ''
+  return letterFrame(
+    'It is in the house box.',
+    `<p style="margin:0;">Garment bag, unscented tissue, a rigid box. No scent. A house card sits with the piece name and the size.</p>${cutsMarkup(input.cuts)}${written}<p style="margin:16px 0 0;">${escapeHtml(careLine)}</p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function packedLetterText(input: { cuts: string; note?: string }) {
+  const line = input.note?.trim()
+  return [
+    'Garment bag, unscented tissue, a rigid box. No scent. A house card sits with the piece name and the size.',
+    input.cuts.trim() || null,
+    line ? `A line you wrote is on the card.\n\n${line}` : null,
+    careLine,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
+export function sentLetterHtml(input: { how: string; cuts: string }) {
+  return letterFrame(
+    'It has left the house.',
+    `<p style="margin:0;">${escapeHtml(input.how)}</p>${cutsMarkup(input.cuts)}<p style="margin:16px 0 0;">Hang it. ${escapeHtml(careLine)}</p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function sentLetterText(input: { how: string; cuts: string }) {
+  return [
+    input.how,
+    input.cuts.trim() || null,
+    `Hang it. ${careLine}`,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
 }
 
 function houseOrigin() {

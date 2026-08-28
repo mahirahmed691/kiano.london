@@ -31,10 +31,12 @@ function asPaymentError(message?: string) {
 function Field({
   id,
   label,
+  hint,
   children,
 }: {
   id: string
   label: string
+  hint?: string
   children: ReactNode
 }) {
   return (
@@ -43,6 +45,7 @@ function Field({
         {label}
       </label>
       <div className="mt-1">{children}</div>
+      {hint ? <p className="mt-2 text-[13px] font-light text-stone">{hint}</p> : null}
     </div>
   )
 }
@@ -312,10 +315,14 @@ export function CheckoutPage() {
 
               <fieldset>
                 <legend className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                  03 · A note
+                  03 · A card
                 </legend>
                 <div className="mt-6">
-                  <Field id="checkout-note" label="A note for the house (optional)">
+                  <Field
+                    id="checkout-note"
+                    label="A line for the house card (optional)"
+                    hint="It sits in the box with the piece name and the size."
+                  >
                     <textarea
                       id="checkout-note"
                       name="note"

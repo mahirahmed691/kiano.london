@@ -15,6 +15,10 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/craftsmanship` | Craftsmanship |
 | `/craftsmanship-details` | The making, in detail |
 | `/visit` | Atelier visit |
+| `/order/confirmed` | After payment |
+| `/order/invoice` | A record of the cut |
+| `/order/card` | The house card, for the box |
+| `/checkout` | The till |
 | `/account` | Member reservations |
 | `/reservation` | Ask after a reserved cut (reference and email) |
 | `/admin` | House ledger board (signed-in allowlist) |
@@ -23,6 +27,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/admin/accounts` | Tax and the journal |
 | `/admin/invoices` | Records of the cut |
 | `/admin/work` | Reserved, on the table, packed, left the house |
+| `/admin/work/card` | Print the house card |
 | `/admin/members` | Those who keep an account |
 | `/admin/list` | The list, confirmed and held |
 | `/admin/field` | Other houses of the column |

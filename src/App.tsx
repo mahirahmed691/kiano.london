@@ -17,6 +17,7 @@ import { AdminListPage } from '@/pages/AdminListPage'
 import { AdminMembersPage } from '@/pages/AdminMembersPage'
 import { AdminPage } from '@/pages/AdminPage'
 import { AdminPricesPage } from '@/pages/AdminPricesPage'
+import { AdminWorkCardPage } from '@/pages/AdminWorkCardPage'
 import { AdminWorkPage } from '@/pages/AdminWorkPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
@@ -26,6 +27,7 @@ import { CookiesPage } from '@/pages/CookiesPage'
 import { HomePage } from '@/pages/HomePage'
 import { LettersConfirmedPage } from '@/pages/LettersConfirmedPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+import { OrderCardPage } from '@/pages/OrderCardPage'
 import { OrderConfirmedPage } from '@/pages/OrderConfirmedPage'
 import { OrderInvoicePage } from '@/pages/OrderInvoicePage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
@@ -59,6 +61,7 @@ export default function App() {
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
                 <Route path="/order/invoice" element={<OrderInvoicePage />} />
+                <Route path="/order/card" element={<OrderCardPage />} />
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<AdminPage />} />
@@ -68,6 +71,7 @@ export default function App() {
                   <Route path="invoices" element={<AdminInvoicesPage />} />
                   <Route path="invoices/:number" element={<AdminInvoicePage />} />
                   <Route path="work" element={<AdminWorkPage />} />
+                  <Route path="work/card" element={<AdminWorkCardPage />} />
                   <Route path="members" element={<AdminMembersPage />} />
                   <Route path="list" element={<AdminListPage />} />
                   <Route path="field" element={<AdminFieldPage />} />

@@ -1,5 +1,6 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { packingSteps } from '@/data/packing'
 import { isAdminUser } from '@/lib/admin'
 import { orderReference } from '@/lib/checkout'
@@ -207,6 +208,19 @@ export function LedgerWork() {
                 {!returned && order.stageNote ? (
                   <p className="mt-2 text-[14px] font-light text-ink">{order.stageNote}</p>
                 ) : null}
+                {order.note ? (
+                  <p className="mt-4 text-[15px] font-light leading-relaxed text-ink">
+                    {order.note}
+                  </p>
+                ) : null}
+                <p className="mt-4">
+                  <Link
+                    to={`/admin/work/card?id=${encodeURIComponent(order.id)}`}
+                    className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+                  >
+                    The house card
+                  </Link>
+                </p>
                 {returned ? null : (
                   <>
                     <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">

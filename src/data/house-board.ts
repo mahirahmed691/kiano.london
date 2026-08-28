@@ -24,7 +24,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Bag and checkout',
     completion: 92,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Test Checkout is open. Live keys wait on onboarding.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
   },
   {
     name: 'Stock',
@@ -64,9 +64,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Cloth at touching distance',
-    completion: 65,
+    completion: 72,
     status: 'partial',
-    note: 'Pinch-zoom on the piece page. Packing is still copy. No photographs of the box or bag.',
+    note: 'Pinch-zoom on the piece page. The house card can be printed from the work and from the reservation. Care is written when it is packed. Packing photographs are still missing.',
   },
   {
     name: 'House film',
@@ -78,13 +78,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
+    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work prints a house card for the box. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a named week, a cut held for cloth, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when a reservation is returned.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a named week, a cut held for cloth, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, when it is packed or leaves, and when a reservation is returned.',
   },
   {
     name: 'Analytics',

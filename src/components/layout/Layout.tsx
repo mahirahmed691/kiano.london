@@ -24,7 +24,10 @@ export function Layout() {
   const { pathname } = useLocation()
   const app = useHouseApp()
   const invoicePrint =
-    pathname.startsWith('/admin/invoices/') || pathname === '/order/invoice'
+    pathname.startsWith('/admin/invoices/') ||
+    pathname === '/admin/work/card' ||
+    pathname === '/order/invoice' ||
+    pathname === '/order/card'
   const quiet =
     pathname === '/checkout' || pathname === '/order/confirmed' || invoicePrint
 

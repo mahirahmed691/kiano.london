@@ -112,6 +112,12 @@ const pages: Record<string, PageMeta> = {
     path: '/order/invoice',
     robots: 'noindex, nofollow',
   },
+  '/order/card': {
+    title: 'The house card — Kiano London',
+    description: 'The card that sits in the box with the piece.',
+    path: '/order/card',
+    robots: 'noindex, nofollow',
+  },
   '/sign-in': {
     title: 'Sign in — Kiano London',
     description: 'Sign in to see reservations placed with the atelier.',

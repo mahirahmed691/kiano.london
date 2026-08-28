@@ -32,9 +32,9 @@ export const workCopy: Record<
   },
   packed: {
     label: 'Packed',
-    line: 'Bag, unscented tissue, a rigid box.',
+    line: 'Bag, unscented tissue, a rigid box. A house card sits with it.',
     memberTitle: 'It is in the house box',
-    memberBody: 'Garment bag, unscented tissue, a rigid box. No scent.',
+    memberBody: 'Garment bag, unscented tissue, a rigid box. A house card sits with the piece. No scent.',
   },
   sent: {
     label: 'Left the house',
