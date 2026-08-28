@@ -91,7 +91,7 @@ const routes: Route[] = [
   {
     method: 'POST',
     path: '/api/return',
-    load: async () => (await import('./api/return.ts')).POST,
+    load: async () => (await import('./api/appointment.ts')).POST,
   },
   {
     method: 'POST',
@@ -116,7 +116,7 @@ const routes: Route[] = [
   {
     method: 'GET',
     path: '/api/subscribe-confirm',
-    load: async () => (await import('./api/subscribe-confirm.ts')).GET,
+    load: async () => (await import('./api/subscribe.ts')).GET,
   },
   {
     method: 'GET',
