@@ -1,4 +1,4 @@
-export const letterStatuses = ['new', 'seen', 'named', 'refused'] as const
+export const letterStatuses = ['new', 'seen', 'named', 'agreed', 'refused'] as const
 
 export type LetterStatus = (typeof letterStatuses)[number]
 
@@ -81,6 +81,9 @@ export function letterLine(input: {
       return input.reply?.trim()
         ? input.reply.trim()
         : 'The house cannot take the return.'
+    }
+    if (input.status === 'agreed') {
+      return 'Send it back. Unworn, with the house card, the bag, and the box. This is not yet a refund.'
     }
     if (input.status === 'seen') return 'The house has the letter. It is not a refund.'
     return 'The letter is held. It is not a refund.'

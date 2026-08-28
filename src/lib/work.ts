@@ -1,4 +1,6 @@
-export const workStages = ['reserved', 'cutting', 'packed', 'sent'] as const
+import { storedNamedFor } from './letters.js'
+
+export const workStages = ['reserved', 'cloth', 'cutting', 'packed', 'sent'] as const
 
 export type WorkStage = (typeof workStages)[number]
 
@@ -15,6 +17,12 @@ export const workCopy: Record<
     line: 'Cloth is held. Not yet on the table.',
     memberTitle: 'The cut is reserved',
     memberBody: 'Cloth is held against the account.',
+  },
+  cloth: {
+    label: 'Held for cloth',
+    line: 'The mill has not yet sent the cloth.',
+    memberTitle: 'Cloth is waited on',
+    memberBody: 'The house is waiting on the mill for this cut.',
   },
   cutting: {
     label: 'On the table',
@@ -79,4 +87,67 @@ export function isFullyReturned(amountPence: number, refundedPence: number) {
 
 export function isPartReturned(amountPence: number, refundedPence: number) {
   return refundedPence > 0 && refundedPence < amountPence
+}
+
+export function asWorkReason(value: unknown) {
+  if (typeof value !== 'string') return ''
+  return value.trim().slice(0, 400)
+}
+
+export function isWorkBackwards(before: WorkStage, next: WorkStage) {
+  return workStages.indexOf(next) < workStages.indexOf(before)
+}
+
+function utcDay(iso: string) {
+  const year = Number(iso.slice(0, 4))
+  const month = Number(iso.slice(5, 7))
+  const day = Number(iso.slice(8, 10))
+  const date = new Date(Date.UTC(year, month - 1, day))
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return null
+  }
+  return date
+}
+
+function mondayUtc(date: Date) {
+  const next = new Date(date.getTime())
+  const weekday = next.getUTCDay()
+  const offset = weekday === 0 ? -6 : 1 - weekday
+  next.setUTCDate(next.getUTCDate() + offset)
+  return next.toISOString().slice(0, 10)
+}
+
+export function asNamedWeek(value: unknown) {
+  const stored = storedNamedFor(typeof value === 'string' ? value : '')
+  if (!stored) return ''
+  const date = utcDay(stored)
+  if (!date) return ''
+  const monday = mondayUtc(date)
+  const week = utcDay(monday)
+  if (!week) return ''
+  const now = new Date()
+  const start = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - 7)
+  const end = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 548)
+  if (week.getTime() < start || week.getTime() > end) return ''
+  return monday
+}
+
+export function formatNamedWeek(iso: string) {
+  const stored = storedNamedFor(iso)
+  if (!stored) return ''
+  const date = utcDay(stored)
+  if (!date) return ''
+  const monday = mondayUtc(date)
+  const week = utcDay(monday)
+  if (!week) return ''
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(week)
 }

@@ -83,6 +83,8 @@ async function migrate(db: Sql) {
   await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS carrier TEXT NOT NULL DEFAULT ''`
   await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking TEXT NOT NULL DEFAULT ''`
   await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS tracking_href TEXT NOT NULL DEFAULT ''`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS ready_week DATE`
+  await db`ALTER TABLE orders ADD COLUMN IF NOT EXISTS stage_note TEXT NOT NULL DEFAULT ''`
   await db`
     CREATE TABLE IF NOT EXISTS subscribers (
       email TEXT PRIMARY KEY,

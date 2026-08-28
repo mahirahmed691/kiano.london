@@ -17,7 +17,7 @@ import { WordPlates } from '@/components/notices/WordPlates'
 import { formatNoticeWhen } from '@/lib/word'
 import { useHouseApp } from '@/lib/shell'
 import { useWord } from '@/lib/word-state'
-import { asWorkStage, dispatchLine, isFullyReturned, isPartReturned, workCopy, workStages } from '@/lib/work'
+import { asWorkStage, dispatchLine, formatNamedWeek, isFullyReturned, isPartReturned, workCopy, workStages } from '@/lib/work'
 import { asLetterKind, asLetterStatus, letterLine } from '@/lib/letters'
 
 type AccountOrder = {
@@ -32,6 +32,8 @@ type AccountOrder = {
   carrier?: string
   tracking?: string
   trackingHref?: string
+  readyWeek?: string
+  stageNote?: string
   dispatch?: string
   lines: {
     productId: string
@@ -202,6 +204,14 @@ function AccountOrders() {
                   ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
                   : workCopy[asWorkStage(order.stage)].line}
           </p>
+          {!isFullyReturned(order.amountPence, order.refundedPence ?? 0) && order.readyWeek ? (
+            <p className="mt-2 text-[14px] font-light text-ink-soft">
+              The house names the week of {formatNamedWeek(order.readyWeek)}.
+            </p>
+          ) : null}
+          {!isFullyReturned(order.amountPence, order.refundedPence ?? 0) && order.stageNote ? (
+            <p className="mt-2 text-[14px] font-light text-ink">{order.stageNote}</p>
+          ) : null}
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
             <Link
               to={`/order/invoice?session_id=${encodeURIComponent(order.id)}`}
@@ -271,7 +281,9 @@ function AccountLetters({ letters }: { letters: AccountLetter[] }) {
             reply: letter.reply,
           })
           const extra =
-            status === 'named' && letter.reply?.trim() ? letter.reply.trim() : ''
+            (status === 'named' || status === 'agreed') && letter.reply?.trim()
+              ? letter.reply.trim()
+              : ''
           return (
             <li key={letter.id} className="py-8">
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">

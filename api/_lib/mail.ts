@@ -186,6 +186,74 @@ export function returnRefusedLetterText(input: {
     .join('\n\n')
 }
 
+export function returnAgreedLetterHtml(input: {
+  name: string
+  reference: string
+  note?: string
+}) {
+  const name = escapeHtml(input.name)
+  const reference = escapeHtml(input.reference)
+  const note = input.note?.trim()
+    ? `<p style="margin:16px 0 0;">${escapeHtml(input.note.trim())}</p>`
+    : ''
+  return letterFrame(
+    'Send it back.',
+    `<p style="margin:0;">${name}, send the piece back. Unworn, with the house card, the bag, and the box. Reservation ${reference}. This is not yet a refund.</p>${note}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function returnAgreedLetterText(input: {
+  name: string
+  reference: string
+  note?: string
+}) {
+  return [
+    `${input.name}, send the piece back.`,
+    'Unworn, with the house card, the bag, and the box.',
+    `Reservation ${input.reference}. This is not yet a refund.`,
+    input.note?.trim() || null,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
+export function workWeekLetterHtml(input: { week: string }) {
+  const week = escapeHtml(input.week)
+  return letterFrame(
+    'A week is named.',
+    `<p style="margin:0;">The house names the week of ${week} for this cut. Four to eight weeks is the usual wait; this is the week the house can keep.</p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function workWeekLetterText(input: { week: string }) {
+  return [
+    `The house names the week of ${input.week} for this cut.`,
+    'Four to eight weeks is the usual wait; this is the week the house can keep.',
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
+export function workBackLetterHtml(input: { stage: string; reason: string }) {
+  const stage = escapeHtml(input.stage)
+  const reason = escapeHtml(input.reason)
+  return letterFrame(
+    'The cut has been held back.',
+    `<p style="margin:0;">The piece is now ${stage}.</p><p style="margin:16px 0 0;">${reason}</p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function workBackLetterText(input: { stage: string; reason: string }) {
+  return [
+    `The piece is now ${input.stage}.`,
+    input.reason,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
 function houseOrigin() {
   return (process.env.SITE_URL || 'https://www.kiano.london').replace(/\/$/, '')
 }

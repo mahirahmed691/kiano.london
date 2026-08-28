@@ -14,6 +14,8 @@ type OrderRow = {
   carrier: string | null
   tracking: string | null
   tracking_href: string | null
+  ready_week: string | Date | null
+  stage_note: string | null
   created_at: string
 }
 
@@ -49,7 +51,7 @@ export async function GET(request: Request) {
 
     const orders = (await sql`
       SELECT id, email, status, stage, amount_pence, refunded_pence, currency,
-             carrier, tracking, tracking_href, created_at
+             carrier, tracking, tracking_href, ready_week, stage_note, created_at
       FROM orders
       WHERE clerk_user_id = ${clerkUserId}
       ORDER BY created_at DESC
@@ -102,6 +104,8 @@ export async function GET(request: Request) {
         carrier: order.carrier ?? '',
         tracking: order.tracking ?? '',
         trackingHref: asTrackingHref(order.tracking_href ?? ''),
+        readyWeek: storedNamedFor(order.ready_week),
+        stageNote: order.stage_note ?? '',
         dispatch: dispatchLine(order.carrier ?? '', order.tracking ?? ''),
         createdAt: order.created_at,
         lines: (linesByOrder.get(order.id) ?? []).map((line) => ({

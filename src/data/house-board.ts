@@ -22,9 +22,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Bag and checkout',
-    completion: 88,
+    completion: 92,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A paid session writes a house letter as well as Word. Test Checkout is open. Live keys wait on onboarding.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Test Checkout is open. Live keys wait on onboarding.',
   },
   {
     name: 'Stock',
@@ -84,7 +84,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when a reservation is returned.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a named week, a cut held for cloth, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, and when a reservation is returned.',
   },
   {
     name: 'Analytics',
@@ -94,9 +94,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Returns and refunds',
-    completion: 86,
+    completion: 90,
     status: 'partial',
-    note: 'House copy at /returns. A letter is held in the diary; it is not a refund. A full Stripe refund is written on the book, restocks the size, and writes to the email on the reservation. Partial refunds are pence and a letter. The atelier still agrees the return by letter.',
+    note: 'House copy at /returns. A letter is held in the diary; it is not a refund. The house can ask it back, or write that it cannot be taken. A full Stripe refund is written on the book, restocks the size, and writes to the email on the reservation. Partial refunds are pence and a letter.',
   },
 ]
 
@@ -127,7 +127,7 @@ export const houseIntegrations = [
     name: 'Resend',
     state: 'Wired',
     hook: 'None',
-    events: 'List confirm letters, visit confirmation (held, not booked), a named morning or a refusal, return letters (held, not refunded), reservation and refund letters',
+    events: 'List confirm letters, visit confirmation (held, not booked), a named morning or a refusal, return letters (held, asked back, or refused), a named week, a cut held back, reservation and refund letters',
     note: 'From address must be a verified domain. RESEND_API_KEY is on Vercel. kiano.london verification is pending DNS.',
   },
   {

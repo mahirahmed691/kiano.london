@@ -8,8 +8,9 @@ export function AdminWorkPage() {
         The work.
       </Display>
       <Body className="mt-6">
-        A paid cut moves from reserved, to the table, to the house box, then leaves. Name how it
-        left when it goes. A full return from Stripe puts the size back on the line.
+        A paid cut moves from reserved, to held for cloth if the mill is late, to the table, to
+        the house box, then leaves. Name a week so the account is not blank. A reason is needed
+        if a cut is held back. Name how it left when it goes.
       </Body>
       <LedgerWork />
     </>

@@ -9,7 +9,9 @@ import { formatGbpExact } from '@/lib/money'
 import {
   asWorkStage,
   dispatchLine,
+  formatNamedWeek,
   isFullyReturned,
+  isWorkBackwards,
   workCopy,
   workStages,
   type WorkStage,
@@ -22,6 +24,8 @@ type DispatchDraft = {
   carrier: string
   tracking: string
   trackingHref: string
+  readyWeek: string
+  reason: string
 }
 
 export function LedgerWork() {
@@ -52,6 +56,8 @@ export function LedgerWork() {
             carrier: order.carrier ?? '',
             tracking: order.tracking ?? '',
             trackingHref: order.trackingHref ?? '',
+            readyWeek: order.readyWeek ?? '',
+            reason: '',
           },
         ]),
       ),
@@ -83,6 +89,8 @@ export function LedgerWork() {
         carrier: current[orderId]?.carrier ?? '',
         tracking: current[orderId]?.tracking ?? '',
         trackingHref: current[orderId]?.trackingHref ?? '',
+        readyWeek: current[orderId]?.readyWeek ?? '',
+        reason: current[orderId]?.reason ?? '',
         ...patch,
       },
     }))
@@ -92,7 +100,13 @@ export function LedgerWork() {
     setBusy(orderId)
     try {
       const token = await getToken()
-      const draft = drafts[orderId] ?? { carrier: '', tracking: '', trackingHref: '' }
+      const draft = drafts[orderId] ?? {
+        carrier: '',
+        tracking: '',
+        trackingHref: '',
+        readyWeek: '',
+        reason: '',
+      }
       const response = await fetch('/api/admin?section=work', {
         method: 'POST',
         headers: {
@@ -105,6 +119,8 @@ export function LedgerWork() {
           carrier: draft.carrier,
           tracking: draft.tracking,
           trackingHref: draft.trackingHref,
+          readyWeek: draft.readyWeek,
+          reason: draft.reason,
         }),
       })
       const data = (await response.json()) as { error?: string }
@@ -153,6 +169,8 @@ export function LedgerWork() {
               carrier: order.carrier ?? '',
               tracking: order.tracking ?? '',
               trackingHref: order.trackingHref ?? '',
+              readyWeek: order.readyWeek ?? '',
+              reason: '',
             }
             return (
               <li key={order.id} className="py-10">
@@ -181,24 +199,72 @@ export function LedgerWork() {
                       ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
                       : workCopy[stage].line}
                 </p>
+                {!returned && order.readyWeek ? (
+                  <p className="mt-2 text-[14px] font-light text-ink-soft">
+                    The house names the week of {formatNamedWeek(order.readyWeek)}.
+                  </p>
+                ) : null}
+                {!returned && order.stageNote ? (
+                  <p className="mt-2 text-[14px] font-light text-ink">{order.stageNote}</p>
+                ) : null}
                 {returned ? null : (
                   <>
                     <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-                      {workStages.map((next) => (
+                      {workStages.map((next) => {
+                        const back = isWorkBackwards(stage, next)
+                        return (
                         <button
                           key={next}
                           type="button"
-                          disabled={busy === order.id}
+                          disabled={busy === order.id || (back && !draft.reason.trim())}
                           onClick={() => void setStage(order.id, next)}
                           className={
                             next === stage
                               ? 'text-[11px] uppercase tracking-[0.22em]'
-                              : 'text-[11px] uppercase tracking-[0.22em] opacity-45 transition-opacity hover:opacity-100'
+                              : 'text-[11px] uppercase tracking-[0.22em] opacity-45 transition-opacity hover:opacity-100 disabled:opacity-25'
                           }
                         >
                           {workCopy[next].label}
                         </button>
-                      ))}
+                        )
+                      })}
+                    </div>
+                    <div className="mt-8 grid gap-6 sm:grid-cols-2">
+                      <label>
+                        <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                          The week
+                        </span>
+                        <input
+                          className={fieldClass}
+                          type="date"
+                          value={draft.readyWeek}
+                          onChange={(event) =>
+                            patchDraft(order.id, { readyWeek: event.target.value })
+                          }
+                        />
+                      </label>
+                      <label>
+                        <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                          A reason, if held back
+                        </span>
+                        <input
+                          className={fieldClass}
+                          value={draft.reason}
+                          onChange={(event) =>
+                            patchDraft(order.id, { reason: event.target.value })
+                          }
+                        />
+                      </label>
+                    </div>
+                    <div className="mt-6">
+                      <button
+                        type="button"
+                        disabled={busy === order.id || !draft.readyWeek}
+                        onClick={() => void setStage(order.id, stage)}
+                        className="text-[11px] uppercase tracking-[0.22em] opacity-45 transition-opacity hover:opacity-100"
+                      >
+                        Name the week
+                      </button>
                     </div>
                     <div className="mt-8 grid gap-6 sm:grid-cols-3">
                       <label>

@@ -61,7 +61,7 @@ function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string
     },
     {
       label: 'The work',
-      value: `${String(ledger.workCutting ?? 0).padStart(2, '0')} cutting · ${String(ledger.workPacked ?? 0).padStart(2, '0')} packed`,
+      value: `${String(ledger.workCloth ?? 0).padStart(2, '0')} cloth · ${String(ledger.workCutting ?? 0).padStart(2, '0')} cutting · ${String(ledger.workPacked ?? 0).padStart(2, '0')} packed`,
       to: '/admin/work',
     },
   ]

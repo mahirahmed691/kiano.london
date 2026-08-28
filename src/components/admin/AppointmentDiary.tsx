@@ -28,6 +28,7 @@ function letterStatusLabel(row: AppointmentRow) {
   if (row.status === 'named' && row.namedFor) {
     return `Named · ${formatNamedDay(row.namedFor)}`
   }
+  if (row.status === 'agreed') return 'Send it back'
   if (row.status === 'refused') return row.kind === 'return' ? 'Cannot be taken' : 'Cannot be kept'
   if (row.status === 'seen') return 'Seen'
   return 'New'
@@ -43,7 +44,7 @@ function DiaryLetter({
   const [day, setDay] = useState(row.namedFor)
   const [reply, setReply] = useState(row.reply)
   const [busy, setBusy] = useState('')
-  const closed = row.status === 'refused'
+  const closed = row.status === 'refused' || row.status === 'agreed'
 
   async function keep(status: LetterKeep['status']) {
     if (busy) return
@@ -94,6 +95,9 @@ function DiaryLetter({
         {row.status === 'named' && row.reply.trim() ? (
           <p className="mt-2 text-[15px] font-light leading-relaxed text-ink">{row.reply}</p>
         ) : null}
+        {row.status === 'agreed' && row.reply.trim() ? (
+          <p className="mt-2 text-[15px] font-light leading-relaxed text-ink">{row.reply}</p>
+        ) : null}
         {closed ? null : (
           <div className="mt-6 space-y-6">
             {row.kind === 'visit' ? (
@@ -137,7 +141,16 @@ function DiaryLetter({
                 >
                   Name the morning
                 </button>
-              ) : null}
+              ) : (
+                <button
+                  type="button"
+                  disabled={Boolean(busy)}
+                  onClick={() => void keep('agreed')}
+                  className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 disabled:opacity-35"
+                >
+                  Send it back
+                </button>
+              )}
               <button
                 type="button"
                 disabled={Boolean(busy)}

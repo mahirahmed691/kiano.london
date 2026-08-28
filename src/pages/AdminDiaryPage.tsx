@@ -12,7 +12,8 @@ export function AdminDiaryPage() {
       </Display>
       <Body className="mt-6">
         Requests are copied here when the atelier can keep them. A visit is held until the house
-        names a morning. A return is held, not refunded. There is no public calendar.
+        names a morning. A return is held until the house asks it back. There is no public
+        calendar. It is not a refund.
       </Body>
       {error ? (
         <p className="mt-6 text-[15px] font-light text-ink" role="alert">

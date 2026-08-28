@@ -51,7 +51,8 @@ export function ReturnsPage() {
             Write first.
           </Display>
           <Body className="mt-6">
-            The house keeps the letter in the diary. If you would rather write directly:{' '}
+            The house keeps the letter in the diary. If the return can be taken, the house asks
+            it back. If you would rather write directly:{' '}
             <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
               {site.email}
             </a>

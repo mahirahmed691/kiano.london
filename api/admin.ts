@@ -4,6 +4,8 @@ import { requireAdmin } from './_lib/admin.js'
 import { withDb } from './_lib/db.js'
 import { recordNotice } from './_lib/notices.js'
 import {
+  returnAgreedLetterHtml,
+  returnAgreedLetterText,
   returnRefusedLetterHtml,
   returnRefusedLetterText,
   sendMail,
@@ -11,18 +13,14 @@ import {
   visitNamedLetterText,
   visitRefusedLetterHtml,
   visitRefusedLetterText,
+  workBackLetterHtml,
+  workBackLetterText,
+  workWeekLetterHtml,
+  workWeekLetterText,
 } from './_lib/mail.js'
 import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.js'
-import {
-  asLetterKind,
-  asLetterReply,
-  asLetterStatus,
-  asNamedDay,
-  formatNamedDay,
-  isLetterStatus,
-  storedNamedFor,
-} from '../src/lib/letters.js'
-import { asCarrier, asTrackingCode, asTrackingHref, asWorkStage, dispatchLine, isFullyReturned, isWorkStage, workCopy } from '../src/lib/work.js'
+import { asLetterKind, asLetterReply, asLetterStatus, asNamedDay, formatNamedDay, isLetterStatus, storedNamedFor } from '../src/lib/letters.js'
+import { asCarrier, asNamedWeek, asTrackingCode, asTrackingHref, asWorkReason, asWorkStage, dispatchLine, formatNamedWeek, isFullyReturned, isWorkBackwards, isWorkStage, workCopy } from '../src/lib/work.js'
 
 type Method = 'GET' | 'POST'
 type Section =
@@ -168,6 +166,12 @@ async function getSummary(): Promise<Response> {
         n: number
       }[],
     )
+    const workCloth = asCount(
+      (await sql`
+        SELECT COUNT(*)::int AS n FROM orders
+        WHERE status = 'paid' AND stage = 'cloth' AND refunded_pence < amount_pence
+      `) as { n: number }[],
+    )
     const workCutting = asCount(
       (await sql`
         SELECT COUNT(*)::int AS n FROM orders
@@ -224,6 +228,7 @@ async function getSummary(): Promise<Response> {
       sizesHeld,
       appointmentCount,
       newLetters,
+      workCloth,
       workCutting,
       workPacked,
       workSent,
@@ -611,7 +616,7 @@ async function getOrders(): Promise<Response> {
     const sql = await backfillInvoices()
     const orders = (await sql`
       SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
-             o.currency, o.carrier, o.tracking, o.tracking_href, o.created_at,
+             o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.created_at,
              i.number AS invoice_number
       FROM orders o
       LEFT JOIN invoices i ON i.order_id = o.id
@@ -630,6 +635,8 @@ async function getOrders(): Promise<Response> {
       carrier: string | null
       tracking: string | null
       tracking_href: string | null
+      ready_week: string | Date | null
+      stage_note: string | null
       created_at: string | Date
       invoice_number: string | null
     }[]
@@ -668,6 +675,8 @@ async function getOrders(): Promise<Response> {
         carrier: order.carrier ?? '',
         tracking: order.tracking ?? '',
         trackingHref: asTrackingHref(order.tracking_href ?? ''),
+        readyWeek: storedNamedFor(order.ready_week),
+        stageNote: order.stage_note ?? '',
         createdAt: asIso(order.created_at),
         invoiceNumber: order.invoice_number ?? '',
         lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
@@ -854,18 +863,21 @@ async function postDiary(request: Request): Promise<Response> {
     const kind = asLetterKind(row.kind)
     const before = asLetterStatus(row.status)
 
-    if ((status === 'new' || status === 'seen') && (before === 'named' || before === 'refused')) {
+    if ((status === 'new' || status === 'seen') && (before === 'named' || before === 'agreed' || before === 'refused')) {
       return Response.json({ error: 'The letter has already been answered.' }, { status: 400 })
     }
     if (status === 'named' && kind !== 'visit') {
       return Response.json({ error: 'A morning is named for a visit.' }, { status: 400 })
+    }
+    if (status === 'agreed' && kind !== 'return') {
+      return Response.json({ error: 'A return is agreed, not a visit.' }, { status: 400 })
     }
     if (status === 'named' && !namedFor) {
       return Response.json({ error: 'A morning is needed.' }, { status: 400 })
     }
 
     const storedDay = status === 'named' ? namedFor : ''
-    const storedReply = status === 'named' || status === 'refused' ? reply : ''
+    const storedReply = status === 'named' || status === 'refused' || status === 'agreed' ? reply : ''
 
     const updated = (await sql`
       UPDATE appointments
@@ -886,7 +898,7 @@ async function postDiary(request: Request): Promise<Response> {
       return Response.json({ error: 'That letter is not held.' }, { status: 404 })
     }
 
-    if (status === 'named' || status === 'refused') {
+    if (status === 'named' || status === 'refused' || status === 'agreed') {
       const day = formatNamedDay(storedDay)
       if (status === 'named') {
         await sendMail({
@@ -895,6 +907,22 @@ async function postDiary(request: Request): Promise<Response> {
           text: visitNamedLetterText({ name: row.name, day, note: storedReply }),
           html: visitNamedLetterHtml({ name: row.name, day, note: storedReply }),
           idempotencyKey: `visit-named/${row.id}/${storedDay}`,
+        })
+      } else if (status === 'agreed') {
+        await sendMail({
+          to: row.email,
+          subject: 'Send it back — Kiano London',
+          text: returnAgreedLetterText({
+            name: row.name,
+            reference: row.reference ?? '',
+            note: storedReply,
+          }),
+          html: returnAgreedLetterHtml({
+            name: row.name,
+            reference: row.reference ?? '',
+            note: storedReply,
+          }),
+          idempotencyKey: `return-agreed/${row.id}`,
         })
       } else if (kind === 'return') {
         await sendMail({
@@ -934,15 +962,19 @@ async function postDiary(request: Request): Promise<Response> {
           title:
             status === 'named'
               ? 'A morning is named'
-              : kind === 'return'
-                ? 'The return cannot be taken'
-                : 'A morning cannot be kept',
+              : status === 'agreed'
+                ? 'Send it back'
+                : kind === 'return'
+                  ? 'The return cannot be taken'
+                  : 'A morning cannot be kept',
           body:
             status === 'named'
               ? `The house can keep the morning of ${day}.`
-              : kind === 'return'
-                ? 'The house cannot take this return.'
-                : 'The house cannot keep a morning.',
+              : status === 'agreed'
+                ? 'Send the piece back. This is not yet a refund.'
+                : kind === 'return'
+                  ? 'The house cannot take this return.'
+                  : 'The house cannot keep a morning.',
           href: '/account',
           productIds: row.product_id ? [row.product_id] : undefined,
         })
@@ -969,15 +1001,11 @@ async function postWork(request: Request): Promise<Response> {
     carrier?: unknown
     tracking?: unknown
     trackingHref?: unknown
+    readyWeek?: unknown
+    reason?: unknown
   }
   try {
-    body = (await request.json()) as {
-      orderId?: unknown
-      stage?: unknown
-      carrier?: unknown
-      tracking?: unknown
-      trackingHref?: unknown
-    }
+    body = (await request.json()) as typeof body
   } catch {
     return Response.json({ error: 'The work could not be read.' }, { status: 400 })
   }
@@ -995,11 +1023,14 @@ async function postWork(request: Request): Promise<Response> {
   const tracking = stage === 'sent' ? asTrackingCode(typeof body.tracking === 'string' ? body.tracking : '') : ''
   const trackingHref =
     stage === 'sent' ? asTrackingHref(typeof body.trackingHref === 'string' ? body.trackingHref : '') : ''
+  const namedWeek = asNamedWeek(body.readyWeek)
+  const reason = asWorkReason(body.reason)
 
   try {
     const sql = await withDb()
     const current = (await sql`
-      SELECT id, stage, clerk_user_id, email, carrier, tracking, tracking_href, amount_pence, refunded_pence
+      SELECT id, stage, clerk_user_id, email, carrier, tracking, tracking_href,
+             ready_week, stage_note, amount_pence, refunded_pence
       FROM orders
       WHERE id = ${orderId} AND status = 'paid'
     `) as {
@@ -1010,6 +1041,8 @@ async function postWork(request: Request): Promise<Response> {
       carrier: string | null
       tracking: string | null
       tracking_href: string | null
+      ready_week: string | Date | null
+      stage_note: string | null
       amount_pence: number
       refunded_pence: number
     }[]
@@ -1022,14 +1055,32 @@ async function postWork(request: Request): Promise<Response> {
     }
 
     const before = asWorkStage(row.stage)
+    const backwards = isWorkBackwards(before, stage)
+    if (backwards && !reason) {
+      return Response.json({ error: 'A reason is needed if the cut is held back.' }, { status: 400 })
+    }
+
+    const previousWeek = storedNamedFor(row.ready_week)
+    if (body.readyWeek !== undefined && body.readyWeek !== '' && !namedWeek) {
+      return Response.json({ error: 'A week is needed.' }, { status: 400 })
+    }
+    const storedWeek = namedWeek || previousWeek
+    const weekChanged = Boolean(namedWeek) && namedWeek !== previousWeek
+    const stageNote = backwards ? reason : ''
     const dispatchChanged =
       stage === 'sent' &&
       (asCarrier(row.carrier) !== carrier ||
         asTrackingCode(row.tracking) !== tracking ||
         asTrackingHref(row.tracking_href) !== trackingHref)
 
-    if (before === stage && !dispatchChanged) {
-      return Response.json({ ok: true, orderId: row.id, stage })
+    if (before === stage && !dispatchChanged && !weekChanged && !backwards) {
+      return Response.json({
+        ok: true,
+        orderId: row.id,
+        stage,
+        readyWeek: storedWeek,
+        stageNote: row.stage_note ?? '',
+      })
     }
 
     await sql`
@@ -1038,31 +1089,81 @@ async function postWork(request: Request): Promise<Response> {
         stage = ${stage},
         carrier = ${carrier},
         tracking = ${tracking},
-        tracking_href = ${trackingHref}
+        tracking_href = ${trackingHref},
+        ready_week = ${storedWeek || null},
+        stage_note = ${backwards ? stageNote : before === stage ? (row.stage_note ?? '') : ''}
       WHERE id = ${orderId} AND status = 'paid'
     `
 
-    if (stage !== 'reserved' && row.clerk_user_id && (before !== stage || dispatchChanged)) {
-      const copy = workCopy[stage]
-      const bodyLine =
-        stage === 'sent' ? dispatchLine(carrier, tracking) : copy.memberBody
-      const cuts = (
-        (await sql`
-          SELECT DISTINCT product_id FROM order_lines WHERE order_id = ${orderId}
-        `) as { product_id: string }[]
-      ).map((line) => line.product_id)
-      await recordNotice({
-        audience: 'member',
-        clerkUserId: row.clerk_user_id,
-        kind: 'work',
-        title: copy.memberTitle,
-        body: bodyLine,
-        href: '/account',
-        productIds: cuts,
+    const cuts = (
+      (await sql`
+        SELECT DISTINCT product_id FROM order_lines WHERE order_id = ${orderId}
+      `) as { product_id: string }[]
+    ).map((line) => line.product_id)
+
+    if (row.clerk_user_id && (before !== stage || dispatchChanged || weekChanged)) {
+      if (backwards) {
+        await recordNotice({
+          audience: 'member',
+          clerkUserId: row.clerk_user_id,
+          kind: 'work',
+          title: 'The cut has been held back',
+          body: reason,
+          href: '/account',
+          productIds: cuts,
+        })
+      } else if (before !== stage && stage !== 'reserved') {
+        const copy = workCopy[stage]
+        const bodyLine = stage === 'sent' ? dispatchLine(carrier, tracking) : copy.memberBody
+        await recordNotice({
+          audience: 'member',
+          clerkUserId: row.clerk_user_id,
+          kind: 'work',
+          title: copy.memberTitle,
+          body: bodyLine,
+          href: '/account',
+          productIds: cuts,
+        })
+      } else if (weekChanged) {
+        const week = formatNamedWeek(namedWeek)
+        await recordNotice({
+          audience: 'member',
+          clerkUserId: row.clerk_user_id,
+          kind: 'work',
+          title: 'A week is named',
+          body: `The house names the week of ${week}.`,
+          href: '/account',
+          productIds: cuts,
+        })
+      }
+    }
+
+    if (backwards) {
+      await sendMail({
+        to: row.email,
+        subject: 'The cut has been held back — Kiano London',
+        text: workBackLetterText({ stage: workCopy[stage].line, reason }),
+        html: workBackLetterHtml({ stage: workCopy[stage].line, reason }),
+        idempotencyKey: `work-back/${row.id}/${before}/${stage}`,
+      })
+    } else if (weekChanged) {
+      const week = formatNamedWeek(namedWeek)
+      await sendMail({
+        to: row.email,
+        subject: 'A week is named — Kiano London',
+        text: workWeekLetterText({ week }),
+        html: workWeekLetterHtml({ week }),
+        idempotencyKey: `work-week/${row.id}/${namedWeek}`,
       })
     }
 
-    return Response.json({ ok: true, orderId: row.id, stage })
+    return Response.json({
+      ok: true,
+      orderId: row.id,
+      stage,
+      readyWeek: storedWeek,
+      stageNote: backwards ? reason : before === stage ? (row.stage_note ?? '') : '',
+    })
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The work could not be kept.' }, { status: 503 })

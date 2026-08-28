@@ -70,7 +70,9 @@ export type LedgerOrder = {
   refundedPence?: number
   carrier?: string
   tracking?: string
+  readyWeek?: string
   trackingHref?: string
+  stageNote?: string
   lines: {
     productId: string
     size: number
