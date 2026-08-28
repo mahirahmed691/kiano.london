@@ -1,76 +1,26 @@
 import { Show, SignOutButton, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/HeldCuts'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { getProduct, productLineName, productPath } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
-import { orderReference, returnPath } from '@/lib/checkout'
-import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { WordPlates } from '@/components/notices/WordPlates'
 import { formatNoticeWhen } from '@/lib/word'
 import { useHouseApp } from '@/lib/shell'
 import { useWord } from '@/lib/word-state'
-import { asWorkStage, dispatchLine, formatNamedWeek, isFullyReturned, isPartReturned, workCopy, workStages } from '@/lib/work'
-import { asLetterKind, asLetterStatus, letterLine } from '@/lib/letters'
-
-type AccountOrder = {
-  id: string
-  createdAt: string
-  amountPence: number
-  currency: string
-  status: string
-  stage?: string
-  refundedPence?: number
-  returned?: boolean
-  carrier?: string
-  tracking?: string
-  trackingHref?: string
-  readyWeek?: string
-  stageNote?: string
-  dispatch?: string
-  lines: {
-    productId: string
-    size: number
-    quantity: number
-    amountPence: number
-    description: string
-  }[]
-}
-
-type AccountLetter = {
-  id: number
-  kind: 'visit' | 'return'
-  status: string
-  namedFor?: string
-  reply?: string
-  productId?: string
-  size?: number | null
-  reference?: string
-  createdAt: string
-}
-
-function formatOrderDate(value: string) {
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return ''
-  return new Intl.DateTimeFormat('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
 
 function AccountOrders() {
   const { getToken, isSignedIn } = useAuth()
   const { user } = useUser()
-  const [orders, setOrders] = useState<AccountOrder[] | null>(null)
-  const [letters, setLetters] = useState<AccountLetter[]>([])
+  const [orders, setOrders] = useState<HeldOrder[] | null>(null)
+  const [letters, setLetters] = useState<HeldLetter[]>([])
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -99,8 +49,8 @@ function AccountOrders() {
           headers: token ? { Authorization: `Bearer ${token}` } : undefined,
         })
         const data = (await response.json()) as {
-          orders?: AccountOrder[]
-          letters?: AccountLetter[]
+          orders?: HeldOrder[]
+          letters?: HeldLetter[]
           error?: string
         }
         if (cancelled) return
@@ -139,171 +89,7 @@ function AccountOrders() {
     )
   }
 
-  if (orders.length === 0) {
-    return (
-      <div className="mt-10">
-        <Body>No cuts are reserved against this account yet.</Body>
-        <AccountLetters letters={letters} />
-        <div className="mt-8">
-          <Button to="/shop">The Shop</Button>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <>
-    <ul className="mt-12 divide-y divide-rule border-t border-ink">
-      {orders.map((order) => (
-        <li key={order.id} className="py-8">
-          <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-              {formatOrderDate(order.createdAt)} · {orderReference(order.id)}
-            </p>
-            <p className="font-display text-2xl font-light">{formatGbp(order.amountPence)}</p>
-          </div>
-          <ul className="mt-4 space-y-2">
-            {order.lines.map((line, index) => {
-                const product = getProduct(line.productId)
-                return (
-                  <li key={`${order.id}-${line.productId}-${line.size}-${index}`}>
-                    <Link
-                      to={product ? productPath(product) : '/shop'}
-                      className="text-[15px] font-light text-ink transition-opacity hover:opacity-70"
-                    >
-                      {line.description}
-                      {line.quantity > 1 ? ` × ${line.quantity}` : ''}
-                    </Link>
-                  </li>
-                )
-              })}
-          </ul>
-          <ol className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-            {workStages.map((step) => {
-              const current = asWorkStage(order.stage)
-              const reached = workStages.indexOf(step) <= workStages.indexOf(current)
-              return (
-                <li
-                  key={step}
-                  className={cn(
-                    'text-[11px] uppercase tracking-[0.22em]',
-                    reached ? 'text-ink' : 'text-stone',
-                  )}
-                >
-                  {workCopy[step].label}
-                </li>
-              )
-            })}
-          </ol>
-          <p className="mt-3 text-[14px] font-light text-ink-soft">
-            {isFullyReturned(order.amountPence, order.refundedPence ?? 0)
-              ? 'The reservation has been returned.'
-              : isPartReturned(order.amountPence, order.refundedPence ?? 0)
-                ? `The reservation has been returned in part · ${formatGbp(order.refundedPence ?? 0)}.`
-                : asWorkStage(order.stage) === 'sent'
-                  ? dispatchLine(order.carrier ?? '', order.tracking ?? '')
-                  : workCopy[asWorkStage(order.stage)].line}
-          </p>
-          {!isFullyReturned(order.amountPence, order.refundedPence ?? 0) && order.readyWeek ? (
-            <p className="mt-2 text-[14px] font-light text-ink-soft">
-              The house names the week of {formatNamedWeek(order.readyWeek)}.
-            </p>
-          ) : null}
-          {!isFullyReturned(order.amountPence, order.refundedPence ?? 0) && order.stageNote ? (
-            <p className="mt-2 text-[14px] font-light text-ink">{order.stageNote}</p>
-          ) : null}
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
-            <Link
-              to={`/order/invoice?session_id=${encodeURIComponent(order.id)}`}
-              className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-            >
-              A record of the cut
-            </Link>
-            {order.lines[0]?.productId ? (
-              <Link
-                to={
-                  order.lines[0].size
-                    ? `/visit?piece=${encodeURIComponent(order.lines[0].productId)}&size=${order.lines[0].size}`
-                    : `/visit?piece=${encodeURIComponent(order.lines[0].productId)}`
-                }
-                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-              >
-                Enquire to visit
-              </Link>
-            ) : null}
-            <Link
-              to={returnPath({
-                reference: orderReference(order.id),
-                productId: order.lines[0]?.productId,
-                size: order.lines[0]?.size,
-              })}
-              className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-            >
-              Write if it must return
-            </Link>
-            {order.trackingHref && asWorkStage(order.stage) === 'sent' ? (
-              <a
-                href={order.trackingHref}
-                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-              >
-                Follow it
-              </a>
-            ) : null}
-          </div>
-        </li>
-      ))}
-    </ul>
-    <AccountLetters letters={letters} />
-    </>
-  )
-}
-
-function AccountLetters({ letters }: { letters: AccountLetter[] }) {
-  if (letters.length === 0) return null
-
-  return (
-    <div className="mt-16">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Letters held</p>
-      <ul className="mt-6 divide-y divide-rule border-t border-ink">
-        {letters.map((letter) => {
-          const product = letter.productId ? getProduct(letter.productId) : undefined
-          const piece = product
-            ? productLineName(product)
-            : letter.kind === 'return'
-              ? 'A cut'
-              : 'A visit'
-          const kind = asLetterKind(letter.kind)
-          const status = asLetterStatus(letter.status)
-          const line = letterLine({
-            kind,
-            status,
-            namedFor: letter.namedFor,
-            reply: letter.reply,
-          })
-          const extra =
-            (status === 'named' || status === 'agreed') && letter.reply?.trim()
-              ? letter.reply.trim()
-              : ''
-          return (
-            <li key={letter.id} className="py-8">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                {formatOrderDate(letter.createdAt)}
-                {letter.reference ? ` · ${letter.reference}` : ''}
-              </p>
-              <p className="mt-3 font-display text-2xl font-light">{piece}</p>
-              {letter.size ? (
-                <p className="mt-1 text-[15px] font-light text-ink-soft">Size {letter.size}</p>
-              ) : null}
-              <p className="mt-3 text-[15px] font-light leading-relaxed text-ink-soft">{line}</p>
-              {extra ? (
-                <p className="mt-2 text-[15px] font-light leading-relaxed text-ink">{extra}</p>
-              ) : null}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
+  return <HeldCuts orders={orders} letters={letters} />
 }
 
 function AccountWord() {
@@ -423,13 +209,17 @@ function AccountGate() {
       <Show when="signed-out">
         <Body className="mt-6">
           The shop is public. Sign in to keep reservations in one place, against the email
-          you use at checkout.
+          you use at checkout. If you reserved without an account, ask after the cut with
+          the reference and that email.
         </Body>
         <div className="mt-10 flex flex-wrap gap-4">
           <Button to="/sign-in" variant="solid">
             Sign in
           </Button>
           <Button to="/sign-up">Open an account</Button>
+        </div>
+        <div className="mt-8">
+          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
         </div>
       </Show>
       <Show when="signed-in">
@@ -472,6 +262,7 @@ export function AccountPage() {
         )}
         <AccountList />
         <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
+          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
           <TextLink to="/returns">If it must return</TextLink>
           <TextLink to="/shop">Return to the shop</TextLink>
         </div>

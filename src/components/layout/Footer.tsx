@@ -46,6 +46,14 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  to="/reservation"
+                  className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                >
+                  A reserved cut
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/account"
                   className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
                 >

@@ -16,6 +16,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/craftsmanship-details` | The making, in detail |
 | `/visit` | Atelier visit |
 | `/account` | Member reservations |
+| `/reservation` | Ask after a reserved cut (reference and email) |
 | `/admin` | House ledger board (signed-in allowlist) |
 | `/admin/cuts` | Remaining cuts |
 | `/admin/prices` | The line in sterling |

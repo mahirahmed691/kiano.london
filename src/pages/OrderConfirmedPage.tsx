@@ -11,6 +11,7 @@ import {
   clearStoredCheckout,
   formatOrderAddress,
   orderReference,
+  reservationPath,
   type CheckoutOrder,
 } from '@/lib/checkout'
 import { clerkEnabled } from '@/lib/clerk'
@@ -235,6 +236,16 @@ export function OrderConfirmedPage() {
               {sessionId ? (
                 <TextLink to={`/order/invoice?session_id=${encodeURIComponent(sessionId)}`}>
                   A record of the cut
+                </TextLink>
+              ) : null}
+              {order ? (
+                <TextLink
+                  to={reservationPath({
+                    reference: orderReference(order.id),
+                    email: order.customerEmail ?? undefined,
+                  })}
+                >
+                  Ask after this cut
                 </TextLink>
               ) : null}
               {order ? (

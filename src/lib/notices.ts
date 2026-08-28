@@ -75,6 +75,7 @@ export const quietLetterPaths = [
   '/sign-in',
   '/sign-up',
   '/account',
+  '/reservation',
   '/cookies',
   '/privacy',
   '/returns',

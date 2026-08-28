@@ -40,8 +40,12 @@ export function PrivacyPage() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">A reservation</p>
             <Body className="mt-3">
               Payment is Stripe. The order, the size, and the delivery address are kept in our
-              database so the cloth can be cut and sent. If a reserved cut cannot be worn, write
-              as set out on{' '}
+              database so the cloth can be cut and sent. You can ask after a reserved cut with the
+              eight-letter reference and the email used at the till, on{' '}
+              <Link to="/reservation" className="border-b border-current pb-px">
+                a reserved cut
+              </Link>
+              . If a reserved cut cannot be worn, write as set out on{' '}
               <Link to="/returns" className="border-b border-current pb-px">
                 if it must return
               </Link>

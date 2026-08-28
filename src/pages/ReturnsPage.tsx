@@ -63,7 +63,10 @@ export function ReturnsPage() {
           </div>
         </div>
 
-        <p className="mt-16">
+        <p className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
+          <Link to="/reservation" className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70">
+            Ask after a reserved cut
+          </Link>
           <Link to="/account" className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70">
             Account
           </Link>

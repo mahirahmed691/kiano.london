@@ -11,7 +11,7 @@ const fieldClass =
 function appointmentPiece(row: AppointmentRow) {
   const product = getProduct(row.productId)
   if (product) return productLineName(product)
-  return row.kind === 'return' ? 'A cut' : 'To be discussed'
+  return row.kind === 'return' ? 'A cut' : row.kind === 'wait' ? 'A size' : 'To be discussed'
 }
 
 function formatDiaryDate(value: string) {
@@ -28,8 +28,12 @@ function letterStatusLabel(row: AppointmentRow) {
   if (row.status === 'named' && row.namedFor) {
     return `Named · ${formatNamedDay(row.namedFor)}`
   }
-  if (row.status === 'agreed') return 'Send it back'
-  if (row.status === 'refused') return row.kind === 'return' ? 'Cannot be taken' : 'Cannot be kept'
+  if (row.status === 'agreed') return row.kind === 'wait' ? 'On the line' : 'Send it back'
+  if (row.status === 'refused') {
+    if (row.kind === 'return') return 'Cannot be taken'
+    if (row.kind === 'wait') return 'Cannot write'
+    return 'Cannot be kept'
+  }
   if (row.status === 'seen') return 'Seen'
   return 'New'
 }
@@ -72,7 +76,7 @@ function DiaryLetter({
       </div>
       <div className="lg:col-span-6">
         <p className="text-[15px] font-light leading-relaxed text-ink-soft">
-          {row.kind === 'return' ? 'A return' : 'A visit'}
+          {row.kind === 'return' ? 'A return' : row.kind === 'wait' ? 'A wait' : 'A visit'}
           {' · '}
           {appointmentPiece(row)}
           {row.size ? ` · ${row.size}` : row.kind === 'return' ? '' : ' · to be fitted'}
@@ -148,7 +152,7 @@ function DiaryLetter({
                   onClick={() => void keep('agreed')}
                   className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 disabled:opacity-35"
                 >
-                  Send it back
+                  {row.kind === 'wait' ? 'It is on the line' : 'Send it back'}
                 </button>
               )}
               <button
@@ -157,7 +161,11 @@ function DiaryLetter({
                 onClick={() => void keep('refused')}
                 className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 disabled:opacity-35"
               >
-                {row.kind === 'return' ? 'Cannot be taken' : 'Cannot be kept'}
+                {row.kind === 'return'
+                  ? 'Cannot be taken'
+                  : row.kind === 'wait'
+                    ? 'Cannot write'
+                    : 'Cannot be kept'}
               </button>
               {row.status === 'new' ? (
                 <button

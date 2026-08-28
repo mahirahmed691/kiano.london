@@ -355,6 +355,67 @@ export function returnAskLetterText(input: {
   ].join('\n\n')
 }
 
+export function waitAskLetterHtml(input: { name: string; piece: string; size: string }) {
+  const name = escapeHtml(input.name)
+  const piece = escapeHtml(input.piece)
+  const size = escapeHtml(input.size)
+  return letterFrame(
+    'The letter is held.',
+    `<p style="margin:0;">${name}, the house has the letter. If ${piece}, ${size}, returns to the line, we write.</p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function waitAskLetterText(input: { name: string; piece: string; size: string }) {
+  return [
+    `${input.name}, the house has the letter.`,
+    `If ${input.piece}, ${input.size}, returns to the line, we write.`,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
+export function waitReturnedLetterHtml(input: { name: string; piece: string; size: string; href: string }) {
+  const name = escapeHtml(input.name)
+  const piece = escapeHtml(input.piece)
+  const size = escapeHtml(input.size)
+  const href = escapeHtml(input.href)
+  return letterFrame(
+    'This size is on the line.',
+    `<p style="margin:0;">${name}, ${piece}, ${size}, can be reserved again.</p><p style="margin:16px 0 0;"><a href="${href}" style="color:#1B1714;">Open the piece</a></p>`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function waitReturnedLetterText(input: { name: string; piece: string; size: string; href: string }) {
+  return [
+    `${input.name}, ${input.piece}, ${input.size}, can be reserved again.`,
+    input.href,
+    `Questions: ${site.email}.`,
+  ].join('\n\n')
+}
+
+export function waitRefusedLetterHtml(input: { name: string; piece: string; size: string; note?: string }) {
+  const name = escapeHtml(input.name)
+  const piece = escapeHtml(input.piece)
+  const size = escapeHtml(input.size)
+  const note = input.note?.trim() ? `<p style="margin:16px 0 0;">${escapeHtml(input.note.trim())}</p>` : ''
+  return letterFrame(
+    'The house cannot write.',
+    `<p style="margin:0;">${name}, the house cannot write if ${piece}, ${size}, returns to the line.</p>${note}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function waitRefusedLetterText(input: { name: string; piece: string; size: string; note?: string }) {
+  return [
+    `${input.name}, the house cannot write if ${input.piece}, ${input.size}, returns to the line.`,
+    input.note?.trim() || '',
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
 export function housePath(path: string) {
   return `${houseOrigin()}${path.startsWith('/') ? path : `/${path}`}`
 }

@@ -94,6 +94,12 @@ const pages: Record<string, PageMeta> = {
     description: 'Reservations placed with Kiano London.',
     path: '/account',
   },
+  '/reservation': {
+    title: 'A reserved cut — Kiano London',
+    description: 'Ask after a reserved cut with the reference and the email used at the till.',
+    path: '/reservation',
+    robots: 'noindex, nofollow',
+  },
   '/admin': {
     title: 'The ledger — Kiano London',
     description: 'A private reading of the house.',

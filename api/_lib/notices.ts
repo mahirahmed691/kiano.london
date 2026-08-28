@@ -3,9 +3,9 @@ import { adminAllowlist } from './admin.js'
 import { withDb } from './db.js'
 
 export type NoticeAudience = 'member' | 'admin'
-export type NoticeKind = 'order' | 'visit' | 'list' | 'cut' | 'member' | 'work' | 'return'
+export type NoticeKind = 'order' | 'visit' | 'list' | 'cut' | 'member' | 'work' | 'return' | 'wait'
 
-const kinds = new Set<NoticeKind>(['order', 'visit', 'list', 'cut', 'member', 'work', 'return'])
+const kinds = new Set<NoticeKind>(['order', 'visit', 'list', 'cut', 'member', 'work', 'return', 'wait'])
 const expoToken = /^(Expo(nent)?PushToken)\[[^\s[\]]+]$/
 const expoPushUrl = 'https://exp.host/--/api/v2/push/send'
 

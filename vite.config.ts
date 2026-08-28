@@ -49,6 +49,11 @@ const routes: Route[] = [
     load: async () => (await import('./api/orders.ts')).GET,
   },
   {
+    method: 'POST',
+    path: '/api/orders',
+    load: async () => (await import('./api/orders.ts')).POST,
+  },
+  {
     method: 'GET',
     path: '/api/admin',
     load: async () => (await import('./api/admin.ts')).GET,
@@ -91,6 +96,11 @@ const routes: Route[] = [
   {
     method: 'POST',
     path: '/api/return',
+    load: async () => (await import('./api/appointment.ts')).POST,
+  },
+  {
+    method: 'POST',
+    path: '/api/wait',
     load: async () => (await import('./api/appointment.ts')).POST,
   },
   {

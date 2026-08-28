@@ -1,5 +1,6 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { WaitForm } from '@/components/visit/WaitForm'
 import { Link, useParams } from 'react-router-dom'
 import { HowItArrives } from '@/components/editorial/HowItArrives'
 import { ProductGrid } from '@/components/product/ProductGrid'
@@ -17,6 +18,7 @@ import {
   colourVariants,
   getProduct,
   productPath,
+  productLineName,
   relatedProducts,
   thobeSizes,
   type Product,
@@ -59,7 +61,8 @@ export function ProductPage() {
   )
 
   useEffect(() => {
-    setSize('')
+    const fromSize = Number(new URLSearchParams(window.location.search).get('size'))
+    setSize(thobeSizes.includes(fromSize as ThobeSize) ? (fromSize as ThobeSize) : '')
     setGuideOpen(false)
     setLooking(null)
   }, [product?.id])
@@ -214,10 +217,15 @@ export function ProductPage() {
                 </p>
               </div>
 
-              {held ? (
-                <Button variant="solid" className="mt-10 w-full justify-center" to={enquireTo}>
-                  Write to the atelier
-                </Button>
+              {held && size ? (
+                <div className="mt-10 space-y-10">
+                  <WaitForm
+                    key={`${product.id}-${size}`}
+                    productId={product.id}
+                    size={size}
+                    piece={productLineName(product)}
+                  />
+                </div>
               ) : (
                 <Button
                   variant="solid"
@@ -323,8 +331,12 @@ export function ProductPage() {
         <div className="flex items-center gap-4">
           <p className="font-display text-2xl font-light">{product.price}</p>
           {held ? (
-            <Button variant="solid" className="flex-1 justify-center" to={enquireTo}>
-              Write to the atelier
+            <Button
+              variant="solid"
+              className="flex-1 justify-center"
+              href="#wait-letter"
+            >
+              Write if this size returns
             </Button>
           ) : (
             <Button

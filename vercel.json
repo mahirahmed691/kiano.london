@@ -12,6 +12,7 @@
     { "source": "/api/admin-inventory", "destination": "/api/admin?section=inventory" },
     { "source": "/api/admin-competitors", "destination": "/api/admin?section=competitors" },
     { "source": "/api/return", "destination": "/api/appointment?kind=return" },
+    { "source": "/api/wait", "destination": "/api/appointment?kind=wait" },
     { "source": "/api/subscribe-confirm", "destination": "/api/subscribe" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]

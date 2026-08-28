@@ -46,11 +46,7 @@ export function QuickAddDialog() {
 
   const remaining = current && size && stock ? stock[size] : undefined
   const held = remaining === 0
-  const enquireTo = current
-    ? size
-      ? `/visit?piece=${current.id}&size=${size}`
-      : `/visit?piece=${current.id}`
-    : '/visit'
+  const waitTo = current && size ? `${productPath(current)}?size=${size}` : current ? productPath(current) : '/shop'
 
   function addToBag() {
     if (!current || !size || held) return
@@ -165,8 +161,8 @@ export function QuickAddDialog() {
                 </div>
 
                 {held ? (
-                  <Button variant="solid" className="mt-8 w-full justify-center" to={enquireTo} onClick={close}>
-                    Write to the atelier
+                  <Button variant="solid" className="mt-8 w-full justify-center" to={waitTo} onClick={close}>
+                    Write if this size returns
                   </Button>
                 ) : (
                   <Button

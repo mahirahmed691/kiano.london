@@ -2,7 +2,7 @@ export const letterStatuses = ['new', 'seen', 'named', 'agreed', 'refused'] as c
 
 export type LetterStatus = (typeof letterStatuses)[number]
 
-export type LetterKind = 'visit' | 'return'
+export type LetterKind = 'visit' | 'return' | 'wait'
 
 export function isLetterStatus(value: string): value is LetterStatus {
   return (letterStatuses as readonly string[]).includes(value)
@@ -14,7 +14,9 @@ export function asLetterStatus(value: string | null | undefined): LetterStatus {
 }
 
 export function asLetterKind(value: string | null | undefined): LetterKind {
-  return value === 'return' ? 'return' : 'visit'
+  if (value === 'return') return 'return'
+  if (value === 'wait') return 'wait'
+  return 'visit'
 }
 
 export function asLetterReply(value: unknown) {
@@ -76,6 +78,17 @@ export function letterLine(input: {
   namedFor?: string
   reply?: string
 }) {
+  if (input.kind === 'wait') {
+    if (input.status === 'refused') {
+      return input.reply?.trim()
+        ? input.reply.trim()
+        : 'The house cannot write if this size returns.'
+    }
+    if (input.status === 'agreed') return 'This size is on the line.'
+    if (input.status === 'seen') return 'The house has the letter. The size is still held.'
+    return 'The letter is held. We write if this size returns.'
+  }
+
   if (input.kind === 'return') {
     if (input.status === 'refused') {
       return input.reply?.trim()

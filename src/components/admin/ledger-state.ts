@@ -12,7 +12,7 @@ export type AppointmentRow = {
   productId: string
   size: number | null
   note: string
-  kind: 'visit' | 'return'
+  kind: 'visit' | 'return' | 'wait'
   reference: string
   status: LetterStatus
   namedFor: string

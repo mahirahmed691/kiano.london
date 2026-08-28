@@ -4,6 +4,7 @@ import { isFullyReturned } from '../../src/lib/work.js'
 import { withDb } from './db.js'
 import { returnLetterHtml, returnLetterText, sendMail } from './mail.js'
 import { recordNotice } from './notices.js'
+import { writeWhenSizeReturns } from './wait.js'
 
 type OrderRow = {
   id: string
@@ -116,6 +117,7 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
           href: '/admin/cuts',
           productIds: [line.product_id],
         })
+        await writeWhenSizeReturns(sql, line.product_id, line.size)
       }
     }
   }

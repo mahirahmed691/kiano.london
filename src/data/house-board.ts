@@ -18,7 +18,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'The line',
     completion: 90,
     status: 'complete',
-    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide with how to take a measure.',
+    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide. When a size is held at none, a letter can ask that the house write if it returns.',
   },
   {
     name: 'Bag and checkout',
@@ -30,13 +30,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Stock',
     completion: 90,
     status: 'complete',
-    note: 'Neon inventory per size, with a movement book for sale, restock, and adjust. Allowlisted members set remaining cuts. The public inventory route is read-only.',
+    note: 'Neon inventory per size, with a movement book for sale, restock, and adjust. Allowlisted members set remaining cuts. When a size at none returns, those who wrote are told. The public inventory route is read-only.',
   },
   {
     name: 'Members',
     completion: 92,
     status: 'complete',
-    note: 'Clerk sign-in, account of reservations, token on checkout. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
+    note: 'Clerk sign-in, account of reservations, token on checkout. A guest can ask after a cut with the eight-letter reference and the email on the reservation. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
   },
   {
     name: 'The list',

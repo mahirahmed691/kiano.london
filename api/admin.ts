@@ -1,4 +1,4 @@
-import { getProduct, productLineName, products, thobeSizes } from '../src/data/products.js'
+import { getProduct, productLineName, productPath, products, thobeSizes } from '../src/data/products.js'
 import { vatMethodNote, splitVat } from '../src/lib/vat.js'
 import { requireAdmin } from './_lib/admin.js'
 import { withDb } from './_lib/db.js'
@@ -13,6 +13,8 @@ import {
   visitNamedLetterText,
   visitRefusedLetterHtml,
   visitRefusedLetterText,
+  waitRefusedLetterHtml,
+  waitRefusedLetterText,
   workBackLetterHtml,
   workBackLetterText,
   workWeekLetterHtml,
@@ -21,6 +23,7 @@ import {
 import { ensureInvoiceForOrder, invoicePublicView, loadInvoice } from './_lib/invoice.js'
 import { asLetterKind, asLetterReply, asLetterStatus, asNamedDay, formatNamedDay, isLetterStatus, storedNamedFor } from '../src/lib/letters.js'
 import { asCarrier, asNamedWeek, asTrackingCode, asTrackingHref, asWorkReason, asWorkStage, dispatchLine, formatNamedWeek, isFullyReturned, isWorkBackwards, isWorkStage, workCopy } from '../src/lib/work.js'
+import { writeWhenSizeReturns } from './_lib/wait.js'
 
 type Method = 'GET' | 'POST'
 type Section =
@@ -404,6 +407,7 @@ async function postInventory(request: Request, email: string): Promise<Response>
           href: '/admin/cuts',
           productIds: [productId],
         })
+        await writeWhenSizeReturns(sql, productId, size)
       }
     }
 
@@ -843,7 +847,7 @@ async function postDiary(request: Request): Promise<Response> {
   try {
     const sql = await withDb()
     const held = (await sql`
-      SELECT id, name, email, kind, status, product_id, reference
+      SELECT id, name, email, kind, status, product_id, size, reference
       FROM appointments
       WHERE id = ${id}
     `) as {
@@ -853,6 +857,7 @@ async function postDiary(request: Request): Promise<Response> {
       kind: string | null
       status: string | null
       product_id: string | null
+      size: number | null
       reference: string | null
     }[]
     const row = held[0]
@@ -869,11 +874,25 @@ async function postDiary(request: Request): Promise<Response> {
     if (status === 'named' && kind !== 'visit') {
       return Response.json({ error: 'A morning is named for a visit.' }, { status: 400 })
     }
-    if (status === 'agreed' && kind !== 'return') {
+    if (status === 'agreed' && kind !== 'return' && kind !== 'wait') {
       return Response.json({ error: 'A return is agreed, not a visit.' }, { status: 400 })
     }
     if (status === 'named' && !namedFor) {
       return Response.json({ error: 'A morning is needed.' }, { status: 400 })
+    }
+
+    if (status === 'agreed' && kind === 'wait') {
+      if (!row.product_id || row.size == null) {
+        return Response.json({ error: 'A size is needed.' }, { status: 400 })
+      }
+      await writeWhenSizeReturns(sql, row.product_id, row.size)
+      return Response.json({
+        ok: true,
+        id: row.id,
+        status: 'agreed' as const,
+        namedFor: '',
+        reply: 'The size is on the line.',
+      })
     }
 
     const storedDay = status === 'named' ? namedFor : ''
@@ -940,6 +959,27 @@ async function postDiary(request: Request): Promise<Response> {
           }),
           idempotencyKey: `return-refused/${row.id}`,
         })
+      } else if (kind === 'wait') {
+        const piece = row.product_id ? getProduct(row.product_id) : undefined
+        const waitPiece = piece ? productLineName(piece) : 'a cut'
+        const waitSize = row.size ? `size ${row.size}` : 'a size'
+        await sendMail({
+          to: row.email,
+          subject: 'The house cannot write — Kiano London',
+          text: waitRefusedLetterText({
+            name: row.name,
+            piece: waitPiece,
+            size: waitSize,
+            note: storedReply,
+          }),
+          html: waitRefusedLetterHtml({
+            name: row.name,
+            piece: waitPiece,
+            size: waitSize,
+            note: storedReply,
+          }),
+          idempotencyKey: `wait-refused/${row.id}`,
+        })
       } else {
         await sendMail({
           to: row.email,
@@ -958,7 +998,7 @@ async function postDiary(request: Request): Promise<Response> {
         await recordNotice({
           audience: 'member',
           clerkUserId,
-          kind: kind === 'return' ? 'return' : 'visit',
+          kind: kind === 'return' ? 'return' : kind === 'wait' ? 'wait' : 'visit',
           title:
             status === 'named'
               ? 'A morning is named'
@@ -966,7 +1006,9 @@ async function postDiary(request: Request): Promise<Response> {
                 ? 'Send it back'
                 : kind === 'return'
                   ? 'The return cannot be taken'
-                  : 'A morning cannot be kept',
+                  : kind === 'wait'
+                    ? 'The house cannot write'
+                    : 'A morning cannot be kept',
           body:
             status === 'named'
               ? `The house can keep the morning of ${day}.`
@@ -974,8 +1016,12 @@ async function postDiary(request: Request): Promise<Response> {
                 ? 'Send the piece back. This is not yet a refund.'
                 : kind === 'return'
                   ? 'The house cannot take this return.'
-                  : 'The house cannot keep a morning.',
-          href: '/account',
+                  : kind === 'wait'
+                    ? 'The house cannot write if this size returns.'
+                    : 'The house cannot keep a morning.',
+          href: kind === 'wait' && row.product_id && getProduct(row.product_id)
+            ? productPath(getProduct(row.product_id)!)
+            : '/account',
           productIds: row.product_id ? [row.product_id] : undefined,
         })
       }

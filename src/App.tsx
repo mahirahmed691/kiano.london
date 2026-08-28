@@ -30,6 +30,7 @@ import { OrderConfirmedPage } from '@/pages/OrderConfirmedPage'
 import { OrderInvoicePage } from '@/pages/OrderInvoicePage'
 import { PrivacyPage } from '@/pages/PrivacyPage'
 import { ProductPage } from '@/pages/ProductPage'
+import { ReservationPage } from '@/pages/ReservationPage'
 import { ReturnsPage } from '@/pages/ReturnsPage'
 import { ShopPage } from '@/pages/ShopPage'
 import { SignInPage } from '@/pages/SignInPage'
@@ -75,6 +76,7 @@ export default function App() {
                 </Route>
                 <Route path="/cookies" element={<CookiesPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/reservation" element={<ReservationPage />} />
                 <Route path="/returns" element={<ReturnsPage />} />
                 <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />
                 <Route path="/sign-in/*" element={<SignInPage />} />

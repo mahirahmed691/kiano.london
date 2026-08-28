@@ -1,4 +1,5 @@
 import { getProduct, productLineName, thobeSizes } from '../src/data/products.js'
+import type { LetterKind } from '../src/lib/letters.js'
 import { databaseUrl, withDb } from './_lib/db.js'
 import {
   returnAskLetterHtml,
@@ -6,6 +7,8 @@ import {
   sendMail,
   visitLetterHtml,
   visitLetterText,
+  waitAskLetterHtml,
+  waitAskLetterText,
 } from './_lib/mail.js'
 import { recordNotice } from './_lib/notices.js'
 
@@ -22,12 +25,11 @@ function asReference(value: unknown) {
   return asText(value, 20).replace(/[\s-]/g, '').toUpperCase()
 }
 
-function letterKind(request: Request): 'visit' | 'return' {
+function letterKind(request: Request): LetterKind {
   const url = new URL(request.url)
   const path = url.pathname.replace(/\/$/, '')
-  if (path.endsWith('/return') || url.searchParams.get('kind') === 'return') {
-    return 'return'
-  }
+  if (path.endsWith('/wait') || url.searchParams.get('kind') === 'wait') return 'wait'
+  if (path.endsWith('/return') || url.searchParams.get('kind') === 'return') return 'return'
   return 'visit'
 }
 
@@ -64,6 +66,9 @@ export async function POST(request: Request) {
   if (kind === 'return' && !referencePattern.test(reference)) {
     return Response.json({ error: 'The reservation is needed.' }, { status: 400 })
   }
+  if (kind === 'wait' && !getProduct(productId)) {
+    return Response.json({ error: 'That piece is not in the collection.' }, { status: 400 })
+  }
   if (productId && !getProduct(productId)) {
     return Response.json({ error: 'That piece is not in the collection.' }, { status: 400 })
   }
@@ -76,40 +81,87 @@ export async function POST(request: Request) {
     }
     size = parsed
   }
+  if (kind === 'wait' && size === null) {
+    return Response.json({ error: 'A size is needed.' }, { status: 400 })
+  }
 
   const product = productId ? getProduct(productId) : undefined
-  const piece = product ? productLineName(product) : kind === 'return' ? 'a cut' : 'a piece to be discussed'
+  const piece =
+    product ? productLineName(product) : kind === 'return' ? 'a cut' : 'a piece to be discussed'
   const sizeLine = size ? `size ${size}` : kind === 'return' ? 'size to be named' : 'to be fitted'
 
   let kept = false
+  let already = false
   if (databaseUrl()) {
     try {
       const sql = await withDb()
-      await sql`
-        INSERT INTO appointments (name, email, telephone, product_id, size, note, kind, reference)
-        VALUES (
-          ${name},
-          ${email},
-          ${telephone || null},
-          ${productId || null},
-          ${size},
-          ${note || null},
-          ${kind},
-          ${kind === 'return' ? reference : ''}
-        )
-      `
-      kept = true
-      await recordNotice({
-        audience: 'admin',
-        kind,
-        title: kind === 'return' ? 'A return is asked' : 'A letter is held',
-        body: kind === 'return' ? `${name} · ${piece} · ${reference}.` : `${name} wrote for ${piece}.`,
-        href: '/admin/diary',
-        productIds: productId ? [productId] : undefined,
-      })
+      if (kind === 'wait' && productId && size !== null) {
+        const remaining = (await sql`
+          SELECT quantity FROM inventory
+          WHERE product_id = ${productId} AND size = ${size}
+        `) as { quantity: number }[]
+        if ((remaining[0]?.quantity ?? 0) > 0) {
+          return Response.json(
+            { error: 'This size is on the line.', onTheLine: true },
+            { status: 409 },
+          )
+        }
+        const held = (await sql`
+          SELECT id FROM appointments
+          WHERE kind = 'wait'
+            AND lower(email) = ${email}
+            AND product_id = ${productId}
+            AND size = ${size}
+            AND status IN ('new', 'seen')
+          LIMIT 1
+        `) as { id: number }[]
+        if (held[0]) {
+          kept = true
+          already = true
+        }
+      }
+
+      if (!already) {
+        await sql`
+          INSERT INTO appointments (name, email, telephone, product_id, size, note, kind, reference)
+          VALUES (
+            ${name},
+            ${email},
+            ${telephone || null},
+            ${productId || null},
+            ${size},
+            ${note || null},
+            ${kind},
+            ${kind === 'return' ? reference : ''}
+          )
+        `
+        kept = true
+        await recordNotice({
+          audience: 'admin',
+          kind: kind === 'wait' ? 'wait' : kind === 'return' ? 'return' : 'visit',
+          title:
+            kind === 'return'
+              ? 'A return is asked'
+              : kind === 'wait'
+                ? 'A size is waited on'
+                : 'A letter is held',
+          body:
+            kind === 'return'
+              ? `${name} · ${piece} · ${reference}.`
+              : kind === 'wait'
+                ? `${name} · ${piece} · ${sizeLine}.`
+                : `${name} wrote for ${piece}.`,
+          href: '/admin/diary',
+          productIds: productId ? [productId] : undefined,
+        })
+      }
     } catch (caught) {
       console.error(caught)
     }
+  }
+
+  if (already) {
+    return Response.json({ ok: true, kept, written: false, already: true })
   }
 
   const day = new Date().toISOString().slice(0, 10)
@@ -122,13 +174,21 @@ export async function POST(request: Request) {
           html: returnAskLetterHtml({ name, piece, size: sizeLine, reference }),
           idempotencyKey: `return-ask/${email}/${reference}`,
         })
-      : await sendMail({
-          to: email,
-          subject: 'The letter is held — Kiano London',
-          text: visitLetterText({ name, piece, size: sizeLine }),
-          html: visitLetterHtml({ name, piece, size: sizeLine }),
-          idempotencyKey: `visit-confirm/${email}/${day}`,
-        })
+      : kind === 'wait'
+        ? await sendMail({
+            to: email,
+            subject: 'The letter is held — Kiano London',
+            text: waitAskLetterText({ name, piece, size: sizeLine }),
+            html: waitAskLetterHtml({ name, piece, size: sizeLine }),
+            idempotencyKey: `wait-ask/${email}/${productId}/${size}`,
+          })
+        : await sendMail({
+            to: email,
+            subject: 'The letter is held — Kiano London',
+            text: visitLetterText({ name, piece, size: sizeLine }),
+            html: visitLetterHtml({ name, piece, size: sizeLine }),
+            idempotencyKey: `visit-confirm/${email}/${day}`,
+          })
 
   return Response.json({ ok: true, kept, written: mail.sent })
 }

@@ -4,5 +4,5 @@ export function isHouseRedirect(value: string | null): value is string {
     return false
   }
   const path = value.split('?')[0] ?? ''
-  return path === '/account' || path === '/checkout' || path === '/admin' || path.startsWith('/admin/')
+  return path === '/account' || path === '/reservation' || path === '/checkout' || path === '/admin' || path.startsWith('/admin/')
 }

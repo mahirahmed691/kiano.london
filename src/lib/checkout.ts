@@ -65,6 +65,14 @@ export function returnLetterHref(reference: string) {
   return returnPath({ reference })
 }
 
+export function reservationPath(input: { reference?: string; email?: string }) {
+  const query = new URLSearchParams()
+  if (input.reference) query.set('ref', input.reference)
+  if (input.email) query.set('email', input.email)
+  const qs = query.toString()
+  return qs ? `/reservation?${qs}` : '/reservation'
+}
+
 export function formatOrderAddress(address: CheckoutOrderAddress) {
   return [
     address.name,
