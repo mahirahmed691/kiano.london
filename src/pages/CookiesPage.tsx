@@ -37,6 +37,14 @@ export function CookiesPage() {
             </Body>
           </li>
           <li>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The line on this device</p>
+            <Body className="mt-3">
+              After a visit, the house, the shop, and the collection can be read without a network.
+              Remaining cuts are kept from the last time they were fetched. The bag stays in this
+              browser. The till, the account, and letters need a connection.
+            </Body>
+          </li>
+          <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">This notice</p>
             <Body className="mt-3">
               Your choice is stored locally so we do not ask again on every page. It does not

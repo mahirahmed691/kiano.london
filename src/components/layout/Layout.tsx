@@ -5,6 +5,7 @@ import { QuickAddDialog } from '@/components/product/QuickAddDialog'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { HouseAppBridge } from '@/components/layout/HouseAppBridge'
+import { LineHeld } from '@/components/layout/LineHeld'
 import { HouseNotices } from '@/components/notices/HouseNotices'
 import { WordDrawer } from '@/components/notices/WordDrawer'
 import { HouseSchema } from '@/components/seo/HouseSchema'
@@ -35,6 +36,11 @@ export function Layout() {
       {app || invoicePrint ? null : (
         <div className="print:hidden">
           <Header />
+        </div>
+      )}
+      {invoicePrint ? null : (
+        <div className="print:hidden">
+          <LineHeld />
         </div>
       )}
       <main

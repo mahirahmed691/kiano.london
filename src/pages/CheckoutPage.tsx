@@ -86,6 +86,10 @@ export function CheckoutPage() {
     }
 
     writeStoredCheckout(parsed.details)
+    if (!navigator.onLine) {
+      setError('The till needs a connection.')
+      return
+    }
     setBusy(true)
 
     try {

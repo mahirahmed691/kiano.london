@@ -52,9 +52,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Installable house',
-    completion: 78,
+    completion: 88,
     status: 'partial',
-    note: 'PWA on the site keeps the editorial header. Expo is a WebView with house tabs: House, Line, Bag, Account. Word sits as a hairline mark. The buy bar and notices sit above the tabs. Android still needs FCM in EAS.',
+    note: 'PWA on the site keeps the editorial header. After a visit, the line can be read without a network; the till and the account need a connection. Expo is a WebView with house tabs: House, Line, Bag, Account. Word sits as a hairline mark. The buy bar and notices sit above the tabs. Android still needs FCM in EAS.',
   },
   {
     name: 'Share and search',

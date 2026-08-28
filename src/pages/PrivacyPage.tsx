@@ -79,7 +79,7 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Cookies</p>
             <Body className="mt-3">
-              The bag and this notice stay in the browser. Detail sits on the{' '}
+              The bag, this notice, and the line on this device stay in the browser. Detail sits on the{' '}
               <Link to="/cookies" className="border-b border-current pb-px">
                 cookies
               </Link>{' '}

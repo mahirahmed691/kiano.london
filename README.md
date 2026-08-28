@@ -49,7 +49,7 @@ The logotype returns to the homepage. Collection pieces are driven from `src/dat
 - Stripe Checkout
 - Semantic HTML, CSS transitions, `prefers-reduced-motion`
 
-The site installs as a standalone app from Safari or Chrome (Add to Home Screen). Native iOS and Android use the Expo shell in `mobile/`, which opens the live house.
+The site installs as a standalone app from Safari or Chrome (Add to Home Screen). After a visit, the house, the shop, and the collection can be read without a network; the till and the account need a connection. Native iOS and Android use the Expo shell in `mobile/`, which opens the live house.
 
 ## Local development
 

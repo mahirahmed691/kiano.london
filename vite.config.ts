@@ -235,12 +235,56 @@ export default defineConfig(({ mode }) => {
       atelierApi(env),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
+        injectRegister: false,
+        includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png'],
         manifest: false,
         workbox: {
           navigateFallback: '/index.html',
           navigateFallbackDenylist: [/^\/api\//],
           globPatterns: ['**/*.{js,css,html,svg,png,jpg,jpeg,webp,woff2}'],
+          globIgnores: ['**/images/competitors/**'],
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'kiano-type-css',
+                expiration: { maxEntries: 8, maxAgeSeconds: 60 * 60 * 24 * 365 },
+                cacheableResponse: { statuses: [0, 200] },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'kiano-type',
+                expiration: { maxEntries: 24, maxAgeSeconds: 60 * 60 * 24 * 365 },
+                cacheableResponse: { statuses: [0, 200] },
+              },
+            },
+            {
+              urlPattern: /\/api\/inventory/,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'kiano-cuts',
+                expiration: { maxEntries: 16, maxAgeSeconds: 60 * 60 * 24 * 7 },
+                cacheableResponse: { statuses: [200] },
+              },
+            },
+            {
+              urlPattern: /\/api\//,
+              handler: 'NetworkOnly',
+            },
+            {
+              urlPattern: /\.(?:png|gif|jpg|jpeg|webp|svg)(?:\?.*)?$/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'kiano-cloth',
+                expiration: { maxEntries: 80, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                cacheableResponse: { statuses: [0, 200] },
+              },
+            },
+          ],
         },
       }),
     ],
