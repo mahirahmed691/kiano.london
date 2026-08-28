@@ -1,5 +1,6 @@
 import Stripe from 'stripe'
 import { reservedCutName } from '../src/data/products.js'
+import { liveStripeProduct } from './_lib/stripe-product.js'
 import {
   paymentStatusOf,
   type CheckoutOrder,
@@ -35,15 +36,13 @@ function asRecord(value: unknown): Record<string, string> {
 }
 
 function lineMeta(line: Stripe.LineItem) {
-  const product = line.price?.product
-  const metadata =
-    product && typeof product !== 'string' && !product.deleted ? asRecord(product.metadata) : {}
+  const product = liveStripeProduct(line.price?.product)
+  const metadata = product ? asRecord(product.metadata) : {}
   const size = Number(metadata.size)
   return {
     productId: metadata.product_id || undefined,
     size: Number.isFinite(size) && size > 0 ? size : undefined,
-    fromProduct:
-      product && typeof product !== 'string' && !product.deleted ? product.name : '',
+    fromProduct: product?.name ?? '',
   }
 }
 

@@ -1,4 +1,4 @@
-import { isShareBot, renderShareDocument } from './src/lib/share'
+import { isShareBot, renderShareDocument } from './src/lib/share.js'
 
 export const config = {
   matcher: ['/((?!api/|images/|favicon|robots.txt|sitemap.xml|logo.svg).*)'],

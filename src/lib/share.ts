@@ -1,5 +1,5 @@
-import { getProduct, productPath } from '../data/products'
-import { site } from '../data/site'
+import { getProduct, productPath } from '../data/products.js'
+import { site } from '../data/site.js'
 
 export type PageMeta = {
   title: string

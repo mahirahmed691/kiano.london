@@ -1,6 +1,7 @@
 import type Stripe from 'stripe'
 import { getProduct, productLineName, reservedCutName, thobeSizes } from '../../src/data/products.js'
 import { withDb } from './db.js'
+import { liveStripeProduct } from './stripe-product.js'
 import { ensureInvoiceForOrder } from './invoice.js'
 import {
   housePath,
@@ -31,8 +32,8 @@ function asRecord(value: unknown): Record<string, string> {
 }
 
 function productMetadata(line: Stripe.LineItem) {
-  const product = line.price?.product
-  if (!product || typeof product === 'string' || product.deleted) return {}
+  const product = liveStripeProduct(line.price?.product)
+  if (!product) return {}
   return asRecord(product.metadata)
 }
 

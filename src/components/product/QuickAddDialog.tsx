@@ -149,8 +149,8 @@ export function QuickAddDialog() {
                           type="button"
                           onClick={() => setSize(value)}
                           className={cn(
-                            'flex aspect-square items-center justify-center bg-ivory text-[12px] tracking-[0.08em] transition-colors duration-300',
-                            size === value ? 'bg-ink text-ivory' : 'hover:bg-ivory-deep',
+                            'flex aspect-square items-center justify-center text-[12px] tracking-[0.08em] transition-colors duration-300',
+                            size === value ? 'bg-ink text-ivory' : 'bg-ivory hover:bg-ivory-deep',
                             sizeHeld && size !== value && 'opacity-35',
                           )}
                         >
