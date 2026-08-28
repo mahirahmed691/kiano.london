@@ -74,7 +74,7 @@ export function MobileNav({ open, onClose }: Props) {
         aria-label="Mobile"
       >
         <Monogram decorative className="mb-10 h-7 text-ink" />
-        <ul className="space-y-8">
+        <ul className={cn('space-y-8', open && 'stagger-in')}>
           <li>
             <RoomLink to="/" onClose={onClose} large>
               Home

@@ -30,7 +30,7 @@ export function ShopPage() {
           <img
             src="/images/jubbah-sand-02.jpg"
             alt="The sand jubbah at rest, the cloth to the ankle."
-            className="absolute inset-0 h-full w-full object-cover object-[center_22%]"
+            className="still-in absolute inset-0 h-full w-full object-cover object-[center_22%]"
             loading="eager"
             decoding="async"
           />
@@ -73,11 +73,12 @@ export function ShopPage() {
             <p className="text-[15px] font-light text-ink-soft">No jubbah in this colour.</p>
           ) : (
             <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-              {shown.map((product) => (
+              {shown.map((product, index) => (
                 <ProductCard
                   key={product.id}
                   product={product}
                   to={productPath(product)}
+                  delay={index * 80}
                 />
               ))}
             </div>

@@ -24,10 +24,8 @@ export function ColourFilter({ value, options, onChange }: Props) {
             aria-pressed={selected}
             onClick={() => onChange(option)}
             className={cn(
-              'relative text-[11px] uppercase tracking-[0.22em] transition-opacity focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ink',
-              selected ? 'opacity-100' : 'opacity-45 hover:opacity-100',
-              selected &&
-                'after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:bg-current',
+              'relative text-[11px] uppercase tracking-[0.22em] transition-opacity focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ink after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:origin-left after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)]',
+              selected ? 'opacity-100 after:scale-x-100' : 'opacity-45 after:scale-x-0 hover:opacity-100',
             )}
           >
             {option}

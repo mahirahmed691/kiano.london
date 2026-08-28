@@ -17,6 +17,7 @@ export function ProductGrid({ products, className, numbered = true }: Props) {
           product={product}
           index={numbered ? String(i + 1).padStart(2, '0') : undefined}
           to={productPath(product)}
+          delay={i * 80}
         />
       ))}
     </div>

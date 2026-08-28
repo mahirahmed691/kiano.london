@@ -12,7 +12,7 @@ export function ProductPlate({ image, first = false, onLook }: Props) {
   return (
     <div
       className={cn(
-        'relative w-full snap-start overflow-hidden bg-ivory-deep',
+        'relative w-full snap-start overflow-hidden bg-ivory-deep img-zoom',
         first
           ? 'max-xl:min-h-[calc(100svh-var(--header-offset))] max-xl:scroll-mt-[var(--header-offset)] xl:min-h-[calc(100svh-7rem)]'
           : 'aspect-3/4',
@@ -23,7 +23,7 @@ export function ProductPlate({ image, first = false, onLook }: Props) {
         alt={image.alt}
         loading={first ? 'eager' : 'lazy'}
         decoding="async"
-        className="absolute inset-0 size-full object-cover"
+        className={cn('absolute inset-0 size-full object-cover', first && 'still-in')}
         style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
       />
       {first ? (

@@ -1,13 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 
-type Props = {
-  children: ReactNode
-  className?: string
-  delay?: number
-}
-
-export function Reveal({ children, className, delay = 0 }: Props) {
+export function useInViewOnce() {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -33,6 +27,18 @@ export function Reveal({ children, className, delay = 0 }: Props) {
     observer.observe(node)
     return () => observer.disconnect()
   }, [])
+
+  return { ref, visible }
+}
+
+type Props = {
+  children: ReactNode
+  className?: string
+  delay?: number
+}
+
+export function Reveal({ children, className, delay = 0 }: Props) {
+  const { ref, visible } = useInViewOnce()
 
   return (
     <div

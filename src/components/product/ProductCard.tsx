@@ -1,7 +1,7 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { Link } from 'react-router-dom'
+import { Reveal } from '@/components/ui/Reveal'
 import { type Product } from '@/data/products'
-import { cn } from '@/lib/cn'
 import { useQuickAdd } from '@/lib/quickAdd'
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
   index?: string
   className?: string
   to?: string
+  delay?: number
 }
 
 function CardImage({ product }: { product: Product }) {
@@ -56,11 +57,12 @@ function CardMeta({ product, index }: Pick<Props, 'product' | 'index'>) {
   )
 }
 
-export function ProductCard({ product, index, className, to }: Props) {
+export function ProductCard({ product, index, className, to, delay = 0 }: Props) {
   const { open } = useQuickAdd()
 
   return (
-    <article className={cn('group', className)}>
+    <Reveal delay={delay} className={className}>
+    <article className="group">
       <div className="relative">
         {to ? (
           <Link
@@ -90,5 +92,6 @@ export function ProductCard({ product, index, className, to }: Props) {
         <CardMeta product={product} index={index} />
       )}
     </article>
+    </Reveal>
   )
 }

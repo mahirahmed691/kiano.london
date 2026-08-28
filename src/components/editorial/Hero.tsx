@@ -43,7 +43,7 @@ export function Hero({
       <img
         src={image}
         alt={imageAlt}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="still-in absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition }}
         fetchPriority={priority ? 'high' : undefined}
         loading={priority ? 'eager' : 'lazy'}
@@ -65,30 +65,38 @@ export function Hero({
           )}
         >
           {kicker ? (
-            <Eyebrow className="mb-5 text-ivory/75">{kicker}</Eyebrow>
+            <Eyebrow className="copy-in mb-5 text-ivory/75">{kicker}</Eyebrow>
           ) : null}
           {title ? (
-            <Display
-              as="h1"
-              className={cn(
-                'max-w-4xl text-[2.75rem] text-ivory sm:text-6xl md:text-7xl lg:text-[5.25rem]',
-                align === 'center' && 'mx-auto',
-              )}
-            >
-              {title}
-            </Display>
+            <div className="copy-in" style={{ animationDelay: kicker ? '90ms' : undefined }}>
+              <Display
+                as="h1"
+                className={cn(
+                  'max-w-4xl text-[2.75rem] text-ivory sm:text-6xl md:text-7xl lg:text-[5.25rem]',
+                  align === 'center' && 'mx-auto',
+                )}
+              >
+                {title}
+              </Display>
+            </div>
           ) : null}
           {subtitle ? (
-            <Lead
-              className={cn(
-                'mt-6 text-ivory/80',
-                align === 'center' && 'mx-auto',
-              )}
-            >
-              {subtitle}
-            </Lead>
+            <div className="copy-in" style={{ animationDelay: '180ms' }}>
+              <Lead
+                className={cn(
+                  'mt-6 text-ivory/80',
+                  align === 'center' && 'mx-auto',
+                )}
+              >
+                {subtitle}
+              </Lead>
+            </div>
           ) : null}
-          {children ? <div className="mt-10">{children}</div> : null}
+          {children ? (
+            <div className="copy-in mt-10" style={{ animationDelay: '260ms' }}>
+              {children}
+            </div>
+          ) : null}
         </Container>
       ) : null}
     </section>

@@ -127,7 +127,7 @@ export function HomePage() {
 
       <section>
         {lookbook.map((plate) => (
-          <figure key={plate.src} className="relative min-h-[100svh] overflow-hidden bg-night">
+          <figure key={plate.src} className="img-zoom relative min-h-[100svh] overflow-hidden bg-night">
             <img
               src={plate.src}
               alt={plate.alt}
@@ -146,7 +146,7 @@ export function HomePage() {
             </figcaption>
           </figure>
         ))}
-        <figure className="relative min-h-[100svh] overflow-hidden bg-night">
+        <figure className="img-zoom relative min-h-[100svh] overflow-hidden bg-night">
           <img
             src="/images/stitch-pad.jpg"
             alt="Pad-stitching through the collar stand, silk on linen."

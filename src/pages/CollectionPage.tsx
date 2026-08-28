@@ -30,7 +30,7 @@ export function CollectionPage() {
           <img
             src="/images/thobe-layl.jpg"
             alt="The Layl thobe: matte black, band collar, hem to the ankle."
-            className="absolute inset-0 h-full w-full object-cover object-[center_12%]"
+            className="still-in absolute inset-0 h-full w-full object-cover object-[center_12%]"
             loading="eager"
             decoding="async"
           />
@@ -79,6 +79,7 @@ export function CollectionPage() {
                   product={product}
                   to={productPath(product)}
                   index={String(index + 1).padStart(2, '0')}
+                  delay={index * 80}
                   className={
                     index === 0
                       ? 'sm:col-span-2 lg:col-span-7'
