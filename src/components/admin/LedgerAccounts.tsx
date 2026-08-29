@@ -98,7 +98,13 @@ export function LedgerAccounts() {
   const allTime = book?.allTime ?? emptyPeriod()
 
   return (
-    <div className="mt-16">
+    <div className="accounts-book mt-16">
+      <style>{`
+        @media print {
+          header, footer, #main-content > :not(:has(.accounts-book)), .no-print { display: none !important; }
+          body, #root { background: #fff !important; color: #111 !important; }
+        }
+      `}</style>
       {error ? (
         <p className="mb-8 text-[15px] font-light text-ink" role="alert">
           {error}
@@ -140,10 +146,20 @@ export function LedgerAccounts() {
         ) : null}
       </LedgerFold>
       <LedgerFold title="The journal" defaultOpen={false}>
-        <div className="no-print">
-          <Button type="button" onClick={() => void copyCsv()} disabled={!book?.journal.length}>
-            Copy the book
-          </Button>
+        <div className="no-print mb-8">
+          <div className="flex flex-wrap items-center gap-6">
+            <Button type="button" onClick={() => void copyCsv()} disabled={!book?.journal.length}>
+              Copy the book
+            </Button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70 disabled:opacity-25"
+              disabled={!book?.journal.length}
+            >
+              Print
+            </button>
+          </div>
           {copied ? (
             <p className="mt-4 text-[13px] font-light text-ink-soft" role="status">
               {copied}

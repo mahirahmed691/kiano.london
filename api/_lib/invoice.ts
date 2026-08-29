@@ -118,6 +118,10 @@ export async function loadInvoice(
     gross_pence: number
   }[]
 
+  const paid = (await sql`
+    SELECT refunded_pence FROM orders WHERE id = ${row.order_id} LIMIT 1
+  `) as { refunded_pence: number | null }[]
+
   return {
     id: row.id,
     number: row.number,
@@ -129,6 +133,7 @@ export async function loadInvoice(
     vatPence: row.vat_pence,
     grossPence: row.gross_pence,
     currency: row.currency,
+    refundedPence: Number(paid[0]?.refunded_pence) || 0,
     shipping: asShipping(row.shipping),
     lines: lines.map((line) => ({
       productId: line.product_id,

@@ -3,6 +3,7 @@ import { formatOrderAddress, orderReference, type CheckoutOrderAddress } from '@
 import type { LedgerInvoice } from '@/lib/ledger'
 import { formatLedgerDate } from '@/lib/ledger'
 import { formatGbpExact } from '@/lib/money'
+import { isFullyReturned, isPartReturned } from '@/lib/work'
 import { vatMethodNote } from '@/lib/vat'
 
 type Props = {
@@ -13,6 +14,8 @@ type Props = {
 export function InvoiceSheet({ invoice, reference }: Props) {
   const shipping = invoice.shipping as CheckoutOrderAddress | null
   const lines = shipping ? formatOrderAddress(shipping) : []
+  const returned = invoice.refundedPence ?? 0
+  const remaining = Math.max(0, invoice.grossPence - returned)
 
   return (
     <article className="invoice-sheet mx-auto max-w-3xl">
@@ -104,6 +107,24 @@ export function InvoiceSheet({ invoice, reference }: Props) {
           <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">Gross</dt>
           <dd className="font-display text-3xl font-light">{formatGbpExact(invoice.grossPence)}</dd>
         </div>
+        {returned > 0 ? (
+          <>
+            <div className="flex items-baseline justify-between gap-6">
+              <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">Returned</dt>
+              <dd className="text-[15px] font-light">{formatGbpExact(returned)}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-6">
+              <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                {isFullyReturned(invoice.grossPence, returned)
+                  ? 'Closed'
+                  : isPartReturned(invoice.grossPence, returned)
+                    ? 'Still held'
+                    : 'Held'}
+              </dt>
+              <dd className="font-display text-2xl font-light">{formatGbpExact(remaining)}</dd>
+            </div>
+          </>
+        ) : null}
       </dl>
 
       <p className="mt-12 max-w-prose text-[13px] font-light leading-relaxed text-stone">

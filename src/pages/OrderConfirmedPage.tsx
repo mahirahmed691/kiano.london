@@ -1,6 +1,7 @@
 import { Show } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { InvoiceSheet } from '@/components/invoice/InvoiceSheet'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -15,6 +16,8 @@ import {
   type CheckoutOrder,
 } from '@/lib/checkout'
 import { clerkEnabled } from '@/lib/clerk'
+import { invoiceFromOrder } from '@/lib/invoice-from-order'
+import type { LedgerInvoice } from '@/lib/ledger'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -56,6 +59,7 @@ export function OrderConfirmedPage() {
   const sessionId = params.get('session_id') ?? ''
   const [view, setView] = useState<View>(sessionId ? 'loading' : 'missing')
   const [order, setOrder] = useState<CheckoutOrder | null>(null)
+  const [invoice, setInvoice] = useState<LedgerInvoice | null>(null)
 
   usePageMeta({
     ...getShareMeta('/order/confirmed'),
@@ -82,7 +86,10 @@ export function OrderConfirmedPage() {
           `/api/checkout-session?session_id=${encodeURIComponent(sessionId)}`,
         )
         const text = await response.text()
-        let data: CheckoutOrder & { error?: string }
+        let data: CheckoutOrder & {
+          error?: string
+          record?: LedgerInvoice | null
+        }
         try {
           data = JSON.parse(text) as CheckoutOrder & { error?: string }
         } catch {
@@ -98,6 +105,7 @@ export function OrderConfirmedPage() {
         if (data.paymentStatus === 'paid') {
           clear()
           clearStoredCheckout()
+          setInvoice(data.record ?? invoiceFromOrder(data))
           setView('paid')
           return
         }
@@ -187,7 +195,7 @@ export function OrderConfirmedPage() {
   return (
     <Section className="pt-32 md:pt-40">
       <Container>
-        <div className="grid gap-16 lg:grid-cols-12">
+        <div className="no-print grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Eyebrow>Order</Eyebrow>
             <Display as="h1" className="mt-4 max-w-3xl text-5xl md:text-6xl lg:text-7xl">
@@ -233,6 +241,15 @@ export function OrderConfirmedPage() {
               ) : (
                 <Button to="/collection">The Collection</Button>
               )}
+              {invoice ? (
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+                >
+                  Print the receipt
+                </button>
+              ) : null}
               {sessionId ? (
                 <TextLink to={`/order/invoice?session_id=${encodeURIComponent(sessionId)}`}>
                   A record of the cut
@@ -319,6 +336,11 @@ export function OrderConfirmedPage() {
             </aside>
           ) : null}
         </div>
+        {invoice ? (
+          <div className="hidden print:block">
+            <InvoiceSheet invoice={invoice} reference={order ? orderReference(order.id) : undefined} />
+          </div>
+        ) : null}
       </Container>
     </Section>
   )

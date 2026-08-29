@@ -24,7 +24,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Bag and checkout',
     completion: 92,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. The account and a reserved cut can print the card. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. The confirmation can print the tax invoice. The account and a reserved cut can print the card. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
   },
   {
     name: 'Stock',
@@ -78,7 +78,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. The till, the table, and the box can be printed. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, the house card, and the face of the box. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
+    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. The till, the table, the box, the records, and the journal can be printed. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, the house card, and the face of the box. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Word from the house',

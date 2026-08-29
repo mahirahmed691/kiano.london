@@ -12,6 +12,7 @@ import { AdminDiaryPage } from '@/pages/AdminDiaryPage'
 import { AdminFieldPage } from '@/pages/AdminFieldPage'
 import { AdminFiguresPage } from '@/pages/AdminFiguresPage'
 import { AdminInvoicePage } from '@/pages/AdminInvoicePage'
+import { AdminInvoicesBookPage } from '@/pages/AdminInvoicesBookPage'
 import { AdminInvoicesPage } from '@/pages/AdminInvoicesPage'
 import { AdminLinePage } from '@/pages/AdminLinePage'
 import { AdminListPage } from '@/pages/AdminListPage'
@@ -73,6 +74,7 @@ export default function App() {
                   <Route path="prices" element={<AdminPricesPage />} />
                   <Route path="accounts" element={<AdminAccountsPage />} />
                   <Route path="invoices" element={<AdminInvoicesPage />} />
+                  <Route path="invoices/book" element={<AdminInvoicesBookPage />} />
                   <Route path="invoices/:number" element={<AdminInvoicePage />} />
                   <Route path="work" element={<AdminWorkPage />} />
                   <Route path="work/table" element={<AdminWorkTablePage />} />

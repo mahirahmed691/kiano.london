@@ -27,6 +27,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/admin/prices` | The line in sterling |
 | `/admin/accounts` | Tax and the journal |
 | `/admin/invoices` | Records of the cut |
+| `/admin/invoices/book` | Print the tax invoices |
 | `/admin/work` | Reserved, on the table, packed, left the house |
 | `/admin/work/table` | Print cuts still in the house |
 | `/admin/work/box` | Print the face of the box |

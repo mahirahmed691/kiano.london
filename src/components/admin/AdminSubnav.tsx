@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 export function AdminSubnav() {
   return (
     <nav
-      className="sticky top-[var(--header-offset)] z-30 -mx-6 mt-10 overflow-x-auto border-y border-rule bg-ivory px-6 md:mx-0 md:px-0"
+      className="sticky top-[var(--header-offset)] z-30 -mx-6 mt-10 overflow-x-auto border-y border-rule bg-ivory px-6 print:hidden md:mx-0 md:px-0"
       aria-label="The ledger"
     >
       <ul className="flex min-w-max gap-7 py-4 md:flex-wrap md:min-w-0 md:gap-8">

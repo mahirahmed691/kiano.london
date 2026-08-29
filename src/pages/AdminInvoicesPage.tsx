@@ -9,8 +9,8 @@ export function AdminInvoicesPage() {
         A record of the cut.
       </Display>
       <Body className="mt-6">
-        Written when Stripe marks a session paid. Open one to print. Not a Making Tax Digital
-        suite.
+        Written when Stripe marks a session paid. Open one for the tax invoice, or print the book.
+        Not a Making Tax Digital suite.
       </Body>
       <LedgerInvoices />
       <LedgerOrders />

@@ -159,7 +159,7 @@ export function HeldCuts({
                 to={`/order/invoice?session_id=${encodeURIComponent(order.id)}`}
                 className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
               >
-                A record of the cut
+                Print the receipt
               </Link>
               <Link
                 to={`/order/card?session_id=${encodeURIComponent(order.id)}`}

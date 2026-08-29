@@ -23,7 +23,7 @@ export function AdminLayout() {
   return (
     <Section className={cn('pt-32 md:pt-40', printSheet && 'print:py-8')}>
       <Container>
-        {printSheet ? null : <Eyebrow>The ledger</Eyebrow>}
+        {printSheet ? null : <Eyebrow className="print:hidden">The ledger</Eyebrow>}
         {clerkEnabled ? (
           <AdminGate printSheet={printSheet} />
         ) : (
@@ -32,7 +32,7 @@ export function AdminLayout() {
           </Body>
         )}
         {printSheet ? null : (
-          <div className="mt-16">
+          <div className="mt-16 print:hidden">
             <TextLink to="/">Return to the house</TextLink>
           </div>
         )}

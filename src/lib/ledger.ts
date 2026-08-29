@@ -45,6 +45,7 @@ export type LedgerInvoice = {
   vatPence: number
   grossPence: number
   currency: string
+  refundedPence?: number
   shipping: {
     name: string | null
     line1: string | null

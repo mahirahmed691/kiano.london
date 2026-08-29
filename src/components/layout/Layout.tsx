@@ -55,7 +55,11 @@ export function Layout() {
       >
         <Outlet />
       </main>
-      {app || quiet ? null : <Footer />}
+      {app || quiet ? null : (
+        <div className="print:hidden">
+          <Footer />
+        </div>
+      )}
       <QuickAddDialog />
       <CartDrawer />
       <WordDrawer />

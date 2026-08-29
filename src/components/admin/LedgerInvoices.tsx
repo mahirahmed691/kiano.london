@@ -62,6 +62,14 @@ export function LedgerInvoices() {
           {error}
         </p>
       ) : null}
+      <p className="no-print mb-8">
+        <Link
+          to="/admin/invoices/book"
+          className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+        >
+          Print the records
+        </Link>
+      </p>
       {invoices.length === 0 && !error ? (
         <p className="text-[15px] font-light text-ink-soft">No records yet.</p>
       ) : (
