@@ -1,5 +1,6 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { LedgerFold } from '@/components/admin/LedgerFold'
 import { getProduct, products, productLineName, thobeSizes } from '@/data/products'
 import { isAdminUser } from '@/lib/admin'
@@ -161,6 +162,14 @@ export function RestockLedger() {
           {notice}
         </p>
       ) : null}
+      <p className="no-print mb-8">
+        <Link
+          to="/admin/cuts/book"
+          className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+        >
+          Print the line
+        </Link>
+      </p>
       <LedgerFold title="Cuts on the line">
       {held.length > 0 ? (
         <div className="mb-12 border-b border-rule pb-10">

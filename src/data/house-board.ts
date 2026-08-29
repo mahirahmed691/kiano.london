@@ -78,7 +78,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. The till, the table, the box, the records, and the journal can be printed. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, the house card, and the face of the box. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
+    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. The till, the table, the box, the records, the journal, the diary, remaining cuts, the list, members, and the prices can be printed. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, the house card, and the face of the box. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Word from the house',

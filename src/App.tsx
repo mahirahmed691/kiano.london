@@ -7,7 +7,9 @@ import { QuickAddProvider } from '@/lib/quickAdd'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import { AccountPage } from '@/pages/AccountPage'
 import { AdminAccountsPage } from '@/pages/AdminAccountsPage'
+import { AdminCutsBookPage } from '@/pages/AdminCutsBookPage'
 import { AdminCutsPage } from '@/pages/AdminCutsPage'
+import { AdminDiaryBookPage } from '@/pages/AdminDiaryBookPage'
 import { AdminDiaryPage } from '@/pages/AdminDiaryPage'
 import { AdminFieldPage } from '@/pages/AdminFieldPage'
 import { AdminFiguresPage } from '@/pages/AdminFiguresPage'
@@ -71,6 +73,7 @@ export default function App() {
                   <Route index element={<AdminPage />} />
                   <Route path="figures" element={<AdminFiguresPage />} />
                   <Route path="cuts" element={<AdminCutsPage />} />
+                  <Route path="cuts/book" element={<AdminCutsBookPage />} />
                   <Route path="prices" element={<AdminPricesPage />} />
                   <Route path="accounts" element={<AdminAccountsPage />} />
                   <Route path="invoices" element={<AdminInvoicesPage />} />
@@ -84,6 +87,7 @@ export default function App() {
                   <Route path="list" element={<AdminListPage />} />
                   <Route path="field" element={<AdminFieldPage />} />
                   <Route path="diary" element={<AdminDiaryPage />} />
+                  <Route path="diary/book" element={<AdminDiaryBookPage />} />
                   <Route path="line" element={<AdminLinePage />} />
                 </Route>
                 <Route path="/cookies" element={<CookiesPage />} />

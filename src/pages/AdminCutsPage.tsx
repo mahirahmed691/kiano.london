@@ -9,7 +9,8 @@ export function AdminCutsPage() {
       </Display>
       <Body className="mt-6">
         Set a size when cloth returns. Leave the field and it is kept. The shop reads
-        these numbers; this page is the only place they are written.
+        these numbers; this page is the only place they are written. Print remaining cuts for the
+        table.
       </Body>
       <RestockLedger />
     </>

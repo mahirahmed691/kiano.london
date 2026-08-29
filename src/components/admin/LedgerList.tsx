@@ -57,7 +57,13 @@ export function LedgerList() {
   }
 
   return (
-    <div className="mt-16">
+    <div className="list-book mt-16">
+      <style>{`
+        @media print {
+          header, footer, #main-content > :not(:has(.list-book)), .no-print { display: none !important; }
+          body, #root { background: #fff !important; color: #111 !important; }
+        }
+      `}</style>
       {error ? (
         <p className="mb-8 text-[15px] font-light text-ink" role="alert">
           {error}

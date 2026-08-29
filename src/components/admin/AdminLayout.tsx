@@ -17,7 +17,9 @@ export function AdminLayout() {
     pathname === '/admin/work/card' ||
     pathname === '/admin/work/table' ||
     pathname === '/admin/work/box' ||
-    pathname === '/admin/figures'
+    pathname === '/admin/figures' ||
+    pathname === '/admin/diary/book' ||
+    pathname === '/admin/cuts/book'
   usePageMeta(getShareMeta('/admin'))
 
   return (

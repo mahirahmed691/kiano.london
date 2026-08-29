@@ -28,6 +28,8 @@ export function Layout() {
     pathname === '/admin/work/card' ||
     pathname === '/admin/work/table' ||
     pathname === '/admin/work/box' ||
+    pathname === '/admin/diary/book' ||
+    pathname === '/admin/cuts/book' ||
     pathname === '/order/invoice' ||
     pathname === '/order/card'
   const quiet =

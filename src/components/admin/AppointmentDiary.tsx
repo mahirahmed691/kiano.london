@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { LedgerFilter } from '@/components/admin/LedgerFilter'
 import { getProduct, productLineName } from '@/data/products'
 import type { AppointmentRow, LetterKeep } from '@/components/admin/ledger-state'
@@ -255,6 +256,14 @@ export function AppointmentDiary({
           ]}
         />
       </div>
+      <p className="no-print mt-8">
+        <Link
+          to="/admin/diary/book"
+          className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+        >
+          Print the diary
+        </Link>
+      </p>
       {appointments.length === 0 ? (
         <p className="mt-10 text-[15px] font-light leading-relaxed text-ink-soft">
           No letters held yet. They still arrive by mail.

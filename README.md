@@ -24,6 +24,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/admin` | House ledger board (signed-in allowlist) |
 | `/admin/figures` | The till |
 | `/admin/cuts` | Remaining cuts |
+| `/admin/cuts/book` | Print remaining on the line |
 | `/admin/prices` | The line in sterling |
 | `/admin/accounts` | Tax and the journal |
 | `/admin/invoices` | Records of the cut |
@@ -36,6 +37,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/admin/list` | The list, confirmed and held |
 | `/admin/field` | Other houses of the column |
 | `/admin/diary` | Appointment letters |
+| `/admin/diary/book` | Print letters still open |
 | `/admin/line` | The line of work |
 | `/cookies` | Cookies |
 | `/privacy` | Privacy |
