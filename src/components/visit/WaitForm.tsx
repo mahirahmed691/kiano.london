@@ -1,8 +1,10 @@
-import { useUser } from '@clerk/react'
-import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from 'react'
+import { useCallback, useState, type FormEvent, type ReactNode } from 'react'
+import { HouseContactPrefill } from '@/components/account/HouseContactPrefill'
 import { Button } from '@/components/ui/Button'
 import { site } from '@/data/site'
-import { clerkContact, clerkEnabled } from '@/lib/clerk'
+import { readStoredCheckout, rememberHouseContact } from '@/lib/checkout'
+import { clerkEnabled } from '@/lib/clerk'
+import type { HouseProfile } from '@/lib/house-profile'
 
 const fieldClass =
   'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
@@ -26,21 +28,6 @@ function Field({
   )
 }
 
-function WaitMember({
-  onPrefill,
-}: {
-  onPrefill: (patch: { name: string; email: string; telephone: string }) => void
-}) {
-  const { isSignedIn, user } = useUser()
-
-  useEffect(() => {
-    if (!isSignedIn || !user) return
-    onPrefill(clerkContact(user))
-  }, [isSignedIn, onPrefill, user])
-
-  return null
-}
-
 export function WaitForm({
   productId,
   size,
@@ -50,9 +37,10 @@ export function WaitForm({
   size: number
   piece: string
 }) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [telephone, setTelephone] = useState('')
+  const stored = readStoredCheckout()
+  const [name, setName] = useState(stored.name)
+  const [email, setEmail] = useState(stored.email)
+  const [telephone, setTelephone] = useState(stored.telephone)
   const [sent, setSent] = useState(false)
   const [written, setWritten] = useState(false)
   const [kept, setKept] = useState(false)
@@ -60,19 +48,17 @@ export function WaitForm({
   const [onTheLine, setOnTheLine] = useState(false)
   const [keeping, setKeeping] = useState(false)
 
-  const onPrefill = useCallback(
-    (patch: { name: string; email: string; telephone: string }) => {
-      setName((current) => current || patch.name)
-      setEmail((current) => current || patch.email)
-      setTelephone((current) => current || patch.telephone)
-    },
-    [],
-  )
+  const onPrefill = useCallback((patch: Partial<HouseProfile>) => {
+    setName((current) => current || patch.name || '')
+    setEmail((current) => current || patch.email || '')
+    setTelephone((current) => current || patch.telephone || '')
+  }, [])
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (keeping) return
     setKeeping(true)
+    rememberHouseContact({ name, email, telephone })
 
     let kept = false
     let confirmationSent = false
@@ -169,7 +155,7 @@ export function WaitForm({
 
   return (
     <form id="wait-letter" autoComplete="on" onSubmit={onSubmit} className="space-y-8">
-      {clerkEnabled ? <WaitMember onPrefill={onPrefill} /> : null}
+      {clerkEnabled ? <HouseContactPrefill onPrefill={onPrefill} /> : null}
       <p className="text-[15px] font-light leading-relaxed text-ink-soft">
         {piece}, size {size}, is held. Leave a name. We write if it returns.
       </p>

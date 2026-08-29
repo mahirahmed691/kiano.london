@@ -11,6 +11,8 @@ import {
   sendMail,
 } from './mail.js'
 import { recordNotice } from './notices.js'
+import { keepPaidProfile, upsertMember } from './profile.js'
+import { profileFromShipping } from '../../src/lib/house-profile.js'
 
 const allowedSizes = new Set<number>(thobeSizes)
 
@@ -172,18 +174,19 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
   }
 
   if (clerkUserId) {
-    await sql`
-      INSERT INTO members (clerk_user_id, email, name)
-      VALUES (${clerkUserId}, ${email}, ${name})
-      ON CONFLICT (clerk_user_id) DO UPDATE SET
-        email = EXCLUDED.email,
-        name = COALESCE(EXCLUDED.name, members.name)
-    `
+    await upsertMember(sql, clerkUserId, email, name ?? '')
     await sql`
       UPDATE orders
       SET clerk_user_id = ${clerkUserId}
       WHERE clerk_user_id IS NULL AND lower(email) = lower(${email})
     `
+    const telephone =
+      session.metadata?.telephone?.trim() || session.customer_details?.phone?.trim() || ''
+    await keepPaidProfile(
+      sql,
+      clerkUserId,
+      profileFromShipping(shipping, { name, email, telephone }),
+    )
   }
 
   const memberId =

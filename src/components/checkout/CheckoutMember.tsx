@@ -1,11 +1,11 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import type { CheckoutDetails } from '@/lib/checkout'
 import { clerkContact } from '@/lib/clerk'
+import { fetchHouseProfile, type HouseProfile } from '@/lib/house-profile'
 
 type Props = {
-  onPrefill: (patch: Pick<CheckoutDetails, 'name' | 'email' | 'telephone'>) => void
+  onPrefill: (patch: Partial<HouseProfile>) => void
   onToken: (getToken: () => Promise<string | null>) => void
 }
 
@@ -19,13 +19,43 @@ export function CheckoutMember({ onPrefill, onToken }: Props) {
 
   useEffect(() => {
     if (!isSignedIn || !user) return
-    onPrefill(clerkContact(user))
-  }, [isSignedIn, onPrefill, user])
+    const member = user
+    let cancelled = false
+
+    async function load() {
+      onPrefill(clerkContact(member))
+      const token = await getToken()
+      if (token) {
+        await fetch('/api/member', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            email: member.primaryEmailAddress?.emailAddress ?? '',
+            name: member.fullName ?? '',
+          }),
+        })
+      }
+      const profile = await fetchHouseProfile(token)
+      if (!cancelled && profile) onPrefill(profile)
+    }
+
+    void load()
+    return () => {
+      cancelled = true
+    }
+  }, [getToken, isSignedIn, onPrefill, user])
 
   if (isSignedIn) {
     return (
       <p className="mt-6 text-[14px] font-light text-ink-soft">
-        Signed in. This reservation will sit on your account.
+        Signed in. Kept details will fill the till.{' '}
+        <Link to="/account" className="border-b border-current pb-px">
+          Change them
+        </Link>
+        .
       </p>
     )
   }
@@ -36,7 +66,7 @@ export function CheckoutMember({ onPrefill, onToken }: Props) {
       <Link to="/sign-in" className="border-b border-current pb-px">
         sign in
       </Link>{' '}
-      so the cut is kept against your account.
+      so the cut is kept against your account. This browser keeps the details for the next time.
     </p>
   )
 }

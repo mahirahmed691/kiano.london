@@ -2,6 +2,7 @@ import { Show, SignOutButton, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/HeldCuts'
+import { HouseProfileForm } from '@/components/account/HouseProfileForm'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -208,9 +209,9 @@ function AccountGate() {
     <>
       <Show when="signed-out">
         <Body className="mt-6">
-          The shop is public. Sign in to keep reservations in one place, against the email
-          you use at checkout. If you reserved without an account, ask after the cut with
-          the reference and that email.
+          The shop is public. Sign in to keep reservations and the details for the next till.
+          If you reserved without an account, ask after the cut with the reference and that
+          email.
         </Body>
         <div className="mt-10 flex flex-wrap gap-4">
           <Button to="/sign-in" variant="solid">
@@ -226,6 +227,7 @@ function AccountGate() {
         <Body className="mt-6">
           Payment still reserves the cloth. These are the cuts held against this email.
         </Body>
+        <HouseProfileForm />
         <AccountOrders />
         <AccountWord />
         <AccountDeviceWord />

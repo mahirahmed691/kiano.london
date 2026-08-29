@@ -52,6 +52,7 @@ async function migrate(db: Sql) {
       created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     )
   `
+  await db`ALTER TABLE members ADD COLUMN IF NOT EXISTS profile JSONB`
   await db`
     CREATE TABLE IF NOT EXISTS orders (
       id TEXT PRIMARY KEY,

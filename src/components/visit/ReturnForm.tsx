@@ -1,11 +1,13 @@
-import { useUser } from '@clerk/react'
-import { useCallback, useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
+import { useCallback, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { HouseContactPrefill } from '@/components/account/HouseContactPrefill'
 import { Button } from '@/components/ui/Button'
 import { productLineName, products, thobeSizes } from '@/data/products'
 import { site } from '@/data/site'
-import { clerkContact, clerkEnabled } from '@/lib/clerk'
+import { readStoredCheckout, rememberHouseContact } from '@/lib/checkout'
+import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
+import type { HouseProfile } from '@/lib/house-profile'
 
 const fieldClass =
   'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
@@ -29,27 +31,16 @@ function Field({
   )
 }
 
-function ReturnMember({
-  onPrefill,
-}: {
-  onPrefill: (patch: { name: string; email: string; telephone: string }) => void
-}) {
-  const { isSignedIn, user } = useUser()
-
-  useEffect(() => {
-    if (!isSignedIn || !user) return
-    onPrefill(clerkContact(user))
-  }, [isSignedIn, onPrefill, user])
-
-  return null
-}
-
 export function ReturnForm() {
   const [params] = useSearchParams()
-  const [name, setName] = useState(() => params.get('name')?.trim() ?? '')
-  const [email, setEmail] = useState(() => params.get('email')?.trim() ?? '')
+  const stored = readStoredCheckout()
+  const [name, setName] = useState(() => params.get('name')?.trim() || stored.name)
+  const [email, setEmail] = useState(() => params.get('email')?.trim() || stored.email)
   const [telephone, setTelephone] = useState(
-    () => params.get('tel')?.trim() || params.get('telephone')?.trim() || '',
+    () =>
+      params.get('tel')?.trim() ||
+      params.get('telephone')?.trim() ||
+      stored.telephone,
   )
   const [reference, setReference] = useState(
     () => (params.get('ref') ?? params.get('reference') ?? '').trim().toUpperCase(),
@@ -62,14 +53,11 @@ export function ReturnForm() {
   const [kept, setKept] = useState(false)
   const [keeping, setKeeping] = useState(false)
 
-  const onPrefill = useCallback(
-    (patch: { name: string; email: string; telephone: string }) => {
-      setName((current) => current || patch.name)
-      setEmail((current) => current || patch.email)
-      setTelephone((current) => current || patch.telephone)
-    },
-    [],
-  )
+  const onPrefill = useCallback((patch: Partial<HouseProfile>) => {
+    setName((current) => current || patch.name || '')
+    setEmail((current) => current || patch.email || '')
+    setTelephone((current) => current || patch.telephone || '')
+  }, [])
 
   const selected = useMemo(
     () => products.find((item) => item.id === piece),
@@ -81,6 +69,7 @@ export function ReturnForm() {
     event.preventDefault()
     if (keeping) return
     setKeeping(true)
+    rememberHouseContact({ name, email, telephone })
 
     let kept = false
     let confirmationSent = false
@@ -161,7 +150,7 @@ export function ReturnForm() {
 
   return (
     <form autoComplete="on" onSubmit={onSubmit} className="space-y-8">
-      {clerkEnabled ? <ReturnMember onPrefill={onPrefill} /> : null}
+      {clerkEnabled ? <HouseContactPrefill onPrefill={onPrefill} /> : null}
       <div className="grid gap-8 sm:grid-cols-2">
         <Field id="return-name" label="Name">
           <input

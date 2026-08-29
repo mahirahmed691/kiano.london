@@ -15,6 +15,7 @@ import {
   type CheckoutDetails,
 } from '@/lib/checkout'
 import { clerkEnabled } from '@/lib/clerk'
+import { fillEmptyDetails, profileFromDetails, type HouseProfile } from '@/lib/house-profile'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
@@ -65,13 +66,8 @@ export function CheckoutPage() {
     writeStoredCheckout(details)
   }, [details])
 
-  const onPrefill = useCallback((patch: Pick<CheckoutDetails, 'name' | 'email' | 'telephone'>) => {
-    setDetails((current) => ({
-      ...current,
-      name: current.name || patch.name,
-      email: current.email || patch.email,
-      telephone: current.telephone || patch.telephone,
-    }))
+  const onPrefill = useCallback((patch: Partial<HouseProfile>) => {
+    setDetails((current) => fillEmptyDetails(current, patch))
   }, [])
 
   function setField<K extends keyof CheckoutDetails>(key: K, value: CheckoutDetails[K]) {
@@ -97,6 +93,20 @@ export function CheckoutPage() {
 
     try {
       const token = await getTokenRef.current()
+      if (token) {
+        await fetch('/api/member', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            email: parsed.details.email,
+            name: parsed.details.name,
+            profile: profileFromDetails(parsed.details),
+          }),
+        }).catch(() => undefined)
+      }
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {

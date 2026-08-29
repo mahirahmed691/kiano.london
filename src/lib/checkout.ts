@@ -8,6 +8,7 @@ import {
   type CheckoutOrderAddress,
   type ShippingCountryCode,
 } from '@/data/shipping'
+import { asHouseProfile, type HouseProfile } from '@/lib/house-profile'
 
 export {
   emptyCheckoutDetails,
@@ -19,10 +20,36 @@ export {
 
 export const CHECKOUT_STORAGE_KEY = 'kiano.checkout'
 
+function readRawCheckout(): string | null {
+  try {
+    const local = window.localStorage.getItem(CHECKOUT_STORAGE_KEY)
+    if (local) return local
+  } catch {
+    /* private mode */
+  }
+  try {
+    const session = window.sessionStorage.getItem(CHECKOUT_STORAGE_KEY)
+    if (!session) return null
+    try {
+      window.localStorage.setItem(CHECKOUT_STORAGE_KEY, session)
+    } catch {
+      /* private mode */
+    }
+    try {
+      window.sessionStorage.removeItem(CHECKOUT_STORAGE_KEY)
+    } catch {
+      /* private mode */
+    }
+    return session
+  } catch {
+    return null
+  }
+}
+
 export function readStoredCheckout(): CheckoutDetails {
   if (typeof window === 'undefined') return emptyCheckoutDetails
   try {
-    const raw = window.sessionStorage.getItem(CHECKOUT_STORAGE_KEY)
+    const raw = readRawCheckout()
     if (!raw) return emptyCheckoutDetails
     const stored = JSON.parse(raw) as Partial<CheckoutDetails>
     const parsed = parseCheckoutDetails({ ...emptyCheckoutDetails, ...stored })
@@ -37,11 +64,44 @@ export function readStoredCheckout(): CheckoutDetails {
 }
 
 export function writeStoredCheckout(details: CheckoutDetails) {
-  window.sessionStorage.setItem(CHECKOUT_STORAGE_KEY, JSON.stringify(details))
+  const payload = JSON.stringify(details)
+  try {
+    window.localStorage.setItem(CHECKOUT_STORAGE_KEY, payload)
+  } catch {
+    try {
+      window.sessionStorage.setItem(CHECKOUT_STORAGE_KEY, payload)
+    } catch {
+      /* private mode */
+    }
+  }
 }
 
 export function clearStoredCheckout() {
-  window.sessionStorage.removeItem(CHECKOUT_STORAGE_KEY)
+  try {
+    window.localStorage.removeItem(CHECKOUT_STORAGE_KEY)
+  } catch {
+    /* private mode */
+  }
+  try {
+    window.sessionStorage.removeItem(CHECKOUT_STORAGE_KEY)
+  } catch {
+    /* private mode */
+  }
+}
+
+export function clearCheckoutNote() {
+  const current = readStoredCheckout()
+  writeStoredCheckout({ ...current, note: '' })
+}
+
+export function rememberHouseContact(patch: Partial<HouseProfile>) {
+  const current = readStoredCheckout()
+  const profile = asHouseProfile({ ...current, ...patch })
+  writeStoredCheckout({
+    ...current,
+    ...profile,
+    note: current.note,
+  })
 }
 
 export function orderReference(id: string) {

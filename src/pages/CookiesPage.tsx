@@ -30,6 +30,14 @@ export function CookiesPage() {
             </Body>
           </li>
           <li>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The till</p>
+            <Body className="mt-3">
+              Name, telephone, and the delivery address stay in this browser after they are
+              written, so they need not be entered again. An account keeps the same details with
+              the house.
+            </Body>
+          </li>
+          <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Account</p>
             <Body className="mt-3">
               Sign-in is run by Clerk. Their cookies keep you signed in. The shop works without an

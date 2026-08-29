@@ -19,7 +19,7 @@ const envKeys = [
   'RESEND_FROM',
 ] as const
 
-type Method = 'GET' | 'POST' | 'PATCH'
+type Method = 'GET' | 'POST' | 'PATCH' | 'PUT'
 
 type Route = {
   method: Method
@@ -109,9 +109,19 @@ const routes: Route[] = [
     load: async () => (await import('./api/clerk-webhook.ts')).POST,
   },
   {
+    method: 'GET',
+    path: '/api/member',
+    load: async () => (await import('./api/member.ts')).GET,
+  },
+  {
     method: 'POST',
     path: '/api/member',
     load: async () => (await import('./api/member.ts')).POST,
+  },
+  {
+    method: 'PUT',
+    path: '/api/member',
+    load: async () => (await import('./api/member.ts')).PUT,
   },
   {
     method: 'POST',
@@ -189,7 +199,7 @@ function atelierApi(env: Record<string, string>): Plugin {
           }
           try {
             const chunks: Buffer[] = []
-            const hasBody = route.method === 'POST' || route.method === 'PATCH'
+            const hasBody = route.method === 'POST' || route.method === 'PATCH' || route.method === 'PUT'
             if (hasBody) {
               for await (const chunk of req) {
                 chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)

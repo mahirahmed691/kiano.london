@@ -32,8 +32,13 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Account</p>
             <Body className="mt-3">
-              Member sign-in is Clerk. Name and email sit there, and on this site so a reservation
-              can be shown against the same address.
+              Member sign-in is Clerk. Name and email sit there. Delivery name, telephone, and
+              address are kept with the house so the till, a visit, a wait, and a return need
+              not be written again. Change them on{' '}
+              <Link to="/account" className="border-b border-current pb-px">
+                account
+              </Link>
+              .
             </Body>
           </li>
           <li>
@@ -79,7 +84,8 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Cookies</p>
             <Body className="mt-3">
-              The bag, this notice, and the line on this device stay in the browser. Detail sits on the{' '}
+              The bag, the till details, this notice, and the line on this device stay in the
+              browser. Detail sits on the{' '}
               <Link to="/cookies" className="border-b border-current pb-px">
                 cookies
               </Link>{' '}

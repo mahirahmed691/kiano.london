@@ -9,7 +9,7 @@ import { packingNote } from '@/data/packing'
 import { getProduct, productPath } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import {
-  clearStoredCheckout,
+  clearCheckoutNote,
   formatOrderAddress,
   orderReference,
   reservationPath,
@@ -104,7 +104,7 @@ export function OrderConfirmedPage() {
         setOrder(data)
         if (data.paymentStatus === 'paid') {
           clear()
-          clearStoredCheckout()
+          clearCheckoutNote()
           setInvoice(data.record ?? invoiceFromOrder(data))
           setView('paid')
           return
