@@ -43,6 +43,7 @@ type Section =
   | 'members'
   | 'list'
   | 'work'
+  | 'figures'
 
 const sections = new Set<Section>([
   'summary',
@@ -56,6 +57,7 @@ const sections = new Set<Section>([
   'members',
   'list',
   'work',
+  'figures',
 ])
 
 const allowedSizes = new Set<number>(thobeSizes)
@@ -101,6 +103,74 @@ function asCount(rows: { n?: string | number | bigint }[]) {
 function asText(value: unknown, max: number) {
   if (typeof value !== 'string') return ''
   return value.trim().slice(0, max)
+}
+
+function asEmailQuery(value: unknown) {
+  const email = asText(value, 254).toLowerCase()
+  if (!email.includes('@') || email.includes(' ')) return ''
+  return email
+}
+
+function asShipping(value: unknown) {
+  if (!value) return null
+  const parsed =
+    typeof value === 'string'
+      ? (() => {
+          try {
+            return JSON.parse(value) as Record<string, unknown>
+          } catch {
+            return null
+          }
+        })()
+      : typeof value === 'object'
+        ? (value as Record<string, unknown>)
+        : null
+  if (!parsed) return null
+  const field = (key: string) => {
+    const next = parsed[key]
+    return typeof next === 'string' && next.trim() ? next.trim() : null
+  }
+  return {
+    name: field('name'),
+    line1: field('line1'),
+    line2: field('line2'),
+    city: field('city'),
+    region: field('region'),
+    postalCode: field('postalCode') ?? field('postal_code'),
+    country: field('country'),
+  }
+}
+
+function appointmentPublic(row: {
+  id: number
+  name: string
+  email: string
+  telephone: string | null
+  product_id: string | null
+  size: number | null
+  note: string | null
+  kind: string | null
+  reference: string | null
+  status: string | null
+  named_for: string | Date | null
+  reply: string | null
+  created_at: string | Date
+}) {
+  return {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    telephone: row.telephone ?? '',
+    productId: row.product_id ?? '',
+    size: row.size,
+    note: row.note ?? '',
+    kind: asLetterKind(row.kind),
+    reference: row.reference ?? '',
+    status: asLetterStatus(row.status),
+    namedFor: storedNamedFor(row.named_for),
+    reply: row.reply ?? '',
+    createdAt: asIso(row.created_at),
+  }
 }
 
 function asPence(value: unknown) {
@@ -174,6 +244,12 @@ async function getSummary(): Promise<Response> {
         n: number
       }[],
     )
+    const workReserved = asCount(
+      (await sql`
+        SELECT COUNT(*)::int AS n FROM orders
+        WHERE status = 'paid' AND stage = 'reserved' AND refunded_pence < amount_pence
+      `) as { n: number }[],
+    )
     const workCloth = asCount(
       (await sql`
         SELECT COUNT(*)::int AS n FROM orders
@@ -208,8 +284,9 @@ async function getSummary(): Promise<Response> {
       SELECT id, name, email, telephone, product_id, size, note, status, kind, reference,
              named_for, reply, created_at
       FROM appointments
+      WHERE status = 'new'
       ORDER BY created_at DESC
-      LIMIT 20
+      LIMIT 12
     `) as {
       id: number
       name: string
@@ -236,6 +313,7 @@ async function getSummary(): Promise<Response> {
       sizesHeld,
       appointmentCount,
       newLetters,
+      workReserved,
       workCloth,
       workCutting,
       workPacked,
@@ -244,25 +322,232 @@ async function getSummary(): Promise<Response> {
         productId: row.product_id,
         size: row.size,
       })),
-      appointments: appointmentRows.map((row) => ({
-        id: row.id,
-        name: row.name,
-        email: row.email,
-        telephone: row.telephone ?? '',
-        productId: row.product_id ?? '',
-        size: row.size,
-        note: row.note ?? '',
-        kind: asLetterKind(row.kind),
-        reference: row.reference ?? '',
-        status: asLetterStatus(row.status),
-        namedFor: storedNamedFor(row.named_for),
-        reply: row.reply ?? '',
-        createdAt: asIso(row.created_at),
-      })),
+      appointments: appointmentRows.map(appointmentPublic),
     })
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The ledger could not be read.' }, { status: 503 })
+  }
+}
+
+function utcMonthStart(monthsAgo = 0) {
+  const date = new Date()
+  date.setUTCDate(1)
+  date.setUTCHours(0, 0, 0, 0)
+  date.setUTCMonth(date.getUTCMonth() - monthsAgo)
+  return date.toISOString()
+}
+
+function utcMonday(weeksAgo = 0) {
+  const now = new Date()
+  const date = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()))
+  const weekday = date.getUTCDay()
+  const offset = weekday === 0 ? -6 : 1 - weekday
+  date.setUTCDate(date.getUTCDate() + offset - weeksAgo * 7)
+  return date.toISOString().slice(0, 10)
+}
+
+function asPeriod(row: {
+  billed?: number
+  returned?: number
+  held?: number
+  count?: number
+}) {
+  const billedPence = Number(row.billed) || 0
+  const returnedPence = Number(row.returned) || 0
+  const heldPence = Number(row.held) || 0
+  const count = Number(row.count) || 0
+  return {
+    billedPence,
+    returnedPence,
+    heldPence,
+    count,
+    ...splitVat(heldPence),
+  }
+}
+
+async function getFigures(): Promise<Response> {
+  try {
+    const sql = await withDb()
+    const thisMonth = utcMonthStart(0)
+    const lastMonth = utcMonthStart(1)
+    const weekFrom = `${utcMonday(11)}T00:00:00.000Z`
+
+    const totals = (
+      (await sql`
+        SELECT
+          COALESCE(SUM(amount_pence), 0)::int AS billed,
+          COALESCE(SUM(refunded_pence), 0)::int AS returned,
+          COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence)), 0)::int AS held,
+          COUNT(*)::int AS count,
+          COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence))
+            FILTER (WHERE created_at >= ${thisMonth}::timestamptz), 0)::int AS month_held,
+          COALESCE(SUM(amount_pence)
+            FILTER (WHERE created_at >= ${thisMonth}::timestamptz), 0)::int AS month_billed,
+          COALESCE(SUM(refunded_pence)
+            FILTER (WHERE created_at >= ${thisMonth}::timestamptz), 0)::int AS month_returned,
+          COUNT(*) FILTER (WHERE created_at >= ${thisMonth}::timestamptz)::int AS month_count,
+          COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence))
+            FILTER (
+              WHERE created_at >= ${lastMonth}::timestamptz
+                AND created_at < ${thisMonth}::timestamptz
+            ), 0)::int AS last_held,
+          COALESCE(SUM(amount_pence)
+            FILTER (
+              WHERE created_at >= ${lastMonth}::timestamptz
+                AND created_at < ${thisMonth}::timestamptz
+            ), 0)::int AS last_billed,
+          COALESCE(SUM(refunded_pence)
+            FILTER (
+              WHERE created_at >= ${lastMonth}::timestamptz
+                AND created_at < ${thisMonth}::timestamptz
+            ), 0)::int AS last_returned,
+          COUNT(*) FILTER (
+            WHERE created_at >= ${lastMonth}::timestamptz
+              AND created_at < ${thisMonth}::timestamptz
+          )::int AS last_count,
+          COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence))
+            FILTER (WHERE refunded_pence < amount_pence AND stage <> 'sent'), 0)::int AS open_held,
+          COUNT(*) FILTER (WHERE refunded_pence < amount_pence AND stage <> 'sent')::int AS open_count
+        FROM orders
+        WHERE status = 'paid'
+      `) as {
+        billed: number
+        returned: number
+        held: number
+        count: number
+        month_held: number
+        month_billed: number
+        month_returned: number
+        month_count: number
+        last_held: number
+        last_billed: number
+        last_returned: number
+        last_count: number
+        open_held: number
+        open_count: number
+      }[]
+    )[0]
+
+    const weekRows = (await sql`
+      SELECT to_char(date_trunc('week', created_at AT TIME ZONE 'UTC'), 'YYYY-MM-DD') AS week,
+             COUNT(*)::int AS n,
+             COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence)), 0)::int AS held
+      FROM orders
+      WHERE status = 'paid' AND created_at >= ${weekFrom}::timestamptz
+      GROUP BY 1
+      ORDER BY 1
+    `) as { week: string; n: number; held: number }[]
+
+    const weekByDay = new Map(weekRows.map((row) => [String(row.week).slice(0, 10), row]))
+    const weeks = Array.from({ length: 12 }, (_, index) => {
+      const week = utcMonday(11 - index)
+      const row = weekByDay.get(week)
+      return {
+        week,
+        count: Number(row?.n) || 0,
+        heldPence: Number(row?.held) || 0,
+      }
+    })
+
+    const pieces = (await sql`
+      SELECT l.product_id, COALESCE(SUM(l.quantity), 0)::int AS units,
+             COALESCE(SUM(l.amount_pence), 0)::int AS pence
+      FROM order_lines l
+      INNER JOIN orders o ON o.id = l.order_id
+      WHERE o.status = 'paid'
+      GROUP BY l.product_id
+      ORDER BY pence DESC
+    `) as { product_id: string; units: number; pence: number }[]
+
+    const sizes = (await sql`
+      SELECT l.size, COALESCE(SUM(l.quantity), 0)::int AS units
+      FROM order_lines l
+      INNER JOIN orders o ON o.id = l.order_id
+      WHERE o.status = 'paid'
+      GROUP BY l.size
+      ORDER BY l.size
+    `) as { size: number; units: number }[]
+
+    const countries = (await sql`
+      SELECT COALESCE(NULLIF(o.shipping->>'country', ''), '') AS country,
+             COUNT(*)::int AS n,
+             COALESCE(SUM(GREATEST(0, o.amount_pence - o.refunded_pence)), 0)::int AS held
+      FROM orders o
+      WHERE o.status = 'paid'
+      GROUP BY 1
+      ORDER BY held DESC, n DESC
+    `) as { country: string; n: number; held: number }[]
+
+    const pipeline = (await sql`
+      SELECT stage,
+             COUNT(*)::int AS n,
+             COALESCE(SUM(GREATEST(0, amount_pence - refunded_pence)), 0)::int AS held
+      FROM orders
+      WHERE status = 'paid' AND refunded_pence < amount_pence
+      GROUP BY stage
+    `) as { stage: string; n: number; held: number }[]
+
+    const buyers = (
+      (await sql`
+        SELECT COUNT(*)::int AS buyers,
+               COUNT(*) FILTER (WHERE n > 1)::int AS returning
+        FROM (
+          SELECT COUNT(*) AS n
+          FROM orders
+          WHERE status = 'paid'
+          GROUP BY lower(email)
+        ) t
+      `) as { buyers: number; returning: number }[]
+    )[0]
+
+    return Response.json({
+      month: asPeriod({
+        billed: totals?.month_billed,
+        returned: totals?.month_returned,
+        held: totals?.month_held,
+        count: totals?.month_count,
+      }),
+      lastMonth: asPeriod({
+        billed: totals?.last_billed,
+        returned: totals?.last_returned,
+        held: totals?.last_held,
+        count: totals?.last_count,
+      }),
+      allTime: asPeriod({
+        billed: totals?.billed,
+        returned: totals?.returned,
+        held: totals?.held,
+        count: totals?.count,
+      }),
+      openHeldPence: Number(totals?.open_held) || 0,
+      openCount: Number(totals?.open_count) || 0,
+      buyers: Number(buyers?.buyers) || 0,
+      returning: Number(buyers?.returning) || 0,
+      weeks,
+      pieces: pieces.map((row) => ({
+        productId: row.product_id,
+        units: Number(row.units) || 0,
+        pence: Number(row.pence) || 0,
+      })),
+      sizes: sizes.map((row) => ({
+        size: Number(row.size) || 0,
+        units: Number(row.units) || 0,
+      })),
+      countries: countries.map((row) => ({
+        country: row.country ?? '',
+        count: Number(row.n) || 0,
+        heldPence: Number(row.held) || 0,
+      })),
+      pipeline: pipeline.map((row) => ({
+        stage: asWorkStage(row.stage),
+        count: Number(row.n) || 0,
+        heldPence: Number(row.held) || 0,
+      })),
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The figures could not be read.' }, { status: 503 })
   }
 }
 
@@ -643,29 +928,10 @@ function namedCuts(
 async function getOrders(request?: Request): Promise<Response> {
   try {
     const sql = await backfillInvoices()
-    const wanted = request ? asOrderId(new URL(request.url).searchParams.get('id') ?? '') : ''
-    const orders = (
-      wanted
-        ? await sql`
-            SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
-                   o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
-                   o.created_at, i.number AS invoice_number
-            FROM orders o
-            LEFT JOIN invoices i ON i.order_id = o.id
-            WHERE o.status = 'paid' AND o.id = ${wanted}
-            LIMIT 1
-          `
-        : await sql`
-            SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
-                   o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
-                   o.created_at, i.number AS invoice_number
-            FROM orders o
-            LEFT JOIN invoices i ON i.order_id = o.id
-            WHERE o.status = 'paid'
-            ORDER BY o.created_at DESC
-            LIMIT 80
-          `
-    ) as {
+    const params = request ? new URL(request.url).searchParams : null
+    const wanted = params ? asOrderId(params.get('id') ?? '') : ''
+    const email = !wanted && params ? asEmailQuery(params.get('email') ?? '') : ''
+    type OrderRow = {
       id: string
       email: string
       clerk_user_id: string | null
@@ -682,7 +948,45 @@ async function getOrders(request?: Request): Promise<Response> {
       note: string | null
       created_at: string | Date
       invoice_number: string | null
-    }[]
+      customer_name: string | null
+      shipping: unknown
+    }
+    const orders = (
+      wanted
+        ? await sql`
+            SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
+                   o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
+                   o.created_at, i.number AS invoice_number, i.customer_name,
+                   COALESCE(i.shipping, o.shipping) AS shipping
+            FROM orders o
+            LEFT JOIN invoices i ON i.order_id = o.id
+            WHERE o.status = 'paid' AND o.id = ${wanted}
+            LIMIT 1
+          `
+        : email
+          ? await sql`
+              SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
+                     o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
+                     o.created_at, i.number AS invoice_number, i.customer_name,
+                     COALESCE(i.shipping, o.shipping) AS shipping
+              FROM orders o
+              LEFT JOIN invoices i ON i.order_id = o.id
+              WHERE o.status = 'paid' AND lower(o.email) = ${email}
+              ORDER BY o.created_at DESC
+              LIMIT 80
+            `
+          : await sql`
+              SELECT o.id, o.email, o.clerk_user_id, o.status, o.stage, o.amount_pence, o.refunded_pence,
+                     o.currency, o.carrier, o.tracking, o.tracking_href, o.ready_week, o.stage_note, o.note,
+                     o.created_at, i.number AS invoice_number, i.customer_name,
+                     COALESCE(i.shipping, o.shipping) AS shipping
+              FROM orders o
+              LEFT JOIN invoices i ON i.order_id = o.id
+              WHERE o.status = 'paid'
+              ORDER BY o.created_at DESC
+              LIMIT 80
+            `
+    ) as OrderRow[]
 
     const lines = (
       wanted
@@ -691,12 +995,19 @@ async function getOrders(request?: Request): Promise<Response> {
             FROM order_lines l
             WHERE l.order_id = ${wanted}
           `
-        : await sql`
-            SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
-            FROM order_lines l
-            INNER JOIN orders o ON o.id = l.order_id
-            WHERE o.status = 'paid'
-          `
+        : email
+          ? await sql`
+              SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
+              FROM order_lines l
+              INNER JOIN orders o ON o.id = l.order_id
+              WHERE o.status = 'paid' AND lower(o.email) = ${email}
+            `
+          : await sql`
+              SELECT l.order_id, l.product_id, l.size, l.quantity, l.amount_pence, l.description
+              FROM order_lines l
+              INNER JOIN orders o ON o.id = l.order_id
+              WHERE o.status = 'paid'
+            `
     ) as {
       order_id: string
       product_id: string
@@ -714,35 +1025,58 @@ async function getOrders(request?: Request): Promise<Response> {
     }
 
     return Response.json({
-      orders: orders.map((order) => ({
-        id: order.id,
-        email: order.email,
-        clerkUserId: order.clerk_user_id ?? '',
-        status: order.status,
-        stage: asWorkStage(order.stage),
-        amountPence: order.amount_pence,
-        refundedPence: order.refunded_pence ?? 0,
-        currency: order.currency,
-        carrier: order.carrier ?? '',
-        tracking: order.tracking ?? '',
-        trackingHref: asTrackingHref(order.tracking_href ?? ''),
-        readyWeek: storedNamedFor(order.ready_week),
-        stageNote: order.stage_note ?? '',
-        note: order.note ?? '',
-        createdAt: asIso(order.created_at),
-        invoiceNumber: order.invoice_number ?? '',
-        lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
-          productId: line.product_id,
-          size: line.size,
-          quantity: line.quantity,
-          amountPence: line.amount_pence,
-          description: line.description,
-        })),
-      })),
+      orders: orders.map((order) => {
+        const shipping = asShipping(order.shipping)
+        return {
+          id: order.id,
+          email: order.email,
+          customerName: (order.customer_name ?? shipping?.name ?? order.email).trim(),
+          clerkUserId: order.clerk_user_id ?? '',
+          status: order.status,
+          stage: asWorkStage(order.stage),
+          amountPence: order.amount_pence,
+          refundedPence: order.refunded_pence ?? 0,
+          currency: order.currency,
+          carrier: order.carrier ?? '',
+          tracking: order.tracking ?? '',
+          trackingHref: asTrackingHref(order.tracking_href ?? ''),
+          readyWeek: storedNamedFor(order.ready_week),
+          stageNote: order.stage_note ?? '',
+          note: order.note ?? '',
+          shipping,
+          createdAt: asIso(order.created_at),
+          invoiceNumber: order.invoice_number ?? '',
+          lines: (linesByOrder.get(order.id) ?? []).map((line) => ({
+            productId: line.product_id,
+            size: line.size,
+            quantity: line.quantity,
+            amountPence: line.amount_pence,
+            description: line.description,
+          })),
+        }
+      }),
     })
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The reservations could not be read.' }, { status: 503 })
+  }
+}
+
+async function getDiary(): Promise<Response> {
+  try {
+    const sql = await withDb()
+    const rows = (await sql`
+      SELECT id, name, email, telephone, product_id, size, note, status, kind, reference,
+             named_for, reply, created_at
+      FROM appointments
+      ORDER BY created_at DESC
+      LIMIT 200
+    `) as Parameters<typeof appointmentPublic>[0][]
+
+    return Response.json({ appointments: rows.map(appointmentPublic) })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The diary could not be read.' }, { status: 503 })
   }
 }
 
@@ -766,9 +1100,11 @@ async function getInvoices(request: Request): Promise<Response> {
     }
 
     const rows = (await sql`
-      SELECT id, number, email, customer_name, issued_at, net_pence, vat_pence, gross_pence
-      FROM invoices
-      ORDER BY issued_at DESC, id DESC
+      SELECT i.id, i.number, i.email, i.customer_name, i.issued_at, i.net_pence, i.vat_pence, i.gross_pence,
+             o.id AS order_id, o.refunded_pence, o.amount_pence, o.stage
+      FROM invoices i
+      LEFT JOIN orders o ON o.id = i.order_id
+      ORDER BY i.issued_at DESC, i.id DESC
       LIMIT 80
     `) as {
       id: number
@@ -779,6 +1115,10 @@ async function getInvoices(request: Request): Promise<Response> {
       net_pence: number
       vat_pence: number
       gross_pence: number
+      order_id: string | null
+      refunded_pence: number | null
+      amount_pence: number | null
+      stage: string | null
     }[]
 
     return Response.json({
@@ -791,6 +1131,10 @@ async function getInvoices(request: Request): Promise<Response> {
         netPence: row.net_pence,
         vatPence: row.vat_pence,
         grossPence: row.gross_pence,
+        orderId: row.order_id ?? '',
+        refundedPence: row.refunded_pence ?? 0,
+        amountPence: row.amount_pence ?? row.gross_pence,
+        stage: asWorkStage(row.stage),
       })),
     })
   } catch (caught) {
@@ -814,7 +1158,13 @@ async function getMembers(): Promise<Response> {
         (
           SELECT MAX(o.created_at) FROM orders o
           WHERE o.clerk_user_id = m.clerk_user_id AND o.status = 'paid'
-        ) AS last_paid_at
+        ) AS last_paid_at,
+        (
+          SELECT o.id FROM orders o
+          WHERE o.clerk_user_id = m.clerk_user_id AND o.status = 'paid'
+          ORDER BY o.created_at DESC
+          LIMIT 1
+        ) AS last_order_id
       FROM members m
       ORDER BY m.created_at DESC
       LIMIT 200
@@ -824,6 +1174,7 @@ async function getMembers(): Promise<Response> {
       created_at: string | Date
       orders: number
       last_paid_at: string | Date | null
+      last_order_id: string | null
     }[]
 
     return Response.json({
@@ -832,6 +1183,7 @@ async function getMembers(): Promise<Response> {
         name: row.name ?? '',
         orders: Number(row.orders) || 0,
         lastPaidAt: row.last_paid_at ? asIso(row.last_paid_at) : '',
+        lastOrderId: row.last_order_id ?? '',
         createdAt: asIso(row.created_at),
       })),
     })
@@ -1310,6 +1662,8 @@ async function handle(request: Request, method: Method): Promise<Response> {
     if (section === 'members') return getMembers()
     if (section === 'list') return getList()
     if (section === 'work') return getOrders(request)
+    if (section === 'diary') return getDiary()
+    if (section === 'figures') return getFigures()
     return Response.json({ error: 'This page of the ledger is written, not read.' }, { status: 405 })
   }
 

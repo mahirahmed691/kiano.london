@@ -33,7 +33,7 @@ function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string
 
   const figures: Array<{ label: string; value: string; to?: string }> = [
     { label: 'Reserved', value: String(ledger.orders).padStart(2, '0'), to: '/admin/invoices' },
-    { label: 'Held', value: formatGbp(ledger.reservedPence), to: '/admin/accounts' },
+    { label: 'Held', value: formatGbp(ledger.reservedPence), to: '/admin/figures' },
     {
       label: 'Cuts remaining',
       value: String(ledger.cutsRemaining),
@@ -61,7 +61,7 @@ function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string
     },
     {
       label: 'The work',
-      value: `${String(ledger.workCloth ?? 0).padStart(2, '0')} cloth · ${String(ledger.workCutting ?? 0).padStart(2, '0')} cutting · ${String(ledger.workPacked ?? 0).padStart(2, '0')} packed`,
+      value: `${String(ledger.workReserved ?? 0).padStart(2, '0')} reserved · ${String(ledger.workCutting ?? 0).padStart(2, '0')} table · ${String(ledger.workPacked ?? 0).padStart(2, '0')} packed`,
       to: '/admin/work',
     },
   ]
@@ -97,11 +97,31 @@ function LedgerFigures({ ledger, error }: { ledger: Ledger | null; error: string
             {ledger.heldCuts.map((cut) => (
               <li key={`${cut.productId}-${cut.size}`}>
                 <Link
-                  to="/admin/cuts"
+                  to={`/admin/cuts#cut-${cut.productId}`}
                   className="flex items-baseline justify-between gap-6 py-4 transition-opacity hover:opacity-70"
                 >
                   <p className="text-[15px] font-light">{heldCutName(cut.productId)}</p>
                   <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{cut.size}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {ledger.appointments.length > 0 ? (
+        <div className="mt-12 border-t border-rule pt-10">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">New letters</p>
+          <ul className="mt-6 divide-y divide-rule border-y border-rule">
+            {ledger.appointments.map((row) => (
+              <li key={row.id}>
+                <Link
+                  to="/admin/diary"
+                  className="grid gap-2 py-4 transition-opacity hover:opacity-70 sm:grid-cols-12 sm:items-baseline"
+                >
+                  <p className="font-display text-2xl font-light sm:col-span-7">{row.name}</p>
+                  <p className="text-[13px] font-light text-ink-soft sm:col-span-5 sm:text-right">
+                    {row.kind === 'return' ? 'A return' : row.kind === 'wait' ? 'A wait' : 'A visit'}
+                  </p>
                 </Link>
               </li>
             ))}

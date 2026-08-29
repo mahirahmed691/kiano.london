@@ -78,7 +78,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work prints a house card for the box. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
+    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, and the house card. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Word from the house',
@@ -88,9 +88,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Analytics',
-    completion: 10,
-    status: 'missing',
-    note: 'No PostHog, GA, or funnel. The ledger is the only house-side count.',
+    completion: 55,
+    status: 'partial',
+    note: 'No PostHog, GA, or funnel. The ledger till counts paid reservations, returns, the weeks, the line, sizes, and where the box went.',
   },
   {
     name: 'Returns and refunds',

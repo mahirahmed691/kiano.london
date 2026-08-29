@@ -10,6 +10,7 @@ import { AdminAccountsPage } from '@/pages/AdminAccountsPage'
 import { AdminCutsPage } from '@/pages/AdminCutsPage'
 import { AdminDiaryPage } from '@/pages/AdminDiaryPage'
 import { AdminFieldPage } from '@/pages/AdminFieldPage'
+import { AdminFiguresPage } from '@/pages/AdminFiguresPage'
 import { AdminInvoicePage } from '@/pages/AdminInvoicePage'
 import { AdminInvoicesPage } from '@/pages/AdminInvoicesPage'
 import { AdminLinePage } from '@/pages/AdminLinePage'
@@ -65,6 +66,7 @@ export default function App() {
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<AdminPage />} />
+                  <Route path="figures" element={<AdminFiguresPage />} />
                   <Route path="cuts" element={<AdminCutsPage />} />
                   <Route path="prices" element={<AdminPricesPage />} />
                   <Route path="accounts" element={<AdminAccountsPage />} />

@@ -83,7 +83,11 @@ export function LedgerList() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone sm:col-span-3">
                   {formatLedgerDate(row.confirmedAt || row.createdAt)}
                 </p>
-                <p className="text-[15px] font-light sm:col-span-9">{row.email}</p>
+                <p className="text-[15px] font-light sm:col-span-9">
+                  <a href={`mailto:${row.email}`} className="transition-opacity hover:opacity-70">
+                    {row.email}
+                  </a>
+                </p>
               </li>
             ))}
           </ul>
@@ -100,7 +104,9 @@ export function LedgerList() {
                   {formatLedgerDate(row.createdAt)}
                 </p>
                 <p className="text-[15px] font-light sm:col-span-9">
-                  {row.email}
+                  <a href={`mailto:${row.email}`} className="transition-opacity hover:opacity-70">
+                    {row.email}
+                  </a>
                   <span className="mt-1 block text-[13px] text-ink-soft">{row.source}</span>
                 </p>
               </li>

@@ -68,6 +68,11 @@ export function AdminInvoicePage() {
     <>
       <div className="no-print mb-12 flex flex-wrap items-center gap-6">
         <TextLink to="/admin/invoices">The records</TextLink>
+        {invoice.orderId ? (
+          <TextLink to={`/admin/work/card?id=${encodeURIComponent(invoice.orderId)}`}>
+            The house card
+          </TextLink>
+        ) : null}
         <button
           type="button"
           onClick={() => window.print()}

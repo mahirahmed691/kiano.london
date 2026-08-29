@@ -60,6 +60,7 @@ export type LedgerInvoice = {
 export type LedgerOrder = {
   id: string
   email: string
+  customerName: string
   clerkUserId: string
   status: string
   amountPence: number
@@ -74,6 +75,7 @@ export type LedgerOrder = {
   trackingHref?: string
   stageNote?: string
   note?: string
+  shipping: LedgerInvoice['shipping']
   lines: {
     productId: string
     size: number
@@ -100,11 +102,73 @@ export type LedgerPeriod = {
   count: number
 }
 
+export type LedgerTillPeriod = LedgerPeriod & {
+  billedPence: number
+  returnedPence: number
+  heldPence: number
+}
+
+export type LedgerTillWeek = {
+  week: string
+  count: number
+  heldPence: number
+}
+
+export type LedgerTillPiece = {
+  productId: string
+  units: number
+  pence: number
+}
+
+export type LedgerTillSize = {
+  size: number
+  units: number
+}
+
+export type LedgerTillCountry = {
+  country: string
+  count: number
+  heldPence: number
+}
+
+export type LedgerTillStage = {
+  stage: string
+  count: number
+  heldPence: number
+}
+
+export type LedgerTill = {
+  month: LedgerTillPeriod
+  lastMonth: LedgerTillPeriod
+  allTime: LedgerTillPeriod
+  openHeldPence: number
+  openCount: number
+  buyers: number
+  returning: number
+  weeks: LedgerTillWeek[]
+  pieces: LedgerTillPiece[]
+  sizes: LedgerTillSize[]
+  countries: LedgerTillCountry[]
+  pipeline: LedgerTillStage[]
+}
+
+export function formatLedgerWeek(iso: string) {
+  const stored = iso.slice(0, 10)
+  const date = new Date(`${stored}T00:00:00.000Z`)
+  if (Number.isNaN(date.getTime())) return iso
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'UTC',
+  }).format(date)
+}
+
 export type LedgerMember = {
   email: string
   name: string
   orders: number
   lastPaidAt: string
+  lastOrderId: string
   createdAt: string
 }
 

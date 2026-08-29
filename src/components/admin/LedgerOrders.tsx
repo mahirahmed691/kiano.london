@@ -57,9 +57,14 @@ export function LedgerOrders() {
                 {formatLedgerDate(order.createdAt)}
               </p>
               <div className="lg:col-span-4">
-                <p className="font-display text-2xl font-light">{order.email}</p>
+                <p className="font-display text-2xl font-light">
+                  {order.customerName || order.email}
+                </p>
+                {order.customerName && order.customerName !== order.email ? (
+                  <p className="mt-2 text-[13px] font-light text-ink-soft">{order.email}</p>
+                ) : null}
                 <p className="mt-2 text-[13px] font-light text-ink-soft">
-                  {orderReference(order.id)} · {order.status}
+                  {orderReference(order.id)}
                   {order.clerkUserId ? ' · member' : ''}
                 </p>
                 {order.invoiceNumber ? (
@@ -69,6 +74,11 @@ export function LedgerOrders() {
                     </TextLink>
                   </p>
                 ) : null}
+                <p className="mt-3">
+                  <TextLink to={`/admin/work?email=${encodeURIComponent(order.email)}`}>
+                    The work
+                  </TextLink>
+                </p>
               </div>
               <ul className="text-[15px] font-light leading-relaxed text-ink-soft lg:col-span-4">
                 {order.lines.map((line, index) => (

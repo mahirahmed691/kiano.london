@@ -9,7 +9,7 @@ export function AdminAccountsPage() {
       </Display>
       <Body className="mt-6">
         Paid reservations only. A simple journal for the accountant, not a Sage clone. A full
-        return is written when Stripe refunds it.
+        return is written when Stripe refunds it. Months and the line sit on Figures.
       </Body>
       <LedgerAccounts />
     </>

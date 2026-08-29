@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { LedgerFilter } from '@/components/admin/LedgerFilter'
 import { getProduct, productLineName } from '@/data/products'
-import type { AppointmentRow, Ledger, LetterKeep } from '@/components/admin/ledger-state'
+import type { AppointmentRow, LetterKeep } from '@/components/admin/ledger-state'
 import { LedgerFold } from '@/components/admin/LedgerFold'
-import { asLetterStatus, formatNamedDay, letterLine } from '@/lib/letters'
+import { asLetterKind, asLetterStatus, formatNamedDay, letterLine, type LetterKind } from '@/lib/letters'
 import { cn } from '@/lib/cn'
 
 const fieldClass =
@@ -69,9 +70,17 @@ function DiaryLetter({
       </p>
       <div className="lg:col-span-4">
         <p className="font-display text-2xl font-light">{row.name}</p>
-        <p className="mt-2 text-[15px] font-light text-ink-soft">{row.email}</p>
+        <p className="mt-2 text-[15px] font-light text-ink-soft">
+          <a href={`mailto:${row.email}`} className="transition-opacity hover:opacity-70">
+            {row.email}
+          </a>
+        </p>
         {row.telephone ? (
-          <p className="mt-1 text-[15px] font-light text-ink-soft">{row.telephone}</p>
+          <p className="mt-1 text-[15px] font-light text-ink-soft">
+            <a href={`tel:${row.telephone}`} className="transition-opacity hover:opacity-70">
+              {row.telephone}
+            </a>
+          </p>
         ) : null}
       </div>
       <div className="lg:col-span-6">
@@ -186,25 +195,75 @@ function DiaryLetter({
 }
 
 export function AppointmentDiary({
-  ledger,
+  appointments,
   onKeep,
 }: {
-  ledger: Ledger | null
+  appointments: AppointmentRow[] | null
   onKeep: (input: LetterKeep) => void
 }) {
-  if (!ledger) {
+  const [statusView, setStatusView] = useState<'new' | 'open' | 'closed' | 'all'>('open')
+  const [kindView, setKindView] = useState<'all' | LetterKind>('all')
+
+  if (!appointments) {
     return <p className="mt-12 text-[15px] font-light text-ink-soft">Reading the diary.</p>
   }
 
+  const closedOf = (row: AppointmentRow) => row.status === 'refused' || row.status === 'agreed'
+  const byStatus = appointments.filter((row) => {
+    if (statusView === 'all') return true
+    if (statusView === 'new') return row.status === 'new'
+    if (statusView === 'closed') return closedOf(row)
+    return !closedOf(row)
+  })
+  const visible = byStatus.filter((row) => kindView === 'all' || asLetterKind(row.kind) === kindView)
+
   return (
     <LedgerFold title="The letters" className="mt-16">
-      {ledger.appointments.length === 0 ? (
-        <p className="text-[15px] font-light leading-relaxed text-ink-soft">
+      <div className="space-y-8">
+        <LedgerFilter
+          label="Held"
+          value={statusView}
+          onChange={setStatusView}
+          options={[
+            {
+              id: 'new',
+              label: 'New',
+              count: appointments.filter((row) => row.status === 'new').length,
+            },
+            {
+              id: 'open',
+              label: 'Open',
+              count: appointments.filter((row) => !closedOf(row)).length,
+            },
+            {
+              id: 'closed',
+              label: 'Closed',
+              count: appointments.filter((row) => closedOf(row)).length,
+            },
+            { id: 'all', label: 'All', count: appointments.length },
+          ]}
+        />
+        <LedgerFilter
+          label="Kind"
+          value={kindView}
+          onChange={setKindView}
+          options={[
+            { id: 'all', label: 'All' },
+            { id: 'visit', label: 'Visit' },
+            { id: 'wait', label: 'Wait' },
+            { id: 'return', label: 'Return' },
+          ]}
+        />
+      </div>
+      {appointments.length === 0 ? (
+        <p className="mt-10 text-[15px] font-light leading-relaxed text-ink-soft">
           No letters held yet. They still arrive by mail.
         </p>
+      ) : visible.length === 0 ? (
+        <p className="mt-10 text-[15px] font-light text-ink-soft">Nothing in this column.</p>
       ) : (
-        <ul className="divide-y divide-rule border-y border-ink">
-          {ledger.appointments.map((row) => (
+        <ul className="mt-10 divide-y divide-rule border-y border-ink">
+          {visible.map((row) => (
             <DiaryLetter key={row.id} row={row} onKeep={onKeep} />
           ))}
         </ul>

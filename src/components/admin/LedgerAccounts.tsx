@@ -1,7 +1,7 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { LedgerFold } from '@/components/admin/LedgerFold'
-import { Button } from '@/components/ui/Button'
+import { Button, TextLink } from '@/components/ui/Button'
 import { isAdminUser } from '@/lib/admin'
 import type { LedgerJournalRow, LedgerPeriod } from '@/lib/ledger'
 import { formatLedgerDate } from '@/lib/ledger'
@@ -157,7 +157,11 @@ export function LedgerAccounts() {
                 {formatLedgerDate(row.date)}
               </p>
               <div className="lg:col-span-4">
-                <p className="font-display text-2xl font-light">{row.reference}</p>
+                {row.reference.startsWith('KL-') ? (
+                  <TextLink to={`/admin/invoices/${row.reference}`}>{row.reference}</TextLink>
+                ) : (
+                  <p className="font-display text-2xl font-light">{row.reference}</p>
+                )}
                 <p className="mt-2 text-[13px] font-light text-ink-soft">{row.email}</p>
               </div>
               <p className="text-[13px] font-light text-ink-soft lg:col-span-3">{row.description}</p>

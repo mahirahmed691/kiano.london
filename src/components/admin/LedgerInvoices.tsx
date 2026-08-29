@@ -1,10 +1,12 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { LedgerFold } from '@/components/admin/LedgerFold'
 import { TextLink } from '@/components/ui/Button'
 import { isAdminUser } from '@/lib/admin'
 import { formatLedgerDate } from '@/lib/ledger'
 import { formatGbpExact } from '@/lib/money'
+import { asWorkStage, isFullyReturned, workCopy } from '@/lib/work'
 
 type Row = {
   id: number
@@ -15,6 +17,10 @@ type Row = {
   netPence: number
   vatPence: number
   grossPence: number
+  orderId?: string
+  refundedPence?: number
+  amountPence?: number
+  stage?: string
 }
 
 export function LedgerInvoices() {
@@ -71,9 +77,22 @@ export function LedgerInvoices() {
                   {row.customerName}
                   <span className="mt-1 block">{row.email}</span>
                 </p>
+                {row.orderId ? (
+                  <p className="mt-3">
+                    <Link
+                      to={`/admin/work/card?id=${encodeURIComponent(row.orderId)}`}
+                      className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+                    >
+                      The house card
+                    </Link>
+                  </p>
+                ) : null}
               </div>
               <p className="text-[13px] font-light text-ink-soft lg:col-span-2">
-                VAT {formatGbpExact(row.vatPence)}
+                {isFullyReturned(row.amountPence ?? row.grossPence, row.refundedPence ?? 0)
+                  ? 'Returned'
+                  : workCopy[asWorkStage(row.stage)].label}
+                <span className="mt-1 block">VAT {formatGbpExact(row.vatPence)}</span>
               </p>
               <p className="font-display text-2xl font-light lg:col-span-3 lg:text-right">
                 {formatGbpExact(row.grossPence)}

@@ -9,9 +9,9 @@ export function AdminWorkPage() {
       </Display>
       <Body className="mt-6">
         A paid cut moves from reserved, to held for cloth if the mill is late, to the table, to
-        the house box, then leaves. Name a week so the account is not blank. A reason is needed
-        if a cut is held back. Print the house card for the box. Packed, and when it leaves, a
-        letter is written. Name how it left when it goes.
+        the house box, then leaves. The box address sits on the reservation. Name a week so the
+        account is not blank. A reason is needed if a cut is held back. Print the house card for
+        the box. Packed, and when it leaves, a letter is written. Name how it left when it goes.
       </Body>
       <LedgerWork />
     </>

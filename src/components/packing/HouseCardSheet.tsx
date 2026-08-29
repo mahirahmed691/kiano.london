@@ -14,6 +14,9 @@ export function HouseCardSheet({ card }: { card: HouseCard }) {
       `}</style>
       <p className="text-[11px] uppercase tracking-[0.28em] text-stone">House card</p>
       <p className="mt-6 font-display text-4xl font-light md:text-5xl">{site.fullName}</p>
+      {card.to ? (
+        <p className="mt-8 font-display text-3xl font-light">{card.to}</p>
+      ) : null}
       <ul className="mt-12 divide-y divide-rule border-y border-ink">
         {card.pieces.map((piece, index) => (
           <li key={`${piece.name}-${index}`} className="py-6">

@@ -77,6 +77,13 @@ export function RestockLedger() {
     }
   }, [getToken, isSignedIn, user])
 
+  useEffect(() => {
+    if (!ready) return
+    const id = window.location.hash.replace(/^#/, '')
+    if (!id) return
+    document.getElementById(id)?.scrollIntoView({ block: 'start' })
+  }, [ready])
+
   async function keepCut(productId: string, size: number) {
     const raw = book[productId]?.[size] ?? '0'
     if (raw.trim() === '') {
@@ -136,6 +143,12 @@ export function RestockLedger() {
     return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading remaining cuts.</p>
   }
 
+  const held = products.flatMap((product) =>
+    thobeSizes
+      .filter((size) => (saved[product.id]?.[size] ?? 0) <= 0)
+      .map((size) => ({ product, size })),
+  )
+
   return (
     <div className="mt-16">
       {error ? (
@@ -149,6 +162,24 @@ export function RestockLedger() {
         </p>
       ) : null}
       <LedgerFold title="Cuts on the line">
+      {held.length > 0 ? (
+        <div className="mb-12 border-b border-rule pb-10">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">At none</p>
+          <ul className="mt-6 divide-y divide-rule border-y border-rule">
+            {held.map(({ product, size }) => (
+              <li key={`${product.id}-${size}`}>
+                <a
+                  href={`#cut-${product.id}`}
+                  className="flex items-baseline justify-between gap-6 py-4 transition-opacity hover:opacity-70"
+                >
+                  <p className="text-[15px] font-light">{productLineName(product)}</p>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{size}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       <label className="block max-w-xl">
         <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
           A line for the book
@@ -163,7 +194,11 @@ export function RestockLedger() {
       </label>
       <ul className="mt-12 divide-y divide-rule border-y border-ink">
         {products.map((product) => (
-          <li key={product.id} className="grid gap-6 py-8 lg:grid-cols-12 lg:items-baseline">
+          <li
+            key={product.id}
+            id={`cut-${product.id}`}
+            className="grid scroll-mt-36 gap-6 py-8 lg:grid-cols-12 lg:items-baseline"
+          >
             <div className="lg:col-span-4">
               <p className="font-display text-2xl font-light">{productLineName(product)}</p>
               <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-stone">

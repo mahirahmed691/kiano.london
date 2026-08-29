@@ -1,9 +1,9 @@
 import { AppointmentDiary } from '@/components/admin/AppointmentDiary'
-import { useLedger } from '@/components/admin/ledger-state'
+import { useDiary } from '@/components/admin/ledger-state'
 import { Body, Display } from '@/components/ui/Heading'
 
 export function AdminDiaryPage() {
-  const { ledger, error, keepLetter } = useLedger()
+  const { appointments, error, keepLetter } = useDiary()
 
   return (
     <>
@@ -20,7 +20,7 @@ export function AdminDiaryPage() {
           {error}
         </p>
       ) : null}
-      <AppointmentDiary ledger={ledger} onKeep={keepLetter} />
+      <AppointmentDiary appointments={appointments} onKeep={keepLetter} />
     </>
   )
 }

@@ -9,6 +9,7 @@ export type HouseCardPiece = {
 
 export type HouseCard = {
   reference: string
+  to?: string
   pieces: HouseCardPiece[]
   line: string
 }
@@ -16,10 +17,12 @@ export type HouseCard = {
 export function houseCardFromOrder(order: {
   id: string
   note?: string | null
+  customerName?: string | null
   lines: { description: string; size?: number | null; quantity: number }[]
 }): HouseCard {
   return {
     reference: orderReference(order.id),
+    to: (order.customerName ?? '').trim(),
     pieces: order.lines.map((line) => ({
       name: line.description,
       size: line.size ?? 0,
@@ -33,6 +36,7 @@ export function houseCardFromCheckout(order: CheckoutOrder): HouseCard {
   return houseCardFromOrder({
     id: order.id,
     note: order.note,
+    customerName: order.customerName,
     lines: order.lines.map((line) => ({
       description: line.description,
       size: line.size,
@@ -42,7 +46,10 @@ export function houseCardFromCheckout(order: CheckoutOrder): HouseCard {
 }
 
 export function houseCardFromLedger(order: LedgerOrder): HouseCard {
-  return houseCardFromOrder(order)
+  return houseCardFromOrder({
+    ...order,
+    customerName: order.customerName || order.shipping?.name,
+  })
 }
 
 export function isHouseCard(value: unknown): value is HouseCard {
