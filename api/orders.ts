@@ -20,6 +20,7 @@ type OrderRow = {
   tracking_href: string | null
   ready_week: string | Date | null
   stage_note: string | null
+  note: string | null
   created_at: string
 }
 
@@ -64,6 +65,7 @@ function publicOrder(order: OrderRow, lines: LineRow[]) {
     trackingHref: asTrackingHref(order.tracking_href ?? ''),
     readyWeek: storedNamedFor(order.ready_week),
     stageNote: order.stage_note ?? '',
+    note: order.note ?? '',
     dispatch: dispatchLine(order.carrier ?? '', order.tracking ?? ''),
     createdAt: order.created_at,
     lines: lines.map((line) => ({
@@ -113,7 +115,7 @@ export async function GET(request: Request) {
 
     const orders = (await sql`
       SELECT id, email, status, stage, amount_pence, refunded_pence, currency,
-             carrier, tracking, tracking_href, ready_week, stage_note, created_at
+             carrier, tracking, tracking_href, ready_week, stage_note, note, created_at
       FROM orders
       WHERE clerk_user_id = ${clerkUserId}
       ORDER BY created_at DESC
@@ -174,7 +176,7 @@ export async function POST(request: Request) {
     const sql = await withDb()
     const orders = (await sql`
       SELECT id, email, status, stage, amount_pence, refunded_pence, currency,
-             carrier, tracking, tracking_href, ready_week, stage_note, created_at
+             carrier, tracking, tracking_href, ready_week, stage_note, note, created_at
       FROM orders
       WHERE lower(email) = ${email}
         AND (

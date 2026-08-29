@@ -39,9 +39,9 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">A reservation</p>
             <Body className="mt-3">
-              Payment is Stripe. The order, the size, and the delivery address are kept in our
-              database so the cloth can be cut and sent. You can ask after a reserved cut with the
-              eight-letter reference and the email used at the till, on{' '}
+              Payment is Stripe. The order, the size, the delivery address, and a line written for
+              the house card are kept in our database so the cloth can be cut and sent. You can ask
+              after a reserved cut with the eight-letter reference and the email used at the till, on{' '}
               <Link to="/reservation" className="border-b border-current pb-px">
                 a reserved cut
               </Link>

@@ -24,7 +24,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Bag and checkout',
     completion: 92,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. The account and a reserved cut can print the card. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
   },
   {
     name: 'Stock',
@@ -36,7 +36,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Members',
     completion: 92,
     status: 'complete',
-    note: 'Clerk sign-in, account of reservations, token on checkout. A guest can ask after a cut with the eight-letter reference and the email on the reservation. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
+    note: 'Clerk sign-in, account of reservations, token on checkout. A guest can ask after a cut with the eight-letter reference and the email on the reservation. The house card and the record of the cut sit on both. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
   },
   {
     name: 'The list',
@@ -66,7 +66,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Cloth at touching distance',
     completion: 72,
     status: 'partial',
-    note: 'Pinch-zoom on the piece page. The house card can be printed from the work and from the reservation. Care is written when it is packed. Packing photographs are still missing.',
+    note: 'Pinch-zoom on the piece page. The house card can be printed from the work, the reservation, the account, and by asking after a cut. Care is written when it is packed. Packing photographs are still missing.',
   },
   {
     name: 'House film',
@@ -127,7 +127,7 @@ export const houseIntegrations = [
     name: 'Resend',
     state: 'Wired',
     hook: 'None',
-    events: 'List confirm letters, visit confirmation (held, not booked), a named morning or a refusal, return letters (held, asked back, or refused), a named week, a cut held back, reservation and refund letters',
+    events: 'List confirm letters, visit confirmation (held, not booked), a named morning or a refusal, return letters (held, asked back, or refused), a named week, a cut held back, reservation and refund letters, packed and left the house',
     note: 'From address must be a verified domain. RESEND_API_KEY is on Vercel. kiano.london verification is pending DNS.',
   },
   {

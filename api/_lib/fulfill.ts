@@ -237,6 +237,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
         lines: reserved,
         reference,
         invoiceUrl: housePath(`/order/invoice?session_id=${encodeURIComponent(session.id)}`),
+        cardUrl: housePath(`/order/card?session_id=${encodeURIComponent(session.id)}`),
         accountUrl: housePath('/account'),
       }),
       html: reservationLetterHtml({
@@ -244,6 +245,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
         lines: reserved,
         reference,
         invoiceUrl: housePath(`/order/invoice?session_id=${encodeURIComponent(session.id)}`),
+        cardUrl: housePath(`/order/card?session_id=${encodeURIComponent(session.id)}`),
         accountUrl: housePath('/account'),
       }),
       idempotencyKey: `reservation/${session.id}`,

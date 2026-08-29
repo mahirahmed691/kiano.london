@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { HouseCardSheet } from '@/components/packing/HouseCardSheet'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import type { CheckoutOrder } from '@/lib/checkout'
-import { houseCardFromCheckout, type HouseCard } from '@/lib/house-card'
+import { houseCardFromCheckout, isHouseCard, type HouseCard } from '@/lib/house-card'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function OrderCardPage() {
   const [params] = useSearchParams()
+  const location = useLocation()
   const sessionId = params.get('session_id') ?? ''
-  const [card, setCard] = useState<HouseCard | null>(null)
-  const [missing, setMissing] = useState(!sessionId)
+  const passed = isHouseCard((location.state as { card?: unknown } | null)?.card)
+    ? (location.state as { card: HouseCard }).card
+    : null
+  const [card, setCard] = useState<HouseCard | null>(passed)
+  const [missing, setMissing] = useState(!sessionId && !passed)
 
   usePageMeta({
     ...getShareMeta('/order/card'),
@@ -22,7 +26,7 @@ export function OrderCardPage() {
 
   useEffect(() => {
     if (!sessionId) {
-      setMissing(true)
+      if (!passed) setMissing(true)
       return
     }
     let cancelled = false
@@ -37,19 +41,20 @@ export function OrderCardPage() {
           !response.ok ||
           (data.paymentStatus !== 'paid' && data.paymentStatus !== 'no_payment_required')
         ) {
-          setMissing(true)
+          if (!passed) setMissing(true)
           return
         }
+        setMissing(false)
         setCard(houseCardFromCheckout(data))
       } catch {
-        if (!cancelled) setMissing(true)
+        if (!cancelled && !passed) setMissing(true)
       }
     }
     void load()
     return () => {
       cancelled = true
     }
-  }, [sessionId])
+  }, [passed, sessionId])
 
   if (missing) {
     return (
@@ -60,10 +65,11 @@ export function OrderCardPage() {
             This card could not be found.
           </Display>
           <Body className="mt-8">
-            Open it from the confirmation, with the session from payment.
+            Open it from the confirmation, the account, or by asking after the cut.
           </Body>
-          <div className="mt-12">
-            <TextLink to="/">Return to the house</TextLink>
+          <div className="mt-12 flex flex-wrap gap-6">
+            <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+            <TextLink to="/account">Account</TextLink>
           </div>
         </Container>
       </Section>
@@ -84,12 +90,19 @@ export function OrderCardPage() {
     <Section className="pt-32 md:pt-40">
       <Container>
         <div className="no-print mb-12 flex flex-wrap items-center gap-6">
-          <Button
-            to={`/order/confirmed?session_id=${encodeURIComponent(sessionId)}`}
-            variant="ghost"
-          >
-            The reservation
-          </Button>
+          {sessionId ? (
+            <Button
+              to={`/order/confirmed?session_id=${encodeURIComponent(sessionId)}`}
+              variant="ghost"
+            >
+              The reservation
+            </Button>
+          ) : (
+            <Button to="/account" variant="ghost">
+              Account
+            </Button>
+          )}
+          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
           <button
             type="button"
             onClick={() => window.print()}

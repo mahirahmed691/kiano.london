@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Body } from '@/components/ui/Heading'
 import { Button } from '@/components/ui/Button'
+import { careLine } from '@/data/packing'
 import { getProduct, productLineName, productPath } from '@/data/products'
 import { orderReference, returnPath } from '@/lib/checkout'
 import { cn } from '@/lib/cn'
+import { houseCardFromOrder } from '@/lib/house-card'
 import { asLetterKind, asLetterStatus, letterLine } from '@/lib/letters'
 import { formatGbp } from '@/lib/money'
 import {
@@ -30,6 +32,7 @@ export type HeldOrder = {
   trackingHref?: string
   readyWeek?: string
   stageNote?: string
+  note?: string
   dispatch?: string
   lines: {
     productId: string
@@ -144,12 +147,26 @@ export function HeldCuts({
             {!isFullyReturned(order.amountPence, order.refundedPence ?? 0) && order.stageNote ? (
               <p className="mt-2 text-[14px] font-light text-ink">{order.stageNote}</p>
             ) : null}
+            {order.note ? (
+              <p className="mt-4 text-[15px] font-light leading-relaxed text-ink">{order.note}</p>
+            ) : null}
+            {!isFullyReturned(order.amountPence, order.refundedPence ?? 0) &&
+            (asWorkStage(order.stage) === 'packed' || asWorkStage(order.stage) === 'sent') ? (
+              <p className="mt-2 text-[14px] font-light text-ink-soft">{careLine}</p>
+            ) : null}
             <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
               <Link
                 to={`/order/invoice?session_id=${encodeURIComponent(order.id)}`}
                 className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
               >
                 A record of the cut
+              </Link>
+              <Link
+                to={`/order/card?session_id=${encodeURIComponent(order.id)}`}
+                state={{ card: houseCardFromOrder(order) }}
+                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+              >
+                The house card
               </Link>
               {order.lines[0]?.productId ? (
                 <Link

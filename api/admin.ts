@@ -9,6 +9,7 @@ import {
   returnRefusedLetterHtml,
   returnRefusedLetterText,
   sendMail,
+  housePath,
   visitNamedLetterHtml,
   visitNamedLetterText,
   visitRefusedLetterHtml,
@@ -1253,21 +1254,23 @@ async function postWork(request: Request): Promise<Response> {
           })
         }
         if (before !== stage && stage === 'packed') {
+          const cardUrl = housePath(`/order/card?session_id=${encodeURIComponent(row.id)}`)
           await sendMail({
             to: row.email,
             subject: 'It is in the house box — Kiano London',
-            text: packedLetterText({ cuts: cutsText, note: row.note ?? '' }),
-            html: packedLetterHtml({ cuts: cutsText, note: row.note ?? '' }),
+            text: packedLetterText({ cuts: cutsText, note: row.note ?? '', cardUrl }),
+            html: packedLetterHtml({ cuts: cutsText, note: row.note ?? '', cardUrl }),
             idempotencyKey: `work-packed/${row.id}/${before}`,
           })
         }
         if (stage === 'sent' && (before !== stage || dispatchChanged)) {
           const how = dispatchLine(carrier, tracking)
+          const cardUrl = housePath(`/order/card?session_id=${encodeURIComponent(row.id)}`)
           await sendMail({
             to: row.email,
             subject: 'It has left the house — Kiano London',
-            text: sentLetterText({ how, cuts: cutsText }),
-            html: sentLetterHtml({ how, cuts: cutsText }),
+            text: sentLetterText({ how, cuts: cutsText, cardUrl }),
+            html: sentLetterHtml({ how, cuts: cutsText, cardUrl }),
             idempotencyKey: `work-sent/${row.id}/${carrier}/${tracking}`,
           })
         }
