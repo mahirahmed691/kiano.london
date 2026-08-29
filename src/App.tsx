@@ -18,8 +18,10 @@ import { AdminListPage } from '@/pages/AdminListPage'
 import { AdminMembersPage } from '@/pages/AdminMembersPage'
 import { AdminPage } from '@/pages/AdminPage'
 import { AdminPricesPage } from '@/pages/AdminPricesPage'
+import { AdminWorkBoxPage } from '@/pages/AdminWorkBoxPage'
 import { AdminWorkCardPage } from '@/pages/AdminWorkCardPage'
 import { AdminWorkPage } from '@/pages/AdminWorkPage'
+import { AdminWorkTablePage } from '@/pages/AdminWorkTablePage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { CraftsmanshipDetailsPage } from '@/pages/CraftsmanshipDetailsPage'
@@ -73,6 +75,8 @@ export default function App() {
                   <Route path="invoices" element={<AdminInvoicesPage />} />
                   <Route path="invoices/:number" element={<AdminInvoicePage />} />
                   <Route path="work" element={<AdminWorkPage />} />
+                  <Route path="work/table" element={<AdminWorkTablePage />} />
+                  <Route path="work/box" element={<AdminWorkBoxPage />} />
                   <Route path="work/card" element={<AdminWorkCardPage />} />
                   <Route path="members" element={<AdminMembersPage />} />
                   <Route path="list" element={<AdminListPage />} />

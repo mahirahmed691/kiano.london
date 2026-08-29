@@ -22,11 +22,14 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/account` | Member reservations |
 | `/reservation` | Ask after a reserved cut (reference and email) |
 | `/admin` | House ledger board (signed-in allowlist) |
+| `/admin/figures` | The till |
 | `/admin/cuts` | Remaining cuts |
 | `/admin/prices` | The line in sterling |
 | `/admin/accounts` | Tax and the journal |
 | `/admin/invoices` | Records of the cut |
 | `/admin/work` | Reserved, on the table, packed, left the house |
+| `/admin/work/table` | Print cuts still in the house |
+| `/admin/work/box` | Print the face of the box |
 | `/admin/work/card` | Print the house card |
 | `/admin/members` | Those who keep an account |
 | `/admin/list` | The list, confirmed and held |

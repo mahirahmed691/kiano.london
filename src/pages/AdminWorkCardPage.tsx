@@ -75,6 +75,12 @@ export function AdminWorkCardPage() {
     <>
       <div className="no-print mb-12 flex flex-wrap items-center gap-6">
         <TextLink to="/admin/work">The work</TextLink>
+        <Link
+          to={`/admin/work/box?id=${encodeURIComponent(orderId)}`}
+          className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+        >
+          The box
+        </Link>
         <button
           type="button"
           onClick={() => window.print()}

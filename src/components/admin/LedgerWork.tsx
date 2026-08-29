@@ -203,7 +203,7 @@ export function LedgerWork() {
         </p>
       ) : null}
 
-      <aside className="mb-14 border-t border-ink pt-10">
+      <aside className="no-print mb-14 border-t border-ink pt-10">
         <p className="text-[11px] uppercase tracking-[0.22em] text-stone">When it is packed</p>
         <ul className="mt-6 grid gap-8 sm:grid-cols-3">
           {packingSteps.map((step) => (
@@ -232,6 +232,14 @@ export function LedgerWork() {
           { id: 'all', label: 'All', count: counts.all },
         ]}
       />
+      <p className="no-print mt-6">
+        <Link
+          to={email ? `/admin/work/table?email=${encodeURIComponent(email)}` : '/admin/work/table'}
+          className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+        >
+          Print the table
+        </Link>
+      </p>
 
       {email ? (
         <p className="mt-8 text-[15px] font-light text-ink-soft">
@@ -329,6 +337,12 @@ export function LedgerWork() {
                     className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
                   >
                     The house card
+                  </Link>
+                  <Link
+                    to={`/admin/work/box?id=${encodeURIComponent(order.id)}`}
+                    className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+                  >
+                    The box
                   </Link>
                   {order.invoiceNumber ? (
                     <Link

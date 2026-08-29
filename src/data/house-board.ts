@@ -66,7 +66,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Cloth at touching distance',
     completion: 72,
     status: 'partial',
-    note: 'Pinch-zoom on the piece page. The house card can be printed from the work, the reservation, the account, and by asking after a cut. Care is written when it is packed. Packing photographs are still missing.',
+    note: 'Pinch-zoom on the piece page. The house card can be printed from the work, the reservation, the account, and by asking after a cut. The work also prints the table of cuts still here, and the face of the box. Care is written when it is packed. Packing photographs are still missing.',
   },
   {
     name: 'House film',
@@ -78,7 +78,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'House ledger',
     completion: 94,
     status: 'complete',
-    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, and the house card. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
+    note: 'The board is an index. Figures is the till: months, twelve weeks, the line, sizes, where the box went, and what is still moving. The till, the table, and the box can be printed. Cuts, prices, VAT, accounts, invoices, the work, members, the list, diary, the field, and the line sit on their own pages. The work shows the box address, the invoice, the house card, and the face of the box. The diary is its own book. Sizes at none are named. A full Stripe refund restocks the size and is written as returned pence.',
   },
   {
     name: 'Word from the house',

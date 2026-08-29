@@ -26,6 +26,8 @@ export function Layout() {
   const invoicePrint =
     pathname.startsWith('/admin/invoices/') ||
     pathname === '/admin/work/card' ||
+    pathname === '/admin/work/table' ||
+    pathname === '/admin/work/box' ||
     pathname === '/order/invoice' ||
     pathname === '/order/card'
   const quiet =

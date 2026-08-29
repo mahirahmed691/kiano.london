@@ -29,7 +29,7 @@ export function LedgerFold({
       <h2 className={eyebrow ? 'mt-3' : undefined}>
         <button
           type="button"
-          className="flex w-full items-baseline justify-between gap-6 text-left"
+          className="flex w-full items-baseline justify-between gap-6 text-left print:hidden"
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((value) => !value)}
@@ -41,8 +41,11 @@ export function LedgerFold({
             {open ? '−' : '+'}
           </span>
         </button>
+        <span className="hidden font-display text-3xl font-light leading-[1.05] tracking-[-0.02em] text-ink print:block md:text-4xl">
+          {title}
+        </span>
       </h2>
-      <div id={panelId} hidden={!open} className="mt-8">
+      <div id={panelId} className={cn('mt-8', !open && 'hidden print:block')}>
         {children}
       </div>
     </section>

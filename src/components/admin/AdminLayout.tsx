@@ -12,7 +12,12 @@ import { usePageMeta } from '@/lib/usePageMeta'
 
 export function AdminLayout() {
   const { pathname } = useLocation()
-  const printSheet = /^\/admin\/invoices\/.+/.test(pathname) || pathname === '/admin/work/card'
+  const printSheet =
+    /^\/admin\/invoices\/.+/.test(pathname) ||
+    pathname === '/admin/work/card' ||
+    pathname === '/admin/work/table' ||
+    pathname === '/admin/work/box' ||
+    pathname === '/admin/figures'
   usePageMeta(getShareMeta('/admin'))
 
   return (

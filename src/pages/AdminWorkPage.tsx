@@ -11,7 +11,8 @@ export function AdminWorkPage() {
         A paid cut moves from reserved, to held for cloth if the mill is late, to the table, to
         the house box, then leaves. The box address sits on the reservation. Name a week so the
         account is not blank. A reason is needed if a cut is held back. Print the house card for
-        the box. Packed, and when it leaves, a letter is written. Name how it left when it goes.
+        inside the box, the face for the address, or the table for every cut still here. Packed,
+        and when it leaves, a letter is written. Name how it left when it goes.
       </Body>
       <LedgerWork />
     </>
