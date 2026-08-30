@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { HouseSizePrefill } from '@/components/account/HouseSizePrefill'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Display, Eyebrow } from '@/components/ui/Heading'
@@ -10,8 +11,10 @@ import {
   type ThobeSize,
 } from '@/data/products'
 import { packingNote } from '@/data/packing'
+import { clerkEnabled } from '@/lib/clerk'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
+import { readStoredSize, writeStoredSize } from '@/lib/house-profile'
 import { useQuickAdd } from '@/lib/quickAdd'
 import { remainingCopy, useProductStock } from '@/lib/useProductStock'
 
@@ -26,9 +29,14 @@ export function QuickAddDialog() {
 
   useEffect(() => {
     setCurrent(opened)
-    setSize('')
+    setSize(readStoredSize() ?? '')
     setGuideOpen(false)
   }, [opened])
+
+  const chooseSize = useCallback((value: ThobeSize) => {
+    setSize(value)
+    writeStoredSize(value)
+  }, [])
 
   useEffect(() => {
     if (!opened) return
@@ -125,7 +133,6 @@ export function QuickAddDialog() {
                           style={{ backgroundColor: variant.swatch ?? '#1B1714' }}
                           onClick={() => {
                             setCurrent(variant)
-                            setSize('')
                           }}
                         />
                       ))}
@@ -135,6 +142,9 @@ export function QuickAddDialog() {
                 ) : null}
 
                 <div className="mt-8">
+                  {clerkEnabled ? (
+                    <HouseSizePrefill chosen={size} onSize={chooseSize} />
+                  ) : null}
                   <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
                   <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-rule">
                     {thobeSizes.map((value) => {
@@ -143,7 +153,8 @@ export function QuickAddDialog() {
                         <button
                           key={value}
                           type="button"
-                          onClick={() => setSize(value)}
+                          aria-pressed={size === value}
+                          onClick={() => chooseSize(value)}
                           className={cn(
                             'flex aspect-square items-center justify-center text-[12px] tracking-[0.08em] transition-colors duration-300',
                             size === value ? 'bg-ink text-ivory' : 'bg-ivory hover:bg-ivory-deep',

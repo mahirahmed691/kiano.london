@@ -15,7 +15,7 @@ import {
   type CheckoutDetails,
 } from '@/lib/checkout'
 import { clerkEnabled } from '@/lib/clerk'
-import { fillEmptyDetails, profileFromDetails, type HouseProfile } from '@/lib/house-profile'
+import { asThobeSize, fillEmptyDetails, profileFromDetails, readStoredSize, type HouseProfile } from '@/lib/house-profile'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
@@ -103,7 +103,10 @@ export function CheckoutPage() {
           body: JSON.stringify({
             email: parsed.details.email,
             name: parsed.details.name,
-            profile: profileFromDetails(parsed.details),
+            profile: profileFromDetails(
+              parsed.details,
+              readStoredSize() ?? asThobeSize(items[0]?.size),
+            ),
           }),
         }).catch(() => undefined)
       }

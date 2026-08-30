@@ -3,14 +3,17 @@ import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Body } from '@/components/ui/Heading'
 import { shippingCountries } from '@/data/shipping'
+import { thobeSizes } from '@/data/products'
 import { clerkContact } from '@/lib/clerk'
-import { rememberHouseContact, writeStoredCheckout, readStoredCheckout } from '@/lib/checkout'
+import { rememberHouseContact, readStoredCheckout } from '@/lib/checkout'
 import { cn } from '@/lib/cn'
 import {
+  asThobeSize,
   emptyHouseProfile,
   fetchHouseProfile,
   fillEmptyDetails,
   parseHouseProfile,
+  readStoredSize,
   saveHouseProfile,
   type HouseProfile,
 } from '@/lib/house-profile'
@@ -86,6 +89,7 @@ export function HouseProfileForm() {
         region: next.region,
         postalCode: next.postalCode,
         country: next.country,
+        size: profile?.size ?? readStoredSize(),
       })
       setLoaded(true)
     }
@@ -128,7 +132,6 @@ export function HouseProfileForm() {
     }
 
     rememberHouseContact(parsed.profile)
-    writeStoredCheckout({ ...readStoredCheckout(), ...parsed.profile })
     setDetails(parsed.profile)
     setKept(true)
   }
@@ -142,8 +145,8 @@ export function HouseProfileForm() {
       <div>
         <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Your details</p>
         <Body className="mt-4">
-          Kept once, then filled at the till, a visit, a wait, and a return. The house card is
-          still written each time.
+          Kept once, then filled at the till, a visit, a wait, and a return. The size you wear
+          starts the line. The house card is still written each time.
         </Body>
       </div>
 
@@ -184,6 +187,27 @@ export function HouseProfileForm() {
           onChange={(event) => setField('telephone', event.target.value)}
           className={fieldClass}
         />
+      </Field>
+
+      <Field
+        id="profile-size"
+        label="Size"
+        hint="The line will start here. You can still choose another cut."
+      >
+        <select
+          id="profile-size"
+          name="size"
+          value={details.size ?? ''}
+          onChange={(event) => setField('size', asThobeSize(event.target.value))}
+          className={cn(fieldClass, 'appearance-none')}
+        >
+          <option value="">Not kept yet</option>
+          {thobeSizes.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
       </Field>
 
       <Field id="profile-line1" label="Address">

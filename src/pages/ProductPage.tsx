@@ -1,5 +1,6 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { HouseSizePrefill } from '@/components/account/HouseSizePrefill'
 import { WaitForm } from '@/components/visit/WaitForm'
 import { Link, useParams } from 'react-router-dom'
 import { HowItArrives } from '@/components/editorial/HowItArrives'
@@ -26,6 +27,8 @@ import {
 } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
+import { clerkEnabled } from '@/lib/clerk'
+import { asThobeSize, readStoredSize, writeStoredSize } from '@/lib/house-profile'
 import { ShareLink } from '@/components/ui/ShareLink'
 import { SITE_URL } from '@/lib/seo'
 import { getShareMeta } from '@/lib/share'
@@ -62,10 +65,21 @@ export function ProductPage() {
 
   useEffect(() => {
     const fromSize = Number(new URLSearchParams(window.location.search).get('size'))
-    setSize(thobeSizes.includes(fromSize as ThobeSize) ? (fromSize as ThobeSize) : '')
+    const named = asThobeSize(fromSize)
+    if (named) {
+      setSize(named)
+      writeStoredSize(named)
+    } else {
+      setSize(readStoredSize() ?? '')
+    }
     setGuideOpen(false)
     setLooking(null)
   }, [product?.id])
+
+  const chooseSize = useCallback((value: ThobeSize) => {
+    setSize(value)
+    writeStoredSize(value)
+  }, [])
 
   useEffect(() => {
     if (!product) return
@@ -169,6 +183,9 @@ export function ProductPage() {
               <Body className="mt-6 xl:hidden">{product.description}</Body>
 
               <div className="mt-10" ref={buyRef}>
+                {clerkEnabled ? (
+                  <HouseSizePrefill chosen={size} onSize={chooseSize} />
+                ) : null}
                 {variants.length > 1 ? (
                   <div className="mb-8">
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Colour</p>
@@ -197,16 +214,17 @@ export function ProductPage() {
                   {thobeSizes.map((value) => {
                     const sizeHeld = stock?.[value] === 0
                     return (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => setSize(value)}
-                        className={cn(
-                          'flex aspect-square items-center justify-center text-[12px] tracking-[0.08em] transition-colors duration-300',
-                          size === value ? 'bg-ink text-ivory' : 'bg-ivory hover:bg-ivory-deep',
-                          sizeHeld && size !== value && 'opacity-35',
-                        )}
-                      >
+                        <button
+                          key={value}
+                          type="button"
+                          aria-pressed={size === value}
+                          onClick={() => chooseSize(value)}
+                          className={cn(
+                            'flex aspect-square items-center justify-center text-[12px] tracking-[0.08em] transition-colors duration-300',
+                            size === value ? 'bg-ink text-ivory' : 'bg-ivory hover:bg-ivory-deep',
+                            sizeHeld && size !== value && 'opacity-35',
+                          )}
+                        >
                         {value}
                       </button>
                     )

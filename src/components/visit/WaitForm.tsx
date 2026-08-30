@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { site } from '@/data/site'
 import { readStoredCheckout, rememberHouseContact } from '@/lib/checkout'
 import { clerkEnabled } from '@/lib/clerk'
-import type { HouseProfile } from '@/lib/house-profile'
+import { asThobeSize, type HouseProfile } from '@/lib/house-profile'
 
 const fieldClass =
   'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
@@ -58,7 +58,8 @@ export function WaitForm({
     event.preventDefault()
     if (keeping) return
     setKeeping(true)
-    rememberHouseContact({ name, email, telephone })
+    const named = asThobeSize(size)
+    rememberHouseContact(named ? { name, email, telephone, size: named } : { name, email, telephone })
 
     let kept = false
     let confirmationSent = false

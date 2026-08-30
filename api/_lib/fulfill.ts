@@ -12,7 +12,7 @@ import {
 } from './mail.js'
 import { recordNotice } from './notices.js'
 import { keepPaidProfile, upsertMember } from './profile.js'
-import { profileFromShipping } from '../../src/lib/house-profile.js'
+import { asThobeSize, profileFromShipping } from '../../src/lib/house-profile.js'
 
 const allowedSizes = new Set<number>(thobeSizes)
 
@@ -182,10 +182,11 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
     `
     const telephone =
       session.metadata?.telephone?.trim() || session.customer_details?.phone?.trim() || ''
+    const paidSize = asThobeSize(linesFromSession(session)[0]?.size)
     await keepPaidProfile(
       sql,
       clerkUserId,
-      profileFromShipping(shipping, { name, email, telephone }),
+      profileFromShipping(shipping, { name, email, telephone, size: paidSize }),
     )
   }
 

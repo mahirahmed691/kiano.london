@@ -7,6 +7,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { clerkEnabled } from '@/lib/clerk'
 import { reservationPath } from '@/lib/checkout'
+import { useKeptEmail } from '@/lib/kept-email'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -41,7 +42,7 @@ async function askForCut(email: string, reference: string) {
 
 export function ReservationPage() {
   const [params] = useSearchParams()
-  const [email, setEmail] = useState(() => params.get('email')?.trim() ?? '')
+  const { email, setEmail } = useKeptEmail(params.get('email') ?? '')
   const [reference, setReference] = useState(
     () => (params.get('ref') ?? params.get('reference') ?? '').trim().toUpperCase(),
   )

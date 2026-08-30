@@ -19,7 +19,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/order/invoice` | A record of the cut |
 | `/order/card` | The house card, for the box |
 | `/checkout` | The till |
-| `/account` | Member reservations and kept details |
+| `/account` | Reservations, kept details, and the size they wear |
 | `/reservation` | Ask after a reserved cut (reference and email) |
 | `/admin` | House ledger board (signed-in allowlist) |
 | `/admin/figures` | The till |

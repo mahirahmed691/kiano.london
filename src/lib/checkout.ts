@@ -8,7 +8,12 @@ import {
   type CheckoutOrderAddress,
   type ShippingCountryCode,
 } from '@/data/shipping'
-import { asHouseProfile, type HouseProfile } from '@/lib/house-profile'
+import {
+  asHouseProfile,
+  notifyHouseDetails,
+  writeStoredSize,
+  type HouseProfile,
+} from '@/lib/house-profile'
 
 export {
   emptyCheckoutDetails,
@@ -67,9 +72,11 @@ export function writeStoredCheckout(details: CheckoutDetails) {
   const payload = JSON.stringify(details)
   try {
     window.localStorage.setItem(CHECKOUT_STORAGE_KEY, payload)
+    notifyHouseDetails()
   } catch {
     try {
       window.sessionStorage.setItem(CHECKOUT_STORAGE_KEY, payload)
+      notifyHouseDetails()
     } catch {
       /* private mode */
     }
@@ -97,9 +104,11 @@ export function clearCheckoutNote() {
 export function rememberHouseContact(patch: Partial<HouseProfile>) {
   const current = readStoredCheckout()
   const profile = asHouseProfile({ ...current, ...patch })
+  const { size, ...contact } = profile
+  if ('size' in patch) writeStoredSize(size)
   writeStoredCheckout({
     ...current,
-    ...profile,
+    ...contact,
     note: current.note,
   })
 }

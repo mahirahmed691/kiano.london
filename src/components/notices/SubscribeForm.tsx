@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { markLettersJoined } from '@/lib/notices'
+import { useKeptEmail } from '@/lib/kept-email'
 import { cn } from '@/lib/cn'
 
 type Variant = 'light' | 'dark' | 'panel'
@@ -14,7 +15,7 @@ type Props = {
 }
 
 export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }: Props) {
-  const [email, setEmail] = useState('')
+  const { email, setEmail } = useKeptEmail()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)

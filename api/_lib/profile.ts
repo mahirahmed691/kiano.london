@@ -1,5 +1,6 @@
 import {
   asHouseProfile,
+  asThobeSize,
   mergeProfile,
   parseHouseProfile,
   profileFromShipping,
@@ -36,9 +37,32 @@ export async function readMemberProfile(
   if (row?.email && !profile.email) profile = { ...profile, email: row.email }
   if (row?.name && !profile.name) profile = { ...profile, name: row.name }
 
-  if (profileHasAddress(profile)) return profile
-
   const email = row?.email ?? ''
+  let dirty = false
+  if (!profile.size) {
+    const lines = (await sql`
+      SELECT ol.size
+      FROM order_lines ol
+      INNER JOIN orders o ON o.id = ol.order_id
+      WHERE o.status = 'paid'
+        AND (
+          o.clerk_user_id = ${clerkUserId}
+          OR (${email} <> '' AND o.clerk_user_id IS NULL AND lower(o.email) = lower(${email}))
+        )
+      ORDER BY o.created_at DESC, ol.id ASC
+      LIMIT 1
+    `) as { size: number }[]
+    const size = asThobeSize(lines[0]?.size)
+    if (size) {
+      profile = { ...profile, size }
+      dirty = true
+    }
+  }
+
+  if (profileHasAddress(profile)) {
+    if (dirty && row) await writeMemberProfile(sql, clerkUserId, profile)
+    return profile
+  }
   const orders = (await sql`
     SELECT shipping
     FROM orders
@@ -63,6 +87,8 @@ export async function readMemberProfile(
   )
   if (profileHasAddress(seeded) && row) {
     await writeMemberProfile(sql, clerkUserId, seeded)
+  } else if (dirty && row) {
+    await writeMemberProfile(sql, clerkUserId, profile)
   }
   return seeded
 }
@@ -110,12 +136,12 @@ export async function keepPaidProfile(
   clerkUserId: string,
   profile: HouseProfile,
 ) {
-  if (!profileHasAddress(profile) && !profile.telephone && !profile.name) return
+  if (!profileHasAddress(profile) && !profile.telephone && !profile.name && !profile.size) return
   const existing = await readMemberProfile(sql, clerkUserId)
   const next = mergeProfile(existing, profile)
-  if (next.name || next.email || profileHasAddress(next)) {
+  if (next.name || next.email || profileHasAddress(next) || next.size) {
     await writeMemberProfile(sql, clerkUserId, next)
   }
 }
 
-export { parseHouseProfile }
+export { asThobeSize, parseHouseProfile }

@@ -7,7 +7,7 @@ import { site } from '@/data/site'
 import { readStoredCheckout, rememberHouseContact } from '@/lib/checkout'
 import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
-import type { HouseProfile } from '@/lib/house-profile'
+import { asThobeSize, readStoredSize, writeStoredSize, type HouseProfile } from '@/lib/house-profile'
 
 const fieldClass =
   'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
@@ -34,6 +34,7 @@ function Field({
 export function ReturnForm() {
   const [params] = useSearchParams()
   const stored = readStoredCheckout()
+  const keptSize = readStoredSize()
   const [name, setName] = useState(() => params.get('name')?.trim() || stored.name)
   const [email, setEmail] = useState(() => params.get('email')?.trim() || stored.email)
   const [telephone, setTelephone] = useState(
@@ -46,7 +47,7 @@ export function ReturnForm() {
     () => (params.get('ref') ?? params.get('reference') ?? '').trim().toUpperCase(),
   )
   const [piece, setPiece] = useState(params.get('piece') ?? '')
-  const [size, setSize] = useState(params.get('size') ?? '')
+  const [size, setSize] = useState(params.get('size') ?? (keptSize ? String(keptSize) : ''))
   const [note, setNote] = useState('')
   const [sent, setSent] = useState(false)
   const [written, setWritten] = useState(false)
@@ -57,6 +58,7 @@ export function ReturnForm() {
     setName((current) => current || patch.name || '')
     setEmail((current) => current || patch.email || '')
     setTelephone((current) => current || patch.telephone || '')
+    if (patch.size) setSize((current) => current || String(patch.size))
   }, [])
 
   const selected = useMemo(
@@ -69,7 +71,8 @@ export function ReturnForm() {
     event.preventDefault()
     if (keeping) return
     setKeeping(true)
-    rememberHouseContact({ name, email, telephone })
+    const named = asThobeSize(size)
+    rememberHouseContact(named ? { name, email, telephone, size: named } : { name, email, telephone })
 
     let kept = false
     let confirmationSent = false
@@ -224,7 +227,12 @@ export function ReturnForm() {
             id="return-size"
             name="size"
             value={size}
-            onChange={(event) => setSize(event.target.value)}
+            onChange={(event) => {
+              const next = event.target.value
+              setSize(next)
+              const named = asThobeSize(next)
+              if (named) writeStoredSize(named)
+            }}
             className={cn(fieldClass, 'appearance-none')}
           >
             <option value="">To be named</option>

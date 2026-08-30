@@ -2,6 +2,7 @@ import { Show, SignOutButton, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/HeldCuts'
+import { HouseDeviceForm } from '@/components/account/HouseDeviceForm'
 import { HouseProfileForm } from '@/components/account/HouseProfileForm'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Button, TextLink } from '@/components/ui/Button'
@@ -209,9 +210,9 @@ function AccountGate() {
     <>
       <Show when="signed-out">
         <Body className="mt-6">
-          The shop is public. Sign in to keep reservations and the details for the next till.
-          If you reserved without an account, ask after the cut with the reference and that
-          email.
+          The shop is public. Details written here stay on this device. Sign in to keep
+          reservations and the same details with the house. If you reserved without an account,
+          ask after the cut with the reference and that email.
         </Body>
         <div className="mt-10 flex flex-wrap gap-4">
           <Button to="/sign-in" variant="solid">
@@ -219,6 +220,7 @@ function AccountGate() {
           </Button>
           <Button to="/sign-up">Open an account</Button>
         </div>
+        <HouseDeviceForm />
         <div className="mt-8">
           <TextLink to="/reservation">Ask after a reserved cut</TextLink>
         </div>

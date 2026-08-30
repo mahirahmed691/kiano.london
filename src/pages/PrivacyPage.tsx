@@ -32,9 +32,9 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Account</p>
             <Body className="mt-3">
-              Member sign-in is Clerk. Name and email sit there. Delivery name, telephone, and
-              address are kept with the house so the till, a visit, a wait, and a return need
-              not be written again. Change them on{' '}
+              Member sign-in is Clerk. Name and email sit there. The size you wear, delivery
+              name, telephone, and address are kept with the house so the till, a visit, a wait,
+              and a return need not be written again. Change them on{' '}
               <Link to="/account" className="border-b border-current pb-px">
                 account
               </Link>

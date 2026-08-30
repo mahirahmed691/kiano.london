@@ -18,13 +18,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'The line',
     completion: 90,
     status: 'complete',
-    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide. When a size is held at none, a letter can ask that the house write if it returns.',
+    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide. The size last chosen is kept on the device, and on the account if signed in, so the line starts there. When a size is held at none, a letter can ask that the house write if it returns.',
   },
   {
     name: 'Bag and checkout',
     completion: 92,
     status: 'complete',
-    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. Details written once are kept on the device, and on the account if signed in, so the till and the letters need not be filled again. The confirmation can print the tax invoice. The account and a reserved cut can print the card. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
+    note: 'Drawer, quick add, Stripe Checkout, return to a reservation page. The confirmation names every cut, then offers the account so it can be kept, and a visit if a fitting is needed. A line for the house card can be written at the till. Details written once are kept on the device, and on the account if signed in, so the till, the letters, and the size on the line need not be filled again. The confirmation can print the tax invoice. The account and a reserved cut can print the card. The house can name a week for the wait, hold a cut for cloth, and write a reason if it must go back. A paid session writes a house letter as well as Word. Packed, and when it leaves, a letter is written. Test Checkout is open. Live keys wait on onboarding.',
   },
   {
     name: 'Stock',
@@ -36,7 +36,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Members',
     completion: 92,
     status: 'complete',
-    note: 'Clerk sign-in, account of reservations, kept delivery details, token on checkout. A guest can ask after a cut with the eight-letter reference and the email on the reservation. The house card and the record of the cut sit on both. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
+    note: 'Clerk sign-in, account of reservations, kept delivery details and the size they wear, token on checkout. Unsigned visitors keep the same on the device from Account. A guest can ask after a cut with the eight-letter reference and the email on the reservation. The house card and the record of the cut sit on both. The handler at POST /api/clerk-webhook is ready. Production still needs the Dashboard endpoint and CLERK_WEBHOOK_SIGNING_SECRET on Vercel.',
   },
   {
     name: 'The list',

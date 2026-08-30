@@ -32,9 +32,9 @@ export function CookiesPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The till</p>
             <Body className="mt-3">
-              Name, telephone, and the delivery address stay in this browser after they are
-              written, so they need not be entered again. An account keeps the same details with
-              the house.
+              Name, telephone, the delivery address, and the size you wear stay in this browser
+              after they are written, so they need not be entered again. An account keeps the
+              same details with the house.
             </Body>
           </li>
           <li>

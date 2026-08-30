@@ -1,3 +1,4 @@
+import { thobeSizes, type ThobeSize } from '../data/products.js'
 import {
   emptyCheckoutDetails,
   parseCheckoutDetails,
@@ -7,7 +8,67 @@ import {
   type ShippingCountryCode,
 } from '../data/shipping.js'
 
-export type HouseProfile = Omit<CheckoutDetails, 'note'>
+export type HouseProfile = Omit<CheckoutDetails, 'note'> & {
+  size: ThobeSize | null
+}
+
+export const HOUSE_SIZE_KEY = 'kiano.size'
+export const HOUSE_DETAILS_EVENT = 'kiano-details'
+
+export function notifyHouseDetails() {
+  try {
+    const target = globalThis as typeof globalThis & {
+      dispatchEvent?: (event: { type: string }) => boolean
+      Event?: new (type: string) => { type: string }
+    }
+    if (typeof target.dispatchEvent !== 'function' || typeof target.Event !== 'function') return
+    target.dispatchEvent(new target.Event(HOUSE_DETAILS_EVENT))
+  } catch {
+    /* not a browser */
+  }
+}
+
+type BrowserStore = {
+  getItem: (key: string) => string | null
+  setItem: (key: string, value: string) => void
+  removeItem: (key: string) => void
+}
+
+function browserStore(): BrowserStore | null {
+  try {
+    const store = (globalThis as { localStorage?: BrowserStore }).localStorage
+    return store ?? null
+  } catch {
+    return null
+  }
+}
+
+export function asThobeSize(value: unknown): ThobeSize | null {
+  const size = typeof value === 'number' ? value : typeof value === 'string' ? Number(value) : NaN
+  return thobeSizes.includes(size as ThobeSize) ? (size as ThobeSize) : null
+}
+
+export function readStoredSize(): ThobeSize | null {
+  const store = browserStore()
+  if (!store) return null
+  try {
+    return asThobeSize(store.getItem(HOUSE_SIZE_KEY))
+  } catch {
+    return null
+  }
+}
+
+export function writeStoredSize(size: ThobeSize | null) {
+  const store = browserStore()
+  if (!store) return
+  try {
+    if (!size) store.removeItem(HOUSE_SIZE_KEY)
+    else store.setItem(HOUSE_SIZE_KEY, String(size))
+    notifyHouseDetails()
+  } catch {
+    /* private mode */
+  }
+}
 
 const countryCodes = new Set<string>(shippingCountries.map((country) => country.code))
 
@@ -18,12 +79,15 @@ function asString(value: unknown, max: number) {
 
 export function emptyHouseProfile(): HouseProfile {
   const { note: _note, ...profile } = emptyCheckoutDetails
-  return profile
+  return { ...profile, size: null }
 }
 
-export function profileFromDetails(details: CheckoutDetails): HouseProfile {
+export function profileFromDetails(
+  details: CheckoutDetails,
+  size?: ThobeSize | null,
+): HouseProfile {
   const { note: _note, ...profile } = details
-  return profile
+  return { ...profile, size: size === undefined ? readStoredSize() : size }
 }
 
 export function asHouseProfile(raw: unknown): HouseProfile {
@@ -40,6 +104,7 @@ export function asHouseProfile(raw: unknown): HouseProfile {
     region: asString(record.region, 80),
     postalCode: asString(record.postalCode, 16),
     country: countryCodes.has(country) ? (country as ShippingCountryCode) : 'GB',
+    size: asThobeSize(record.size),
   }
 }
 
@@ -48,7 +113,9 @@ export function parseHouseProfile(input: unknown): { profile: HouseProfile } | {
     input && typeof input === 'object' ? { ...(input as object), note: '' } : input,
   )
   if ('error' in parsed) return parsed
-  return { profile: profileFromDetails(parsed.details) }
+  const size =
+    input && typeof input === 'object' ? asThobeSize((input as { size?: unknown }).size) : null
+  return { profile: profileFromDetails(parsed.details, size) }
 }
 
 export function profileHasAddress(profile: HouseProfile) {
@@ -66,6 +133,7 @@ export function mergeProfile(base: HouseProfile, incoming: HouseProfile): HouseP
     region: incoming.region || base.region,
     postalCode: incoming.postalCode || base.postalCode,
     country: incoming.line1 ? incoming.country : base.country,
+    size: incoming.size ?? base.size,
   }
 }
 
@@ -101,7 +169,12 @@ export function fillEmptyContact(
 
 export function profileFromShipping(
   shipping: CheckoutOrderAddress | Record<string, unknown> | null | undefined,
-  extras: { name?: string | null; email?: string | null; telephone?: string | null } = {},
+  extras: {
+    name?: string | null
+    email?: string | null
+    telephone?: string | null
+    size?: ThobeSize | null
+  } = {},
 ): HouseProfile {
   const record = shipping && typeof shipping === 'object' ? shipping : {}
   return asHouseProfile({
@@ -114,6 +187,7 @@ export function profileFromShipping(
     region: 'region' in record ? record.region : '',
     postalCode: 'postalCode' in record ? record.postalCode : '',
     country: 'country' in record ? record.country : 'GB',
+    size: extras.size ?? null,
   })
 }
 
@@ -126,7 +200,9 @@ export async function fetchHouseProfile(token: string | null): Promise<HouseProf
     if (!response.ok) return null
     const data = (await response.json()) as { profile?: unknown }
     const profile = asHouseProfile(data.profile)
-    return profile.name || profile.email || profileHasAddress(profile) ? profile : null
+    return profile.name || profile.email || profileHasAddress(profile) || profile.size
+      ? profile
+      : null
   } catch {
     return null
   }

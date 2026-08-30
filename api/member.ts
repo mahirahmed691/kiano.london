@@ -1,6 +1,7 @@
 import { clerkUserIdFrom } from './_lib/clerk.js'
 import { withDb } from './_lib/db.js'
 import {
+  asThobeSize,
   parseHouseProfile,
   profileFromBody,
   readMemberProfile,
@@ -34,9 +35,14 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Sign in to open an account.' }, { status: 401 })
   }
 
-  let body: { email?: unknown; name?: unknown; profile?: unknown }
+  let body: { email?: unknown; name?: unknown; profile?: unknown; size?: unknown }
   try {
-    body = (await request.json()) as { email?: unknown; name?: unknown; profile?: unknown }
+    body = (await request.json()) as {
+      email?: unknown
+      name?: unknown
+      profile?: unknown
+      size?: unknown
+    }
   } catch {
     return Response.json({ error: 'The account could not be read.' }, { status: 400 })
   }
@@ -55,7 +61,12 @@ export async function POST(request: Request) {
       SET clerk_user_id = ${clerkUserId}
       WHERE clerk_user_id IS NULL AND lower(email) = lower(${email})
     `
-    const profile = await readMemberProfile(sql, clerkUserId)
+    const size = asThobeSize(body.size)
+    let profile = await readMemberProfile(sql, clerkUserId)
+    if (size && profile.size !== size) {
+      profile = { ...profile, size }
+      await writeMemberProfile(sql, clerkUserId, profile)
+    }
     return Response.json({ ok: true, profile })
   } catch (caught) {
     console.error(caught)
