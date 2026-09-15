@@ -20,6 +20,7 @@ import { AdminLinePage } from '@/pages/AdminLinePage'
 import { AdminListPage } from '@/pages/AdminListPage'
 import { AdminMembersPage } from '@/pages/AdminMembersPage'
 import { AdminPage } from '@/pages/AdminPage'
+import { AdminPlatesPage } from '@/pages/AdminPlatesPage'
 import { AdminPricesPage } from '@/pages/AdminPricesPage'
 import { AdminWorkBoxPage } from '@/pages/AdminWorkBoxPage'
 import { AdminWorkCardPage } from '@/pages/AdminWorkCardPage'
@@ -85,6 +86,7 @@ export default function App() {
                   <Route path="work/card" element={<AdminWorkCardPage />} />
                   <Route path="members" element={<AdminMembersPage />} />
                   <Route path="list" element={<AdminListPage />} />
+                  <Route path="plates" element={<AdminPlatesPage />} />
                   <Route path="field" element={<AdminFieldPage />} />
                   <Route path="diary" element={<AdminDiaryPage />} />
                   <Route path="diary/book" element={<AdminDiaryBookPage />} />

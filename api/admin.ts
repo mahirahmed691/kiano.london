@@ -1,4 +1,5 @@
 import { getProduct, productLineName, productPath, products, thobeSizes } from '../src/data/products.js'
+import { instagramPlates } from '../src/data/instagram-plates.js'
 import { vatMethodNote, splitVat } from '../src/lib/vat.js'
 import { requireAdmin } from './_lib/admin.js'
 import { withDb } from './_lib/db.js'
@@ -44,6 +45,7 @@ type Section =
   | 'list'
   | 'work'
   | 'figures'
+  | 'plates'
 
 const sections = new Set<Section>([
   'summary',
@@ -58,6 +60,7 @@ const sections = new Set<Section>([
   'list',
   'work',
   'figures',
+  'plates',
 ])
 
 const allowedSizes = new Set<number>(thobeSizes)
@@ -1642,6 +1645,77 @@ async function postWork(request: Request): Promise<Response> {
   }
 }
 
+type PlateOutRow = {
+  plate_id: string
+  posted_at: string | Date
+  ig_media_id: string
+  permalink: string
+}
+
+const knownPlates = new Set(instagramPlates.map((plate) => plate.id))
+
+function asPlatePost(row: PlateOutRow) {
+  return {
+    plateId: row.plate_id,
+    postedAt: asIso(row.posted_at),
+    igMediaId: row.ig_media_id ?? '',
+    permalink: row.permalink ?? '',
+  }
+}
+
+async function getPlates(): Promise<Response> {
+  try {
+    const sql = await withDb()
+    const rows = (await sql`
+      SELECT plate_id, posted_at, ig_media_id, permalink
+      FROM instagram_out
+      ORDER BY posted_at ASC
+    `) as PlateOutRow[]
+    return Response.json({ posts: rows.map(asPlatePost) })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The plates could not be read.' }, { status: 503 })
+  }
+}
+
+async function postPlates(request: Request, email: string): Promise<Response> {
+  let body: { plateId?: unknown; igMediaId?: unknown; permalink?: unknown }
+  try {
+    body = (await request.json()) as typeof body
+  } catch {
+    return Response.json({ error: 'The plate could not be read.' }, { status: 400 })
+  }
+
+  const plateId = asText(body.plateId, 80)
+  if (!knownPlates.has(plateId)) {
+    return Response.json({ error: 'This still is not in the book.' }, { status: 400 })
+  }
+
+  const igMediaId = asText(body.igMediaId, 80)
+  const permalink = asText(body.permalink, maxUrl)
+
+  try {
+    const sql = await withDb()
+    const rows = (await sql`
+      INSERT INTO instagram_out (plate_id, ig_media_id, permalink, posted_by)
+      VALUES (${plateId}, ${igMediaId}, ${permalink}, ${email})
+      ON CONFLICT (plate_id) DO UPDATE SET
+        ig_media_id = EXCLUDED.ig_media_id,
+        permalink = EXCLUDED.permalink,
+        posted_by = EXCLUDED.posted_by
+      RETURNING plate_id, posted_at, ig_media_id, permalink
+    `) as PlateOutRow[]
+    const row = rows[0]
+    if (!row) {
+      return Response.json({ error: 'The plate could not be kept.' }, { status: 500 })
+    }
+    return Response.json({ ok: true, post: asPlatePost(row) })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The plate could not be kept.' }, { status: 503 })
+  }
+}
+
 async function handle(request: Request, method: Method): Promise<Response> {
   const section = sectionOf(request)
   if (!section) {
@@ -1664,6 +1738,7 @@ async function handle(request: Request, method: Method): Promise<Response> {
     if (section === 'work') return getOrders(request)
     if (section === 'diary') return getDiary()
     if (section === 'figures') return getFigures()
+    if (section === 'plates') return getPlates()
     return Response.json({ error: 'This page of the ledger is written, not read.' }, { status: 405 })
   }
 
@@ -1671,6 +1746,7 @@ async function handle(request: Request, method: Method): Promise<Response> {
   if (section === 'competitors') return postCompetitors(request, gate.email)
   if (section === 'diary') return postDiary(request)
   if (section === 'work') return postWork(request)
+  if (section === 'plates') return postPlates(request, gate.email)
   return Response.json({ error: 'This page of the ledger is read only.' }, { status: 405 })
 }
 

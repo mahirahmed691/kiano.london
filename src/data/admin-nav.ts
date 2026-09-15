@@ -13,6 +13,7 @@ export const ledgerNav: ReadonlyArray<{
   { label: 'The work', to: '/admin/work', line: 'Reserved, held for cloth, on the table, packed, left the house. Print the card, the table, or the box.' },
   { label: 'Members', to: '/admin/members', line: 'Those who keep an account. Print the names.' },
   { label: 'The list', to: '/admin/list', line: 'Confirmed, and those still held. Print the list.' },
+  { label: 'The plates', to: '/admin/plates', line: 'Stills for Instagram. One a week, in this order.' },
   { label: 'The field', to: '/admin/field', line: 'Other houses of the column, with their marks.' },
   { label: 'The diary', to: '/admin/diary', line: 'Letters held. New, open, and closed. Print the open letters.' },
   { label: 'The line', to: '/admin/line', line: 'What is finished, what is wired, what is next.' },

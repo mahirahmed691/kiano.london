@@ -75,6 +75,12 @@ export const houseFeatures: HouseFeature[] = [
     note: 'Unwired. Stills only until a real walk exists. Do not restore Ken Burns plates.',
   },
   {
+    name: 'The plates',
+    completion: 40,
+    status: 'partial',
+    note: 'A book of editorial stills for Instagram, one a week, captions already written. The ledger room is /admin/plates. Publishing waits on the house Instagram (Business or Creator) in the Kiano London MCP.AI workspace. Reels wait on a real walk.',
+  },
+  {
     name: 'House ledger',
     completion: 94,
     status: 'complete',
@@ -120,7 +126,7 @@ export const houseIntegrations = [
     state: 'Live',
     hook: 'None',
     events:
-      'inventory, stock_movements, invoices, invoice_lines, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes, notices, notice_reads, push_tokens',
+      'inventory, stock_movements, invoices, invoice_lines, members, orders, order_lines, subscribers, webhook_events, appointments, competitor_notes, notices, notice_reads, push_tokens, instagram_out',
     note: 'Schema is created on first use. Remaining cuts, movements, and invoices are written from the ledger and from paid Stripe sessions.',
   },
   {
@@ -142,7 +148,14 @@ export const houseIntegrations = [
     state: 'Live',
     hook: 'None',
     events: 'SPA rewrites, api/ functions',
-    note: 'Unknown routes rewrite to index.html. api/ stays on Functions.',
+    note: 'Unknown routes rewrite to index.html. api/ stays on Functions. Hobby stays at twelve functions; new ledger writes fold into /api/admin.',
+  },
+  {
+    name: 'Instagram',
+    state: 'In hand',
+    hook: 'MCP.AI HTTP · /admin/plates',
+    events: 'One still a week from the plates book. Reels wait on a real walk.',
+    note: 'Publishing is the official Graph path through the Kiano London MCP.AI workspace. The house Instagram (Business or Creator) must be the connected account, not a personal profile. Captions live in the book; the next due still is posted from this chat.',
   },
 ] as const
 

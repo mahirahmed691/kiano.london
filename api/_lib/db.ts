@@ -215,6 +215,15 @@ async function migrate(db: Sql) {
       PRIMARY KEY (clerk_user_id, token)
     )
   `
+  await db`
+    CREATE TABLE IF NOT EXISTS instagram_out (
+      plate_id TEXT PRIMARY KEY,
+      posted_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      ig_media_id TEXT NOT NULL DEFAULT '',
+      permalink TEXT NOT NULL DEFAULT '',
+      posted_by TEXT NOT NULL DEFAULT ''
+    )
+  `
 
   for (const product of products) {
     for (const size of thobeSizes) {
