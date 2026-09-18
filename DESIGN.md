@@ -1,6 +1,6 @@
 # Kiano London — design system
 
-Extracted and implemented as a restrained London house of the jubbah and the thobe: warm ivory ground, espresso ink, a two-line English mark, serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained London house of the jubbah and the thobe: warm ivory ground, espresso ink, a three-line English lockup (KIANO / LONDON / EST. MMXXIV), serif display, generous measure, no decorative chrome.
 
 ## Character
 
@@ -41,7 +41,7 @@ Pull quotes may be italic. Headlines are upright.
 
 ## Header
 
-Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. Mobile: two-line mark that becomes a close, full-screen ivory navigation in display serif.
+Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. The house mark is the three-line lockup: KIANO, LONDON, EST. MMXXIV. Mobile: the lockup sits above full-screen ivory navigation in display serif.
 
 ## Buttons
 

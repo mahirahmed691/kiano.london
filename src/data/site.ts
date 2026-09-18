@@ -3,7 +3,7 @@ export const site = {
   fullName: 'Kiano London',
   lockup: 'London',
   shortName: 'Kiano',
-  established: '2026',
+  established: 'MMXXIV',
   city: 'London',
   neighbourhood: 'Mayfair',
   address: '8 Carlos Place, London W1K 3AS',

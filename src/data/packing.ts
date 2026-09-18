@@ -25,7 +25,7 @@ export const sewnLabels = [
   {
     number: '01',
     title: 'Neck',
-    copy: 'The woven mark: the K, KIANO, London. Set at the nape by hand after the last press.',
+    copy: 'The woven mark: KIANO, London, Est. MMXXIV. Set at the nape by hand after the last press.',
   },
   {
     number: '02',
