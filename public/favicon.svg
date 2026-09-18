@@ -1,6 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kiano London">
   <rect width="64" height="64" fill="#1B1714"/>
-  <g fill="none" stroke="#F2EBDC" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
-    <path d="M20 12v40M20 32L46 12M20 32L46 52"/>
-  </g>
+  <text
+    x="32"
+    y="26"
+    text-anchor="middle"
+    fill="#F2EBDC"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="9"
+    letter-spacing="2.2"
+  >KIANO</text>
+  <line x1="10" y1="32" x2="20" y2="32" stroke="#F2EBDC" stroke-width="0.5" opacity="0.7"/>
+  <text
+    x="32"
+    y="34"
+    text-anchor="middle"
+    fill="#F2EBDC"
+    font-family="ui-sans-serif, system-ui, sans-serif"
+    font-size="3.2"
+    letter-spacing="0.9"
+    opacity="0.85"
+  >EST. MMXXIV</text>
+  <line x1="44" y1="32" x2="54" y2="32" stroke="#F2EBDC" stroke-width="0.5" opacity="0.7"/>
+  <text
+    x="32"
+    y="44"
+    text-anchor="middle"
+    fill="#F2EBDC"
+    font-family="ui-sans-serif, system-ui, sans-serif"
+    font-size="5.5"
+    letter-spacing="2.4"
+  >LONDON</text>
 </svg>

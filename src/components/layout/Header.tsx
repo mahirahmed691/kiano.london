@@ -76,7 +76,7 @@ export function Header() {
             </span>
           </button>
 
-          <HouseMark inverted={inverted} className="items-center text-center" />
+          <HouseMark inverted={inverted} />
 
           <div className="flex items-center justify-end gap-6 lg:gap-9">
             <AdminNavLink

@@ -1,4 +1,4 @@
-import { Monogram } from '@/components/brand/Monogram'
+import { Lockup } from '@/components/brand/Lockup'
 import { cn } from '@/lib/cn'
 
 type Props = {
@@ -20,14 +20,7 @@ const wordmarks: Record<string, string> = {
 
 export function CompetitorMark({ id, name, className }: Props) {
   if (id === 'kiano') {
-    return (
-      <div className={cn('flex items-center gap-3', className)}>
-        <Monogram decorative className="h-8 w-auto shrink-0 text-ink" />
-        <p className="font-display text-[1.65rem] font-medium uppercase leading-none tracking-[0.28em] md:text-[1.85rem] md:tracking-[0.32em]">
-          {name}
-        </p>
-      </div>
-    )
+    return <Lockup compact={false} align="start" className={cn('text-ink', className)} />
   }
 
   const src = wordmarks[id]
