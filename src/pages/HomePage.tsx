@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Hero } from '@/components/editorial/Hero'
+import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
+import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -164,6 +166,12 @@ export function HomePage() {
         </figure>
       </section>
 
+      <Section>
+        <Container>
+          <ThisWeekStill />
+        </Container>
+      </Section>
+
       <Section className="bg-night py-24 md:py-32">
         <Container>
           <QuoteBlock
@@ -185,11 +193,46 @@ export function HomePage() {
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>
+              <TextLink to="/stills">The stills</TextLink>
               <TextLink to="/story">The story</TextLink>
             </div>
           </Reveal>
         </Container>
       </Section>
     </>
+  )
+}
+
+function ThisWeekStill() {
+  const plate = thisWeekPlate()
+  const copy = plateCopy(plate.caption)
+
+  return (
+    <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+      <Reveal className="lg:col-span-5">
+        <Eyebrow>This week</Eyebrow>
+        <Display className="mt-4 text-4xl md:text-5xl">{plate.name}</Display>
+        {copy.lines.map((line) => (
+          <Body key={line} className="mt-6 max-w-md">
+            {line}
+          </Body>
+        ))}
+        <div className="mt-8 flex flex-wrap items-center gap-6">
+          {plate.to ? <Button to={plate.to}>The piece</Button> : null}
+          <TextLink to="/stills">The stills</TextLink>
+        </div>
+      </Reveal>
+      <Reveal delay={100} className="lg:col-span-6 lg:col-start-7">
+        <Link to="/stills" className="block">
+          <ImageFrame
+            src={plate.src}
+            alt={plate.alt}
+            objectPosition={plate.objectPosition}
+            className="aspect-[3/4] w-full"
+            eager
+          />
+        </Link>
+      </Reveal>
+    </div>
   )
 }

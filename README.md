@@ -11,6 +11,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/` | Home |
 | `/shop` | The Shop (jubbah) |
 | `/collection` | The Collection |
+| `/stills` | The stills (one a week, in order) |
 | `/story` | Our Story |
 | `/craftsmanship` | Craftsmanship |
 | `/craftsmanship-details` | The making, in detail |

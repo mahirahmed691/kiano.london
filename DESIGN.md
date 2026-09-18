@@ -41,7 +41,7 @@ Pull quotes may be italic. Headlines are upright.
 
 ## Header
 
-Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. Mobile: two-line mark that becomes a close, full-screen ivory navigation in display serif.
+Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. Home and the stills open on a plate. Mobile: two-line mark that becomes a close, full-screen ivory navigation in display serif.
 
 ## Buttons
 

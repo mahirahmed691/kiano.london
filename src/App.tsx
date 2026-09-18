@@ -44,6 +44,7 @@ import { ReturnsPage } from '@/pages/ReturnsPage'
 import { ShopPage } from '@/pages/ShopPage'
 import { SignInPage } from '@/pages/SignInPage'
 import { SignUpPage } from '@/pages/SignUpPage'
+import { StillsPage } from '@/pages/StillsPage'
 import { StoryPage } from '@/pages/StoryPage'
 import { VisitPage } from '@/pages/VisitPage'
 
@@ -61,6 +62,7 @@ export default function App() {
                 <Route path="/shop/:id" element={<ProductPage />} />
                 <Route path="/collection" element={<CollectionPage />} />
                 <Route path="/collection/:id" element={<ProductPage />} />
+                <Route path="/stills" element={<StillsPage />} />
                 <Route path="/story" element={<StoryPage />} />
                 <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
                 <Route path="/craftsmanship-details" element={<CraftsmanshipDetailsPage />} />

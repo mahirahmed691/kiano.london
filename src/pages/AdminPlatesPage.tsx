@@ -10,8 +10,8 @@ export function AdminPlatesPage() {
       </Display>
       <Body className="mt-6">
         One still a week, in this order. London stone, the column, a quiet line. Reels wait
-        until a real walk exists. The house posts from this book; it does not invent a
-        second look.
+        until a real walk exists. The same book is public at /stills. The house posts from
+        this book; it does not invent a second look.
       </Body>
       <p className="mt-4 text-[13px] font-light text-ink-soft">
         Cadence: every {plateIntervalDays} days. Captions are already written.
