@@ -101,7 +101,7 @@ export function Header() {
                 inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
               )}
             />
-            <span className="flex items-center gap-3.5 md:gap-4">
+            <span className="flex items-center gap-3 md:gap-3.5">
               <HouseClock
                 className={cn(inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]')}
               />

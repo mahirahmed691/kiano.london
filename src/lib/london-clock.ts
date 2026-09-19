@@ -33,5 +33,6 @@ export function londonTimeLabel(date: Date = new Date()) {
     timeZone: LONDON,
     hour: 'numeric',
     minute: '2-digit',
+    hourCycle: 'h23',
   }).format(date)
 }
