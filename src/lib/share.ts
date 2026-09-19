@@ -45,6 +45,14 @@ const pages: Record<string, PageMeta> = {
     image: '/images/atelier-rail.jpg',
     imageAlt: 'The house line on the rail: black, sand, and bone.',
   },
+  '/stills': {
+    title: 'Stills — Kiano London',
+    description:
+      'One still a week. Layl, Hyde Park Corner, Raml, the jubbah, Ghabār, Hadīd, Hajar.',
+    path: '/stills',
+    image: '/images/thobe-layl.jpg',
+    imageAlt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
+  },
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',
     description:

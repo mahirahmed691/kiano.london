@@ -13,6 +13,7 @@ export const primaryNav: NavItem[] = [
 
 export const overlayPaths = [
   '/',
+  '/stills',
   '/story',
   '/craftsmanship',
   '/craftsmanship-details',

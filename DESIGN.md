@@ -41,7 +41,7 @@ Pull quotes may be italic. Headlines are upright.
 
 ## Header
 
-Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. The house mark is the three-line lockup: KIANO, LONDON, EST. MMXXIV. Mobile: the lockup sits above full-screen ivory navigation in display serif.
+Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. The house mark is the three-line lockup: KIANO, LONDON, EST. MMXXIV. Home and the stills open on a plate. Mobile: the lockup sits above full-screen ivory navigation in display serif.
 
 ## Buttons
 

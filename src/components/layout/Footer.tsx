@@ -38,6 +38,14 @@ export function Footer() {
               ))}
               <li>
                 <Link
+                  to="/stills"
+                  className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                >
+                  Stills
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/craftsmanship-details"
                   className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
                 >

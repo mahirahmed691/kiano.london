@@ -114,6 +114,11 @@ export function MobileNav({ open, onClose }: Props) {
             <SectionLabel>The house</SectionLabel>
             <ul className="space-y-1">
               <li>
+                <RoomLink to="/stills" onClose={onClose} large>
+                  Stills
+                </RoomLink>
+              </li>
+              <li>
                 <RoomLink to="/story" onClose={onClose} large>
                   Story
                 </RoomLink>

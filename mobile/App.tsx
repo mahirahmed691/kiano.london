@@ -72,6 +72,7 @@ function pathOf(url: string) {
 function overlayStatus(pathname: string) {
   return (
     pathname === '/' ||
+    pathname === '/stills' ||
     pathname === '/story' ||
     pathname.startsWith('/craftsmanship')
   )

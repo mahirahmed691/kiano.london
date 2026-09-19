@@ -76,9 +76,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'The plates',
-    completion: 40,
+    completion: 72,
     status: 'partial',
-    note: 'A book of editorial stills for Instagram, one a week, captions already written. The ledger room is /admin/plates. Publishing waits on the house Instagram (Business or Creator) in the Kiano London MCP.AI workspace. Reels wait on a real walk.',
+    note: 'A book of editorial stills, one a week, captions already written. The public room is /stills. The ledger remains /admin/plates. Publishing to Instagram waits on the house account (Business or Creator) in the Kiano London MCP.AI workspace. Reels wait on a real walk.',
   },
   {
     name: 'House ledger',
@@ -154,8 +154,8 @@ export const houseIntegrations = [
     name: 'Instagram',
     state: 'In hand',
     hook: 'MCP.AI HTTP · /admin/plates',
-    events: 'One still a week from the plates book. Reels wait on a real walk.',
-    note: 'Publishing is the official Graph path through the Kiano London MCP.AI workspace. The house Instagram (Business or Creator) must be the connected account, not a personal profile. Captions live in the book; the next due still is posted from this chat.',
+    events: 'One still a week from the plates book, shown at /stills. Reels wait on a real walk.',
+    note: 'The book is public on the house site. Publishing to Instagram is the official Graph path through the Kiano London MCP.AI workspace. The house Instagram (Business or Creator) must be the connected account, not a personal profile. Captions live in the book; the next due still is posted from this chat.',
   },
 ] as const
 
