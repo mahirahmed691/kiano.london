@@ -15,7 +15,7 @@ export function Footer() {
       <Container className="py-16 md:py-20">
         <div className="grid gap-12 lg:grid-cols-4 lg:gap-8">
           <div>
-            <HouseMark className="text-ivory" />
+            <HouseMark compact={false} align="start" className="text-ivory" />
             <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ivory/65">
               {site.tagline}
             </p>
