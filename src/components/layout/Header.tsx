@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { HouseClock } from '@/components/brand/HouseClock'
 import { HouseMark } from '@/components/brand/HouseMark'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { MegaMenu } from '@/components/layout/MegaMenu'
@@ -100,17 +101,22 @@ export function Header() {
                 inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
               )}
             />
-            <button
-              type="button"
-              className={cn(
-                'text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70',
-                inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
-              )}
-              aria-label={count ? `Open bag, ${count} pieces` : 'Open bag'}
-              onClick={() => setOpen(true)}
-            >
-              Bag{count ? ` ${String(count).padStart(2, '0')}` : ''}
-            </button>
+            <span className="flex items-center gap-3 md:gap-3.5">
+              <HouseClock
+                className={cn(inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]')}
+              />
+              <button
+                type="button"
+                className={cn(
+                  'text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70',
+                  inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
+                )}
+                aria-label={count ? `Open bag, ${count} pieces` : 'Open bag'}
+                onClick={() => setOpen(true)}
+              >
+                Bag{count ? ` ${String(count).padStart(2, '0')}` : ''}
+              </button>
+            </span>
           </div>
         </div>
       </header>
