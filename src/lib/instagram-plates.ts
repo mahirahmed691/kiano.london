@@ -3,7 +3,7 @@ import {
   plateIntervalDays,
   plateWeekOrigin,
   type InstagramPlate,
-} from '@/data/instagram-plates'
+} from '../data/instagram-plates.js'
 
 const houseOrigin = 'https://www.kiano.london'
 
