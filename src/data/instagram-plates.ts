@@ -1,13 +1,20 @@
 export type PlateKind = 'still' | 'reel' | 'carousel'
 
+export type PlateChild = {
+  src: string
+  alt: string
+  objectPosition?: string
+}
+
 export type InstagramPlate = {
   id: string
   kind: PlateKind
   name: string
   src: string
-  children?: readonly string[]
+  children?: readonly PlateChild[]
   caption: string
   alt: string
+  place: string
   to?: string
   objectPosition?: string
 }
@@ -25,6 +32,7 @@ export const instagramPlates: readonly InstagramPlate[] = [
     src: '/images/thobe-layl.jpg',
     caption: 'Layl. Matte black, hem to the ankle.\n\nkiano.london',
     alt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
+    place: 'London',
     to: '/collection/layl-thobe',
     objectPosition: 'center 12%',
   },
@@ -33,8 +41,9 @@ export const instagramPlates: readonly InstagramPlate[] = [
     kind: 'still',
     name: 'Hyde Park Corner',
     src: '/images/look-lanesborough.jpg',
-    caption: 'The white column. Hyde Park Corner.\n\nkiano.london',
+    caption: 'The white column. Hyde Park Corner.\nWorn in London stone.\n\nkiano.london',
     alt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
+    place: 'Hyde Park Corner',
     to: '/story',
     objectPosition: 'center 22%',
   },
@@ -45,16 +54,25 @@ export const instagramPlates: readonly InstagramPlate[] = [
     src: '/images/thobe-raml.jpg',
     caption: 'Raml. Sand extra-long staple, the daylight column.\n\nkiano.london',
     alt: 'The Raml thobe: sand extra-long staple, the daylight column.',
+    place: 'London',
     to: '/collection/raml-thobe',
     objectPosition: 'center 12%',
   },
   {
     id: 'jubbah-black',
-    kind: 'still',
+    kind: 'carousel',
     name: 'The jubbah, black',
     src: '/images/jubbah-black.jpg',
+    children: [
+      {
+        src: '/images/jubbah-black-02.jpg',
+        alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
+        objectPosition: 'center 12%',
+      },
+    ],
     caption: 'The jubbah in black. Worn alone, or over a thobe.\n\nkiano.london',
     alt: 'A black Emirati jubbah worn at full length.',
+    place: 'London',
     to: '/shop/jubbah-black',
     objectPosition: 'center 12%',
   },
@@ -65,6 +83,7 @@ export const instagramPlates: readonly InstagramPlate[] = [
     src: '/images/thobe-ghabar.jpg',
     caption: 'Ghabār. Earth-grey, a column of cloth.\n\nkiano.london',
     alt: 'Ghabār: an earth-grey Emirati thobe, a column of cloth.',
+    place: 'London',
     to: '/collection/ghabar-thobe',
     objectPosition: 'center 12%',
   },
@@ -75,16 +94,25 @@ export const instagramPlates: readonly InstagramPlate[] = [
     src: '/images/featured-overcoat.jpg',
     caption: 'Hadīd. The first still of the house.\n\nkiano.london',
     alt: 'The Hadīd thobe, the first still of the house.',
+    place: 'London',
     to: '/collection/hadid-thobe',
     objectPosition: '72% 18%',
   },
   {
     id: 'jubbah-sand',
-    kind: 'still',
+    kind: 'carousel',
     name: 'The jubbah, sand',
     src: '/images/jubbah-sand.jpg',
+    children: [
+      {
+        src: '/images/jubbah-sand-02.jpg',
+        alt: 'The sand jubbah at rest: the cloth draped to the ankle.',
+        objectPosition: 'center 18%',
+      },
+    ],
     caption: 'The jubbah in sand. More air through the chest than the thobe.\n\nkiano.london',
     alt: 'The jubbah in sand, a modest column.',
+    place: 'London',
     to: '/shop/jubbah-sand',
     objectPosition: 'center 8%',
   },
@@ -95,16 +123,25 @@ export const instagramPlates: readonly InstagramPlate[] = [
     src: '/images/thobe-hajar.jpg',
     caption: 'Hajar. Stone, pressed once.\n\nkiano.london',
     alt: 'The Hajar thobe, stone cloth, pressed once.',
+    place: 'London',
     to: '/collection/hajar-thobe',
     objectPosition: 'center 12%',
   },
   {
     id: 'jubbah-charcoal',
-    kind: 'still',
+    kind: 'carousel',
     name: 'The jubbah, charcoal',
     src: '/images/jubbah-charcoal.jpg',
+    children: [
+      {
+        src: '/images/jubbah-charcoal-02.jpg',
+        alt: 'The charcoal jubbah walking: wool-cotton, ankle hem, concealed placket.',
+        objectPosition: 'center 18%',
+      },
+    ],
     caption: 'The jubbah in charcoal. Band collar, concealed placket.\n\nkiano.london',
     alt: 'The jubbah in charcoal, band collar, concealed placket.',
+    place: 'London',
     to: '/shop/jubbah-charcoal',
     objectPosition: 'center 10%',
   },
