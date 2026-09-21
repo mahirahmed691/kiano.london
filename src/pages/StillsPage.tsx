@@ -1,4 +1,5 @@
 import { Hero } from '@/components/editorial/Hero'
+import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { PlatePair } from '@/components/editorial/PlatePair'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -148,6 +149,14 @@ export function StillsPage() {
                         <div className="mt-8">
                           <TextLink to={plate.to}>The piece</TextLink>
                         </div>
+                      ) : null}
+                      {plate.children?.[0] ? (
+                        <ImageFrame
+                          src={plate.children[0].src}
+                          alt={plate.children[0].alt}
+                          objectPosition={plate.children[0].objectPosition}
+                          className="mt-10 aspect-[3/4] w-full max-w-sm"
+                        />
                       ) : null}
                     </Reveal>
                   </article>

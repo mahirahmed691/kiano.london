@@ -45,9 +45,7 @@ export function HomePage() {
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
                 This week · {week.place}
               </p>
-              <Lead className="mt-4">
-                {week.name}. {weekCopy.lines[0]}
-              </Lead>
+              <Lead className="mt-4">{weekCopy.lines[0] ?? week.name}</Lead>
               <Body className="mt-6">
                 Emirati thobes and jubbahs. Five columns, and the outer garment
                 in three colours. Cloth chosen to last. The house does not invent

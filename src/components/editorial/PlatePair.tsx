@@ -10,7 +10,6 @@ type Props = {
 }
 
 export function PlatePair({ plate, eager = false, className }: Props) {
-  const second = plate.children?.[0]
   const primary = (
     <ImageFrame
       src={plate.src}
@@ -20,29 +19,16 @@ export function PlatePair({ plate, eager = false, className }: Props) {
       eager={eager}
     />
   )
-  const wrapped = plate.to ? (
-    <Link to={plate.to} className="block">
-      {primary}
-    </Link>
-  ) : (
-    primary
-  )
-
-  if (!second) {
-    return <div className={className}>{wrapped}</div>
-  }
 
   return (
-    <div className={cn('grid gap-4 md:gap-6', className)}>
-      {wrapped}
-      <div className="md:w-4/5 md:justify-self-end">
-        <ImageFrame
-          src={second.src}
-          alt={second.alt}
-          objectPosition={second.objectPosition}
-          className="aspect-[3/4] w-full"
-        />
-      </div>
+    <div className={cn(className)}>
+      {plate.to ? (
+        <Link to={plate.to} className="block">
+          {primary}
+        </Link>
+      ) : (
+        primary
+      )}
     </div>
   )
 }
