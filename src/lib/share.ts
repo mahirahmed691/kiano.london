@@ -1,3 +1,4 @@
+import { thisWeekPlate } from './instagram-plates.js'
 import { getProduct, productPath } from '../data/products.js'
 import { site } from '../data/site.js'
 
@@ -42,8 +43,8 @@ const pages: Record<string, PageMeta> = {
     description:
       'A London house of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar.',
     path: '/story',
-    image: '/images/atelier-rail.jpg',
-    imageAlt: 'The house line on the rail: black, sand, and bone.',
+    image: '/images/look-lanesborough.jpg',
+    imageAlt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
   },
   '/stills': {
     title: 'Stills — Kiano London',
@@ -155,6 +156,16 @@ export function normalizePath(pathname: string) {
 
 export function getShareMeta(pathname: string): PageMeta {
   const path = normalizePath(pathname)
+
+  if (path === '/' || path === '/stills') {
+    const week = thisWeekPlate()
+    const base = pages[path]!
+    return {
+      ...base,
+      image: week.src,
+      imageAlt: week.alt,
+    }
+  }
 
   if (path.startsWith('/sign-in')) return pages['/sign-in']!
   if (path.startsWith('/sign-up')) return pages['/sign-up']!

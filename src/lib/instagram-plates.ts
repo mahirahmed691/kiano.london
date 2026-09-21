@@ -74,3 +74,31 @@ export function plateWeekIndex(now = Date.now()) {
 export function thisWeekPlate(now = Date.now()) {
   return instagramPlates[plateWeekIndex(now)]!
 }
+
+export function plateNumber(plate: InstagramPlate) {
+  const index = instagramPlates.findIndex((item) => item.id === plate.id)
+  return String(Math.max(0, index) + 1).padStart(2, '0')
+}
+
+export function stillsHash(plate: InstagramPlate) {
+  return `/stills#${plate.id}`
+}
+
+/** Previous plates in the book, newest first, omitting this week's still. */
+export function recentPlates(count = 4, now = Date.now()) {
+  const week = plateWeekIndex(now)
+  const total = instagramPlates.length
+  const take = Math.min(count, Math.max(0, total - 1))
+  const out: InstagramPlate[] = []
+  for (let step = 1; step <= take; step += 1) {
+    const index = (week - step + total) % total
+    out.push(instagramPlates[index]!)
+  }
+  return out
+}
+
+export function plateKindLabel(kind: InstagramPlate['kind']) {
+  if (kind === 'carousel') return 'Two stills'
+  if (kind === 'reel') return 'A walk'
+  return 'A still'
+}

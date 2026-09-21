@@ -90,7 +90,8 @@ function PlateRow({ plate, next = false }: { plate: PlateLine; next?: boolean })
       <div className={next ? 'grid gap-6 lg:grid-cols-12 lg:items-start' : 'contents'}>
         <div className="lg:col-span-4">
           <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-            {plate.kind === 'reel' ? 'Reel' : plate.kind === 'carousel' ? 'Carousel' : 'Still'}
+            {plate.kind === 'reel' ? 'Reel' : plate.kind === 'carousel' ? 'Two stills' : 'Still'}
+            {plate.place ? ` · ${plate.place}` : ''}
             {plate.postedAt ? ' · Gone out' : ' · Held'}
           </p>
           <p className="mt-3 font-display text-2xl font-light md:text-3xl">{plate.name}</p>

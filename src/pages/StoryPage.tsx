@@ -50,6 +50,31 @@ export function StoryPage() {
         </Container>
       </Section>
 
+      <Section className="bg-ivory-deep/40">
+        <Container>
+          <EditorialSplit
+            image="/images/look-lanesborough.jpg"
+            imageAlt="A white Emirati thobe at The Lanesborough, Hyde Park Corner."
+            objectPosition="center 22%"
+            imageOn="left"
+          >
+            <Eyebrow>Hyde Park Corner</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">The white column.</Display>
+            <Body className="mt-6">
+              The stills are the line as it is worn: London stone, a quiet column, a
+              caption that ends with the name of the house. Not a second look for a feed.
+            </Body>
+            <Body className="mt-4">
+              This plate sits in the book as Hyde Park Corner. When it is the week, it
+              opens the house.
+            </Body>
+            <div className="mt-8">
+              <TextLink to="/stills#lanesborough-white">The stills</TextLink>
+            </div>
+          </EditorialSplit>
+        </Container>
+      </Section>
+
       <Section>
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
@@ -103,8 +128,9 @@ export function StoryPage() {
               Write to the atelier if you wish to see cloth, sit for a fitting, or
               simply come. We keep the diary small on purpose.
             </Body>
-            <div className="mt-8 flex flex-wrap gap-6">
+            <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>
+              <TextLink to="/stills">The stills</TextLink>
               <TextLink to="/craftsmanship">How it is made</TextLink>
             </div>
           </Reveal>

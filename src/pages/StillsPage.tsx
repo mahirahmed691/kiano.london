@@ -1,13 +1,18 @@
-import { Link } from 'react-router-dom'
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { PlatePair } from '@/components/editorial/PlatePair'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { instagramPlates, plateIntervalDays } from '@/data/instagram-plates'
 import { site } from '@/data/site'
-import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
+import {
+  plateCopy,
+  plateKindLabel,
+  plateNumber,
+  thisWeekPlate,
+} from '@/lib/instagram-plates'
 import { cn } from '@/lib/cn'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -32,7 +37,7 @@ export function StillsPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>This week</Eyebrow>
+              <Eyebrow>This week · {week.place}</Eyebrow>
               <Display as="h1" className="mt-4 text-4xl md:text-5xl lg:text-6xl">
                 The stills.
               </Display>
@@ -55,6 +60,38 @@ export function StillsPage() {
               ) : null}
             </Reveal>
           </div>
+
+          <Reveal delay={160} className="mt-16 border-t border-rule pt-10 md:mt-20">
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The book</p>
+            <ol className="mt-6 grid gap-x-12 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+              {instagramPlates.map((plate) => {
+                const current = plate.id === week.id
+                return (
+                  <li key={plate.id}>
+                    <a
+                      href={`#${plate.id}`}
+                      className={cn(
+                        'flex items-baseline gap-4 text-ink transition-opacity hover:opacity-70',
+                        current && 'text-ink',
+                      )}
+                    >
+                      <span className="w-6 shrink-0 text-[11px] uppercase tracking-[0.22em] text-stone">
+                        {plateNumber(plate)}
+                      </span>
+                      <span className="font-display text-xl font-light tracking-[-0.02em] md:text-2xl">
+                        {plate.name}
+                      </span>
+                      {current ? (
+                        <span className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                          This week
+                        </span>
+                      ) : null}
+                    </a>
+                  </li>
+                )
+              })}
+            </ol>
+          </Reveal>
         </Container>
       </Section>
 
@@ -70,34 +107,16 @@ export function StillsPage() {
                 <li
                   key={plate.id}
                   id={plate.id}
-                  className="border-t border-rule py-16 md:py-24"
+                  className="scroll-mt-[6rem] border-t border-rule py-16 md:scroll-mt-[7rem] md:py-24"
                 >
-                  <article className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
+                  <article className="grid items-start gap-10 lg:grid-cols-12 lg:gap-16">
                     <Reveal
                       className={cn(
                         'lg:col-span-7',
                         imageLeft ? 'lg:col-start-1 lg:row-start-1' : 'lg:col-start-6 lg:row-start-1',
                       )}
                     >
-                      {plate.to ? (
-                        <Link to={plate.to} className="block">
-                          <ImageFrame
-                            src={plate.src}
-                            alt={plate.alt}
-                            objectPosition={plate.objectPosition}
-                            className="aspect-[3/4] w-full"
-                            eager={index < 2}
-                          />
-                        </Link>
-                      ) : (
-                        <ImageFrame
-                          src={plate.src}
-                          alt={plate.alt}
-                          objectPosition={plate.objectPosition}
-                          className="aspect-[3/4] w-full"
-                          eager={index < 2}
-                        />
-                      )}
+                      <PlatePair plate={plate} eager={index < 2} />
                     </Reveal>
                     <Reveal
                       delay={120}
@@ -107,10 +126,15 @@ export function StillsPage() {
                       )}
                     >
                       <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                        {String(index + 1).padStart(2, '0')}
+                        {plateNumber(plate)}
+                        {' · '}
+                        {plateKindLabel(plate.kind)}
                         {current ? ' · This week' : ''}
                       </p>
                       <Display className="mt-4 text-3xl md:text-4xl">{plate.name}</Display>
+                      <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">
+                        {plate.place}
+                      </p>
                       {copy.lines.map((line) => (
                         <Body key={line} className="mt-4 max-w-sm">
                           {line}
@@ -125,6 +149,14 @@ export function StillsPage() {
                         <div className="mt-8">
                           <TextLink to={plate.to}>The piece</TextLink>
                         </div>
+                      ) : null}
+                      {plate.children?.[0] ? (
+                        <ImageFrame
+                          src={plate.children[0].src}
+                          alt={plate.children[0].alt}
+                          objectPosition={plate.children[0].objectPosition}
+                          className="mt-10 aspect-[3/4] w-full max-w-sm"
+                        />
                       ) : null}
                     </Reveal>
                   </article>
