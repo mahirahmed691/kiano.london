@@ -1,5 +1,6 @@
 import { Hero } from '@/components/editorial/Hero'
 import { SizeGuide } from '@/components/product/SizeGuide'
+import { TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
@@ -17,7 +18,7 @@ const visitSteps = [
   {
     number: '02',
     title: 'Sit',
-    copy: 'Cloth is shown on the table in daylight. A thobe is tried. The appointment lasts as long as it needs to.',
+    copy: 'Cloth is shown on the table in daylight. A thobe is tried. The stills are the line as it is worn; a visit is the next still. The appointment lasts as long as it needs to.',
   },
   {
     number: '03',
@@ -89,6 +90,9 @@ export function VisitPage() {
                   <a href={site.telephoneHref}>{site.telephone}</a>
                 </p>
               </address>
+              <div className="mt-8">
+                <TextLink to="/stills">The stills</TextLink>
+              </div>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
               <AppointmentForm />
