@@ -1,53 +1,30 @@
 import { Link } from 'react-router-dom'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Hero } from '@/components/editorial/Hero'
-import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
+import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
-import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
+import { plateCopy, recentPlates, stillsHash, thisWeekPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
-const lookbook = [
-  {
-    src: '/images/thobe-layl.jpg',
-    alt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
-    objectPosition: 'center 12%',
-    kicker: '01',
-    name: 'Layl',
-    to: '/collection/layl-thobe',
-  },
-  {
-    src: '/images/thobe-ghabar.jpg',
-    alt: 'Ghabār: an earth-grey Emirati thobe, a column of cloth.',
-    objectPosition: 'center 18%',
-    kicker: '02',
-    name: 'Ghabār',
-    to: '/collection/ghabar-thobe',
-  },
-  {
-    src: '/images/thobe-raml.jpg',
-    alt: 'The Raml thobe: sand extra-long staple, the daylight column.',
-    objectPosition: 'center 12%',
-    kicker: '03',
-    name: 'Raml',
-    to: '/collection/raml-thobe',
-  },
-]
-
 export function HomePage() {
+  const week = thisWeekPlate()
+  const previous = recentPlates(4)
+  const weekCopy = plateCopy(week.caption)
+
   usePageMeta(getShareMeta('/'))
 
   return (
     <>
       <Hero
-        image="/images/featured-overcoat.jpg"
-        imageAlt="Hadīd: a charcoal Emirati thobe with a standing collar and a concealed placket, worn at full length."
-        objectPosition="68% 12%"
+        image={week.src}
+        imageAlt={week.alt}
+        objectPosition={week.objectPosition}
         quiet
         priority
       />
@@ -65,19 +42,21 @@ export function HomePage() {
               </p>
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
-              <Lead>
-                Emirati thobes and jubbahs. Five columns, and the outer garment
-                in three colours. Cloth chosen to last.
+              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                This week · {week.place}
+              </p>
+              <Lead className="mt-4">
+                {week.name}. {weekCopy.lines[0]}
               </Lead>
               <Body className="mt-6">
-                The name is the house, not a translation. Nothing here is made for a
-                campaign. A thobe should look as considered in its tenth year as it did
-                in its first. That is the only standard we keep.
+                Emirati thobes and jubbahs. Five columns, and the outer garment
+                in three colours. Cloth chosen to last. The house does not invent
+                a second look for a feed.
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
-                <Button to="/shop">The Shop</Button>
+                <Button to="/stills">The stills</Button>
+                <TextLink to="/shop">The Shop</TextLink>
                 <TextLink to="/collection">The Collection</TextLink>
-                <TextLink to="/visit">Visit by appointment</TextLink>
               </div>
             </Reveal>
           </div>
@@ -128,25 +107,8 @@ export function HomePage() {
       </Section>
 
       <section>
-        {lookbook.map((plate) => (
-          <figure key={plate.src} className="img-zoom relative min-h-[100svh] overflow-hidden bg-night">
-            <img
-              src={plate.src}
-              alt={plate.alt}
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{ objectPosition: plate.objectPosition }}
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-16 md:px-12 lg:px-16">
-              <Link to={plate.to} className="inline-block text-ivory transition-opacity hover:opacity-80">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">{plate.kicker}</p>
-                <p className="mt-2 font-display text-3xl font-light md:text-4xl">
-                  The {plate.name} Thobe
-                </p>
-              </Link>
-            </figcaption>
-          </figure>
+        {previous.map((plate, index) => (
+          <BookLook key={plate.id} plate={plate} lastWeek={index === 0} />
         ))}
         <figure className="img-zoom relative min-h-[100svh] overflow-hidden bg-night">
           <img
@@ -165,12 +127,6 @@ export function HomePage() {
           </figcaption>
         </figure>
       </section>
-
-      <Section>
-        <Container>
-          <ThisWeekStill />
-        </Container>
-      </Section>
 
       <Section className="bg-night py-24 md:py-32">
         <Container>
@@ -203,36 +159,31 @@ export function HomePage() {
   )
 }
 
-function ThisWeekStill() {
-  const plate = thisWeekPlate()
+function BookLook({ plate, lastWeek }: { plate: InstagramPlate; lastWeek: boolean }) {
   const copy = plateCopy(plate.caption)
+  const href = plate.to ?? stillsHash(plate)
 
   return (
-    <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-      <Reveal className="lg:col-span-5">
-        <Eyebrow>This week</Eyebrow>
-        <Display className="mt-4 text-4xl md:text-5xl">{plate.name}</Display>
-        {copy.lines.map((line) => (
-          <Body key={line} className="mt-6 max-w-md">
-            {line}
-          </Body>
-        ))}
-        <div className="mt-8 flex flex-wrap items-center gap-6">
-          {plate.to ? <Button to={plate.to}>The piece</Button> : null}
-          <TextLink to="/stills">The stills</TextLink>
-        </div>
-      </Reveal>
-      <Reveal delay={100} className="lg:col-span-6 lg:col-start-7">
-        <Link to="/stills" className="block">
-          <ImageFrame
-            src={plate.src}
-            alt={plate.alt}
-            objectPosition={plate.objectPosition}
-            className="aspect-[3/4] w-full"
-            eager
-          />
+    <figure className="img-zoom relative min-h-[100svh] overflow-hidden bg-night">
+      <img
+        src={plate.src}
+        alt={plate.alt}
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: plate.objectPosition }}
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-16 md:px-12 lg:px-16">
+        <Link to={href} className="inline-block text-ivory transition-opacity hover:opacity-80">
+          <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">
+            {lastWeek ? 'Last week' : plate.place}
+          </p>
+          <p className="mt-2 font-display text-3xl font-light md:text-4xl">{plate.name}</p>
+          {copy.lines[0] ? (
+            <p className="mt-2 max-w-md font-light text-ivory/75">{copy.lines[0]}</p>
+          ) : null}
         </Link>
-      </Reveal>
-    </div>
+      </figcaption>
+    </figure>
   )
 }
