@@ -16,7 +16,7 @@ export function Lockup({ compact = false, align = 'center', className }: Props) 
   return (
     <span
       className={cn(
-        'inline-flex flex-col leading-none',
+        'inline-flex w-fit flex-col leading-none',
         align === 'start' ? 'items-start' : 'items-center',
         className,
       )}
