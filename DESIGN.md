@@ -43,6 +43,10 @@ Pull quotes may be italic. Headlines are upright.
 
 Fixed. Over imagery: transparent, ivory navigation, bronze lockup. After 24px of scroll, or on light pages: ivory field, hairline, ink type. The house mark is the interlocking KK monogram over the three-line lockup: KIANO, LONDON, EST. MMXXIV. EST. sits centred between two hairlines. Home and the stills open on the plate of the week from the book. The shop, the collection, and a visit open on a house still, lockup inverted over the plate. The packing, the letters, and the making carry the same stills and the woven lockup. A hairline London clock sits beside the bag: no numerals, no chrome, the house's time. Mobile: the lockup sits above full-screen ivory navigation in display serif; this week's plate closes the menu.
 
+## Footer
+
+Night ground. The lockup sits centred on the band, bronze, the same stack as the header. Tagline and creed sit under it. Nav, a visit, and the list follow in columns. No gold fill.
+
 ## Buttons
 
 Small. Uppercase tracking. Outline, not fill. Hover inverts to ink. On heroes, invert against ivory. Ghost links use a hairline underline and a small arrow.

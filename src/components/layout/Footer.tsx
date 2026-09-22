@@ -14,17 +14,17 @@ export function Footer() {
   return (
     <footer className="bg-night text-ivory">
       <Container className="py-24 md:py-32">
-        <div className="grid gap-12 lg:grid-cols-4 lg:gap-8">
-          <div>
-            <HouseMark compact={false} align="start" className="text-bronze" />
-            <p className="mt-6 max-w-xs text-[14px] font-light leading-[1.85] text-ivory/65">
-              {site.tagline}
-            </p>
-            <p className="mt-4 text-[10px] uppercase tracking-[0.32em] text-ivory/45">
-              {creedJoin}
-            </p>
-          </div>
+        <div className="flex flex-col items-center text-center">
+          <HouseMark compact={false} className="text-bronze" />
+          <p className="mt-6 max-w-xs text-[14px] font-light leading-[1.85] text-ivory/65">
+            {site.tagline}
+          </p>
+          <p className="mt-4 text-[10px] uppercase tracking-[0.32em] text-ivory/45">
+            {creedJoin}
+          </p>
+        </div>
 
+        <div className="mt-16 grid gap-12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-8">
           <div>
             <p className="text-[10px] uppercase tracking-[0.32em] text-ivory/45">
               {site.fullName}
