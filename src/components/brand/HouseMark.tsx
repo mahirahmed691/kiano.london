@@ -23,7 +23,7 @@ export function HouseMark({
       to={to}
       className={cn(
         'inline-flex',
-        inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.45)]',
+        inverted ? 'text-bronze drop-shadow-[0_1px_10px_rgba(0,0,0,0.45)]' : undefined,
         className,
       )}
       aria-label={`${site.fullName}, home`}
