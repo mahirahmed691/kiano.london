@@ -1,4 +1,4 @@
-import { sizeChart, sizeMeasures, sizeNote } from '@/data/sizing'
+import { sizeChart, sizeMeasures, sizeNote, sizeNoteAr } from '@/data/sizing'
 import { cn } from '@/lib/cn'
 
 type Props = {
@@ -35,11 +35,27 @@ export function SizeGuide({ className, compact = false }: Props) {
           <div key={item.title}>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{item.title}</p>
             <p className="mt-2 text-[13px] font-light leading-relaxed text-ink-soft">{item.copy}</p>
+            <p
+              lang="ar"
+              dir="rtl"
+              className="mt-2 w-fit font-arabic text-[15px] font-light leading-relaxed text-ink-soft"
+            >
+              {item.copyAr}
+            </p>
           </div>
         ))}
       </div>
       {compact ? null : (
-        <p className="mt-8 max-w-xl text-[13px] font-light leading-relaxed text-stone">{sizeNote}</p>
+        <>
+          <p className="mt-8 max-w-xl text-[13px] font-light leading-relaxed text-stone">{sizeNote}</p>
+          <p
+            lang="ar"
+            dir="rtl"
+            className="mt-3 w-fit max-w-xl font-arabic text-[15px] font-light leading-relaxed text-stone"
+          >
+            {sizeNoteAr}
+          </p>
+        </>
       )}
     </div>
   )

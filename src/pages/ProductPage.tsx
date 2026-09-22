@@ -7,13 +7,15 @@ import { HowItArrives } from '@/components/editorial/HowItArrives'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ClothZoom } from '@/components/product/ClothZoom'
 import { ProductPlate } from '@/components/product/ProductPlate'
+import { HowToMeasure } from '@/components/product/HowToMeasure'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
-import { packingNote } from '@/data/packing'
+import { packingNote, packingNoteAr } from '@/data/packing'
+import { carriageLine, carriageLineAr } from '@/data/shipping'
 import { site } from '@/data/site'
 import {
   colourVariants,
@@ -267,8 +269,15 @@ export function ProductPage() {
                 </button>
                 {guideOpen ? <SizeGuide className="pb-4" compact /> : null}
                 <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
-                  Carriage included. Made to order, four to eight weeks. Payment is taken first.
+                  {carriageLine} Made to order, four to eight weeks. Payment is taken first.{' '}
                   {packingNote}
+                </p>
+                <p
+                  lang="ar"
+                  dir="rtl"
+                  className="w-fit font-arabic text-[15px] font-light leading-relaxed text-stone"
+                >
+                  {carriageLineAr} {packingNoteAr}
                 </p>
                 <TextLink to={enquireTo}>Enquire to visit</TextLink>
                 <ShareLink title={share.title} text={share.description} path={share.path} />
@@ -316,6 +325,12 @@ export function ProductPage() {
               <SizeGuide className="mt-8" />
             </Reveal>
           </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <HowToMeasure />
         </Container>
       </Section>
 
@@ -399,7 +414,7 @@ function PieceHeading({ product }: { product: Product }) {
       <Display as="h1" className="mt-6 text-4xl md:text-5xl">
         {product.name}
       </Display>
-      <p lang="ar" dir="rtl" className="mt-3 font-arabic text-2xl text-ink/55">
+      <p lang="ar" dir="rtl" className="mt-3 w-fit font-arabic text-2xl text-ink/55">
         {product.arabicName}
       </p>
     </>

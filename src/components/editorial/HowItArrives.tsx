@@ -1,5 +1,5 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
-import { packingNote, packingSteps, sewnLabels } from '@/data/packing'
+import { packingNote, packingNoteAr, packingSteps, sewnLabels } from '@/data/packing'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Container, Section } from '@/components/ui/Container'
 import { Reveal } from '@/components/ui/Reveal'
@@ -13,6 +13,9 @@ export function HowItArrives() {
             <Eyebrow>How it arrives</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">The packing.</Display>
             <Body className="mt-8">{packingNote}</Body>
+            <p lang="ar" dir="rtl" className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ink-soft">
+              {packingNoteAr}
+            </p>
           </Reveal>
           <div className="space-y-10 lg:col-span-7 lg:col-start-6">
             {packingSteps.map((step, index) => (
@@ -20,6 +23,9 @@ export function HowItArrives() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{step.number}</p>
                 <h3 className="mt-2 font-display text-3xl font-light">{step.title}</h3>
                 <Body className="mt-3">{step.copy}</Body>
+                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-lg font-light leading-relaxed text-ink-soft">
+                  {step.copyAr}
+                </p>
               </Reveal>
             ))}
           </div>
@@ -54,6 +60,9 @@ export function HowItArrives() {
                   {item.number} · {item.title}
                 </p>
                 <Body className="mt-3">{item.copy}</Body>
+                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-lg font-light leading-relaxed text-ink-soft">
+                  {item.copyAr}
+                </p>
               </Reveal>
             ))}
           </div>

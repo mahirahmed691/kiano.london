@@ -95,7 +95,7 @@ export function visitLetterHtml(input: { name: string; piece: string; size: stri
   const named = `<p style="margin:16px 0 0;">You named ${piece}, ${size}.</p>`
   return letterFrame(
     'The letter is held.',
-    `<p style="margin:0;">${name}, the request is with the house. This is not a booking. We write when a morning can be kept.</p>${named}`,
+    `<p style="margin:0;">${name}, the request is with the house. This is not a booking. We write when a morning can be kept.</p>${named}<p lang="ar" dir="rtl" style="margin:16px 0 0;">الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.</p>`,
     `Questions: ${site.email}.`,
   )
 }
@@ -105,6 +105,7 @@ export function visitLetterText(input: { name: string; piece: string; size: stri
     `${input.name}, the request is with the house.`,
     'This is not a booking. We write when a morning can be kept.',
     `You named ${input.piece}, ${input.size}.`,
+    'الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.',
     `Questions: ${site.email}.`,
   ].join('\n\n')
 }
@@ -480,6 +481,40 @@ export function waitRefusedLetterText(input: { name: string; piece: string; size
   ]
     .filter(Boolean)
     .join('\n\n')
+}
+
+export function weekPlateLetterHtml(input: {
+  name: string
+  place: string
+  line: string
+  image: string
+  href: string
+}) {
+  const name = escapeHtml(input.name)
+  const place = escapeHtml(input.place)
+  const line = escapeHtml(input.line)
+  const image = escapeHtml(input.image)
+  const href = escapeHtml(input.href)
+  return letterFrame(
+    name,
+    `<p style="margin:0;">This week · ${place}.</p><p style="margin:16px 0 0;">${line}</p><p style="margin:16px 0 0;"><img src="${image}" alt="" width="480" style="display:block;width:100%;height:auto;"/></p><p style="margin:16px 0 0;"><a href="${href}" style="color:#1B1714;">The stills</a></p>`,
+    `A still a week. Questions: ${site.email}.`,
+  )
+}
+
+export function weekPlateLetterText(input: {
+  name: string
+  place: string
+  line: string
+  href: string
+}) {
+  return [
+    `This week · ${input.place}.`,
+    input.name,
+    input.line,
+    input.href,
+    `A still a week. Questions: ${site.email}.`,
+  ].join('\n\n')
 }
 
 export function housePath(path: string) {

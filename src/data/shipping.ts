@@ -16,6 +16,12 @@ export type ShippingCountryCode = (typeof shippingCountries)[number]['code']
 
 export const shippingCountryCodes = shippingCountries.map((country) => country.code)
 
+export const carriageLine =
+  'Carriage is included to Britain, the United Arab Emirates, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the United States, France, Germany and Italy. A visit is not required.'
+
+export const carriageLineAr =
+  'الشحن مشمول إلى بريطانيا والإمارات والسعودية والكويت وقطر والبحرين وعُمان والولايات المتحدة وفرنسا وألمانيا وإيطاليا. الزيارة ليست واجبة.'
+
 export function shippingCountryName(code: string | null | undefined) {
   if (!code) return ''
   return shippingCountries.find((country) => country.code === code)?.name ?? code

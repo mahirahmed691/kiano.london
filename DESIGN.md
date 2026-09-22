@@ -4,7 +4,7 @@ Extracted and implemented as a restrained London house of the jubbah and the tho
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic appears on garment names; it is not the house mark.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic sits with the English on garment names, size, packing, and a visit; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
 
 ## Colour
 
@@ -26,7 +26,7 @@ No gradients as decoration. Hero overlays are photographic scrims only. No gold 
 
 - **Display:** Cormorant Garamond, 300. Headlines, pull quotes.
 - **Interface:** Jost, 300–400. Navigation, labels, body.
-- **Arabic:** Amiri, 400. Garment names and occasional bilingual lines only.
+- **Arabic:** Amiri, 400. Garment names, and a second line on size, packing, and a visit. Not the house mark.
 
 Labels are 11px, uppercase, tracking `0.22em–0.28em`. Headlines are light weight with tight tracking. Body is 15–16px, relaxed leading, `max-width: 65ch` in practice.
 
