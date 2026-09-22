@@ -28,7 +28,7 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @media (display-mode: standalone) {
@@ -64,7 +64,7 @@ body {
 }
 
 :focus-visible {
-  outline: 1px solid var(--color-ivory);
+  outline: 1px solid currentColor;
   outline-offset: 4px;
 }
 
