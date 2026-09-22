@@ -30,7 +30,7 @@ export function Lockup({ compact = false, align = 'center', className }: Props) 
       />
       <span
         className={cn(
-          'font-display font-medium uppercase',
+          'font-display font-normal uppercase',
           compact
             ? 'mt-2 text-[1.02rem] tracking-[0.38em] pl-[0.38em] md:mt-2.5 md:text-[1.18rem] md:tracking-[0.44em] md:pl-[0.44em]'
             : 'mt-3.5 text-[1.35rem] tracking-[0.42em] pl-[0.42em] md:mt-4 md:text-[1.55rem] md:tracking-[0.48em] md:pl-[0.48em]',
