@@ -23,9 +23,9 @@ export function SizeGuide({ className, compact = false }: Props) {
           {sizeChart.map((row) => (
             <tr key={row.size} className="border-b border-rule/70">
               <td className="py-3 pr-4 font-display text-xl font-light">{row.size}</td>
-              <td className="py-3 pr-4 text-[14px] font-light text-ivory/70">{row.chest}</td>
-              <td className="py-3 pr-4 text-[14px] font-light text-ivory/70">{row.length}</td>
-              <td className="py-3 text-[14px] font-light text-ivory/70">{row.shoulder}</td>
+              <td className="py-3 pr-4 text-[14px] font-light text-ink-soft">{row.chest}</td>
+              <td className="py-3 pr-4 text-[14px] font-light text-ink-soft">{row.length}</td>
+              <td className="py-3 text-[14px] font-light text-ink-soft">{row.shoulder}</td>
             </tr>
           ))}
         </tbody>
@@ -34,11 +34,11 @@ export function SizeGuide({ className, compact = false }: Props) {
         {sizeMeasures.map((item) => (
           <div key={item.title}>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{item.title}</p>
-            <p className="mt-2 text-[13px] font-light leading-relaxed text-ivory/70">{item.copy}</p>
+            <p className="mt-2 text-[13px] font-light leading-relaxed text-ink-soft">{item.copy}</p>
             <p
               lang="ar"
               dir="rtl"
-              className="mt-2 w-fit font-arabic text-[15px] font-light leading-relaxed text-ivory/70"
+              className="mt-2 w-fit font-arabic text-[15px] font-light leading-relaxed text-ink-soft"
             >
               {item.copyAr}
             </p>

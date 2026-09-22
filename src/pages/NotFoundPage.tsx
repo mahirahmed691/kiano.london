@@ -12,7 +12,7 @@ export function NotFoundPage() {
   })
 
   return (
-    <section className="flex min-h-[80svh] items-center pt-24">
+    <section className="flex min-h-[80svh] items-center bg-ivory pt-24 text-ink">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">

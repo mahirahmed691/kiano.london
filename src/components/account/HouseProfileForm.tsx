@@ -19,7 +19,7 @@ import {
 } from '@/lib/house-profile'
 
 const fieldClass =
-  'w-full border-0 border-b border-ivory/25 bg-transparent py-3 text-[15px] font-light text-ivory outline-none transition-colors duration-300 placeholder:text-ivory/40 focus:border-ivory'
+  'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
 
 function Field({
   id,
@@ -137,7 +137,7 @@ export function HouseProfileForm() {
   }
 
   if (!loaded) {
-    return <p className="mt-8 text-[15px] font-light text-ivory/70">Reading your details.</p>
+    return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading your details.</p>
   }
 
   return (
@@ -290,12 +290,12 @@ export function HouseProfileForm() {
       </div>
 
       {error ? (
-        <p className="text-[14px] font-light text-ivory" role="alert">
+        <p className="text-[14px] font-light text-ink" role="alert">
           {error}
         </p>
       ) : null}
       {kept ? (
-        <p className="text-[14px] font-light text-ivory/70">Kept for the next time.</p>
+        <p className="text-[14px] font-light text-ink-soft">Kept for the next time.</p>
       ) : null}
 
       <Button type="submit" variant="solid" disabled={busy}>
