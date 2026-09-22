@@ -70,7 +70,7 @@ export function VisitPage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/40">
+      <Section>
         <Container>
           <EditorialSplit
             image={week.src}
@@ -111,13 +111,13 @@ export function VisitPage() {
               <p
                 lang="ar"
                 dir="rtl"
-                className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ink-soft"
+                className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ivory/70"
               >
                 الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.
               </p>
               <address className="mt-10 not-italic">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Address</p>
-                <p className="mt-3 max-w-xs text-[15px] font-light leading-relaxed text-ink-soft">
+                <p className="mt-3 max-w-xs text-[15px] font-light leading-relaxed text-ivory/70">
                   {site.address}
                   <br />
                   {site.hours}

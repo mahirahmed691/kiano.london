@@ -148,7 +148,7 @@ export function ProductPage() {
                 {product.details.map((line) => (
                   <li
                     key={line}
-                    className="max-w-sm text-[14px] font-light leading-relaxed text-ink-soft"
+                    className="max-w-sm text-[14px] font-light leading-relaxed text-ivory/70"
                   >
                     {line}
                   </li>
@@ -179,7 +179,7 @@ export function ProductPage() {
               </div>
               <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{product.mill}</p>
               <p className="mt-4 font-display text-4xl font-light">{product.price}</p>
-              <p className="mt-3 text-[14px] font-light text-ink-soft">
+              <p className="mt-3 text-[14px] font-light text-ivory/70">
                 {product.colour} · {product.cloth}
               </p>
               <Body className="mt-6 xl:hidden">{product.description}</Body>
@@ -212,7 +212,7 @@ export function ProductPage() {
                   </div>
                 ) : null}
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
-                <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-rule">
+                <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-ivory/20">
                   {thobeSizes.map((value) => {
                     const sizeHeld = stock?.[value] === 0
                     return (
@@ -223,7 +223,7 @@ export function ProductPage() {
                           onClick={() => chooseSize(value)}
                           className={cn(
                             'flex aspect-square items-center justify-center text-[12px] tracking-[0.08em] transition-colors duration-300',
-                            size === value ? 'bg-ink text-ivory' : 'bg-ivory hover:bg-ivory-deep',
+                            size === value ? 'bg-ivory text-ink' : 'bg-transparent text-ivory hover:bg-ivory/10',
                             sizeHeld && size !== value && 'opacity-35',
                           )}
                         >
@@ -248,7 +248,7 @@ export function ProductPage() {
                 </div>
               ) : (
                 <Button
-                  variant="solid"
+                  variant="invert"
                   className="mt-10 w-full justify-center"
                   disabled={!size}
                   onClick={addToBag}
@@ -299,14 +299,14 @@ export function ProductPage() {
         </div>
       </section>
 
-      <Section className="bg-ivory-deep/40">
+      <Section>
         <Container>
           <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <Eyebrow>The nape</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">The woven mark.</Display>
               <WovenLabel size="lg" className="mt-10" />
-              <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
+              <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ivory/70">
                 The lockup is woven, not printed — KIANO, London, Est. MMXXIV — and set
                 at the nape by hand after the last press. Size is a separate tab. Care
                 sits at the side seam. The same mark is on every thobe and every jubbah.
@@ -317,7 +317,7 @@ export function ProductPage() {
               <Display className="mt-4 text-4xl md:text-5xl">
                 How this {product.cut.toLowerCase()} is held.
               </Display>
-              <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
+              <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ivory/70">
                 {product.composition}
               </p>
               <Eyebrow className="mt-14">Sizes 52–60</Eyebrow>
@@ -356,7 +356,7 @@ export function ProductPage() {
 
       <div
         className={cn(
-          'shell-lift fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
+          'shell-lift fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 text-ink backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
           showBar && !open && looking === null ? 'translate-y-0' : 'translate-y-full',
         )}
         aria-hidden={!showBar}
@@ -414,7 +414,7 @@ function PieceHeading({ product }: { product: Product }) {
       <Display as="h1" className="mt-6 text-4xl md:text-5xl">
         {product.name}
       </Display>
-      <p lang="ar" dir="rtl" className="mt-3 w-fit font-arabic text-2xl text-ink/55">
+      <p lang="ar" dir="rtl" className="mt-3 w-fit font-arabic text-2xl text-ivory/55">
         {product.arabicName}
       </p>
     </>

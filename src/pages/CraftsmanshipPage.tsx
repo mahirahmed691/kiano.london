@@ -71,7 +71,7 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/50">
+      <Section>
         <Container>
           <Reveal className="mb-14 max-w-xl">
             <Eyebrow>Studies</Eyebrow>
@@ -94,7 +94,7 @@ export function CraftsmanshipPage() {
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
                       {study.title}
                     </p>
-                    <p className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-ink-soft">
+                    <p className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-ivory/70">
                       {study.note}
                     </p>
                   </figcaption>

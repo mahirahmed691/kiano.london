@@ -63,7 +63,7 @@ export function HomePage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/40">
+      <Section>
         <Container>
           <Reveal className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
             <Eyebrow>The house</Eyebrow>

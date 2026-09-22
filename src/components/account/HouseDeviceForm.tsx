@@ -14,7 +14,7 @@ import {
 } from '@/lib/house-profile'
 
 const fieldClass =
-  'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
+  'w-full border-0 border-b border-ivory/25 bg-transparent py-3 text-[15px] font-light text-ivory outline-none transition-colors duration-300 placeholder:text-ivory/40 focus:border-ivory'
 
 function Field({
   id,
@@ -222,12 +222,12 @@ export function HouseDeviceForm() {
       </div>
 
       {error ? (
-        <p className="text-[14px] font-light text-ink" role="alert">
+        <p className="text-[14px] font-light text-ivory" role="alert">
           {error}
         </p>
       ) : null}
       {kept ? (
-        <p className="text-[14px] font-light text-ink-soft">Kept on this device.</p>
+        <p className="text-[14px] font-light text-ivory-soft">Kept on this device.</p>
       ) : null}
 
       <Button type="submit" variant="solid">

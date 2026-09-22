@@ -9,7 +9,7 @@ type Props = {
   tone?: 'light' | 'dark'
 }
 
-export function QuoteBlock({ quote, attribution, className, tone = 'light' }: Props) {
+export function QuoteBlock({ quote, attribution, className, tone = 'dark' }: Props) {
   const line = tone === 'dark' ? 'bg-ivory/25' : 'bg-ink/20'
 
   return (

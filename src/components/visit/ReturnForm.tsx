@@ -10,7 +10,7 @@ import { cn } from '@/lib/cn'
 import { asThobeSize, readStoredSize, writeStoredSize, type HouseProfile } from '@/lib/house-profile'
 
 const fieldClass =
-  'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
+  'w-full border-0 border-b border-ivory/25 bg-transparent py-3 text-[15px] font-light text-ivory outline-none transition-colors duration-300 placeholder:text-ivory/40 focus:border-ivory'
 
 function Field({
   id,
@@ -131,7 +131,7 @@ export function ReturnForm() {
         <p className="font-display text-3xl font-light">
           {kept ? 'The letter is held.' : 'The letter is ready.'}
         </p>
-        <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
+        <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-ivory/70">
           {kept
             ? written
               ? 'A confirmation has been sent to you. It is not a refund. We write if the return can be agreed.'

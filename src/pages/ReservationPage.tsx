@@ -12,7 +12,7 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const fieldClass =
-  'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
+  'w-full border-0 border-b border-ivory/25 bg-transparent py-3 text-[15px] font-light text-ivory outline-none transition-colors duration-300 placeholder:text-ivory/40 focus:border-ivory'
 
 function keepAccountHref(email: string) {
   const query = new URLSearchParams({ redirect_url: '/account' })
@@ -154,7 +154,7 @@ export function ReservationPage() {
         </form>
 
         {error ? (
-          <p className="mt-10 text-[15px] font-light text-ink" role="alert">
+          <p className="mt-10 text-[15px] font-light text-ivory" role="alert">
             {error}
           </p>
         ) : null}

@@ -52,7 +52,7 @@ export function StoryPage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/40">
+      <Section>
         <Container>
           <EditorialSplit
             image="/images/look-lanesborough.jpg"
@@ -111,7 +111,7 @@ export function StoryPage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/50 py-28 md:py-40">
+      <Section className="py-28 md:py-40">
         <Container>
           <QuoteBlock
             quote={creedMotto}

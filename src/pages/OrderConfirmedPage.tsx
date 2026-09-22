@@ -311,7 +311,7 @@ export function OrderConfirmedPage() {
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
                       Delivery
                     </p>
-                    <p className="mt-3 text-[14px] font-light leading-relaxed text-ink-soft">
+                    <p className="mt-3 text-[14px] font-light leading-relaxed text-ivory/70">
                       {shippingLines.map((line) => (
                         <span key={line} className="block">
                           {line}
@@ -325,7 +325,7 @@ export function OrderConfirmedPage() {
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
                       On the house card
                     </p>
-                    <p className="mt-3 text-[14px] font-light leading-relaxed text-ink-soft">
+                    <p className="mt-3 text-[14px] font-light leading-relaxed text-ivory/70">
                       {order.note}
                     </p>
                   </div>

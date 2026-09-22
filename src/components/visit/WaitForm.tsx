@@ -7,7 +7,7 @@ import { clerkEnabled } from '@/lib/clerk'
 import { asThobeSize, type HouseProfile } from '@/lib/house-profile'
 
 const fieldClass =
-  'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
+  'w-full border-0 border-b border-ivory/25 bg-transparent py-3 text-[15px] font-light text-ivory outline-none transition-colors duration-300 placeholder:text-ivory/40 focus:border-ivory'
 
 function Field({
   id,
@@ -130,7 +130,7 @@ export function WaitForm({
         <p className="font-display text-3xl font-light">
           {onTheLine ? 'This size is on the line.' : kept ? 'The letter is held.' : 'The letter is ready.'}
         </p>
-        <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
+        <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-ivory/70">
           {onTheLine
             ? 'Refresh, then add it to the bag.'
             : already
@@ -157,7 +157,7 @@ export function WaitForm({
   return (
     <form id="wait-letter" autoComplete="on" onSubmit={onSubmit} className="space-y-8">
       {clerkEnabled ? <HouseContactPrefill onPrefill={onPrefill} /> : null}
-      <p className="text-[15px] font-light leading-relaxed text-ink-soft">
+      <p className="text-[15px] font-light leading-relaxed text-ivory/70">
         {piece}, size {size}, is held. Leave a name. We write if it returns.
       </p>
       <div className="grid gap-8 sm:grid-cols-2">

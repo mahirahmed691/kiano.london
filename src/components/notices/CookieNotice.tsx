@@ -44,7 +44,7 @@ export function CookieNotice() {
 
   return (
     <div
-      className="shell-lift fixed inset-x-0 bottom-0 z-[55] border-t border-rule bg-ivory/95 px-5 py-2.5 md:px-12"
+      className="shell-lift fixed inset-x-0 bottom-0 z-[55] border-t border-rule bg-ivory/95 px-5 py-2.5 text-ink md:px-12"
       role="dialog"
       aria-label="Cookies"
     >

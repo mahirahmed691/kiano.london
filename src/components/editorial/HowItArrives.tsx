@@ -15,7 +15,7 @@ export function HowItArrives() {
             <Eyebrow>How it arrives</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">The packing.</Display>
             <Body className="mt-8">{packingNote}</Body>
-            <p lang="ar" dir="rtl" className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ink-soft">
+            <p lang="ar" dir="rtl" className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ivory/70">
               {packingNoteAr}
             </p>
           </Reveal>
@@ -25,7 +25,7 @@ export function HowItArrives() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{step.number}</p>
                 <h3 className="mt-2 font-display text-3xl font-light">{step.title}</h3>
                 <Body className="mt-3">{step.copy}</Body>
-                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-lg font-light leading-relaxed text-ink-soft">
+                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-lg font-light leading-relaxed text-ivory/70">
                   {step.copyAr}
                 </p>
               </Reveal>
@@ -75,7 +75,7 @@ export function HowItArrives() {
                   {item.number} · {item.title}
                 </p>
                 <Body className="mt-3">{item.copy}</Body>
-                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-lg font-light leading-relaxed text-ink-soft">
+                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-lg font-light leading-relaxed text-ivory/70">
                   {item.copyAr}
                 </p>
               </Reveal>

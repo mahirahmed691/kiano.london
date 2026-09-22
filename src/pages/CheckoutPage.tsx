@@ -22,7 +22,7 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 const fieldClass =
-  'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
+  'w-full border-0 border-b border-ivory/25 bg-transparent py-3 text-[15px] font-light text-ivory outline-none transition-colors duration-300 placeholder:text-ivory/40 focus:border-ivory'
 
 function asPaymentError(message?: string) {
   if (message && !/till/i.test(message)) return message
@@ -184,7 +184,7 @@ export function CheckoutPage() {
             ) : null}
 
             {cancelled ? (
-              <p className="mt-8 max-w-prose border-t border-rule pt-6 text-[15px] font-light leading-relaxed text-ink">
+              <p className="mt-8 max-w-prose border-t border-ivory/15 pt-6 text-[15px] font-light leading-relaxed text-ivory">
                 Payment was not taken. The bag is still held. Complete the details below when you
                 are ready.
               </p>
@@ -350,7 +350,7 @@ export function CheckoutPage() {
               </fieldset>
 
               {error ? (
-                <p className="text-[14px] font-light text-ink lg:hidden" role="alert">
+                <p className="text-[14px] font-light text-ivory lg:hidden" role="alert">
                   {error}
                 </p>
               ) : null}
@@ -447,12 +447,12 @@ export function CheckoutPage() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">To pay</p>
                 <p className="font-display text-4xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
-              <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
+              <p className="mt-5 text-[14px] font-light leading-relaxed text-ivory/70">
                 Pay with card, Apple Pay, or Google Pay. A confirmation follows when the cut is
                 reserved.
               </p>
               {error ? (
-                <p className="mt-5 hidden text-[14px] font-light text-ink lg:block" role="alert">
+                <p className="mt-5 hidden text-[14px] font-light text-ivory lg:block" role="alert">
                   {error}
                 </p>
               ) : null}
@@ -460,7 +460,7 @@ export function CheckoutPage() {
                 type="submit"
                 form="checkout-form"
                 disabled={busy}
-                className="mt-8 hidden w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35 lg:inline-flex"
+                className="mt-8 hidden w-full appearance-none items-center justify-center border border-ivory bg-ivory px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ink [-webkit-text-fill-color:#1B1714] transition-colors duration-300 hover:bg-transparent hover:text-ivory hover:[-webkit-text-fill-color:#F2EBDC] disabled:pointer-events-none disabled:opacity-35 lg:inline-flex"
               >
                 {busy ? 'A moment' : 'Reserve the cut'}
               </button>

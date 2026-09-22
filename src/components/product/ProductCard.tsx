@@ -54,7 +54,7 @@ function CardMeta({ product, index }: Pick<Props, 'product' | 'index'>) {
         </h3>
         <p className="mt-1.5 text-[11px] font-light tracking-[0.16em] text-stone">{product.colour}</p>
       </div>
-      <p className="shrink-0 text-[11px] tracking-[0.16em] text-ink-soft">{product.price}</p>
+        <p className="shrink-0 text-[11px] tracking-[0.16em] text-ivory/70">{product.price}</p>
     </div>
   )
 }
