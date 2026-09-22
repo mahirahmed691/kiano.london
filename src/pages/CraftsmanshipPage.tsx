@@ -94,7 +94,7 @@ export function CraftsmanshipPage() {
                     <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
                       {study.title}
                     </p>
-                    <p className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-ivory/70">
+                    <p className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-ink-soft">
                       {study.note}
                     </p>
                   </figcaption>
@@ -127,7 +127,7 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
-      <Section className="bg-night">
+      <Section paper={false} className="bg-night">
         <Container>
           <Reveal className="max-w-2xl">
             <Eyebrow className="text-ivory/70">Further</Eyebrow>

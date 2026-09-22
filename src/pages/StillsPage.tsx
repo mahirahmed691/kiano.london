@@ -42,7 +42,7 @@ export function StillsPage() {
               <Display as="h1" className="mt-4 text-4xl md:text-5xl lg:text-6xl">
                 The stills.
               </Display>
-              <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ivory/55">
+              <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
                 {site.lockup}
               </p>
             </Reveal>
@@ -72,8 +72,8 @@ export function StillsPage() {
                     <a
                       href={`#${plate.id}`}
                       className={cn(
-                        'flex items-baseline gap-4 text-ivory transition-opacity hover:opacity-70',
-                        current && 'text-ivory',
+                        'flex items-baseline gap-4 text-ink transition-opacity hover:opacity-70',
+                        current && 'text-ink',
                       )}
                     >
                       <span className="w-6 shrink-0 text-[11px] uppercase tracking-[0.22em] text-stone">
@@ -96,7 +96,7 @@ export function StillsPage() {
         </Container>
       </Section>
 
-      <section>
+      <section className="bg-ivory text-ink">
         <Container>
           <ol>
             {instagramPlates.map((plate, index) => {
@@ -142,7 +142,7 @@ export function StillsPage() {
                         </Body>
                       ))}
                       {copy.mark ? (
-                        <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ivory/55">
+                        <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
                           {copy.mark}
                         </p>
                       ) : null}

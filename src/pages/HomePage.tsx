@@ -138,7 +138,7 @@ export function HomePage() {
         </figure>
       </section>
 
-      <Section className="bg-night py-28 md:py-40">
+      <Section paper={false} className="bg-night py-28 md:py-40">
         <Container>
           <QuoteBlock
             tone="dark"
