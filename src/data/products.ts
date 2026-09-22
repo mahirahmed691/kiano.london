@@ -36,7 +36,7 @@ export type Product = {
 }
 
 const napeFinish =
-  'The Kiano monogram is woven at the nape. Size sewn in separately. Care at the side seam.'
+  'The woven mark — KIANO, London, Est. MMXXIV — is set at the nape. Size sewn in separately. Care at the side seam.'
 
 export const products: Product[] = [
   {

@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
+import { HouseCreed } from '@/components/editorial/HouseCreed'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Hero } from '@/components/editorial/Hero'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
+import { creedIntent, creedJoin, creedMotto, creedStandard, creedWoven } from '@/data/creed'
 import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
@@ -34,12 +36,12 @@ export function HomePage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>Kiano London</Eyebrow>
+              <Eyebrow>{creedStandard}</Eyebrow>
               <Display as="h1" className="mt-4 text-4xl md:text-5xl lg:text-6xl">
-                A London house.
+                Worn with purpose.
               </Display>
-              <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
-                {site.lockup}
+              <p className="mt-5 text-[0.68rem] uppercase tracking-[0.28em] text-ink/55">
+                {creedJoin}
               </p>
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
@@ -48,9 +50,8 @@ export function HomePage() {
               </p>
               <Lead className="mt-4">{weekCopy.lines[0] ?? week.name}</Lead>
               <Body className="mt-6">
-                Emirati thobes and jubbahs. Five columns, and the outer garment
-                in three colours. Cloth chosen to last. The house does not invent
-                a second look for a feed.
+                {creedWoven} {creedIntent} Five columns, and the outer garment in
+                three colours. The house does not invent a second look for a feed.
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/stills">The stills</Button>
@@ -59,6 +60,12 @@ export function HomePage() {
               </div>
             </Reveal>
           </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-ivory-deep/40">
+        <Container>
+          <HouseCreed />
         </Container>
       </Section>
 
@@ -131,8 +138,8 @@ export function HomePage() {
         <Container>
           <QuoteBlock
             tone="dark"
-            quote="The modest garment is not empty. It is full of work you are not meant to see."
-            attribution={site.note}
+            quote={creedMotto}
+            attribution={`${creedJoin} · ${site.note}`}
           />
         </Container>
       </Section>

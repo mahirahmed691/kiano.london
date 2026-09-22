@@ -304,12 +304,12 @@ export function ProductPage() {
           <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <Eyebrow>The nape</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The monogram.</Display>
+              <Display className="mt-4 text-4xl md:text-5xl">The woven mark.</Display>
               <WovenLabel size="lg" className="mt-10" />
               <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
-                The K is woven, not printed, and set at the nape by hand after the last
-                press. Size is a separate tab. Care sits at the side seam. The same mark
-                is on every thobe and every jubbah.
+                The lockup is woven, not printed — KIANO, London, Est. MMXXIV — and set
+                at the nape by hand after the last press. Size is a separate tab. Care
+                sits at the side seam. The same mark is on every thobe and every jubbah.
               </p>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">

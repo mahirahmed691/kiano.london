@@ -4,7 +4,7 @@ Extracted and implemented as a restrained London house of the jubbah and the tho
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic sits with the English on garment names, size, packing, and a visit; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic sits with the English on garment names, size, packing, and a visit; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
 
 ## Colour
 

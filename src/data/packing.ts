@@ -1,3 +1,5 @@
+import { creedMotto, creedSpoken } from './creed.js'
+
 export const packingNote =
   'It leaves in a garment bag, unscented tissue, and a rigid box. The cloth is never scented.'
 
@@ -24,7 +26,7 @@ export const packingSteps = [
   {
     number: '03',
     title: 'The box',
-    copy: 'A rigid box, sealed once. The address sits on the face. Inside: a house card with the piece name, the size you chose, and a line if you wrote one.',
+    copy: `A rigid box, sealed once. The address sits on the face. Inside: a house card with the piece name, the size you chose, and a line if you wrote one. The hang tag carries the house: ${creedSpoken} ${creedMotto}`,
     copyAr: 'صندوق صلب، يُختَم مرة. العنوان على الوجه. داخله بطاقة الدار: اسم القطعة، المقاس، وسطر إن كتبته.',
   },
 ] as const

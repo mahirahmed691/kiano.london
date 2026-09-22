@@ -8,6 +8,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
+import { creedMotto } from '@/data/creed'
 import { productColours, productPath, thobes } from '@/data/products'
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
@@ -32,7 +33,7 @@ export function CollectionPage() {
         objectPosition="center 12%"
         kicker="Emirati thobe"
         title="The Collection."
-        subtitle="Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal, grey, beige and bone. Cut from the house block."
+        subtitle={`Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal, grey, beige and bone. ${creedMotto}`}
         minHeight="tall"
         priority
       >

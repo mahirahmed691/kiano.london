@@ -3,6 +3,7 @@ import { HouseMark } from '@/components/brand/HouseMark'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Container } from '@/components/ui/Container'
 import { Rule } from '@/components/ui/Rule'
+import { creedJoin, creedMotto } from '@/data/creed'
 import { primaryNav } from '@/data/navigation'
 import { social } from '@/data/social'
 import { site } from '@/data/site'
@@ -18,6 +19,9 @@ export function Footer() {
             <HouseMark compact={false} align="start" className="text-ivory" />
             <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ivory/65">
               {site.tagline}
+            </p>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-ivory/45">
+              {creedJoin}
             </p>
           </div>
 
@@ -125,7 +129,7 @@ export function Footer() {
               Cookies
             </Link>
             <span>
-              Est. {site.established} · {site.city}
+              {creedMotto} · Est. {site.established} · {site.city}
             </span>
           </p>
         </div>

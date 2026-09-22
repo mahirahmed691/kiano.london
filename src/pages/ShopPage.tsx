@@ -6,6 +6,7 @@ import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Rule } from '@/components/ui/Rule'
+import { creedIntent } from '@/data/creed'
 import { jubbahColours, jubbahs, productPath } from '@/data/products'
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
@@ -30,7 +31,7 @@ export function ShopPage() {
         objectPosition="center 22%"
         kicker="The outer garment"
         title="The Shop."
-        subtitle="The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52 to 60. Cut from the house block."
+        subtitle={`The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52 to 60. ${creedIntent}`}
         minHeight="tall"
         priority
       >

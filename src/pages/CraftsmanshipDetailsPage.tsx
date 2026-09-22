@@ -6,6 +6,7 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { detailSections } from '@/data/craftsmanship'
+import { creedSpoken } from '@/data/creed'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -20,7 +21,7 @@ export function CraftsmanshipDetailsPage() {
         objectPosition="center"
         kicker="Craftsmanship · Details"
         title="What the cloth conceals."
-        subtitle="A thobe is judged from ten paces. It is made in millimetres."
+        subtitle={`${creedSpoken} A thobe is judged from ten paces. It is made in millimetres.`}
         minHeight="page"
         priority
       />

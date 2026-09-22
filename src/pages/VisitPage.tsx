@@ -7,6 +7,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { AppointmentForm } from '@/components/visit/AppointmentForm'
+import { creedIntent } from '@/data/creed'
 import { site } from '@/data/site'
 import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
@@ -44,7 +45,7 @@ export function VisitPage() {
         objectPosition="center 40%"
         kicker="The house"
         title="By appointment."
-        subtitle="There is no shop window. Come to see cloth, or to be fitted. Write first. We keep the diary small."
+        subtitle={`There is no shop window. Come to see cloth, or to be fitted. Write first. ${creedIntent}`}
         minHeight="tall"
         priority
       />

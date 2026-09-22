@@ -5,6 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
+import { creedSpoken, creedWoven } from '@/data/creed'
 import { instagramPlates, plateIntervalDays } from '@/data/instagram-plates'
 import { site } from '@/data/site'
 import {
@@ -48,7 +49,7 @@ export function StillsPage() {
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Body>
                 One still a week, in this order. London stone, the column, a quiet line.
-                The house does not invent a second look for a feed.
+                {` ${creedWoven}`} The house does not invent a second look for a feed.
               </Body>
               <Body className="mt-6">
                 {weekCopy.lines.join(' ')} Cadence: every {plateIntervalDays} days.
@@ -174,7 +175,7 @@ export function StillsPage() {
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
               The stills are the line as it is worn. Cloth is shown on the table. A visit
-              is the next still.
+              is the next still. {creedSpoken}
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>
