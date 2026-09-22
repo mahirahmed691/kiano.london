@@ -1,4 +1,6 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
+import { HangTag } from '@/components/editorial/HangTag'
+import { creedIntent, creedMotto, creedWoven } from '@/data/creed'
 import { packingNote, packingNoteAr, packingSteps, sewnLabels } from '@/data/packing'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Container, Section } from '@/components/ui/Container'
@@ -43,6 +45,19 @@ export function HowItArrives() {
             <WovenLabel size="md" className="absolute bottom-5 left-5 md:bottom-8 md:left-8" />
           </figure>
         </Reveal>
+
+        <div className="mt-20 grid items-center gap-16 md:mt-28 lg:grid-cols-12">
+          <Reveal className="lg:col-span-5">
+            <HangTag />
+          </Reveal>
+          <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
+            <Eyebrow>The tag</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">The house, in the box.</Display>
+            <Body className="mt-8">
+              The hang tag sits with the piece. {creedWoven} {creedIntent} {creedMotto}
+            </Body>
+          </Reveal>
+        </div>
 
         <div className="mt-20 grid gap-16 border-t border-rule pt-16 md:mt-28 md:pt-20 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">

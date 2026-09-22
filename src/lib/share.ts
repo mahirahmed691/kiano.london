@@ -1,4 +1,5 @@
 import { thisWeekPlate } from './instagram-plates.js'
+import { creedIntent, creedMotto, creedSpoken, creedWoven } from '../data/creed.js'
 import { getProduct, productPath } from '../data/products.js'
 import { site } from '../data/site.js'
 
@@ -18,14 +19,14 @@ const pages: Record<string, PageMeta> = {
   '/': {
     title: site.fullName,
     description:
-      'Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. A London house, sizes 52 to 60.',
+      `${creedWoven} Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. A London house, sizes 52 to 60.`,
     path: '/',
     image: '/images/featured-overcoat.jpg',
     imageAlt: 'Hadīd: a charcoal Emirati thobe with a standing collar, worn at full length.',
   },
   '/shop': {
     title: 'Shop — Kiano London',
-    description: 'The jubbah in three colours: black, sand and charcoal. Sizes 52 to 60, from the house block.',
+    description: `The jubbah in three colours: black, sand and charcoal. ${creedIntent} Sizes 52 to 60, from the house block.`,
     path: '/shop',
     image: '/images/jubbah-sand-02.jpg',
     imageAlt: 'The jubbah in sand, hem to the ankle.',
@@ -33,7 +34,7 @@ const pages: Record<string, PageMeta> = {
   '/collection': {
     title: 'The Collection — Kiano London',
     description:
-      'Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, from the house block.',
+      `Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, from the house block. ${creedMotto}`,
     path: '/collection',
     image: '/images/thobe-raml.jpg',
     imageAlt: 'The Raml thobe.',
@@ -41,7 +42,7 @@ const pages: Record<string, PageMeta> = {
   '/story': {
     title: 'Story — Kiano London',
     description:
-      'A London house of the Emirati thobe and jubbah. Layl, Hadīd, Ghabār, Raml and Hajar.',
+      `A London house of the Emirati thobe and jubbah. ${creedSpoken} ${creedMotto}`,
     path: '/story',
     image: '/images/look-lanesborough.jpg',
     imageAlt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
@@ -49,7 +50,7 @@ const pages: Record<string, PageMeta> = {
   '/stills': {
     title: 'Stills — Kiano London',
     description:
-      'One still a week. Layl, Hyde Park Corner, Raml, the jubbah, Ghabār, Hadīd, Hajar.',
+      `One still a week. ${creedWoven} Layl, Hyde Park Corner, Raml, the jubbah, Ghabār, Hadīd, Hajar.`,
     path: '/stills',
     image: '/images/thobe-layl.jpg',
     imageAlt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
@@ -57,7 +58,7 @@ const pages: Record<string, PageMeta> = {
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',
     description:
-      'Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are built.',
+      `${creedSpoken} Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are built.`,
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
     imageAlt: 'A needle on charcoal worsted: the stitch that holds a thobe.',
@@ -73,7 +74,7 @@ const pages: Record<string, PageMeta> = {
   '/visit': {
     title: 'Visit — Kiano London',
     description:
-      'Appointments with Kiano London. See cloth, sit for a fitting, or write first.',
+      `Appointments with Kiano London. See cloth, sit for a fitting, or write first. ${creedIntent}`,
     path: '/visit',
     image: '/images/cutting-room.jpg',
     imageAlt: 'Paper, shears, and cloth: the work of a thobe.',

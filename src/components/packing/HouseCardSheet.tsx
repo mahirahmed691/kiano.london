@@ -1,3 +1,4 @@
+import { creedIntent, creedJoin, creedMotto, creedWoven } from '@/data/creed'
 import { careLine, packingNote } from '@/data/packing'
 import { site } from '@/data/site'
 import type { HouseCard } from '@/lib/house-card'
@@ -14,6 +15,7 @@ export function HouseCardSheet({ card }: { card: HouseCard }) {
       `}</style>
       <p className="text-[11px] uppercase tracking-[0.28em] text-stone">House card</p>
       <p className="mt-6 font-display text-4xl font-light md:text-5xl">{site.fullName}</p>
+      <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">{creedJoin}</p>
       {card.to ? (
         <p className="mt-8 font-display text-3xl font-light">{card.to}</p>
       ) : null}
@@ -37,6 +39,10 @@ export function HouseCardSheet({ card }: { card: HouseCard }) {
       {card.line ? (
         <p className="mt-12 text-[16px] font-light leading-relaxed text-ink">{card.line}</p>
       ) : null}
+      <p className="mt-12 text-[15px] font-light leading-relaxed text-ink-soft">
+        {creedWoven} {creedIntent}
+      </p>
+      <p className="mt-4 text-[11px] uppercase tracking-[0.22em] text-stone">{creedMotto}</p>
       <p className="mt-12 text-[15px] font-light leading-relaxed text-ink-soft">{careLine}</p>
       <p className="mt-6 text-[14px] font-light leading-relaxed text-stone">{packingNote}</p>
       <p className="mt-12 text-[11px] uppercase tracking-[0.22em] text-stone">

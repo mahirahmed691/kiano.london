@@ -12,7 +12,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Editorial rooms',
     completion: 94,
     status: 'complete',
-    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first. The cookie strip waits until the plate has been seen.',
+    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first. The house speaks Discipline, Craftsmanship, Purpose — a higher standard, built to last, worn with purpose. The cookie strip waits until the plate has been seen.',
   },
   {
     name: 'The line',
@@ -60,7 +60,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Share and search',
     completion: 82,
     status: 'complete',
-    note: 'Open Graph, canonical URLs, share bots get a document. Home names the line. Shop and collection keep colour in the address. No type-ahead search.',
+    note: 'Open Graph, canonical URLs, share bots get a document. Home names the line and the creed. Shop and collection keep colour in the address. No type-ahead search.',
   },
   {
     name: 'Cloth at touching distance',

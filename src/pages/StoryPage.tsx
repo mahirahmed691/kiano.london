@@ -5,6 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
+import { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { site } from '@/data/site'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -18,9 +19,9 @@ export function StoryPage() {
         image="/images/atelier-rail.jpg"
         imageAlt="The house line on the rail: black, sand, and bone."
         objectPosition="18% 40%"
-        kicker={site.fullName}
+        kicker={creedStandard}
         title="The house."
-        subtitle="Kiano London is a house of the modest garment: a name, a single address, a long silhouette."
+        subtitle={`${creedWoven} ${creedIntent}`}
         minHeight="tall"
         priority
       />
@@ -40,6 +41,7 @@ export function StoryPage() {
             <Body className="mt-6">
               The first ledger lists thobes, not customers. Cloth chosen to last, and a
               belief that a modest column of cloth is a long conversation, not a season.
+              {` ${creedMotto}`}
             </Body>
             <Body className="mt-4">
               The name is Kiano London. It is not a translation, and not a legend taken
@@ -79,30 +81,29 @@ export function StoryPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
-              <Eyebrow>A visit</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The house</Display>
+              <Eyebrow>{creedStandard}</Eyebrow>
+              <Display className="mt-4 text-4xl md:text-5xl">{creedSpoken}</Display>
             </Reveal>
             <div className="space-y-8 lg:col-span-7 lg:col-start-6">
               <Reveal>
-                <h3 className="font-display text-2xl font-light">The appointment</h3>
+                <h3 className="font-display text-2xl font-light">Discipline</h3>
                 <Body className="mt-3">
-                  There is no window dressing. Cloth is shown on the table. A thobe is
-                  tried in natural light. Appointments last as long as they need to.
+                  Paper for the Emirati thobe is kept. One block, one silhouette. New
+                  patterns are added; old ones are not discarded. The shears follow the grain.
                 </Body>
               </Reveal>
               <Reveal delay={80}>
-                <h3 className="font-display text-2xl font-light">The block</h3>
+                <h3 className="font-display text-2xl font-light">Craftsmanship</h3>
                 <Body className="mt-3">
-                  Paper for the Emirati thobe is kept. New patterns are added. Old ones
-                  are not discarded. Kiano remembers through its paper.
+                  Ready-to-wear follows the same methods as commission work: felled
+                  seams, pad-stitched collars, a finish from the inside. The difference is only time.
                 </Body>
               </Reveal>
               <Reveal delay={140}>
-                <h3 className="font-display text-2xl font-light">The work today</h3>
+                <h3 className="font-display text-2xl font-light">Purpose</h3>
                 <Body className="mt-3">
-                  The line is five thobes in small numbers: Layl, Hadīd, Ghabār, Raml
-                  and Hajar. Ready-to-wear follows the same patterns as commission work.
-                  The difference is only time.
+                  There is no window dressing. Cloth is shown on the table. A thobe is
+                  tried in natural light, then worn with intent. {creedMotto}
                 </Body>
               </Reveal>
             </div>
@@ -113,8 +114,8 @@ export function StoryPage() {
       <Section className="bg-ivory-deep/50 py-24 md:py-32">
         <Container>
           <QuoteBlock
-            quote="A thobe is a piece of architecture you take with you."
-            attribution={site.note}
+            quote={creedMotto}
+            attribution={creedJoin}
           />
         </Container>
       </Section>
@@ -131,7 +132,7 @@ export function StoryPage() {
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
               Write to the atelier if you wish to see cloth, sit for a fitting, or
-              simply come. We keep the diary small on purpose.
+              simply come. We keep the diary small on purpose. {creedIntent}
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>

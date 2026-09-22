@@ -6,6 +6,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { materials, processSteps, stitchStudies } from '@/data/craftsmanship'
+import { creedIntent, creedMotto, creedSpoken } from '@/data/creed'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -18,9 +19,9 @@ export function CraftsmanshipPage() {
         image="/images/worsted-wool.jpg"
         imageAlt="A needle on charcoal worsted: the stitch that holds a thobe."
         objectPosition="center"
-        kicker="The work"
+        kicker="Craftsmanship"
         title="The art of the stitch."
-        subtitle="Cloth. Pattern. Stitch. Finish. Every thobe is built in that order."
+        subtitle={`${creedSpoken} Cloth. Pattern. Stitch. Finish. Every thobe is built in that order.`}
         minHeight="tall"
         priority
       >
@@ -45,7 +46,7 @@ export function CraftsmanshipPage() {
             <Body className="mt-6">
               We do not fuse a collar because it is faster. We do not send buttonholes
               out. The methods are older than this house; we keep them because they still
-              make a better garment.
+              make a better garment. {creedIntent}
             </Body>
           </Reveal>
 
@@ -136,7 +137,7 @@ export function CraftsmanshipPage() {
             <Body className="mt-6 text-ivory/75">
               The felled seam, the hand stitch, the concealed placket, the interior
               pocket. Four details that decide whether a thobe is still itself a
-              decade later.
+              decade later. {creedMotto}
             </Body>
             <div className="mt-8">
               <TextLink to="/craftsmanship-details" className="text-ivory">
