@@ -36,7 +36,7 @@ export function CollectionPage() {
         minHeight="tall"
         priority
       >
-        <p lang="ar" dir="rtl" className="font-arabic text-2xl text-ivory/70">
+        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
           الثوب
         </p>
       </Hero>
