@@ -12,7 +12,7 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-night text-ivory">
+    <footer className="scheme-dark bg-night text-ivory">
       <Container className="py-24 md:py-32">
         <div className="flex flex-col items-center text-center">
           <HouseMark compact={false} className="text-bronze" />
