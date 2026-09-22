@@ -42,7 +42,7 @@ export function CraftsmanshipDetailsPage() {
         </Container>
       </Section>
 
-      {detailSections.map((section, index) => (
+      {detailSections.map((section) => (
         <Section key={section.id}>
           <Container>
             <EditorialSplit
