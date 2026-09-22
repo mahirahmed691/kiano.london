@@ -20,7 +20,7 @@ export function WovenLabel({ size = 'sm', inverted = true, className }: Props) {
     <div
       className={cn(
         'flex flex-col items-center justify-center border',
-        inverted ? 'border-bronze/35 bg-ink text-bronze' : 'border-ink/20 bg-ivory text-ink',
+        inverted ? 'border-bronze/35 bg-night text-bronze' : 'border-ink/20 bg-ivory text-ink',
         sizeClass[size],
         className,
       )}

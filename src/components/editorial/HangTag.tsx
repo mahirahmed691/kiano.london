@@ -10,7 +10,7 @@ export function HangTag({ className }: Props) {
   return (
     <article
       className={cn(
-        'mx-auto flex max-w-[20rem] flex-col items-center border border-ivory/20 bg-night px-11 py-16 text-ivory md:px-14 md:py-20',
+        'mx-auto flex max-w-[20rem] flex-col items-center border border-bronze/20 bg-night px-11 py-16 text-bronze md:px-14 md:py-20',
         className,
       )}
     >

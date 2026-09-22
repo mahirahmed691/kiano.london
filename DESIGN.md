@@ -18,9 +18,9 @@ Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The
 | Stone | `#6F675C` | Kickers, captions |
 | Bronze | `#B8A081` | Lockup on night: the KK, KIANO, LONDON, EST. MMXXIV |
 | Rule | `#D4CBB8` | Hairlines |
-| Night | `#141210` | Footer, dark bands, hero scrim |
+| Night | `#25282B` | Lockup ground, footer, dark bands, hang tag, woven label |
 
-No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The lockup on night is bronze `#B8A081`, not ivory and not a gold fill.
+No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The lockup on night `#25282B` is bronze `#B8A081`, not ivory and not a gold fill.
 
 ## Typography
 
