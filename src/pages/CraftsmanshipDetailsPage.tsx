@@ -1,5 +1,6 @@
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -41,6 +42,8 @@ export function CraftsmanshipDetailsPage() {
           </Reveal>
         </Container>
       </Section>
+
+      <NightMotto />
 
       {detailSections.map((section) => (
         <Section key={section.id}>

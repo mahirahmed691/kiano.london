@@ -1,11 +1,11 @@
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
-import { QuoteBlock } from '@/components/editorial/QuoteBlock'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
+import { creedIntent, creedMotto, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { site } from '@/data/site'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -111,15 +111,7 @@ export function StoryPage() {
         </Container>
       </Section>
 
-      <Section paper={false} className="bg-night py-28 md:py-40">
-        <Container>
-          <QuoteBlock
-            tone="dark"
-            quote={creedMotto}
-            attribution={creedJoin}
-          />
-        </Container>
-      </Section>
+      <NightMotto />
 
       <Section>
         <Container>

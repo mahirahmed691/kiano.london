@@ -19,7 +19,7 @@ export function Footer() {
           <p className="mt-6 max-w-xs text-[14px] font-light leading-[1.85] text-ivory/65">
             {site.tagline}
           </p>
-          <p className="mt-4 text-[10px] uppercase tracking-[0.32em] text-ivory/45">
+          <p className="mt-4 text-[10px] uppercase tracking-[0.32em] text-bronze">
             {creedJoin}
           </p>
         </div>

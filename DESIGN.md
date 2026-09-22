@@ -20,7 +20,7 @@ Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The
 | Rule | `#D4CBB8` | Hairlines on ivory |
 | Night | `#25282B` | Page canvas, quote bands, footer, hang tag, woven label |
 
-No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home, the story, the shop, the collection, the stills, and a visit each hold one night motto band so paper does not run the whole way to the footer.
+No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home, the story, the shop, the collection, the stills, a visit, a piece, and the making each hold one night motto band so paper does not run the whole way to the footer. The band is the house creed in italic ivory, attributed in bronze, on night `#25282B`. Do not place it immediately above the footer.
 
 ## Typography
 
@@ -45,7 +45,7 @@ Fixed. Over imagery: transparent, ivory navigation, bronze lockup. After 24px of
 
 ## Footer
 
-Night ground. The lockup sits centred on the band, bronze, the same stack as the header. Tagline and creed sit under it. Nav, a visit, and the list follow in columns. No gold fill.
+Night ground. The lockup sits centred on the band, bronze, the same stack as the header. Tagline sits under it in ivory; the creed sits in bronze. Nav, a visit, and the list follow in columns. No gold fill.
 
 ## Buttons
 

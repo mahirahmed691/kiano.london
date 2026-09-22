@@ -1,5 +1,6 @@
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { StitchArt } from '@/components/editorial/StitchArt'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -105,6 +106,8 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
+      <NightMotto />
+
       <Section>
         <Container>
           <Reveal className="mb-14 max-w-xl">
@@ -127,22 +130,20 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
-      <Section paper={false} className="bg-night">
+      <Section>
         <Container>
           <Reveal className="max-w-2xl">
-            <Eyebrow className="text-ivory/70">Further</Eyebrow>
-            <Display className="mt-4 text-4xl text-ivory md:text-5xl">
+            <Eyebrow>Further</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">
               A closer look at the making.
             </Display>
-            <Body className="mt-6 text-ivory/75">
+            <Body className="mt-6">
               The felled seam, the hand stitch, the concealed placket, the interior
               pocket. Four details that decide whether a thobe is still itself a
               decade later. {creedMotto}
             </Body>
             <div className="mt-8">
-              <TextLink to="/craftsmanship-details" className="text-ivory">
-                Read the details
-              </TextLink>
+              <TextLink to="/craftsmanship-details">Read the details</TextLink>
             </div>
           </Reveal>
         </Container>

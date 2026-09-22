@@ -1,6 +1,6 @@
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
-import { QuoteBlock } from '@/components/editorial/QuoteBlock'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { HowToMeasure } from '@/components/product/HowToMeasure'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { TextLink } from '@/components/ui/Button'
@@ -8,7 +8,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { AppointmentForm } from '@/components/visit/AppointmentForm'
-import { creedIntent, creedJoin, creedMotto } from '@/data/creed'
+import { creedIntent } from '@/data/creed'
 import { site } from '@/data/site'
 import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
@@ -92,15 +92,7 @@ export function VisitPage() {
         </Container>
       </Section>
 
-      <Section paper={false} className="bg-night py-28 md:py-40">
-        <Container>
-          <QuoteBlock
-            tone="dark"
-            quote={creedMotto}
-            attribution={creedJoin}
-          />
-        </Container>
-      </Section>
+      <NightMotto />
 
       <Section>
         <Container>

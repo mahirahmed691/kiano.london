@@ -4,6 +4,7 @@ import { HouseSizePrefill } from '@/components/account/HouseSizePrefill'
 import { WaitForm } from '@/components/visit/WaitForm'
 import { Link, useParams } from 'react-router-dom'
 import { HowItArrives } from '@/components/editorial/HowItArrives'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ClothZoom } from '@/components/product/ClothZoom'
 import { ProductPlate } from '@/components/product/ProductPlate'
@@ -335,6 +336,8 @@ export function ProductPage() {
       </Section>
 
       <HowItArrives />
+
+      <NightMotto />
 
       <Section>
         <Container>

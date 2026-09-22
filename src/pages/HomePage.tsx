@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { HouseCreed } from '@/components/editorial/HouseCreed'
-import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Hero } from '@/components/editorial/Hero'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
+import { creedIntent, creedJoin, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
@@ -138,15 +138,7 @@ export function HomePage() {
         </figure>
       </section>
 
-      <Section paper={false} className="bg-night py-28 md:py-40">
-        <Container>
-          <QuoteBlock
-            tone="dark"
-            quote={creedMotto}
-            attribution={`${creedJoin} · ${site.note}`}
-          />
-        </Container>
-      </Section>
+      <NightMotto attribution={`${creedJoin} · ${site.note}`} />
 
       <Section>
         <Container>

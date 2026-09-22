@@ -2,14 +2,14 @@ import { useMemo } from 'react'
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { LookbookStrip } from '@/components/editorial/LookbookStrip'
-import { QuoteBlock } from '@/components/editorial/QuoteBlock'
+import { NightMotto } from '@/components/editorial/NightMotto'
 import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedJoin, creedMotto } from '@/data/creed'
+import { creedMotto } from '@/data/creed'
 import { productColours, productPath, thobes } from '@/data/products'
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
@@ -111,15 +111,7 @@ export function CollectionPage() {
         />
       </Section>
 
-      <Section paper={false} className="bg-night py-28 md:py-40">
-        <Container>
-          <QuoteBlock
-            tone="dark"
-            quote={creedMotto}
-            attribution={creedJoin}
-          />
-        </Container>
-      </Section>
+      <NightMotto />
 
       <section className="bg-ivory text-ink">
         <Container className="py-24 md:py-32 lg:py-40">
