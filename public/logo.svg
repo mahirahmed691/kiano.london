@@ -1,29 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Kiano London">
-  <rect width="512" height="512" fill="#1B1714"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 560" role="img" aria-label="Kiano London">
+  <rect width="512" height="560" fill="#1B1714"/>
+  <g fill="none" stroke="#F2EBDC" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M256 72 V168"/>
+    <path d="M238 72 H274"/>
+    <path d="M238 168 H274"/>
+    <path d="M256 104 L224 82"/>
+    <path d="M256 104 L288 82"/>
+    <path d="M216 82 H232"/>
+    <path d="M280 82 H296"/>
+    <path d="M256 136 L224 158"/>
+    <path d="M256 136 L288 158"/>
+    <path d="M216 158 H232"/>
+    <path d="M280 158 H296"/>
+  </g>
   <text
     x="256"
-    y="198"
+    y="226"
     text-anchor="middle"
     fill="#F2EBDC"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="54"
+    font-size="48"
     font-weight="400"
     letter-spacing="16"
   >KIANO</text>
   <text
     x="256"
-    y="248"
+    y="270"
     text-anchor="middle"
     fill="#F2EBDC"
     font-family="ui-sans-serif, system-ui, sans-serif"
-    font-size="22"
+    font-size="20"
     font-weight="400"
-    letter-spacing="14"
+    letter-spacing="13"
   >LONDON</text>
-  <line x1="78" y1="308" x2="176" y2="308" stroke="#F2EBDC" stroke-width="1" opacity="0.7"/>
+  <line x1="96" y1="318" x2="186" y2="318" stroke="#F2EBDC" stroke-width="1" opacity="0.7"/>
   <text
     x="256"
-    y="313"
+    y="323"
     text-anchor="middle"
     fill="#F2EBDC"
     font-family="ui-sans-serif, system-ui, sans-serif"
@@ -32,5 +45,5 @@
     letter-spacing="5"
     opacity="0.85"
   >EST. MMXXIV</text>
-  <line x1="336" y1="308" x2="434" y2="308" stroke="#F2EBDC" stroke-width="1" opacity="0.7"/>
+  <line x1="326" y1="318" x2="416" y2="318" stroke="#F2EBDC" stroke-width="1" opacity="0.7"/>
 </svg>

@@ -42,7 +42,7 @@ export function Header() {
       >
         <div
           className={cn(
-            'relative grid h-[5.25rem] grid-cols-[1fr_auto_1fr] items-center border-b border-transparent px-5 md:h-[5.75rem] md:px-12 lg:px-16',
+            'relative grid h-[6.25rem] grid-cols-[1fr_auto_1fr] items-center border-b border-transparent px-5 md:h-[6.75rem] md:px-12 lg:px-16',
             !inverted && 'border-rule/80',
           )}
         >

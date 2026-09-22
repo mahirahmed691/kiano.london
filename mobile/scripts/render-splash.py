@@ -117,9 +117,17 @@ def render() -> None:
     def mark(x: float, y: float) -> tuple[float, float]:
         return ox + x * scale, top + y * scale
 
-    stroke_line(draw, mark(11, 5), mark(11, 43), stroke_w, INK)
-    stroke_line(draw, mark(10.2, 24), mark(31, 5), stroke_w, INK)
-    stroke_line(draw, mark(10.2, 24), mark(31, 43), stroke_w, INK)
+    stroke_line(draw, mark(20, 5), mark(20, 43), stroke_w, INK)
+    stroke_line(draw, mark(15.5, 5), mark(24.5, 5), stroke_w, INK)
+    stroke_line(draw, mark(15.5, 43), mark(24.5, 43), stroke_w, INK)
+    stroke_line(draw, mark(20, 16), mark(7, 8), stroke_w, INK)
+    stroke_line(draw, mark(20, 16), mark(33, 8), stroke_w, INK)
+    stroke_line(draw, mark(5, 8), mark(9, 8), stroke_w, INK)
+    stroke_line(draw, mark(31, 8), mark(35, 8), stroke_w, INK)
+    stroke_line(draw, mark(20, 32), mark(7, 40), stroke_w, INK)
+    stroke_line(draw, mark(20, 32), mark(33, 40), stroke_w, INK)
+    stroke_line(draw, mark(5, 40), mark(9, 40), stroke_w, INK)
+    stroke_line(draw, mark(31, 40), mark(35, 40), stroke_w, INK)
 
     y = top + mono_h + gap_mono
     draw_tracked(draw, cx, y, "KIANO", cormorant, INK, 0.32)
@@ -128,7 +136,7 @@ def render() -> None:
     y += city_h + gap_rule
     draw.rectangle([cx - 42, y, cx + 42, y + rule_h], fill=RULE)
     y += rule_h + gap_est
-    draw_tracked(draw, cx, y, "EST. 2026", jost_est, INK_55, 0.28)
+    draw_tracked(draw, cx, y, "EST. MMXXIV", jost_est, INK_55, 0.28)
 
     box = image.getbbox()
     if box is None:

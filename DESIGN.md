@@ -1,6 +1,6 @@
 # Kiano London — design system
 
-Extracted and implemented as a restrained London house of the jubbah and the thobe: warm ivory ground, espresso ink, a three-line English lockup (KIANO / LONDON / EST. MMXXIV), serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained London house of the jubbah and the thobe: warm ivory ground, espresso ink, the interlocking KK monogram over a three-line English lockup (KIANO / LONDON / EST. MMXXIV), serif display, generous measure, no decorative chrome.
 
 ## Character
 
@@ -41,7 +41,7 @@ Pull quotes may be italic. Headlines are upright.
 
 ## Header
 
-Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. The house mark is the three-line lockup: KIANO, LONDON, EST. MMXXIV. Home and the stills open on the plate of the week from the book. The shop, the collection, and a visit open on a house still, lockup inverted over the plate. The packing, the letters, and the making carry the same stills and the woven lockup. A hairline London clock sits beside the bag: no numerals, no chrome, the house's time. Mobile: the lockup sits above full-screen ivory navigation in display serif; this week's plate closes the menu.
+Fixed. Over imagery: transparent, ivory type. After 24px of scroll, or on light pages: ivory field, hairline, ink type. The house mark is the interlocking KK monogram over the three-line lockup: KIANO, LONDON, EST. MMXXIV. EST. sits centred between two hairlines. Home and the stills open on the plate of the week from the book. The shop, the collection, and a visit open on a house still, lockup inverted over the plate. The packing, the letters, and the making carry the same stills and the woven lockup. A hairline London clock sits beside the bag: no numerals, no chrome, the house's time. Mobile: the lockup sits above full-screen ivory navigation in display serif; this week's plate closes the menu.
 
 ## Buttons
 
