@@ -5,6 +5,8 @@ export type LookbookPlate = {
   src: string
   alt: string
   objectPosition?: string
+  kicker?: string
+  name?: string
 }
 
 type Props = {
@@ -17,15 +19,29 @@ export function LookbookStrip({ plates, className }: Props) {
     <div className={cn('grid grid-cols-1 gap-px bg-rule sm:grid-cols-3', className)}>
       {plates.map((plate, index) => (
         <Reveal key={plate.src} delay={index * 90}>
-          <figure className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep max-sm:min-h-[85svh] max-sm:aspect-auto">
-            <img
-              src={plate.src}
-              alt={plate.alt}
-              loading="lazy"
-              decoding="async"
-              className="size-full object-cover"
-              style={plate.objectPosition ? { objectPosition: plate.objectPosition } : undefined}
-            />
+          <figure>
+            <div className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep max-sm:min-h-[85svh] max-sm:aspect-auto">
+              <img
+                src={plate.src}
+                alt={plate.alt}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover"
+                style={plate.objectPosition ? { objectPosition: plate.objectPosition } : undefined}
+              />
+            </div>
+            {plate.kicker || plate.name ? (
+              <figcaption className="bg-ivory px-1 py-4">
+                {plate.kicker ? (
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{plate.kicker}</p>
+                ) : null}
+                {plate.name ? (
+                  <p className="mt-1 font-display text-xl font-light tracking-[-0.02em] md:text-2xl">
+                    {plate.name}
+                  </p>
+                ) : null}
+              </figcaption>
+            ) : null}
           </figure>
         </Reveal>
       ))}

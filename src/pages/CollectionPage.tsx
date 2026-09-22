@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
+import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
+import { LookbookStrip } from '@/components/editorial/LookbookStrip'
 import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button, TextLink } from '@/components/ui/Button'
@@ -7,7 +9,6 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { productColours, productPath, thobes } from '@/data/products'
-import { site } from '@/data/site'
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -25,32 +26,20 @@ export function CollectionPage() {
 
   return (
     <>
-      <section className="grid bg-ivory pt-[var(--header-offset)] lg:min-h-[100dvh] lg:grid-cols-12">
-        <div className="relative order-1 min-h-[calc(62svh-var(--header-offset))] overflow-hidden bg-ivory-deep lg:order-2 lg:col-span-7 lg:min-h-[calc(100dvh-var(--header-offset))]">
-          <img
-            src="/images/thobe-layl.jpg"
-            alt="The Layl thobe: matte black, band collar, hem to the ankle."
-            className="still-in absolute inset-0 h-full w-full object-cover object-[center_12%]"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-        <div className="order-2 flex flex-col justify-center px-6 py-16 md:px-12 lg:order-1 lg:col-span-5 lg:px-16 lg:py-32">
-          <Reveal>
-            <Eyebrow>Emirati thobe</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
-              The Collection
-            </Display>
-            <p className="mt-4 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
-              {site.lockup}
-            </p>
-            <Body className="mt-6 max-w-md">
-              Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal,
-              grey, beige and bone. Cut from the house block.
-            </Body>
-          </Reveal>
-        </div>
-      </section>
+      <Hero
+        image="/images/thobe-layl.jpg"
+        imageAlt="The Layl thobe: matte black, band collar, hem to the ankle."
+        objectPosition="center 12%"
+        kicker="Emirati thobe"
+        title="The Collection."
+        subtitle="Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal, grey, beige and bone. Cut from the house block."
+        minHeight="tall"
+        priority
+      >
+        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
+          الثوب
+        </p>
+      </Hero>
 
       <Section>
         <Container>
@@ -92,6 +81,32 @@ export function CollectionPage() {
             </div>
           )}
         </Container>
+        <LookbookStrip
+          className="mt-24 md:mt-32"
+          plates={[
+            {
+              src: '/images/featured-overcoat.jpg',
+              alt: 'The Hadīd thobe at full length: standing collar, charcoal column.',
+              objectPosition: '72% 18%',
+              kicker: 'Charcoal',
+              name: 'Hadīd',
+            },
+            {
+              src: '/images/thobe-ghabar.jpg',
+              alt: 'The Ghabār thobe: earth grey compact cotton, hem to the ankle.',
+              objectPosition: 'center 12%',
+              kicker: 'Grey',
+              name: 'Ghabār',
+            },
+            {
+              src: '/images/thobe-raml.jpg',
+              alt: 'The Raml thobe: sand extra-long staple, the cloth to the ankle.',
+              objectPosition: 'center 12%',
+              kicker: 'Beige',
+              name: 'Raml',
+            },
+          ]}
+        />
       </Section>
 
       <section className="bg-ivory-deep/50">

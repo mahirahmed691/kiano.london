@@ -1,3 +1,4 @@
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { packingNote, packingSteps, sewnLabels } from '@/data/packing'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Container, Section } from '@/components/ui/Container'
@@ -23,6 +24,19 @@ export function HowItArrives() {
             ))}
           </div>
         </div>
+
+        <Reveal className="mt-20 md:mt-28">
+          <figure className="relative overflow-hidden bg-ivory-deep">
+            <img
+              src="/images/atelier-rail.jpg"
+              alt="The house line on the rail: black, sand, and bone."
+              className="aspect-[21/9] min-h-[16rem] w-full object-cover object-[18%_40%] md:min-h-[22rem]"
+              loading="lazy"
+              decoding="async"
+            />
+            <WovenLabel size="md" className="absolute bottom-5 left-5 md:bottom-8 md:left-8" />
+          </figure>
+        </Reveal>
 
         <div className="mt-20 grid gap-16 border-t border-rule pt-16 md:mt-28 md:pt-20 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">

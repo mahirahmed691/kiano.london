@@ -6,6 +6,7 @@ import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
+import { thisWeekPlate } from '@/lib/instagram-plates'
 import { cn } from '@/lib/cn'
 
 type Props = {
@@ -47,6 +48,7 @@ function RoomLink({
 
 export function MobileNav({ open, onClose }: Props) {
   const { count, setOpen } = useCart()
+  const week = thisWeekPlate()
   useEffect(() => {
     if (!open) return
     const onKey = (event: KeyboardEvent) => {
@@ -165,7 +167,23 @@ export function MobileNav({ open, onClose }: Props) {
             </button>
           </li>
         </ul>
-        <p className="mt-16 text-[0.68rem] uppercase tracking-[0.42em] text-ink/70">
+        <NavLink to="/stills" onClick={onClose} className="mt-16 block max-w-[14rem]">
+          <span className="relative block aspect-[4/5] overflow-hidden bg-ivory-deep">
+            <img
+              src={week.src}
+              alt={week.alt}
+              className="h-full w-full object-cover"
+              style={{ objectPosition: week.objectPosition }}
+            />
+          </span>
+          <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
+            This week · {week.place}
+          </span>
+          <span className="mt-2 block font-display text-2xl font-light tracking-[-0.02em]">
+            {week.name}
+          </span>
+        </NavLink>
+        <p className="mt-10 text-[0.68rem] uppercase tracking-[0.42em] text-ink/70">
           {site.lockup}
         </p>
         <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">

@@ -144,7 +144,7 @@ function CollectionPanel({ onNavigate }: { onNavigate: () => void }) {
 function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="grid gap-12 lg:grid-cols-12" onClick={onNavigate}>
-      <div className="lg:col-span-7">
+      <div className="lg:col-span-5">
         <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The making</p>
         <p className="mt-6 max-w-xl font-display text-3xl font-light leading-snug tracking-[-0.02em] text-ink md:text-4xl">
           How the column is cut, and the rooms where it is finished.
@@ -158,7 +158,24 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
           </li>
         </ul>
       </div>
-      <div className="lg:col-span-4 lg:col-start-9">
+      <div className="lg:col-span-4">
+        <NavLink to="/craftsmanship" className="group block">
+          <span className="relative block aspect-[4/5] overflow-hidden bg-ivory-deep">
+            <img
+              src="/images/stitch-pad.jpg"
+              alt="Pad-stitching through the collar stand, silk on linen."
+              className="h-full w-full object-cover object-[center_40%] transition-transform duration-[1600ms] ease-out motion-safe:group-hover:scale-[1.04]"
+            />
+          </span>
+          <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
+            The stitch
+          </span>
+          <span className="mt-2 block font-display text-xl font-light tracking-[-0.02em] text-ink md:text-2xl">
+            Closer.
+          </span>
+        </NavLink>
+      </div>
+      <div className="flex flex-col justify-between gap-10 lg:col-span-3 lg:border-l lg:border-rule lg:pl-10">
         <HouseLinks />
       </div>
     </div>
