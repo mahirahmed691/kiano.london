@@ -32,6 +32,16 @@ export async function registerHousePush() {
       importance: Notifications.AndroidImportance.DEFAULT,
       lightColor: '#1B1714',
     })
+    await Notifications.setNotificationChannelAsync('plate', {
+      name: 'This week’s still',
+      importance: Notifications.AndroidImportance.DEFAULT,
+      lightColor: '#1B1714',
+    })
+    await Notifications.setNotificationChannelAsync('left', {
+      name: 'A cut has left',
+      importance: Notifications.AndroidImportance.DEFAULT,
+      lightColor: '#1B1714',
+    })
   }
 
   const existing = await Notifications.getPermissionsAsync()

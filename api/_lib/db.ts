@@ -224,6 +224,15 @@ async function migrate(db: Sql) {
       posted_by TEXT NOT NULL DEFAULT ''
     )
   `
+  await db`
+    CREATE TABLE IF NOT EXISTS plate_letters (
+      week_key TEXT PRIMARY KEY,
+      plate_id TEXT NOT NULL,
+      emailed INTEGER NOT NULL DEFAULT 0,
+      pushed INTEGER NOT NULL DEFAULT 0,
+      sent_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
 
   for (const product of products) {
     for (const size of thobeSizes) {

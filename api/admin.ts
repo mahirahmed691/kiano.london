@@ -1573,6 +1573,8 @@ async function postWork(request: Request): Promise<Response> {
           body: bodyLine,
           href: '/account',
           productIds: cuts,
+          nativePush: stage === 'sent',
+          channel: stage === 'sent' ? 'left' : 'word',
         })
       } else if (weekChanged) {
         const week = formatNamedWeek(namedWeek)

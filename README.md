@@ -103,7 +103,7 @@ Clerk account sync: in the Clerk Dashboard (production), add `https://www.kiano.
 
 Stripe: the same webhook as checkout (`POST /api/stripe-webhook`) must also receive `charge.refunded` so a full return restocks the size.
 
-List letters: set `RESEND_API_KEY` and `RESEND_FROM` on Vercel after the sending domain is verified in Resend.
+List letters: set `RESEND_API_KEY` and `RESEND_FROM` on Vercel after the sending domain is verified in Resend. Confirmed names are written this week’s still on Monday (`GET /api/subscribe`, also as `/api/stills-week`). Optional: `CRON_SECRET` so the week can also be sent with `Authorization: Bearer`.
 
 ## Project structure
 

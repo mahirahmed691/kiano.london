@@ -17,6 +17,8 @@ type NoticeInput = {
   body: string
   href?: string
   productIds?: string[]
+  nativePush?: boolean
+  channel?: 'word' | 'plate' | 'left'
 }
 
 export function storedProductIds(ids: string[] | undefined) {
@@ -72,6 +74,8 @@ export async function recordNotice(input: NoticeInput) {
     return
   }
 
+  if (input.audience === 'member' && !input.nativePush) return
+
   void pushNotice(input, title, body, href).catch((caught) => {
     console.error(caught)
   })
@@ -102,12 +106,30 @@ async function pushNotice(input: NoticeInput, title: string, body: string, href:
 
   const unique = [...new Set(tokens.filter(isExpoPushToken))]
   if (unique.length === 0) return
+  await sendExpo(unique, title, body, href, input.channel ?? (input.nativePush ? 'left' : 'word'))
+}
 
-  const messages = unique.map((token) => ({
+export async function pushPlateToDevices(title: string, body: string, href: string) {
+  const sql = await withDb()
+  const rows = (await sql`SELECT token FROM push_tokens`) as { token: string }[]
+  const unique = [...new Set(rows.map((row) => row.token).filter(isExpoPushToken))]
+  if (unique.length === 0) return { sent: 0 }
+  await sendExpo(unique, title, body, houseHref(href) || '/stills', 'plate')
+  return { sent: unique.length }
+}
+
+async function sendExpo(
+  tokens: string[],
+  title: string,
+  body: string,
+  href: string,
+  channelId: 'word' | 'plate' | 'left',
+) {
+  const messages = tokens.map((token) => ({
     to: token,
     title,
     body,
-    channelId: 'word',
+    channelId,
     badge: 1,
     data: { href },
   }))

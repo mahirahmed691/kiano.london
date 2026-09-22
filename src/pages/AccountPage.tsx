@@ -154,7 +154,7 @@ function AccountDeviceWord() {
   if (allowed) {
     return (
       <p className="mt-10 text-[11px] uppercase tracking-[0.22em] text-stone">
-        This device takes word.
+        This device takes the plate of the week, and when a cut has left.
       </p>
     )
   }
@@ -167,7 +167,7 @@ function AccountDeviceWord() {
         window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'kiano-request-push' }))
       }}
     >
-      Allow word on this device
+      Allow the plate, and when a cut has left
     </button>
   )
 }

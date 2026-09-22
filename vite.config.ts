@@ -17,6 +17,7 @@ const envKeys = [
   'VITE_ADMIN_EMAILS',
   'RESEND_API_KEY',
   'RESEND_FROM',
+  'CRON_SECRET',
 ] as const
 
 type Method = 'GET' | 'POST' | 'PATCH' | 'PUT'
@@ -136,6 +137,16 @@ const routes: Route[] = [
   {
     method: 'GET',
     path: '/api/subscribe-confirm',
+    load: async () => (await import('./api/subscribe.ts')).GET,
+  },
+  {
+    method: 'GET',
+    path: '/api/stills-week',
+    load: async () => (await import('./api/subscribe.ts')).GET,
+  },
+  {
+    method: 'GET',
+    path: '/api/subscribe',
     load: async () => (await import('./api/subscribe.ts')).GET,
   },
   {
