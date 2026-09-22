@@ -24,11 +24,11 @@ No gradients as decoration. Hero overlays are photographic scrims only. No gold 
 
 ## Typography
 
-- **Display:** Cormorant Garamond, 300. Headlines, pull quotes.
-- **Interface:** Jost, 300–400. Navigation, labels, body.
+- **Display:** Cormorant Garamond. The house lockup (KIANO) is Regular, 400. Headlines and pull quotes are Light, 300.
+- **Interface:** Jost, 300–400. Navigation, labels, body, and LONDON / EST. MMXXIV.
 - **Arabic:** Amiri, 400. Garment names, and a second line on size, packing, and a visit. Not the house mark.
 
-Labels are 10–11px, uppercase, tracking `0.28em–0.36em`. Headlines are light weight with tight tracking and discretionary ligatures. Body is 15–16px, weight 300, leading near `1.85`, `max-width: 65ch` in practice.
+Labels are 10–11px, uppercase, tracking `0.28em–0.36em`. Headlines are light weight with tight tracking and discretionary ligatures. The lockup is Regular, widely tracked, upright. Body is 15–16px, weight 300, leading near `1.85`, `max-width: 65ch` in practice.
 
 Pull quotes may be italic. Headlines are upright.
 

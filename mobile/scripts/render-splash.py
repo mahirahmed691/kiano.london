@@ -19,7 +19,7 @@ OUT = ROOT / "assets" / "images" / "splash-lockup.png"
 CACHE = Path("/tmp/kiano-splash-fonts")
 
 FONTS = {
-    "cormorant-medium.ttf": "https://cdn.jsdelivr.net/fontsource/fonts/cormorant-garamond@5.2.8/latin-500-normal.ttf",
+    "cormorant-regular.ttf": "https://cdn.jsdelivr.net/fontsource/fonts/cormorant-garamond@5.2.8/latin-400-normal.ttf",
     "jost-light.ttf": "https://cdn.jsdelivr.net/fontsource/fonts/jost@5.2.8/latin-300-normal.ttf",
 }
 
@@ -31,7 +31,7 @@ def fetch_fonts() -> tuple[Path, Path]:
         if dest.exists() and dest.stat().st_size > 1000:
             continue
         urllib.request.urlretrieve(url, dest)
-    return CACHE / "cormorant-medium.ttf", CACHE / "jost-light.ttf"
+    return CACHE / "cormorant-regular.ttf", CACHE / "jost-light.ttf"
 
 
 def tracked_width(font: ImageFont.FreeTypeFont, text: str, tracking_em: float) -> float:
