@@ -202,8 +202,9 @@ export function OrderConfirmedPage() {
               The cut is reserved.
             </Display>
             <Body className="mt-8">
-              Payment is held. Cloth will be cut from the house block in four to eight weeks. A
-              note will follow if a fitting is needed before it is packed.{' '}
+              Payment is held. Cloth is reserved, not yet on the table. The account will show when
+              it is being cut, when it is packed, and when it has left. Four to eight weeks is the
+              usual wait.{' '}
               {packingNote}
             </Body>
             {order?.customerEmail ? (
@@ -330,7 +331,7 @@ export function OrderConfirmedPage() {
                   </div>
                 ) : null}
                 <p className="mt-8 text-[12px] font-light leading-relaxed text-stone">
-                  Carriage included. Cut to order, four to eight weeks. Leaves unscented.
+                  Cloth is held. Not yet on the table. Carriage included. Leaves unscented.
                 </p>
               </div>
             </aside>

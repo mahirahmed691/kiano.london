@@ -113,6 +113,11 @@ export function HeldCuts({
                 )
               })}
             </ul>
+            <p className="mt-3 font-display text-3xl font-light md:text-4xl">
+              {isFullyReturned(order.amountPence, order.refundedPence ?? 0)
+                ? 'The reservation has been returned.'
+                : `${workCopy[asWorkStage(order.stage)].memberTitle}.`}
+            </p>
             <ol className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
               {workStages.map((step) => {
                 const current = asWorkStage(order.stage)
