@@ -70,13 +70,9 @@ export const products: Product[] = [
         objectPosition: 'center 12%',
       },
       {
-        src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of the Layl thobe, the woven label set by hand.',
-        objectPosition: 'center 62%',
-      },
-      {
-        src: '/images/stitch-buttonhole.jpg',
-        alt: 'A silk-twist buttonhole on dark cloth, the placket of the Layl thobe.',
+        src: '/images/obsidian.jpg',
+        alt: 'Layl worn in London light: a black column at the window.',
+        objectPosition: 'center 18%',
       },
     ],
   },
@@ -115,11 +111,6 @@ export const products: Product[] = [
         src: '/images/worsted-wool.jpg',
         alt: 'Charcoal Super 150s and a needle, the winter cloth of Hadīd.',
       },
-      {
-        src: '/images/concealed-pocket.jpg',
-        alt: 'The interior pocket of the Hadīd thobe, bagged so it does not pull the cloth.',
-        objectPosition: 'center 62%',
-      },
     ],
   },
   {
@@ -157,10 +148,6 @@ export const products: Product[] = [
         src: '/images/cloth-dust.jpg',
         alt: 'Earth-grey compact cotton in the piece, the cloth of Ghabār.',
       },
-      {
-        src: '/images/worsted-wool.jpg',
-        alt: 'The stitch at close range: pad-stitching that shapes the collar stand.',
-      },
     ],
   },
   {
@@ -197,11 +184,6 @@ export const products: Product[] = [
         src: '/images/cloth-giza.jpg',
         alt: 'Sand extra-long staple cotton in the piece, before it is chalked and cut.',
       },
-      {
-        src: '/images/concealed-pocket.jpg',
-        alt: 'The unseen interior: a pocket bagged in the lining, a label set by hand.',
-        objectPosition: 'center 62%',
-      },
     ],
   },
   {
@@ -235,12 +217,9 @@ export const products: Product[] = [
         objectPosition: 'center 12%',
       },
       {
-        src: '/images/cloth-giza.jpg',
-        alt: 'Pale cloth in the piece, washed so the fibre drapes rather than stands.',
-      },
-      {
-        src: '/images/stitch-buttonhole.jpg',
-        alt: 'A silk-twist buttonhole: the fastening disappears until the hand finds it.',
+        src: '/images/look-lanesborough.jpg',
+        alt: 'A pale column worn at Hyde Park Corner: bone light on London stone.',
+        objectPosition: 'center 22%',
       },
     ],
   },
