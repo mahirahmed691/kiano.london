@@ -25,7 +25,7 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
   const fieldClass = cn(
     'w-full border-0 border-b bg-transparent py-3 text-[15px] font-light outline-none transition-colors duration-300',
     dark
-      ? 'border-ivory/25 text-ivory placeholder:text-ivory/35 focus:border-ivory'
+      ? 'border-bronze/35 text-ivory placeholder:text-ivory/35 focus:border-bronze'
       : 'border-rule text-ink placeholder:text-stone/70 focus:border-ink',
   )
 
@@ -70,7 +70,7 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
           htmlFor={`${idPrefix}-email`}
           className={cn(
             'text-[11px] uppercase tracking-[0.22em]',
-            dark ? 'text-ivory/45' : 'text-stone',
+            dark ? 'text-bronze' : 'text-stone',
           )}
         >
           Email

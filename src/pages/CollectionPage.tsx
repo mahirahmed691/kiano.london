@@ -113,8 +113,8 @@ export function CollectionPage() {
 
       <NightMotto />
 
-      <section className="bg-ivory text-ink">
-        <Container className="py-24 md:py-32 lg:py-40">
+      <Section>
+        <Container>
           <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
               <Eyebrow>Hajar</Eyebrow>
@@ -140,7 +140,7 @@ export function CollectionPage() {
             </Reveal>
           </div>
         </Container>
-      </section>
+      </Section>
     </>
   )
 }

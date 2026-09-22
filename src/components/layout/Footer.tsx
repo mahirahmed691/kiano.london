@@ -26,7 +26,7 @@ export function Footer() {
 
         <div className="mt-16 grid gap-12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 lg:gap-8">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-ivory/45">
+            <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">
               {site.fullName}
             </p>
             <ul className="mt-4 space-y-2">
@@ -76,7 +76,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-ivory/45">Visit</p>
+            <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">Visit</p>
             <address className="mt-5 not-italic text-[14px] font-light leading-[1.85] text-ivory/80">
               {site.address}
               <br />
@@ -91,7 +91,7 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-ivory/45">The list</p>
+            <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">The list</p>
             <p className="mt-4 text-[14px] font-light leading-relaxed text-ivory/65">
               Cloth and when a piece can be reserved. A few letters a year.
             </p>
@@ -101,7 +101,7 @@ export function Footer() {
           </div>
         </div>
 
-        <Rule className="my-14 bg-ivory/15" />
+        <Rule className="my-14 bg-bronze/30" />
 
         <div className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.18em] text-ivory/40 sm:flex-row sm:items-center sm:justify-between">
           <p>

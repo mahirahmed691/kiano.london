@@ -116,6 +116,8 @@ export function HomePage() {
         </Container>
       </Section>
 
+      <NightMotto attribution={`${creedJoin} · ${site.note}`} />
+
       <section>
         {previous.map((plate, index) => (
           <BookLook key={plate.id} plate={plate} lastWeek={index === 0} />
@@ -137,8 +139,6 @@ export function HomePage() {
           </figcaption>
         </figure>
       </section>
-
-      <NightMotto attribution={`${creedJoin} · ${site.note}`} />
 
       <Section>
         <Container>

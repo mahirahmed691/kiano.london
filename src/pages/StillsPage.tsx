@@ -99,7 +99,7 @@ export function StillsPage() {
 
       <NightMotto />
 
-      <section className="bg-ivory text-ink">
+      <Section className="py-0 md:py-0 lg:py-0">
         <Container>
           <ol>
             {instagramPlates.map((plate, index) => {
@@ -169,7 +169,7 @@ export function StillsPage() {
             })}
           </ol>
         </Container>
-      </section>
+      </Section>
 
       <Section className="border-t border-rule">
         <Container>

@@ -45,7 +45,7 @@ Fixed. Over imagery: transparent, ivory navigation, bronze lockup. After 24px of
 
 ## Footer
 
-Night ground. The lockup sits centred on the band, bronze, the same stack as the header. Tagline sits under it in ivory; the creed sits in bronze. Nav, a visit, and the list follow in columns. No gold fill.
+Night ground. The lockup sits centred on the band, bronze, the same stack as the header. Tagline sits under it in ivory; the creed and column labels sit in bronze. Nav, a visit, and the list follow in columns. The list field uses a bronze hairline. No gold fill.
 
 ## Buttons
 
