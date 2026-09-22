@@ -10,12 +10,15 @@ type Props = {
 }
 
 export function QuoteBlock({ quote, attribution, className, tone = 'light' }: Props) {
+  const line = tone === 'dark' ? 'bg-ivory/25' : 'bg-ink/20'
+
   return (
     <Reveal className={cn('mx-auto max-w-3xl text-center', className)}>
+      <div className={cn('mx-auto mb-10 h-px w-12 md:mb-12 md:w-16', line)} />
       <Display
         as="h2"
         className={cn(
-          'text-3xl italic sm:text-4xl md:text-5xl',
+          'text-4xl italic sm:text-5xl md:text-6xl',
           tone === 'dark' ? 'text-ivory' : 'text-ink',
         )}
       >
@@ -24,13 +27,14 @@ export function QuoteBlock({ quote, attribution, className, tone = 'light' }: Pr
       {attribution ? (
         <p
           className={cn(
-            'mt-8 text-[11px] uppercase tracking-[0.22em]',
-            tone === 'dark' ? 'text-ivory/60' : 'text-stone',
+            'mt-10 text-[10px] uppercase tracking-[0.34em]',
+            tone === 'dark' ? 'text-ivory/55' : 'text-stone',
           )}
         >
           {attribution}
         </p>
       ) : null}
+      <div className={cn('mx-auto mt-10 h-px w-12 md:mt-12 md:w-16', line)} />
     </Reveal>
   )
 }

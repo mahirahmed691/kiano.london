@@ -53,26 +53,26 @@ export function Hero({
         className={
           quiet
             ? 'absolute inset-x-0 top-0 h-40 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.42)_0%,rgba(20,18,16,0)_100%)]'
-            : 'absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.55)_0%,rgba(20,18,16,0.12)_26%,rgba(20,18,16,0.1)_50%,rgba(20,18,16,0.8)_100%)]'
+            : 'absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0.08)_28%,rgba(20,18,16,0.05)_52%,rgba(20,18,16,0.7)_100%)]'
         }
         aria-hidden="true"
       />
       {!quiet && hasCopy ? (
         <Container
           className={cn(
-            'relative z-10 w-full pb-[max(4.5rem,calc(env(safe-area-inset-bottom)+2rem))] pt-32 md:pb-20 lg:pb-24',
+            'relative z-10 w-full pb-[max(5rem,calc(env(safe-area-inset-bottom)+2.5rem))] pt-32 md:pb-24 lg:pb-28',
             align === 'center' && 'text-center',
           )}
         >
           {kicker ? (
-            <Eyebrow className="copy-in mb-5 text-ivory/75">{kicker}</Eyebrow>
+            <Eyebrow className="copy-in mb-7 text-ivory/70">{kicker}</Eyebrow>
           ) : null}
           {title ? (
             <div className="copy-in" style={{ animationDelay: kicker ? '90ms' : undefined }}>
               <Display
                 as="h1"
                 className={cn(
-                  'max-w-4xl text-[2.75rem] text-ivory sm:text-6xl md:text-7xl lg:text-[5.25rem]',
+                  'max-w-4xl text-[2.85rem] text-ivory sm:text-6xl md:text-7xl lg:text-[5.65rem]',
                   align === 'center' && 'mx-auto',
                 )}
               >
@@ -84,7 +84,7 @@ export function Hero({
             <div className="copy-in" style={{ animationDelay: '180ms' }}>
               <Lead
                 className={cn(
-                  'mt-6 text-ivory/80',
+                  'mt-8 max-w-2xl text-ivory/80',
                   align === 'center' && 'mx-auto',
                 )}
               >
@@ -93,7 +93,7 @@ export function Hero({
             </div>
           ) : null}
           {children ? (
-            <div className="copy-in mt-10" style={{ animationDelay: '260ms' }}>
+            <div className="copy-in mt-12" style={{ animationDelay: '260ms' }}>
               {children}
             </div>
           ) : null}

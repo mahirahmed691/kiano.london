@@ -79,29 +79,29 @@ export function StoryPage() {
 
       <Section>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-12">
+          <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <Eyebrow>{creedStandard}</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">{creedSpoken}</Display>
+              <Display className="mt-6 text-4xl md:text-5xl lg:text-6xl">{creedSpoken}</Display>
             </Reveal>
-            <div className="space-y-8 lg:col-span-7 lg:col-start-6">
-              <Reveal>
-                <h3 className="font-display text-2xl font-light">Discipline</h3>
-                <Body className="mt-3">
+            <div className="divide-y divide-rule lg:col-span-7 lg:col-start-6">
+              <Reveal className="pb-10">
+                <h3 className="font-display text-3xl font-light md:text-4xl">Discipline</h3>
+                <Body className="mt-5">
                   Paper for the Emirati thobe is kept. One block, one silhouette. New
                   patterns are added; old ones are not discarded. The shears follow the grain.
                 </Body>
               </Reveal>
-              <Reveal delay={80}>
-                <h3 className="font-display text-2xl font-light">Craftsmanship</h3>
-                <Body className="mt-3">
+              <Reveal delay={80} className="py-10">
+                <h3 className="font-display text-3xl font-light md:text-4xl">Craftsmanship</h3>
+                <Body className="mt-5">
                   Ready-to-wear follows the same methods as commission work: felled
                   seams, pad-stitched collars, a finish from the inside. The difference is only time.
                 </Body>
               </Reveal>
-              <Reveal delay={140}>
-                <h3 className="font-display text-2xl font-light">Purpose</h3>
-                <Body className="mt-3">
+              <Reveal delay={140} className="pt-10">
+                <h3 className="font-display text-3xl font-light md:text-4xl">Purpose</h3>
+                <Body className="mt-5">
                   There is no window dressing. Cloth is shown on the table. A thobe is
                   tried in natural light, then worn with intent. {creedMotto}
                 </Body>
@@ -111,7 +111,7 @@ export function StoryPage() {
         </Container>
       </Section>
 
-      <Section className="bg-ivory-deep/50 py-24 md:py-32">
+      <Section className="bg-ivory-deep/50 py-28 md:py-40">
         <Container>
           <QuoteBlock
             quote={creedMotto}

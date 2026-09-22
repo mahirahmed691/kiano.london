@@ -248,7 +248,7 @@ export function MegaMenu({ inverted }: Props) {
 
   const triggerClass = (isActive: boolean) =>
     cn(
-      'relative text-[11px] uppercase tracking-[0.22em] transition-opacity after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:origin-left after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)]',
+      'relative text-[10px] uppercase tracking-[0.28em] transition-opacity after:absolute after:-bottom-2 after:left-0 after:h-px after:w-full after:origin-left after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)]',
       inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
       isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100',
       isActive ? 'after:scale-x-100' : 'after:scale-x-0',

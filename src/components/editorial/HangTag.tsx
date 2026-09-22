@@ -10,18 +10,20 @@ export function HangTag({ className }: Props) {
   return (
     <article
       className={cn(
-        'mx-auto flex max-w-sm flex-col items-center bg-night px-10 py-14 text-ivory md:px-12 md:py-16',
+        'mx-auto flex max-w-[20rem] flex-col items-center border border-ivory/20 bg-night px-11 py-16 text-ivory md:px-14 md:py-20',
         className,
       )}
     >
       <Lockup />
-      <p className="mt-10 text-center text-[11px] uppercase tracking-[0.28em] text-ivory/50">
+      <span className="mt-12 h-px w-10 bg-ivory/25" aria-hidden="true" />
+      <p className="mt-10 text-center text-[10px] uppercase tracking-[0.34em] text-ivory/50">
         {creedJoin}
       </p>
-      <p className="mt-8 max-w-[18rem] text-center text-[14px] font-light leading-relaxed text-ivory/80">
+      <p className="mt-8 max-w-[16.5rem] text-center text-[14px] font-light leading-[1.85] text-ivory/80">
         {creedWoven} {creedIntent}
       </p>
-      <p className="mt-10 text-center text-[11px] uppercase tracking-[0.22em] text-ivory/55">
+      <span className="mt-12 h-px w-10 bg-ivory/25" aria-hidden="true" />
+      <p className="mt-10 text-center text-[10px] uppercase tracking-[0.3em] text-ivory/55">
         {creedMotto}
       </p>
     </article>

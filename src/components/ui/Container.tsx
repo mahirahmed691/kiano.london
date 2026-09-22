@@ -21,7 +21,7 @@ export function Container({ as: Tag = 'div', children, className, id }: Props) {
 
 export function Section({ as: Tag = 'section', children, className, id }: Props) {
   return (
-    <Tag id={id} className={cn('py-20 md:py-28 lg:py-36', className)}>
+    <Tag id={id} className={cn('py-24 md:py-32 lg:py-44', className)}>
       {children}
     </Tag>
   )

@@ -62,7 +62,7 @@ export function CollectionPage() {
           {shown.length === 0 ? (
             <p className="text-[15px] font-light text-ink-soft">No thobe in this colour.</p>
           ) : (
-            <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-12">
+            <div className="grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-10">
               {shown.map((product, index) => (
                 <ProductCard
                   key={product.id}
@@ -111,7 +111,7 @@ export function CollectionPage() {
       </Section>
 
       <section className="bg-ivory-deep/50">
-        <Container className="py-20 md:py-28">
+        <Container className="py-24 md:py-32 lg:py-40">
           <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
               <Eyebrow>Hajar</Eyebrow>

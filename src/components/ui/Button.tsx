@@ -27,7 +27,7 @@ const variantClass: Record<Variant, string> = {
 
 function classes(variant: Variant, className?: string, disabled?: boolean) {
   return cn(
-    'inline-flex min-h-11 appearance-none items-center gap-3 px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] transition-colors duration-300 active:opacity-80',
+    'inline-flex min-h-11 appearance-none items-center gap-3 px-8 py-2.5 text-[10px] font-normal uppercase tracking-[0.28em] transition-colors duration-500 active:opacity-80',
     variantClass[variant],
     disabled && 'pointer-events-none opacity-35',
     className,
@@ -82,7 +82,7 @@ export function TextLink({
     <Link
       to={to}
       className={cn(
-        'group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70',
+        'group inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] transition-opacity duration-500 hover:opacity-70',
         className,
       )}
     >

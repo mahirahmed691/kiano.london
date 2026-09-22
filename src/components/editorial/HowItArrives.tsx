@@ -46,13 +46,13 @@ export function HowItArrives() {
           </figure>
         </Reveal>
 
-        <div className="mt-20 grid items-center gap-16 md:mt-28 lg:grid-cols-12">
+        <div className="mt-24 grid items-center gap-16 md:mt-32 lg:grid-cols-12 lg:gap-20">
           <Reveal className="lg:col-span-5">
             <HangTag />
           </Reveal>
           <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
             <Eyebrow>The tag</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">The house, in the box.</Display>
+            <Display className="mt-5 text-4xl md:text-5xl lg:text-6xl">The house, in the box.</Display>
             <Body className="mt-8">
               The hang tag sits with the piece. {creedWoven} {creedIntent} {creedMotto}
             </Body>

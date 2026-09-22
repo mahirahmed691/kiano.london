@@ -7,7 +7,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedIntent, creedJoin, creedMotto, creedStandard, creedWoven } from '@/data/creed'
+import { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
 import { site } from '@/data/site'
@@ -34,26 +34,26 @@ export function HomePage() {
 
       <Section>
         <Container>
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
             <Reveal className="lg:col-span-5">
               <Eyebrow>{creedStandard}</Eyebrow>
-              <Display as="h1" className="mt-4 text-4xl md:text-5xl lg:text-6xl">
+              <Display as="h1" className="mt-6 text-5xl md:text-6xl lg:text-7xl">
                 Worn with purpose.
               </Display>
-              <p className="mt-5 text-[0.68rem] uppercase tracking-[0.28em] text-ink/55">
+              <p className="mt-8 text-[0.62rem] uppercase tracking-[0.4em] text-ink/50">
                 {creedJoin}
               </p>
             </Reveal>
-            <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+            <Reveal delay={120} className="lg:col-span-6 lg:col-start-7 lg:pt-14">
+              <p className="text-[10px] uppercase tracking-[0.32em] text-stone">
                 This week · {week.place}
               </p>
-              <Lead className="mt-4">{weekCopy.lines[0] ?? week.name}</Lead>
-              <Body className="mt-6">
+              <Lead className="mt-5">{weekCopy.lines[0] ?? week.name}</Lead>
+              <Body className="mt-8">
                 {creedWoven} {creedIntent} Five columns, and the outer garment in
                 three colours. The house does not invent a second look for a feed.
               </Body>
-              <div className="mt-8 flex flex-wrap items-center gap-6">
+              <div className="mt-10 flex flex-wrap items-center gap-8">
                 <Button to="/stills">The stills</Button>
                 <TextLink to="/shop">The Shop</TextLink>
                 <TextLink to="/collection">The Collection</TextLink>
@@ -65,6 +65,10 @@ export function HomePage() {
 
       <Section className="bg-ivory-deep/40">
         <Container>
+          <Reveal className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
+            <Eyebrow>The house</Eyebrow>
+            <Display className="mt-5 text-4xl md:text-5xl lg:text-6xl">{creedSpoken}</Display>
+          </Reveal>
           <HouseCreed />
         </Container>
       </Section>
@@ -73,7 +77,7 @@ export function HomePage() {
         <Container>
           <Reveal>
             <Eyebrow>The line</Eyebrow>
-            <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
+            <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-20">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Shop</p>
                 <ul className="mt-5 space-y-3">
@@ -134,7 +138,7 @@ export function HomePage() {
         </figure>
       </section>
 
-      <Section className="bg-night py-24 md:py-32">
+      <Section className="bg-night py-28 md:py-40">
         <Container>
           <QuoteBlock
             tone="dark"
