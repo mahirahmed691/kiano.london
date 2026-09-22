@@ -1,11 +1,10 @@
 import { useMemo } from 'react'
+import { Hero } from '@/components/editorial/Hero'
 import { LookbookStrip } from '@/components/editorial/LookbookStrip'
 import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { jubbahColours, jubbahs, productPath } from '@/data/products'
 import { useColourFilter } from '@/lib/colour-param'
@@ -25,32 +24,20 @@ export function ShopPage() {
 
   return (
     <>
-      <section className="grid bg-ivory pt-[var(--header-offset)] lg:min-h-[100dvh] lg:grid-cols-12">
-        <div className="relative order-1 min-h-[calc(62svh-var(--header-offset))] overflow-hidden bg-ivory-deep lg:order-2 lg:col-span-7 lg:min-h-[calc(100dvh-var(--header-offset))]">
-          <img
-            src="/images/jubbah-sand-02.jpg"
-            alt="The sand jubbah at rest, the cloth to the ankle."
-            className="still-in absolute inset-0 h-full w-full object-cover object-[center_22%]"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-        <div className="order-2 flex flex-col justify-center px-6 py-16 md:px-12 lg:order-1 lg:col-span-5 lg:px-16 lg:py-32">
-          <Reveal>
-            <Eyebrow>The outer garment</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl md:text-6xl lg:text-7xl">
-              The Shop
-            </Display>
-            <p lang="ar" dir="rtl" className="mt-4 font-arabic text-2xl text-ink/55">
-              الجُبَّة
-            </p>
-            <Body className="mt-6 max-w-md">
-              The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52
-              to 60. Cut from the house block.
-            </Body>
-          </Reveal>
-        </div>
-      </section>
+      <Hero
+        image="/images/jubbah-sand-02.jpg"
+        imageAlt="The sand jubbah at rest, the cloth to the ankle."
+        objectPosition="center 22%"
+        kicker="The outer garment"
+        title="The Shop."
+        subtitle="The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52 to 60. Cut from the house block."
+        minHeight="tall"
+        priority
+      >
+        <p lang="ar" dir="rtl" className="font-arabic text-2xl text-ivory/70">
+          الجُبَّة
+        </p>
+      </Hero>
 
       <Section>
         <Container>
@@ -90,15 +77,21 @@ export function ShopPage() {
             {
               src: '/images/jubbah-black-02.jpg',
               alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
+              kicker: 'Black',
+              name: 'The jubbah',
             },
             {
               src: '/images/jubbah-charcoal-cloth.jpg',
               alt: 'Charcoal wool-cotton for the jubbah, still in the piece.',
               objectPosition: 'center 40%',
+              kicker: 'The cloth',
+              name: 'Charcoal',
             },
             {
               src: '/images/jubbah-charcoal-02.jpg',
               alt: 'The charcoal jubbah walking: wool-cotton, ankle hem, concealed placket.',
+              kicker: 'Charcoal',
+              name: 'The jubbah',
             },
           ]}
         />

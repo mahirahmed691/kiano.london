@@ -121,7 +121,12 @@ export function StoryPage() {
 
       <Section>
         <Container>
-          <Reveal className="max-w-2xl">
+          <EditorialSplit
+            image="/images/cutting-room.jpg"
+            imageAlt="Paper, shears, and cloth: the work of a thobe."
+            objectPosition="center 40%"
+            imageOn="right"
+          >
             <Eyebrow>Visit</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
@@ -133,7 +138,7 @@ export function StoryPage() {
               <TextLink to="/stills">The stills</TextLink>
               <TextLink to="/craftsmanship">How it is made</TextLink>
             </div>
-          </Reveal>
+          </EditorialSplit>
         </Container>
       </Section>
     </>

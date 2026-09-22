@@ -1,3 +1,4 @@
+import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { TextLink } from '@/components/ui/Button'
@@ -6,6 +7,7 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { AppointmentForm } from '@/components/visit/AppointmentForm'
 import { site } from '@/data/site'
+import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -28,6 +30,9 @@ const visitSteps = [
 ]
 
 export function VisitPage() {
+  const week = thisWeekPlate()
+  const weekCopy = plateCopy(week.caption)
+
   usePageMeta(getShareMeta('/visit'))
 
   return (
@@ -64,6 +69,27 @@ export function VisitPage() {
       </Section>
 
       <Section className="bg-ivory-deep/40">
+        <Container>
+          <EditorialSplit
+            image={week.src}
+            imageAlt={week.alt}
+            objectPosition={week.objectPosition}
+            imageOn="left"
+          >
+            <Eyebrow>This week · {week.place}</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">{week.name}</Display>
+            <Body className="mt-6">
+              {weekCopy.lines[0] ?? week.alt} A visit is the next still. Cloth is shown
+              on the table; the book is the line as it is worn.
+            </Body>
+            <div className="mt-8">
+              <TextLink to="/stills">The stills</TextLink>
+            </div>
+          </EditorialSplit>
+        </Container>
+      </Section>
+
+      <Section>
         <Container>
           <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-5">

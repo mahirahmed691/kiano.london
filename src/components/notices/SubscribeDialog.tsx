@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 
@@ -53,6 +54,7 @@ export function SubscribeDialog({ open, onClose }: Props) {
                 alt=""
                 className="h-full min-h-[28rem] w-full object-cover object-[center_18%]"
               />
+              <WovenLabel size="md" className="absolute bottom-5 left-5" />
             </div>
             <div className="px-6 py-8 md:px-10 md:py-12">
               <div className="flex items-start justify-between gap-4">

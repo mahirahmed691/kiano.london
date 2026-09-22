@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Hero } from '@/components/editorial/Hero'
 import { Button, TextLink } from '@/components/ui/Button'
@@ -138,19 +139,24 @@ export function HomePage() {
 
       <Section>
         <Container>
-          <Reveal className="max-w-2xl">
+          <EditorialSplit
+            image="/images/cutting-room.jpg"
+            imageAlt="Paper, shears, and cloth: the work of a thobe."
+            objectPosition="center 40%"
+            imageOn="right"
+          >
             <Eyebrow>The house</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
               Fittings are by appointment. We do not keep a shop window. The work is
-              the invitation: Layl, Hadīd, the jubbah.
+              the invitation: Layl, Hadīd, the jubbah. A visit is the next still.
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>
               <TextLink to="/stills">The stills</TextLink>
               <TextLink to="/story">The story</TextLink>
             </div>
-          </Reveal>
+          </EditorialSplit>
         </Container>
       </Section>
     </>
