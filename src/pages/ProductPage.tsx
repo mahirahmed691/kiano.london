@@ -172,7 +172,7 @@ export function ProductPage() {
             />
           </div>
 
-          <div className="order-2 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:py-16 xl:pr-16 xl:pl-10">
+          <div className="order-2 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-16 xl:pl-10">
             <Reveal>
               <div className="mb-10 xl:hidden">
                 <PieceHeading product={product} />

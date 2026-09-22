@@ -30,7 +30,7 @@ export function SizeGuide({ className, compact = false }: Props) {
           ))}
         </tbody>
       </table>
-      <div className="mt-8 grid gap-6 sm:grid-cols-3">
+      <div className={cn('mt-8 grid gap-6', compact ? '' : 'sm:grid-cols-3')}>
         {sizeMeasures.map((item) => (
           <div key={item.title}>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{item.title}</p>
