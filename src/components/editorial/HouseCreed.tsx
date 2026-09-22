@@ -25,7 +25,7 @@ export function HouseCreed({ className }: Props) {
             <h3 className="mt-3 font-display text-3xl font-light tracking-[-0.02em] md:text-4xl">
               {item.word}
             </h3>
-            <p className="mt-4 max-w-sm text-[15px] font-light leading-[1.85] text-ink-soft">
+            <p className="mt-4 max-w-sm text-[15px] font-light leading-[1.85] text-ivory/70">
               {item.line}
             </p>
           </article>

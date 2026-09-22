@@ -36,14 +36,14 @@ export function Header() {
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-50 transition-colors duration-500',
-          inverted ? 'bg-transparent text-ivory' : 'bg-ivory text-ink',
+          inverted ? 'bg-transparent text-ivory' : 'bg-night text-ivory',
         )}
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
         <div
           className={cn(
             'relative grid h-[6.75rem] grid-cols-[1fr_auto_1fr] items-center border-b border-transparent px-5 md:h-[7.25rem] md:px-12 lg:px-16',
-            !inverted && 'border-rule/80',
+            !inverted && 'border-ivory/10',
           )}
         >
           <MegaMenu key={pathname} inverted={inverted} />
@@ -77,7 +77,7 @@ export function Header() {
             </span>
           </button>
 
-          <HouseMark inverted={inverted} />
+          <HouseMark inverted={inverted} className={!inverted ? 'text-bronze' : undefined} />
 
           <div className="flex items-center justify-end gap-6 lg:gap-9">
             <AdminNavLink

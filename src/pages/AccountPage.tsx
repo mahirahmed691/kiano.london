@@ -80,12 +80,12 @@ function AccountOrders() {
   }, [getToken, isSignedIn, user])
 
   if (orders === null) {
-    return <p className="mt-10 text-[15px] font-light text-ink-soft">Fetching your reservations.</p>
+    return <p className="mt-10 text-[15px] font-light text-ivory/70">Fetching your reservations.</p>
   }
 
   if (error) {
     return (
-      <p className="mt-10 text-[15px] font-light text-ink" role="alert">
+      <p className="mt-10 text-[15px] font-light text-ivory" role="alert">
         {error}
       </p>
     )
@@ -127,7 +127,7 @@ function AccountWord() {
               <p className={cn('font-display text-2xl font-light', notice.read && 'opacity-55')}>
                 {notice.title}
               </p>
-              <p className="mt-2 text-[15px] font-light text-ink-soft">{notice.body}</p>
+              <p className="mt-2 text-[15px] font-light text-ivory/70">{notice.body}</p>
             </Link>
           </li>
         ))}
@@ -203,7 +203,7 @@ function AccountGate() {
   const { isLoaded } = useAuth()
 
   if (!isLoaded) {
-    return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the house.</p>
+    return <p className="mt-8 text-[15px] font-light text-ivory/70">Reading the house.</p>
   }
 
   return (

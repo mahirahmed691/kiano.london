@@ -36,7 +36,7 @@ export function SignInPage() {
               initialValues={email ? { emailAddress: email } : undefined}
             />
           ) : (
-            <p className="text-[15px] font-light text-ink">Account is not configured yet.</p>
+            <p className="text-[15px] font-light text-ivory">Account is not configured yet.</p>
           )}
         </div>
       </Container>

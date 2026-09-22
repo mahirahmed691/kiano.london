@@ -43,7 +43,7 @@ export function CraftsmanshipDetailsPage() {
       </Section>
 
       {detailSections.map((section, index) => (
-        <Section key={section.id} className={index % 2 === 1 ? 'bg-ivory-deep/40' : undefined}>
+        <Section key={section.id}>
           <Container>
             <EditorialSplit
               image={section.image}

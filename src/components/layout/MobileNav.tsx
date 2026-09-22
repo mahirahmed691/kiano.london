@@ -66,7 +66,7 @@ export function MobileNav({ open, onClose }: Props) {
     <div
       id="mobile-navigation"
       className={cn(
-        'fixed inset-0 z-40 overflow-y-auto bg-ivory transition-opacity duration-500 md:hidden',
+        'fixed inset-0 z-40 overflow-y-auto bg-ivory text-ink transition-opacity duration-500 md:hidden',
         open ? 'opacity-100' : 'pointer-events-none opacity-0',
       )}
       aria-hidden={!open}

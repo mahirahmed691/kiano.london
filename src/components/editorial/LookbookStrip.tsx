@@ -31,7 +31,7 @@ export function LookbookStrip({ plates, className }: Props) {
               />
             </div>
             {plate.kicker || plate.name ? (
-              <figcaption className="bg-ivory px-1 py-5">
+              <figcaption className="bg-ivory px-1 py-5 text-ink">
                 {plate.kicker ? (
                   <p className="text-[10px] uppercase tracking-[0.32em] text-stone">{plate.kicker}</p>
                 ) : null}

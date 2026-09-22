@@ -28,7 +28,7 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 @media (display-mode: standalone) {
@@ -40,8 +40,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-ivory);
-  color: var(--color-ink);
+  background: var(--color-night);
+  color: var(--color-ivory);
   font-family: var(--font-sans);
   font-weight: 300;
   font-size: 1rem;
@@ -59,12 +59,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-ink);
-  color: var(--color-ivory);
+  background: var(--color-ivory);
+  color: var(--color-night);
 }
 
 :focus-visible {
-  outline: 1px solid var(--color-ink);
+  outline: 1px solid var(--color-ivory);
   outline-offset: 4px;
 }
 

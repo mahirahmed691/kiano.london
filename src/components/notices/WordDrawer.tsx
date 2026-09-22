@@ -34,7 +34,7 @@ export function WordDrawer() {
       />
       <aside
         className={cn(
-          'absolute inset-y-0 right-0 flex w-full max-w-[28rem] flex-col border-l border-rule bg-ivory transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          'absolute inset-y-0 right-0 flex w-full max-w-[28rem] flex-col border-l border-rule bg-ivory text-ink transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
           open ? 'translate-x-0' : 'translate-x-full',
         )}
         aria-hidden={!open}

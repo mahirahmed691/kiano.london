@@ -23,7 +23,7 @@ export function AdminLayout() {
   usePageMeta(getShareMeta('/admin'))
 
   return (
-    <Section className={cn('pt-32 md:pt-40', printSheet && 'print:py-8')}>
+    <Section className={cn('bg-ivory text-ink pt-32 md:pt-40', printSheet && 'print:py-8')}>
       <Container>
         {printSheet ? null : <Eyebrow className="print:hidden">The ledger</Eyebrow>}
         {clerkEnabled ? (
