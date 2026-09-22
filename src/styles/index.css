@@ -17,12 +17,12 @@
 }
 
 :root {
-  --header-offset: calc(5.25rem + env(safe-area-inset-top, 0px));
+  --header-offset: calc(6.75rem + env(safe-area-inset-top, 0px));
 }
 
 @media (min-width: 768px) {
   :root {
-    --header-offset: calc(5.75rem + env(safe-area-inset-top, 0px));
+    --header-offset: calc(7.25rem + env(safe-area-inset-top, 0px));
   }
 }
 

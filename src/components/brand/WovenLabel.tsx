@@ -10,9 +10,9 @@ type Props = {
 }
 
 const sizeClass: Record<Size, string> = {
-  sm: 'w-[4.75rem] px-1.5 py-2',
-  md: 'w-[7.75rem] px-3 py-3',
-  lg: 'w-[12.5rem] px-5 py-6',
+  sm: 'w-[4.75rem] px-1.5 py-2.5',
+  md: 'w-[7.75rem] px-3 py-3.5',
+  lg: 'w-[13rem] px-5 py-7',
 }
 
 export function WovenLabel({ size = 'sm', inverted = true, className }: Props) {
