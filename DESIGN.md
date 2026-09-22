@@ -20,7 +20,7 @@ Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The
 | Rule | `#D4CBB8` | Hairlines on ivory |
 | Night | `#25282B` | Page canvas, quote bands, footer, hang tag, woven label |
 
-No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets.
+No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home, the story, the shop, the collection, and the stills each hold one night motto band so paper does not run the whole way to the footer.
 
 ## Typography
 

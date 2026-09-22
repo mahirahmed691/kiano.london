@@ -1,12 +1,13 @@
 import { useMemo } from 'react'
 import { Hero } from '@/components/editorial/Hero'
 import { LookbookStrip } from '@/components/editorial/LookbookStrip'
+import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Rule } from '@/components/ui/Rule'
-import { creedIntent } from '@/data/creed'
+import { creedIntent, creedJoin, creedMotto } from '@/data/creed'
 import { jubbahColours, jubbahs, productPath } from '@/data/products'
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
@@ -72,8 +73,20 @@ export function ShopPage() {
             </div>
           )}
         </Container>
+      </Section>
+
+      <Section paper={false} className="bg-night py-28 md:py-40">
+        <Container>
+          <QuoteBlock
+            tone="dark"
+            quote={creedMotto}
+            attribution={creedJoin}
+          />
+        </Container>
+      </Section>
+
+      <Section>
         <LookbookStrip
-          className="mt-24 md:mt-32"
           plates={[
             {
               src: '/images/jubbah-black-02.jpg',

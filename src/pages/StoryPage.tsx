@@ -111,9 +111,10 @@ export function StoryPage() {
         </Container>
       </Section>
 
-      <Section className="py-28 md:py-40">
+      <Section paper={false} className="bg-night py-28 md:py-40">
         <Container>
           <QuoteBlock
+            tone="dark"
             quote={creedMotto}
             attribution={creedJoin}
           />

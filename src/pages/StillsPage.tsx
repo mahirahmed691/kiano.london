@@ -1,11 +1,12 @@
 import { Hero } from '@/components/editorial/Hero'
 import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { PlatePair } from '@/components/editorial/PlatePair'
+import { QuoteBlock } from '@/components/editorial/QuoteBlock'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedSpoken, creedWoven } from '@/data/creed'
+import { creedJoin, creedMotto, creedSpoken, creedWoven } from '@/data/creed'
 import { instagramPlates, plateIntervalDays } from '@/data/instagram-plates'
 import { site } from '@/data/site'
 import {
@@ -93,6 +94,16 @@ export function StillsPage() {
               })}
             </ol>
           </Reveal>
+        </Container>
+      </Section>
+
+      <Section paper={false} className="bg-night py-28 md:py-40">
+        <Container>
+          <QuoteBlock
+            tone="dark"
+            quote={creedMotto}
+            attribution={creedJoin}
+          />
         </Container>
       </Section>
 
