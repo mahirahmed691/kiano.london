@@ -82,14 +82,14 @@ export function Header() {
           <div className="flex items-center justify-end gap-6 lg:gap-9">
             <AdminNavLink
               className={cn(
-                'hidden text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 md:inline',
+                'hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
                 inverted && 'drop-shadow-[0_1px_8px_rgba(20,18,16,0.55)]',
               )}
             />
             <NavLink
               to="/account"
               className={cn(
-                'hidden text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70 md:inline',
+                'hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
                 inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
               )}
             >
@@ -97,7 +97,7 @@ export function Header() {
             </NavLink>
             <WordLink
               className={cn(
-                'text-[11px] uppercase tracking-[0.22em]',
+                'text-[10px] uppercase tracking-[0.28em]',
                 inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
               )}
             />
@@ -108,7 +108,7 @@ export function Header() {
               <button
                 type="button"
                 className={cn(
-                  'text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70',
+                  'text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70',
                   inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
                 )}
                 aria-label={count ? `Open bag, ${count} pieces` : 'Open bag'}

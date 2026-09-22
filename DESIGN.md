@@ -4,7 +4,7 @@ Extracted and implemented as a restrained London house of the jubbah and the tho
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty. Arabic sits with the English on garment names, size, packing, and a visit; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty: more air than type, stills held as plates, motion slow enough to be ceremonial. Arabic sits with the English on garment names, size, packing, and a visit; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
 
 ## Colour
 
@@ -28,14 +28,14 @@ No gradients as decoration. Hero overlays are photographic scrims only. No gold 
 - **Interface:** Jost, 300–400. Navigation, labels, body.
 - **Arabic:** Amiri, 400. Garment names, and a second line on size, packing, and a visit. Not the house mark.
 
-Labels are 11px, uppercase, tracking `0.22em–0.28em`. Headlines are light weight with tight tracking. Body is 15–16px, relaxed leading, `max-width: 65ch` in practice.
+Labels are 10–11px, uppercase, tracking `0.28em–0.36em`. Headlines are light weight with tight tracking and discretionary ligatures. Body is 15–16px, weight 300, leading near `1.85`, `max-width: 65ch` in practice.
 
 Pull quotes may be italic. Headlines are upright.
 
 ## Layout
 
 - Horizontal pad: 24 / 48 / 64 / 96px (`px-6 md:px-12 lg:px-16 xl:px-24`)
-- Section rhythm: 80 / 112 / 144px vertical
+- Section rhythm: 96 / 128 / 176px vertical
 - Product cards: 3:4 image, no radius, no shadow
 - Grids collapse to one column on small screens, two from `sm`, three from `lg`
 
@@ -49,7 +49,7 @@ Small. Uppercase tracking. Outline, not fill. Hover inverts to ink. On heroes, i
 
 ## Motion
 
-Fade and a short rise on enter. Image scale `1.02 → 1.07` on hover, 1.6s. Page fade 0.55s. All motion is removed when `prefers-reduced-motion: reduce`.
+Fade and a short rise on enter. Image scale `1.018 → 1.045` on hover, 2.2s. Page fade 0.8s. Still fade 1.7s. All motion is removed when `prefers-reduced-motion: reduce`.
 
 ## Do not
 

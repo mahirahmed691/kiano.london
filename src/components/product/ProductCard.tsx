@@ -17,7 +17,7 @@ function CardImage({ product }: { product: Product }) {
   const hoverSrc = hover && hover.src !== product.image ? hover.src : undefined
 
   return (
-    <div className="img-zoom relative aspect-[3/4] overflow-hidden bg-ivory-deep">
+    <div className="img-zoom relative aspect-[3/4] overflow-hidden bg-ivory-deep ring-1 ring-ink/10">
       <img
         src={product.image}
         alt={product.imageAlt}
@@ -44,15 +44,17 @@ function CardImage({ product }: { product: Product }) {
 
 function CardMeta({ product, index }: Pick<Props, 'product' | 'index'>) {
   return (
-    <div className="mt-4 flex items-baseline justify-between gap-4">
+    <div className="mt-6 flex items-baseline justify-between gap-4">
       <div>
         {index ? (
-          <p className="mb-1 text-[10px] uppercase tracking-[0.22em] text-stone">{index}</p>
+          <p className="mb-2 text-[10px] uppercase tracking-[0.32em] text-stone">{index}</p>
         ) : null}
-        <h3 className="font-display text-2xl font-light leading-tight">{product.name}</h3>
-        <p className="mt-1 text-[12px] font-light tracking-[0.04em] text-stone">{product.colour}</p>
+        <h3 className="font-display text-2xl font-light leading-tight tracking-[-0.02em] md:text-[1.65rem]">
+          {product.name}
+        </h3>
+        <p className="mt-1.5 text-[11px] font-light tracking-[0.16em] text-stone">{product.colour}</p>
       </div>
-      <p className="shrink-0 text-[12px] tracking-[0.08em] text-ink-soft">{product.price}</p>
+      <p className="shrink-0 text-[11px] tracking-[0.16em] text-ink-soft">{product.price}</p>
     </div>
   )
 }

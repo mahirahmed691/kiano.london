@@ -21,7 +21,7 @@ export function ImageFrame({
 }: Props) {
   return (
     <figure className={cn(className)}>
-      <div className="img-zoom h-full w-full overflow-hidden bg-ivory-deep">
+      <div className="img-zoom h-full w-full overflow-hidden bg-ivory-deep ring-1 ring-ink/10">
         <img
           src={src}
           alt={alt}
@@ -32,7 +32,7 @@ export function ImageFrame({
         />
       </div>
       {caption ? (
-        <figcaption className="mt-3 text-[11px] uppercase tracking-[0.18em] text-stone">
+        <figcaption className="mt-4 text-[10px] uppercase tracking-[0.28em] text-stone">
           {caption}
         </figcaption>
       ) : null}

@@ -43,11 +43,19 @@ body {
   background: var(--color-ivory);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-weight: 400;
+  font-weight: 300;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.8;
+  letter-spacing: 0.012em;
+  font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1, 'calt' 1;
+  font-kerning: normal;
+  text-wrap: balance;
 }
 
 ::selection {
@@ -87,23 +95,23 @@ select {
 }
 
 .page-enter {
-  animation: page-enter 0.55s ease both;
+  animation: page-enter 0.8s ease both;
 }
 
 .still-in {
-  animation: still-in 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: still-in 1.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .copy-in {
-  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise-in 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(14px);
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
@@ -114,7 +122,7 @@ select {
 .rule-draw {
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .rule-draw.is-visible {
@@ -122,7 +130,7 @@ select {
 }
 
 .stagger-in > * {
-  animation: rise-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .stagger-in > *:nth-child(1) {
@@ -165,13 +173,13 @@ select {
   width: 100%;
   height: 100% !important;
   object-fit: cover;
-  transform: scale(1.02);
-  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(1.018);
+  transition: transform 2.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .group:hover .img-zoom img,
 .img-zoom:hover img {
-  transform: scale(1.07);
+  transform: scale(1.045);
 }
 
 @keyframes page-enter {
@@ -195,7 +203,7 @@ select {
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;

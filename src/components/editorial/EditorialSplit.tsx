@@ -23,7 +23,7 @@ export function EditorialSplit({
   return (
     <div
       className={cn(
-        'grid items-center gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-24',
+        'grid items-center gap-12 lg:grid-cols-2 lg:gap-20 xl:gap-28',
         className,
       )}
     >

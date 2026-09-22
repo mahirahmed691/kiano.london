@@ -60,7 +60,7 @@ export function ShopPage() {
           {shown.length === 0 ? (
             <p className="text-[15px] font-light text-ink-soft">No jubbah in this colour.</p>
           ) : (
-            <div className="grid gap-x-4 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
               {shown.map((product, index) => (
                 <ProductCard
                   key={product.id}
