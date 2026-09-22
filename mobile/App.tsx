@@ -73,6 +73,9 @@ function overlayStatus(pathname: string) {
   return (
     pathname === '/' ||
     pathname === '/stills' ||
+    pathname === '/shop' ||
+    pathname === '/collection' ||
+    pathname === '/visit' ||
     pathname === '/story' ||
     pathname.startsWith('/craftsmanship')
   )
@@ -340,8 +343,14 @@ function HouseApp() {
               if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
               if (routeTab === 'house') {
-                webView.current?.injectJavaScript(scrollTopScript)
-                return
+                if (path === '/' || path === '') {
+                  go('/stills')
+                  return
+                }
+                if (path === '/stills') {
+                  webView.current?.injectJavaScript(scrollTopScript)
+                  return
+                }
               }
               go('/')
             })

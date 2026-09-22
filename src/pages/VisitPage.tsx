@@ -1,5 +1,6 @@
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
+import { HowToMeasure } from '@/components/product/HowToMeasure'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -106,6 +107,13 @@ export function VisitPage() {
                 </a>
                 .
               </Body>
+              <p
+                lang="ar"
+                dir="rtl"
+                className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ink-soft"
+              >
+                الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.
+              </p>
               <address className="mt-10 not-italic">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Address</p>
                 <p className="mt-3 max-w-xs text-[15px] font-light leading-relaxed text-ink-soft">
@@ -129,18 +137,20 @@ export function VisitPage() {
 
       <Section>
         <Container>
-          <Reveal className="max-w-2xl">
-            <Eyebrow>Sizes 52–60</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">The house block.</Display>
-            <Body className="mt-6">
-              If you already know your size, name it in the letter. If you do not, we
-              will measure you here. Between sizes, we cut from the larger and take in.
-            </Body>
-            <SizeGuide className="mt-10" compact />
+          <HowToMeasure />
+          <div className="mt-16 max-w-2xl">
+            <SizeGuide compact />
             <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
-              Prices include VAT. Each thobe is made to order.
+              Prices include VAT. Each thobe is made to order. A visit is not required.
             </p>
-          </Reveal>
+            <p
+              lang="ar"
+              dir="rtl"
+              className="mt-3 w-fit max-w-md font-arabic text-[15px] font-light leading-relaxed text-stone"
+            >
+              الزيارة ليست واجبة.
+            </p>
+          </div>
         </Container>
       </Section>
     </>

@@ -2,6 +2,7 @@ import { randomBytes } from 'node:crypto'
 import { withDb } from './_lib/db.js'
 import { addToAudience, confirmLetterHtml, sendMail } from './_lib/mail.js'
 import { recordNotice } from './_lib/notices.js'
+import { cronAuthorized, isWeekPlateRequest, sendWeekPlate } from './_lib/week-plate.js'
 import { site } from '../src/data/site.js'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -67,6 +68,18 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
+  if (isWeekPlateRequest(request)) {
+    if (!cronAuthorized(request)) {
+      return Response.json({ error: 'Not the house.' }, { status: 401 })
+    }
+    try {
+      return await sendWeekPlate()
+    } catch (caught) {
+      console.error(caught)
+      return Response.json({ error: 'The week could not be sent.' }, { status: 503 })
+    }
+  }
+
   const token = new URL(request.url).searchParams.get('token') ?? ''
   const origin = new URL(request.url).origin
   const done = `${origin}/letters/confirmed`

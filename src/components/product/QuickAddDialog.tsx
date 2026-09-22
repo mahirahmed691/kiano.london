@@ -106,7 +106,7 @@ export function QuickAddDialog() {
                 <Display id="quick-add-title" as="h2" className="mt-4 text-4xl">
                   {current.name}
                 </Display>
-                <p lang="ar" dir="rtl" className="mt-2 font-arabic text-xl text-ink/55">
+                <p lang="ar" dir="rtl" className="mt-2 w-fit font-arabic text-xl text-ink/55">
                   {current.arabicName}
                 </p>
                 <p className="mt-4 font-display text-3xl font-light">{current.price}</p>
