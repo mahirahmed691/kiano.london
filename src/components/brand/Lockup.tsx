@@ -25,15 +25,15 @@ export function Lockup({ compact = false, align = 'center', className }: Props) 
         decorative
         className={cn(
           'w-auto',
-          compact ? 'h-[1.15rem] md:h-[1.35rem]' : 'h-8 md:h-10',
+          compact ? 'h-[1.7rem] md:h-[2.05rem]' : 'h-11 md:h-[3.15rem]',
         )}
       />
       <span
         className={cn(
           'font-display font-medium uppercase',
           compact
-            ? 'mt-1.5 text-[1.02rem] tracking-[0.38em] pl-[0.38em] md:mt-2 md:text-[1.18rem] md:tracking-[0.44em] md:pl-[0.44em]'
-            : 'mt-3 text-[1.35rem] tracking-[0.42em] pl-[0.42em] md:mt-3.5 md:text-[1.55rem] md:tracking-[0.48em] md:pl-[0.48em]',
+            ? 'mt-2 text-[1.02rem] tracking-[0.38em] pl-[0.38em] md:mt-2.5 md:text-[1.18rem] md:tracking-[0.44em] md:pl-[0.44em]'
+            : 'mt-3.5 text-[1.35rem] tracking-[0.42em] pl-[0.42em] md:mt-4 md:text-[1.55rem] md:tracking-[0.48em] md:pl-[0.48em]',
         )}
       >
         {site.name}

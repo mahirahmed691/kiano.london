@@ -42,7 +42,7 @@ export function WordDrawer() {
       >
         <div className="flex items-center justify-between border-b border-rule px-6 py-5">
           <div className="flex items-center gap-3">
-            <Monogram decorative className="h-4" />
+            <Monogram decorative className="h-5 w-auto" />
             <p className="text-[11px] uppercase tracking-[0.22em]">
               Word{unread ? ` · ${String(unread).padStart(2, '0')}` : ''}
             </p>
