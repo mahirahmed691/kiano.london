@@ -43,8 +43,6 @@ export function CraftsmanshipDetailsPage() {
         </Container>
       </Section>
 
-      <NightMotto />
-
       {detailSections.map((section) => (
         <Section key={section.id}>
           <Container>
@@ -64,6 +62,8 @@ export function CraftsmanshipDetailsPage() {
           </Container>
         </Section>
       ))}
+
+      <NightMotto />
 
       <Section>
         <Container>
