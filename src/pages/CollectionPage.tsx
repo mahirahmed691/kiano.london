@@ -34,8 +34,7 @@ export function CollectionPage() {
         objectPosition="center 12%"
         kicker="Emirati thobe"
         title="The Collection."
-        subtitle={`Five Emirati thobes: Layl, Hadīd, Ghabār, Raml and Hajar. Black, charcoal, grey, beige and bone. ${creedMotto}`}
-        minHeight="tall"
+        minHeight="screen"
         priority
       >
         <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
@@ -45,6 +44,14 @@ export function CollectionPage() {
 
       <Section>
         <Container>
+          <Reveal className="mb-16 max-w-xl md:mb-20">
+            <p className="font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
+              Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.
+            </p>
+            <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
+              Black, charcoal, grey, beige and bone. {creedMotto}
+            </p>
+          </Reveal>
           <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
               {String(shown.length).padStart(2, '0')} {shown.length === 1 ? 'piece' : 'pieces'}

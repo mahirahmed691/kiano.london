@@ -9,12 +9,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { creedSpoken, creedWoven } from '@/data/creed'
 import { instagramPlates, plateIntervalDays } from '@/data/instagram-plates'
 import { site } from '@/data/site'
-import {
-  plateCopy,
-  plateKindLabel,
-  plateNumber,
-  thisWeekPlate,
-} from '@/lib/instagram-plates'
+import { plateCopy, plateKindLabel, plateNumber, stillsHash, thisWeekPlate } from '@/lib/instagram-plates'
 import { cn } from '@/lib/cn'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -33,6 +28,9 @@ export function StillsPage() {
         objectPosition={week.objectPosition}
         quiet
         priority
+        kicker={`This week · ${week.place}`}
+        title={week.name}
+        captionTo={stillsHash(week)}
       />
 
       <Section>

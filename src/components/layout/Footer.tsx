@@ -34,7 +34,7 @@ export function Footer() {
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                    className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                   >
                     {item.label}
                   </Link>
@@ -43,7 +43,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/stills"
-                  className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                  className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                 >
                   Stills
                 </Link>
@@ -51,7 +51,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/craftsmanship-details"
-                  className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                  className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                 >
                   The making
                 </Link>
@@ -59,7 +59,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/reservation"
-                  className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                  className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                 >
                   A reserved cut
                 </Link>
@@ -67,7 +67,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/account"
-                  className="text-[14px] font-light text-ivory/80 transition-opacity hover:opacity-100"
+                  className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                 >
                   Account
                 </Link>
@@ -114,18 +114,18 @@ export function Footer() {
                 href={item.href}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="transition-opacity hover:text-ivory"
+                className="transition-colors duration-500 hover:text-bronze"
               >
                 {item.label}
               </a>
             ))}
-            <Link to="/privacy" className="transition-opacity hover:text-ivory">
+            <Link to="/privacy" className="transition-colors duration-500 hover:text-bronze">
               Privacy
             </Link>
-            <Link to="/returns" className="transition-opacity hover:text-ivory">
+            <Link to="/returns" className="transition-colors duration-500 hover:text-bronze">
               Returns
             </Link>
-            <Link to="/cookies" className="transition-opacity hover:text-ivory">
+            <Link to="/cookies" className="transition-colors duration-500 hover:text-bronze">
               Cookies
             </Link>
             <span>

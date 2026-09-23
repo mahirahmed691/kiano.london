@@ -22,7 +22,6 @@ export function CraftsmanshipDetailsPage() {
         objectPosition="center"
         kicker="Craftsmanship · Details"
         title="What the cloth conceals."
-        subtitle={`${creedSpoken} A thobe is judged from ten paces. It is made in millimetres.`}
         minHeight="page"
         priority
       />
@@ -35,6 +34,7 @@ export function CraftsmanshipDetailsPage() {
               Seam, stitch, fastening, the unseen.
             </Display>
             <Body className="mx-auto mt-6">
+              {creedSpoken} A thobe is judged from ten paces. It is made in millimetres.
               These are not selling points. They are the reasons a thobe can
               be recut, relined and worn again. We write them down so they are not
               treated as folklore.

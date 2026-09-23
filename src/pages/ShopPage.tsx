@@ -6,6 +6,7 @@ import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
+import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { creedIntent } from '@/data/creed'
 import { jubbahColours, jubbahs, productPath } from '@/data/products'
@@ -32,8 +33,7 @@ export function ShopPage() {
         objectPosition="center 22%"
         kicker="The outer garment"
         title="The Shop."
-        subtitle={`The jubbah, in three colours for now: black, sand, charcoal. Five sizes, 52 to 60. ${creedIntent}`}
-        minHeight="tall"
+        minHeight="screen"
         priority
       >
         <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
@@ -43,6 +43,14 @@ export function ShopPage() {
 
       <Section>
         <Container>
+          <Reveal className="mb-16 max-w-xl md:mb-20">
+            <p className="font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
+              The jubbah, in three colours for now: black, sand, charcoal.
+            </p>
+            <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
+              Five sizes, 52 to 60. {creedIntent}
+            </p>
+          </Reveal>
           <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
               {String(shown.length).padStart(2, '0')} {shown.length === 1 ? 'colour' : 'colours'}

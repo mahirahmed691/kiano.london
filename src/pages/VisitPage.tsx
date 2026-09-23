@@ -46,8 +46,7 @@ export function VisitPage() {
         objectPosition="center 40%"
         kicker="The house"
         title="By appointment."
-        subtitle={`There is no shop window. Come to see cloth, or to be fitted. Write first. ${creedIntent}`}
-        minHeight="tall"
+        minHeight="screen"
         priority
       />
 
@@ -57,6 +56,10 @@ export function VisitPage() {
             <Reveal className="lg:col-span-4">
               <Eyebrow>A visit</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">Three acts.</Display>
+              <Body className="mt-6">
+                There is no shop window. Come to see cloth, or to be fitted. Write
+                first. {creedIntent}
+              </Body>
             </Reveal>
             <div className="space-y-10 lg:col-span-7 lg:col-start-6">
               {visitSteps.map((step, index) => (

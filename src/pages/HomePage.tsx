@@ -31,6 +31,9 @@ export function HomePage() {
         objectPosition={week.objectPosition}
         quiet
         priority
+        kicker={`This week · ${week.place}`}
+        title={week.name}
+        captionTo={stillsHash(week)}
       />
 
       <Section>

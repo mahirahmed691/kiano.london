@@ -21,8 +21,7 @@ export function StoryPage() {
         objectPosition="18% 40%"
         kicker={creedStandard}
         title="The house."
-        subtitle={`${creedWoven} ${creedIntent}`}
-        minHeight="tall"
+        minHeight="screen"
         priority
       />
 
@@ -39,7 +38,7 @@ export function StoryPage() {
               Founded for those who preferred to be well dressed rather than noticed.
             </Display>
             <Body className="mt-6">
-              The first ledger lists thobes, not customers. Cloth chosen to last, and a
+              {creedWoven} {creedIntent} The first ledger lists thobes, not customers. Cloth chosen to last, and a
               belief that a modest column of cloth is a long conversation, not a season.
               {` ${creedMotto}`}
             </Body>

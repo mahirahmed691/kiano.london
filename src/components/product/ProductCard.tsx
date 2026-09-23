@@ -33,7 +33,7 @@ function CardImage({ product }: { product: Product }) {
           aria-hidden="true"
           loading="lazy"
           decoding="async"
-          className="img-swap size-full object-cover opacity-0 transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)]:group-hover:opacity-100"
+          className="img-swap size-full object-cover opacity-0 transition-opacity duration-[2.2s] ease-[cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)]:group-hover:opacity-100"
           style={hover.objectPosition ? { objectPosition: hover.objectPosition } : undefined}
         />
       ) : null}
@@ -80,7 +80,7 @@ export function ProductCard({ product, index, className, to, delay = 0 }: Props)
         <button
           type="button"
           aria-label={`Add ${product.name}, ${product.colour}, to the bag`}
-          className="absolute right-3 bottom-3 z-10 flex h-10 w-10 items-center justify-center border border-ivory bg-ivory text-[1.35rem] font-light leading-none text-ink transition-colors duration-300 hover:border-ink hover:bg-ink hover:text-ivory hover:[-webkit-text-fill-color:#F2EBDC]"
+          className="absolute right-3 bottom-3 z-10 flex h-10 w-10 items-center justify-center border border-ivory bg-ivory text-[1.35rem] font-light leading-none text-ink opacity-100 transition-[opacity,colors] duration-500 hover:border-ink hover:bg-ink hover:text-ivory hover:[-webkit-text-fill-color:#F2EBDC] [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100"
           onClick={() => open(product)}
         >
           <span aria-hidden="true">+</span>

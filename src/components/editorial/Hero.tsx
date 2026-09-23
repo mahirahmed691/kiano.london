@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { StillCaption } from '@/components/editorial/StillCaption'
 import { Container } from '@/components/ui/Container'
 import { Display, Eyebrow, Lead } from '@/components/ui/Heading'
 
@@ -10,6 +11,7 @@ type Props = {
   kicker?: string
   title?: string
   subtitle?: string
+  captionTo?: string
   align?: 'start' | 'center'
   minHeight?: 'screen' | 'tall' | 'page'
   children?: ReactNode
@@ -30,6 +32,7 @@ export function Hero({
   kicker,
   title,
   subtitle,
+  captionTo,
   align = 'start',
   minHeight = 'screen',
   children,
@@ -37,6 +40,7 @@ export function Hero({
   quiet = false,
 }: Props) {
   const hasCopy = Boolean(kicker || title || subtitle || children)
+  const plateCaption = quiet && Boolean(kicker || title)
 
   return (
     <section className={cn('relative flex items-end overflow-hidden', heightClass[minHeight])}>
@@ -57,6 +61,15 @@ export function Hero({
         }
         aria-hidden="true"
       />
+      {plateCaption ? (
+        <StillCaption
+          as="div"
+          className="copy-in z-10"
+          kicker={kicker ?? ''}
+          title={title ?? ''}
+          to={captionTo}
+        />
+      ) : null}
       {!quiet && hasCopy ? (
         <Container
           className={cn(
@@ -65,7 +78,7 @@ export function Hero({
           )}
         >
           {kicker ? (
-            <Eyebrow className="copy-in mb-7 text-ivory/70">{kicker}</Eyebrow>
+            <Eyebrow className="copy-in mb-7 text-bronze">{kicker}</Eyebrow>
           ) : null}
           {title ? (
             <div className="copy-in" style={{ animationDelay: kicker ? '90ms' : undefined }}>

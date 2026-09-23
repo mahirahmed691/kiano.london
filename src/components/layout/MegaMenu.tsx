@@ -45,11 +45,11 @@ function PieceStill({
   return (
     <li>
       <NavLink to={to} className="group block">
-        <span className="relative block aspect-[3/4] overflow-hidden bg-ivory-deep">
+        <span className="img-zoom relative block aspect-[3/4] overflow-hidden bg-ivory-deep">
           <img
             src={src}
             alt={alt}
-            className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out motion-safe:group-hover:scale-[1.04]"
+            className="h-full w-full object-cover"
             style={objectPosition ? { objectPosition } : undefined}
           />
         </span>
@@ -160,11 +160,11 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
       </div>
       <div className="lg:col-span-4">
         <NavLink to="/craftsmanship" className="group block">
-          <span className="relative block aspect-[4/5] overflow-hidden bg-ivory-deep">
+          <span className="img-zoom relative block aspect-[4/5] overflow-hidden bg-ivory-deep">
             <img
               src="/images/stitch-pad.jpg"
               alt="Pad-stitching through the collar stand, silk on linen."
-              className="h-full w-full object-cover object-[center_40%] transition-transform duration-[1600ms] ease-out motion-safe:group-hover:scale-[1.04]"
+              className="h-full w-full object-cover object-[center_40%]"
             />
           </span>
           <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">

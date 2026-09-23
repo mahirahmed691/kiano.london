@@ -35,7 +35,7 @@ export function Header() {
       </a>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-colors duration-500',
+          'fixed inset-x-0 top-0 z-50 transition-colors duration-700',
           inverted ? 'bg-transparent text-ivory' : 'bg-ivory text-ink',
         )}
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
