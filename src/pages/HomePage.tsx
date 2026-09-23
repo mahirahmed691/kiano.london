@@ -31,7 +31,7 @@ export function HomePage() {
         objectPosition={week.objectPosition}
         quiet
         priority
-        kicker={`This week · ${week.place}`}
+        kicker={week.place === week.name ? 'This week' : `This week · ${week.place}`}
         title={week.name}
         captionTo={stillsHash(week)}
       />
