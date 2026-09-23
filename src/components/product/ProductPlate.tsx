@@ -1,3 +1,4 @@
+import { type Ref } from 'react'
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { type ProductImage } from '@/data/products'
 import { cn } from '@/lib/cn'
@@ -8,9 +9,20 @@ type Props = {
   onLook: () => void
 }
 
-export function PieceHero({ image, onLook }: { image: ProductImage; onLook: () => void }) {
+export function PieceHero({
+  image,
+  onLook,
+  ref,
+}: {
+  image: ProductImage
+  onLook: () => void
+  ref?: Ref<HTMLElement>
+}) {
   return (
-    <section className="relative min-h-[100svh] snap-start overflow-hidden bg-night">
+    <section
+      ref={ref}
+      className="relative min-h-[100svh] snap-start overflow-hidden bg-night"
+    >
       <img
         src={image.src}
         alt={image.alt}

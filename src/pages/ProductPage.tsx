@@ -48,6 +48,7 @@ export function ProductPage() {
   const [showBar, setShowBar] = useState(false)
   const [looking, setLooking] = useState<number | null>(null)
   const stock = useProductStock(product?.id ?? '')
+  const heroRef = useRef<HTMLElement>(null)
   const buyRef = useRef<HTMLDivElement>(null)
   const related = useMemo(
     () => (product ? relatedProducts(product.id).slice(0, 3) : []),
@@ -77,6 +78,7 @@ export function ProductPage() {
     }
     setGuideOpen(false)
     setLooking(null)
+    setShowBar(false)
   }, [product?.id])
 
   const chooseSize = useCallback((value: ThobeSize) => {
@@ -91,14 +93,32 @@ export function ProductPage() {
   }, [product?.id])
 
   useEffect(() => {
-    const node = buyRef.current
-    if (!node) return
-    const observer = new IntersectionObserver(
-      ([entry]) => setShowBar(!entry.isIntersecting),
+    const buy = buyRef.current
+    const hero = heroRef.current
+    if (!buy || !hero) return
+    let buyVisible = false
+    let heroVisible = true
+    const sync = () => setShowBar(!heroVisible && !buyVisible)
+    const buyObs = new IntersectionObserver(
+      ([entry]) => {
+        buyVisible = entry.isIntersecting
+        sync()
+      },
       { threshold: 0.15 },
     )
-    observer.observe(node)
-    return () => observer.disconnect()
+    const heroObs = new IntersectionObserver(
+      ([entry]) => {
+        heroVisible = entry.isIntersecting
+        sync()
+      },
+      { threshold: 0.05 },
+    )
+    buyObs.observe(buy)
+    heroObs.observe(hero)
+    return () => {
+      buyObs.disconnect()
+      heroObs.disconnect()
+    }
   }, [product?.id])
 
   if (!product) {
@@ -139,6 +159,7 @@ export function ProductPage() {
         }}
       />
       <PieceHero
+        ref={heroRef}
         image={
           product.gallery[0] ?? {
             src: product.image,
