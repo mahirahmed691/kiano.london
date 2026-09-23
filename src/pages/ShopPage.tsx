@@ -75,7 +75,7 @@ export function ShopPage() {
         </Container>
       </Section>
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section>
         <LookbookStrip

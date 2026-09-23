@@ -111,7 +111,7 @@ export function CollectionPage() {
         />
       </Section>
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section>
         <Container>

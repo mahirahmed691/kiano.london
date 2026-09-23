@@ -8,14 +8,39 @@ type Props = {
   onLook: () => void
 }
 
+export function PieceHero({ image, onLook }: { image: ProductImage; onLook: () => void }) {
+  return (
+    <section className="relative min-h-[100svh] snap-start overflow-hidden bg-night">
+      <img
+        src={image.src}
+        alt={image.alt}
+        className="still-in absolute inset-0 size-full object-cover"
+        style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
+        fetchPriority="high"
+        loading="eager"
+        decoding="async"
+      />
+      <div className="scrim-night-top absolute inset-x-0 top-0 h-40" aria-hidden="true" />
+      <WovenLabel
+        size="md"
+        className="pointer-events-none absolute bottom-5 left-5 z-10 md:bottom-8 md:left-8"
+      />
+      <button
+        type="button"
+        className="absolute inset-0 z-[1]"
+        aria-label={`Look closer: ${image.alt}`}
+        onClick={onLook}
+      />
+    </section>
+  )
+}
+
 export function ProductPlate({ image, first = false, onLook }: Props) {
   return (
     <div
       className={cn(
         'relative w-full snap-start overflow-hidden bg-ivory-deep img-zoom',
-        first
-          ? 'max-xl:min-h-[calc(100svh-var(--header-offset))] max-xl:scroll-mt-[var(--header-offset)] xl:min-h-[calc(100svh-7rem)]'
-          : 'aspect-3/4',
+        first ? 'xl:min-h-[calc(100svh-7rem)]' : 'aspect-3/4',
       )}
     >
       <img

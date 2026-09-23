@@ -7,7 +7,7 @@ import { HowItArrives } from '@/components/editorial/HowItArrives'
 import { NightMotto } from '@/components/editorial/NightMotto'
 import { ProductGrid } from '@/components/product/ProductGrid'
 import { ClothZoom } from '@/components/product/ClothZoom'
-import { ProductPlate } from '@/components/product/ProductPlate'
+import { PieceHero, ProductPlate } from '@/components/product/ProductPlate'
 import { HowToMeasure } from '@/components/product/HowToMeasure'
 import { SizeGuide } from '@/components/product/SizeGuide'
 import { Button, TextLink } from '@/components/ui/Button'
@@ -138,9 +138,19 @@ export function ProductPage() {
           }),
         }}
       />
-      <section className="bg-ivory text-ink pt-[var(--header-offset)] xl:pt-32">
+      <PieceHero
+        image={
+          product.gallery[0] ?? {
+            src: product.image,
+            alt: product.imageAlt,
+            objectPosition: product.objectPosition,
+          }
+        }
+        onLook={() => setLooking(0)}
+      />
+      <section className="bg-ivory text-ink">
         <div className="grid xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)] xl:items-start">
-          <div className="order-4 border-t border-rule px-6 py-12 md:px-12 xl:order-1 xl:col-start-1 xl:border-t-0 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
+          <div className="order-3 border-t border-rule px-6 py-12 md:px-12 xl:order-1 xl:col-start-1 xl:border-t-0 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
             <Reveal>
               <div className="hidden xl:block">
                 <PieceHeading product={product} />
@@ -159,21 +169,7 @@ export function ProductPage() {
             </Reveal>
           </div>
 
-          <div className="order-1 xl:order-2 xl:col-start-2">
-            <ProductPlate
-              image={
-                product.gallery[0] ?? {
-                  src: product.image,
-                  alt: product.imageAlt,
-                  objectPosition: product.objectPosition,
-                }
-              }
-              first
-              onLook={() => setLooking(0)}
-            />
-          </div>
-
-          <div className="order-2 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-16 xl:pl-10">
+          <div className="order-1 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-16 xl:pl-10">
             <Reveal>
               <div className="mb-10 xl:hidden">
                 <PieceHeading product={product} />
@@ -287,7 +283,7 @@ export function ProductPage() {
           </div>
 
           {product.gallery.length > 1 ? (
-            <div className="order-3 xl:order-4 xl:col-start-2">
+            <div className="order-2 xl:order-2 xl:col-start-2">
               {product.gallery.slice(1).map((image, index) => (
                 <ProductPlate
                   key={`${image.src}-${index + 1}`}
@@ -296,7 +292,21 @@ export function ProductPage() {
                 />
               ))}
             </div>
-          ) : null}
+          ) : (
+            <div className="order-2 hidden xl:block xl:order-2 xl:col-start-2">
+              <ProductPlate
+                image={
+                  product.gallery[0] ?? {
+                    src: product.image,
+                    alt: product.imageAlt,
+                    objectPosition: product.objectPosition,
+                  }
+                }
+                first
+                onLook={() => setLooking(0)}
+              />
+            </div>
+          )}
         </div>
       </section>
 
@@ -337,7 +347,7 @@ export function ProductPage() {
 
       <HowItArrives />
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section>
         <Container>

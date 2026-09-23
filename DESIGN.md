@@ -20,7 +20,7 @@ Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The
 | Rule | `#D4CBB8` | Hairlines on ivory |
 | Night | `#25282B` | Page canvas, quote bands, footer, hang tag, woven label |
 
-No gradients as decoration. Hero overlays are photographic scrims only, tinted with night `#25282B`. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home, the story, the shop, the collection, the stills, a visit, a piece, and the making each hold one night motto band so paper does not run the whole way to the footer. The band is the house creed in italic ivory, attributed in bronze, on night `#25282B`. Do not place it immediately above the footer.
+No gradients as decoration. Hero overlays are photographic scrims only, tinted with night `#25282B`. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home and the story hold the creed in italic ivory, attributed in bronze. The shop, the collection, the stills, a visit, a piece, and the making hold a quieter night plate: the bronze lockup and the three words, so the quote is not repeated in every room. Do not place a night plate immediately above the footer.
 
 ## Typography
 
@@ -41,7 +41,7 @@ Pull quotes may be italic. Headlines are upright.
 
 ## Header
 
-Fixed. Over imagery: transparent, ivory navigation, bronze lockup. After 24px of scroll, or on rooms without a plate: ivory field, hairline, espresso type, espresso lockup. The house mark is the interlocking KK monogram over the three-line lockup: KIANO, LONDON, EST. MMXXIV. EST. sits centred between two hairlines. Home and the stills open on the plate of the week from the book. The shop, the collection, and a visit open on a house still, lockup inverted over the plate. The packing, the letters, and the making carry the same stills and the woven lockup. A hairline London clock sits beside the bag: no numerals, no chrome, the house's time. Mobile: the lockup sits above full-screen ivory navigation in display serif; this week's plate closes the menu.
+Fixed. Over imagery: transparent, ivory navigation, bronze lockup. After 24px of scroll, or on rooms without a plate: ivory field, hairline, espresso type, espresso lockup. The house mark is the interlocking KK monogram over the three-line lockup: KIANO, LONDON, EST. MMXXIV. EST. sits centred between two hairlines. Home and the stills open on the plate of the week from the book. The shop, the collection, and a visit open on a house still, lockup inverted over the plate. A piece opens the same way: the first still is the room, then the buy column. The packing, the letters, and the making carry the same stills and the woven lockup. A hairline London clock sits beside the bag: no numerals, no chrome, the house's time. Mobile: the lockup sits above full-screen ivory navigation in display serif; this week's plate closes the menu.
 
 ## Footer
 

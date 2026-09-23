@@ -97,7 +97,7 @@ export function StillsPage() {
         </Container>
       </Section>
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section className="py-0 md:py-0 lg:py-0">
         <Container>

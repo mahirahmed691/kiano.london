@@ -92,7 +92,7 @@ export function VisitPage() {
         </Container>
       </Section>
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section>
         <Container>

@@ -74,6 +74,8 @@ export function HomePage() {
         </Container>
       </Section>
 
+      <NightMotto attribution={`${creedJoin} · ${site.note}`} />
+
       <Section className="border-y border-rule">
         <Container>
           <Reveal>
@@ -116,8 +118,6 @@ export function HomePage() {
           </Reveal>
         </Container>
       </Section>
-
-      <NightMotto attribution={`${creedJoin} · ${site.note}`} />
 
       <section>
         {previous.map((plate, index) => (

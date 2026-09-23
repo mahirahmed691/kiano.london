@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
-import { overlayPaths } from '@/data/navigation'
+import { headerOverlays } from '@/data/navigation'
 import { readConsent, writeConsent, type ConsentChoice } from '@/lib/notices'
-
-const platePaths = new Set<string>([...overlayPaths, '/shop', '/visit'])
 
 export function CookieNotice() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
-  const overlay = platePaths.has(pathname)
+  const overlay = headerOverlays(pathname)
   const [scrolled, setScrolled] = useState(false)
   const [seenPath, setSeenPath] = useState(pathname)
   if (seenPath !== pathname) {

@@ -106,7 +106,7 @@ export function CraftsmanshipPage() {
         </Container>
       </Section>
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section>
         <Container>

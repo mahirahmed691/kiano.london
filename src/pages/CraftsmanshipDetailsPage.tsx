@@ -63,7 +63,7 @@ export function CraftsmanshipDetailsPage() {
         </Section>
       ))}
 
-      <NightMotto />
+      <NightMotto quiet />
 
       <Section>
         <Container>
