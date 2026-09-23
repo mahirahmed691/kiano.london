@@ -10,6 +10,7 @@ type Props = {
 
 type SectionProps = Props & {
   paper?: boolean
+  fill?: boolean
 }
 
 export function Container({ as: Tag = 'div', children, className, id }: Props) {
@@ -23,9 +24,24 @@ export function Container({ as: Tag = 'div', children, className, id }: Props) {
   )
 }
 
-export function Section({ as: Tag = 'section', children, className, id, paper = true }: SectionProps) {
+export function Section({
+  as: Tag = 'section',
+  children,
+  className,
+  id,
+  paper = true,
+  fill = false,
+}: SectionProps) {
   return (
-    <Tag id={id} className={cn('py-24 md:py-32 lg:py-44', paper ? 'bg-ivory text-ink' : 'scheme-dark', className)}>
+    <Tag
+      id={id}
+      className={cn(
+        'py-24 md:py-32 lg:py-44',
+        paper ? 'bg-ivory text-ink' : 'scheme-dark',
+        fill && 'min-h-svh',
+        className,
+      )}
+    >
       {children}
     </Tag>
   )

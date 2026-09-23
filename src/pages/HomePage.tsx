@@ -3,6 +3,7 @@ import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { HouseCreed } from '@/components/editorial/HouseCreed'
 import { Hero } from '@/components/editorial/Hero'
 import { NightMotto } from '@/components/editorial/NightMotto'
+import { StillCaption } from '@/components/editorial/StillCaption'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
@@ -131,12 +132,7 @@ export function HomePage() {
             loading="lazy"
             decoding="async"
           />
-          <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-16 md:px-12 lg:px-16">
-            <Link to="/craftsmanship" className="inline-block text-ivory transition-opacity hover:opacity-80">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">The stitch</p>
-              <p className="mt-2 font-display text-3xl font-light md:text-4xl">Closer.</p>
-            </Link>
-          </figcaption>
+          <StillCaption to="/craftsmanship" kicker="The stitch" title="Closer." />
         </figure>
       </section>
 
@@ -180,17 +176,11 @@ function BookLook({ plate, lastWeek }: { plate: InstagramPlate; lastWeek: boolea
         loading="lazy"
         decoding="async"
       />
-      <figcaption className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0)_100%)] px-6 pb-10 pt-16 md:px-12 lg:px-16">
-        <Link to={href} className="inline-block text-ivory transition-opacity hover:opacity-80">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/65">
-            {lastWeek ? 'Last week' : plate.place}
-          </p>
-          <p className="mt-2 font-display text-3xl font-light md:text-4xl">{plate.name}</p>
-          {copy.lines[0] ? (
-            <p className="mt-2 max-w-md font-light text-ivory/75">{copy.lines[0]}</p>
-          ) : null}
-        </Link>
-      </figcaption>
+      <StillCaption to={href} kicker={lastWeek ? 'Last week' : plate.place} title={plate.name}>
+        {copy.lines[0] ? (
+          <p className="mt-2 max-w-md font-light text-ivory/75">{copy.lines[0]}</p>
+        ) : null}
+      </StillCaption>
     </figure>
   )
 }

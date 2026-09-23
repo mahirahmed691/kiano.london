@@ -11,7 +11,7 @@ export function ReturnsPage() {
   usePageMeta(getShareMeta('/returns'))
 
   return (
-    <Section className="pt-32 md:pt-40">
+    <Section fill className="pt-32 md:pt-40">
       <Container className="max-w-2xl">
         <Eyebrow>After it leaves</Eyebrow>
         <Display as="h1" className="mt-4 text-5xl md:text-6xl">

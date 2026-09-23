@@ -13,7 +13,7 @@ export function Footer() {
 
   return (
     <footer className="scheme-dark bg-night text-ivory">
-      <Container className="py-24 md:py-32">
+      <Container className="pt-28 pb-24 md:pt-40 md:pb-32">
         <div className="flex flex-col items-center text-center">
           <HouseMark compact={false} className="text-bronze" />
           <p className="mt-6 max-w-xs text-[14px] font-light leading-[1.85] text-ivory/65">

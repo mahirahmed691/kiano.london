@@ -20,7 +20,7 @@ Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The
 | Rule | `#D4CBB8` | Hairlines on ivory |
 | Night | `#25282B` | Page canvas, quote bands, footer, hang tag, woven label |
 
-No gradients as decoration. Hero overlays are photographic scrims only. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home, the story, the shop, the collection, the stills, a visit, a piece, and the making each hold one night motto band so paper does not run the whole way to the footer. The band is the house creed in italic ivory, attributed in bronze, on night `#25282B`. Do not place it immediately above the footer.
+No gradients as decoration. Hero overlays are photographic scrims only, tinted with night `#25282B`. No gold geometry, mosque silhouettes, or flag colour. The page canvas is night `#25282B`. Reading rooms sit on ivory paper with espresso type. Quote bands, the footer, the hang tag and the woven label stay night. The lockup is bronze `#B8A081` on night plates, espresso on ivory. Ivory is also paper for menus, drawers, and packing sheets. Home, the story, the shop, the collection, the stills, a visit, a piece, and the making each hold one night motto band so paper does not run the whole way to the footer. The band is the house creed in italic ivory, attributed in bronze, on night `#25282B`. Do not place it immediately above the footer.
 
 ## Typography
 
@@ -53,7 +53,7 @@ Small. Uppercase tracking. Outline, not fill. Hover inverts to ink. On heroes, i
 
 ## Motion
 
-Fade and a short rise on enter. Image scale `1.018 → 1.045` on hover, 2.2s. Page fade 0.8s. Still fade 1.7s. All motion is removed when `prefers-reduced-motion: reduce`.
+Fade and a short rise on enter. Image scale `1.018 → 1.045` on hover, 2.6s. Page fade 0.8s. Still fade 2.2s. Hero and still overlays are night scrims, not espresso. Caption kickers on full-bleed stills sit in bronze. All motion is removed when `prefers-reduced-motion: reduce`.
 
 ## Do not
 

@@ -52,8 +52,8 @@ export function Hero({
       <div
         className={
           quiet
-            ? 'absolute inset-x-0 top-0 h-40 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.42)_0%,rgba(20,18,16,0)_100%)]'
-            : 'absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,18,16,0.4)_0%,rgba(20,18,16,0.08)_28%,rgba(20,18,16,0.05)_52%,rgba(20,18,16,0.7)_100%)]'
+            ? 'scrim-night-top absolute inset-x-0 top-0 h-40'
+            : 'scrim-night-hero absolute inset-0'
         }
         aria-hidden="true"
       />

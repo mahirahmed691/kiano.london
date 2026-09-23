@@ -17,7 +17,7 @@ function CardImage({ product }: { product: Product }) {
   const hoverSrc = hover && hover.src !== product.image ? hover.src : undefined
 
   return (
-    <div className="img-zoom relative aspect-[3/4] overflow-hidden bg-ivory-deep ring-1 ring-ink/10">
+    <div className="img-zoom relative aspect-[3/4] overflow-hidden bg-ivory-deep">
       <img
         src={product.image}
         alt={product.imageAlt}

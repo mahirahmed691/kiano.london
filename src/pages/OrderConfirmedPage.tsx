@@ -136,7 +136,7 @@ export function OrderConfirmedPage() {
 
   if (view === 'loading') {
     return (
-      <Section className="pt-32 md:pt-40">
+      <Section fill className="pt-32 md:pt-40">
         <Container>
           <Eyebrow>Order</Eyebrow>
           <Display as="h1" className="mt-4 text-5xl md:text-6xl">
@@ -150,7 +150,7 @@ export function OrderConfirmedPage() {
 
   if (view === 'missing') {
     return (
-      <Section className="pt-32 md:pt-40">
+      <Section fill className="pt-32 md:pt-40">
         <Container>
           <Eyebrow>Order</Eyebrow>
           <Display as="h1" className="mt-4 text-5xl md:text-6xl">
@@ -171,7 +171,7 @@ export function OrderConfirmedPage() {
 
   if (view === 'unpaid') {
     return (
-      <Section className="pt-32 md:pt-40">
+      <Section fill className="pt-32 md:pt-40">
         <Container>
           <Eyebrow>Order</Eyebrow>
           <Display as="h1" className="mt-4 text-5xl md:text-6xl">
@@ -193,7 +193,7 @@ export function OrderConfirmedPage() {
   const shippingLines = order?.shipping ? formatOrderAddress(order.shipping) : []
 
   return (
-    <Section className="pt-32 md:pt-40">
+    <Section fill className="pt-32 md:pt-40">
       <Container>
         <div className="no-print grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7">

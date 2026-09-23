@@ -21,7 +21,7 @@ export function ImageFrame({
 }: Props) {
   return (
     <figure className={cn(className)}>
-      <div className="img-zoom h-full w-full overflow-hidden bg-ivory-deep ring-1 ring-ink/10">
+      <div className="img-zoom h-full w-full overflow-hidden bg-ivory-deep">
         <img
           src={src}
           alt={alt}

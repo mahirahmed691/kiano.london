@@ -48,7 +48,6 @@ export function Header() {
         >
           <MegaMenu key={pathname} inverted={inverted} />
 
-
           <button
             type="button"
             className={cn(

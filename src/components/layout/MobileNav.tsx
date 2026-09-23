@@ -1,4 +1,3 @@
-import { Lockup } from '@/components/brand/Lockup'
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
@@ -75,7 +74,6 @@ export function MobileNav({ open, onClose }: Props) {
         className="flex min-h-full flex-col justify-center px-8 py-28 pt-[max(7rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))]"
         aria-label="Mobile"
       >
-        <Lockup compact={false} align="start" className="mb-10 text-ink" />
         <ul className={cn('space-y-8', open && 'stagger-in')}>
           <li>
             <RoomLink to="/" onClose={onClose} large>

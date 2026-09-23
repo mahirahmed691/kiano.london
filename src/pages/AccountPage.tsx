@@ -253,7 +253,7 @@ export function AccountPage() {
   usePageMeta(getShareMeta('/account'))
 
   return (
-    <Section className="pt-32 md:pt-40">
+    <Section fill className="pt-32 md:pt-40">
       <Container>
         <Eyebrow>Account</Eyebrow>
         <Display as="h1" className="mt-4 text-5xl md:text-6xl">

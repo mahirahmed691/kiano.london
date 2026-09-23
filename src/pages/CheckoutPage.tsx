@@ -144,7 +144,7 @@ export function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <Section className="pt-32 md:pt-40">
+      <Section fill className="pt-32 md:pt-40">
         <Container>
           <Eyebrow>Checkout</Eyebrow>
           <Display as="h1" className="mt-4 text-5xl md:text-6xl">
@@ -161,7 +161,7 @@ export function CheckoutPage() {
   }
 
   return (
-    <Section className="pt-32 md:pt-40">
+    <Section fill className="pt-32 md:pt-40">
       <Container>
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-6">

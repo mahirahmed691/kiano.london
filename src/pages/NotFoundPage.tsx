@@ -1,6 +1,6 @@
 import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { Button, TextLink } from '@/components/ui/Button'
-import { Container } from '@/components/ui/Container'
+import { Container, Section } from '@/components/ui/Container'
 import { Display, Body } from '@/components/ui/Heading'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -12,7 +12,7 @@ export function NotFoundPage() {
   })
 
   return (
-    <section className="flex min-h-[80svh] items-center bg-ivory pt-24 text-ink">
+    <Section fill className="flex items-center pt-24">
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
@@ -38,6 +38,6 @@ export function NotFoundPage() {
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   )
 }
