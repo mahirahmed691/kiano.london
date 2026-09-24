@@ -83,22 +83,7 @@ export function HouseHeader({
       ]}
       onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
     >
-      <View style={styles.row}>
-        <Pressable
-          onPress={onToggle}
-          accessibilityRole="button"
-          accessibilityLabel={menuOpen ? 'Close menu' : 'Open menu'}
-          accessibilityState={{ expanded: menuOpen }}
-          testID="house-menu-toggle"
-          hitSlop={8}
-          style={({ pressed }) => [styles.hit, pressed && styles.pressed]}
-        >
-          <View style={styles.burger}>
-            <Animated.View style={[styles.hair, { backgroundColor: ink }, topBar]} />
-            <Animated.View style={[styles.hair, { backgroundColor: ink }, bottomBar]} />
-          </View>
-        </Pressable>
-
+      <View style={styles.row} pointerEvents="box-none">
         <Pressable
           onPress={onHome}
           accessibilityRole="link"
@@ -110,7 +95,22 @@ export function HouseHeader({
           <HouseLockup compact tone={lockupTone} />
         </Pressable>
 
-        <View style={styles.hit}>
+        <Pressable
+          onPress={onToggle}
+          accessibilityRole="button"
+          accessibilityLabel={menuOpen ? 'Close menu' : 'Open menu'}
+          accessibilityState={{ expanded: menuOpen }}
+          testID="house-menu-toggle"
+          hitSlop={8}
+          style={({ pressed }) => [styles.hit, styles.hitLeft, pressed && styles.pressed]}
+        >
+          <View style={styles.burger}>
+            <Animated.View style={[styles.hair, { backgroundColor: ink }, topBar]} />
+            <Animated.View style={[styles.hair, { backgroundColor: ink }, bottomBar]} />
+          </View>
+        </Pressable>
+
+        <View style={[styles.hit, styles.hitRight]}>
           <HouseWord count={word} inverted={!paper} embedded onPress={onWord} />
         </View>
       </View>
@@ -134,21 +134,29 @@ const styles = StyleSheet.create({
   row: {
     minHeight: 96,
     paddingHorizontal: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  hit: {
-    width: 44,
-    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  hit: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    width: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 2,
+  },
+  hitLeft: {
+    left: 12,
+  },
+  hitRight: {
+    right: 12,
+  },
   mark: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 10,
+    zIndex: 1,
   },
   burger: {
     width: 24,
