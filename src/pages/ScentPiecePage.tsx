@@ -57,22 +57,32 @@ export function ScentPiecePage() {
                 {scentArabic}
               </p>
               <Body className="mt-6">{scent.line}</Body>
-              <Body className="mt-6">
+              <Body className="mt-6">{scent.wear}</Body>
+              <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
                 Arabian Oud, and eau de parfum. The name is of the house. The bottle is
                 not yet of the bag.
-              </Body>
+              </p>
               <div className="mt-10">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The notes</p>
-                <ul className="mt-5 space-y-3">
-                  {scent.notes.map((note) => (
-                    <li
-                      key={note}
-                      className="max-w-sm text-[14px] font-light leading-relaxed text-ink-soft"
-                    >
-                      {note}
-                    </li>
+                <div className="mt-8 space-y-8">
+                  {scent.movements.map((move) => (
+                    <div key={move.kicker}>
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                        {move.kicker}
+                      </p>
+                      <ul className="mt-4 space-y-3">
+                        {move.notes.map((note) => (
+                          <li
+                            key={note}
+                            className="max-w-sm text-[14px] font-light leading-relaxed text-ink-soft"
+                          >
+                            {note}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
               <div className="mt-10 flex flex-wrap items-center gap-6">
                 <Button to="/scent">The Scent</Button>
