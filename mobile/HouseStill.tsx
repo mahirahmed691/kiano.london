@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 200,
+    height: 168,
     backgroundColor: 'rgba(37, 40, 43, 0.38)',
   },
   heroScrim: {

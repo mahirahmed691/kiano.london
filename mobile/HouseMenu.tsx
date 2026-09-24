@@ -76,13 +76,13 @@ export function HouseMenu({
     onOpen(next)
   }
 
+  if (!open) return null
+
   return (
     <View
-      pointerEvents={open ? 'auto' : 'none'}
-      accessibilityViewIsModal={open}
-      importantForAccessibility={open ? 'yes' : 'no-hide-descendants'}
+      accessibilityViewIsModal
       testID="house-menu"
-      style={[styles.veil, { opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none' }]}
+      style={styles.veil}
     >
       <ScrollView
         style={styles.scroll}

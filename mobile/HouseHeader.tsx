@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     zIndex: 13,
+    overflow: 'hidden',
   },
   ruled: {
     borderBottomWidth: StyleSheet.hairlineWidth,
