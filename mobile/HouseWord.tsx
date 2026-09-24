@@ -1,6 +1,9 @@
 import Svg, { Path } from 'react-native-svg'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
+import { pad } from './catalogue'
+import { color, type } from './theme'
+
 type Props = {
   count: number
   top: number
@@ -8,12 +11,8 @@ type Props = {
   onPress: () => void
 }
 
-function pad(value: number) {
-  return String(value).padStart(2, '0')
-}
-
 export function HouseWord({ count, top, inverted, onPress }: Props) {
-  const color = inverted ? '#F2EBDC' : '#1B1714'
+  const ink = inverted ? color.ivory : color.ink
   const waiting = count > 0
 
   return (
@@ -34,19 +33,19 @@ export function HouseWord({ count, top, inverted, onPress }: Props) {
         <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
           <Path
             d="M12 4.5c-2.6 0-4.5 2-4.5 5.2v4.2L5 17.5h14l-2.5-3.6v-4.2c0-3.2-1.9-5.2-4.5-5.2z"
-            stroke={color}
+            stroke={ink}
             strokeWidth="1.2"
             strokeLinecap="square"
             strokeLinejoin="miter"
           />
           <Path
             d="M10 18.5c0 1.1.9 2 2 2s2-.9 2-2"
-            stroke={color}
+            stroke={ink}
             strokeWidth="1.2"
             strokeLinecap="square"
           />
         </Svg>
-        {waiting ? <Text style={[styles.count, { color }]}>{pad(count)}</Text> : null}
+        {waiting ? <Text style={[styles.count, { color: ink }]}>{pad(count)}</Text> : null}
       </View>
     </Pressable>
   )
@@ -72,6 +71,7 @@ const styles = StyleSheet.create({
     gap: 7,
   },
   count: {
+    fontFamily: type.sansRegular,
     fontSize: 10,
     fontWeight: '400',
     letterSpacing: 1.6,

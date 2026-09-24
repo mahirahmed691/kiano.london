@@ -1,5 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
+import { color, type } from './theme'
+
 type Props = {
   onRetry: () => void
 }
@@ -9,9 +11,7 @@ export function HouseFailed({ onRetry }: Props) {
     <View style={styles.veil} accessibilityRole="alert">
       <Text style={styles.kicker}>Kiano London</Text>
       <Text style={styles.display}>The house could not be reached.</Text>
-      <Text style={styles.body}>
-        A line dropped. Try again when you have a moment.
-      </Text>
+      <Text style={styles.body}>A line dropped. Try again when you have a moment.</Text>
       <Pressable
         onPress={onRetry}
         accessibilityRole="button"
@@ -31,18 +31,20 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     zIndex: 15,
     justifyContent: 'center',
-    backgroundColor: '#F2EBDC',
+    backgroundColor: color.ivory,
     paddingHorizontal: 32,
   },
   kicker: {
-    color: '#6F675C',
+    color: color.stone,
+    fontFamily: type.sansRegular,
     fontSize: 11,
     letterSpacing: 3,
     textTransform: 'uppercase',
   },
   display: {
     marginTop: 16,
-    color: '#1B1714',
+    color: color.ink,
+    fontFamily: type.displayLight,
     fontSize: 32,
     fontWeight: '300',
     letterSpacing: -0.4,
@@ -51,7 +53,8 @@ const styles = StyleSheet.create({
   body: {
     marginTop: 16,
     maxWidth: 280,
-    color: '#3F3933',
+    color: color.inkSoft,
+    fontFamily: type.sans,
     fontSize: 15,
     fontWeight: '300',
     lineHeight: 24,
@@ -60,20 +63,21 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 28,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#1B1714',
+    borderColor: color.ink,
     paddingHorizontal: 18,
     paddingVertical: 12,
   },
   pressed: {
-    backgroundColor: '#1B1714',
+    backgroundColor: color.ink,
   },
   retryLabel: {
-    color: '#1B1714',
+    color: color.ink,
+    fontFamily: type.sansRegular,
     fontSize: 11,
     letterSpacing: 2.2,
     textTransform: 'uppercase',
   },
   retryLabelOn: {
-    color: '#F2EBDC',
+    color: color.ivory,
   },
 })

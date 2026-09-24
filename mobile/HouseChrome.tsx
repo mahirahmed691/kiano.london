@@ -1,5 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
+import { pad } from './catalogue'
+import { color, type } from './theme'
+
 export type HouseTab = 'house' | 'line' | 'bag' | 'account'
 
 type Props = {
@@ -15,27 +18,25 @@ type Props = {
   onAccount: () => void
 }
 
-function pad(value: number) {
-  return String(value).padStart(2, '0')
-}
-
 export function tabFromPath(pathname: string): HouseTab {
+  const path = pathname.split('?')[0] || '/'
   if (
-    pathname.startsWith('/account') ||
-    pathname.startsWith('/sign-in') ||
-    pathname.startsWith('/sign-up') ||
-    pathname.startsWith('/admin')
+    path.startsWith('/account') ||
+    path.startsWith('/sign-in') ||
+    path.startsWith('/sign-up') ||
+    path.startsWith('/admin')
   ) {
     return 'account'
   }
-  if (pathname.startsWith('/shop') || pathname.startsWith('/collection')) {
+  if (path.startsWith('/shop') || path.startsWith('/collection')) {
     return 'line'
   }
   return 'house'
 }
 
 export function quietChrome(pathname: string) {
-  return pathname.startsWith('/checkout') || pathname.startsWith('/order')
+  const path = pathname.split('?')[0] || '/'
+  return path.startsWith('/checkout') || path.startsWith('/order')
 }
 
 function Tab({
@@ -78,13 +79,13 @@ export function HouseChrome({
   onBag,
   onAccount,
 }: Props) {
-  const line = tabFromPath(path) === 'line'
+  const line = tabFromPath(path) === 'line' || tab === 'line'
   const collection = path.startsWith('/collection')
   const shop = path.startsWith('/shop') || (line && !collection)
 
   return (
     <View style={[styles.chrome, { paddingBottom: Math.max(inset, 10) }]}>
-      {line ? (
+      {line && tab !== 'bag' && tab !== 'account' ? (
         <View style={styles.segment}>
           <Pressable
             onPress={onShop}
@@ -125,9 +126,9 @@ export function HouseChrome({
 
 const styles = StyleSheet.create({
   chrome: {
-    backgroundColor: '#F2EBDC',
+    backgroundColor: color.ivory,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#D4CBB8',
+    borderTopColor: color.rule,
   },
   segment: {
     flexDirection: 'row',
@@ -156,22 +157,24 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.97 }],
   },
   label: {
+    fontFamily: type.sansRegular,
     fontSize: 11,
     fontWeight: '400',
     letterSpacing: 2.2,
     textTransform: 'uppercase',
   },
   sub: {
+    fontFamily: type.sansRegular,
     fontSize: 11,
     fontWeight: '400',
     letterSpacing: 2.2,
     textTransform: 'uppercase',
   },
   active: {
-    color: '#1B1714',
+    color: color.ink,
   },
   quiet: {
-    color: '#6F675C',
+    color: color.stone,
   },
   mark: {
     marginTop: 7,
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
     width: 12,
   },
   markOn: {
-    backgroundColor: '#1B1714',
+    backgroundColor: color.ink,
   },
   markOff: {
     backgroundColor: 'transparent',

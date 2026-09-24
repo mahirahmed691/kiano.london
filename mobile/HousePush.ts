@@ -21,11 +21,34 @@ export function pathFromNotificationResponse(response: Notifications.Notificatio
   return housePathFromNotification(response.notification)
 }
 
+export function lastHousePath() {
+  if (Platform.OS === 'web') return ''
+  try {
+    return pathFromNotificationResponse(Notifications.getLastNotificationResponse())
+  } catch {
+    return ''
+  }
+}
+
+export function listenHousePush(onPath: (href: string) => void) {
+  if (Platform.OS === 'web') return () => undefined
+  try {
+    const listening = Notifications.addNotificationResponseReceivedListener((response) => {
+      const href = pathFromNotificationResponse(response)
+      if (href) onPath(href)
+    })
+    return () => listening.remove()
+  } catch {
+    return () => undefined
+  }
+}
+
 export async function setHouseBadge(count: number) {
   await Notifications.setBadgeCountAsync(Math.max(0, count)).catch(() => undefined)
 }
 
 export async function registerHousePush() {
+  if (Platform.OS === 'web') return ''
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('word', {
       name: 'Word from the house',

@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import * as SplashScreen from 'expo-splash-screen'
 
+import { color } from './theme'
+
 const MIN_HOLD_MS = 1600
 const MAX_HOLD_MS = 7000
 const FADE_MS = 680
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
     zIndex: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F2EBDC',
+    backgroundColor: color.ivory,
     paddingBottom: 28,
   },
   lockup: {
