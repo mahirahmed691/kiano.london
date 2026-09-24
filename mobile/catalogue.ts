@@ -22,6 +22,17 @@ export {
   type ProductColour,
   type ThobeSize,
 } from '../src/data/products'
+export {
+  getScent,
+  relatedScents,
+  scentArabic,
+  scentComing,
+  scentFamilies,
+  scentPath,
+  scents,
+  type Scent,
+  type ScentStill,
+} from '../src/data/scent'
 export { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven, houseCreed } from '../src/data/creed'
 export { processSteps, materials, stitchStudies } from '../src/data/craftsmanship'
 export { site } from '../src/data/site'
@@ -84,7 +95,7 @@ export function recentPlates(count = 4, now = Date.now()) {
 }
 
 export function pieceIdFromPath(pathname: string) {
-  const match = pathname.match(/^\/(shop|collection)\/([^/?#]+)/)
+  const match = pathname.match(/^\/(shop|collection|scent)\/([^/?#]+)/)
   return match?.[2] ?? ''
 }
 
@@ -95,11 +106,13 @@ export function isNativeBrowse(pathname: string) {
     path === '/stills' ||
     path === '/shop' ||
     path === '/collection' ||
+    path === '/scent' ||
     path === '/visit' ||
     path === '/story' ||
     path === '/craftsmanship' ||
     path.startsWith('/shop/') ||
-    path.startsWith('/collection/')
+    path.startsWith('/collection/') ||
+    path.startsWith('/scent/')
   )
 }
 
@@ -110,11 +123,13 @@ export function overlayRoom(pathname: string) {
     path === '/stills' ||
     path === '/shop' ||
     path === '/collection' ||
+    path === '/scent' ||
     path === '/visit' ||
     path === '/story' ||
     path === '/craftsmanship' ||
     path.startsWith('/shop/') ||
-    path.startsWith('/collection/')
+    path.startsWith('/collection/') ||
+    path.startsWith('/scent/')
   )
 }
 

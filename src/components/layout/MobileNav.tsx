@@ -4,6 +4,7 @@ import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
+import { scentPath, scents } from '@/data/scent'
 import { site } from '@/data/site'
 import { thisWeekPlate } from '@/lib/instagram-plates'
 import { cn } from '@/lib/cn'
@@ -105,6 +106,21 @@ export function MobileNav({ open, onClose }: Props) {
                 <li key={piece.id}>
                   <RoomLink to={productPath(piece)} onClose={onClose}>
                     {piece.name}
+                  </RoomLink>
+                </li>
+              ))}
+            </ul>
+          </li>
+          <li className="space-y-3">
+            <SectionLabel>The Scent</SectionLabel>
+            <RoomLink to="/scent" onClose={onClose} large>
+              Scent
+            </RoomLink>
+            <ul className="space-y-1 pt-1">
+              {scents.map((scent) => (
+                <li key={scent.id}>
+                  <RoomLink to={scentPath(scent)} onClose={onClose}>
+                    {scent.name}
                   </RoomLink>
                 </li>
               ))}

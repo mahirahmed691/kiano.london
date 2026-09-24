@@ -134,6 +134,7 @@ export function CollectionPage() {
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/visit">Visit by appointment</Button>
                 <TextLink to="/shop">The Shop</TextLink>
+                <TextLink to="/scent">The Scent</TextLink>
               </div>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">

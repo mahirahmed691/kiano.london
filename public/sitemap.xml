@@ -56,6 +56,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.kiano.london/scent</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kiano.london/scent/mayfair</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.kiano.london/scent/bond-street</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.kiano.london/scent/kensington</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.kiano.london/stills</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

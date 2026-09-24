@@ -11,6 +11,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { creedIntent, creedJoin, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
+import { scentPath, scents } from '@/data/scent'
 import { site } from '@/data/site'
 import { plateCopy, recentPlates, stillsHash, thisWeekPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
@@ -55,12 +56,13 @@ export function HomePage() {
               <Lead className="mt-5">{weekCopy.lines[0] ?? week.name}</Lead>
               <Body className="mt-8">
                 {creedWoven} {creedIntent} Five columns, and the outer garment in
-                three colours. The house does not invent a second look for a feed.
+                three colours. The scent is coming.
               </Body>
               <div className="mt-10 flex flex-wrap items-center gap-8">
                 <Button to="/stills">The stills</Button>
                 <TextLink to="/shop">The Shop</TextLink>
                 <TextLink to="/collection">The Collection</TextLink>
+                <TextLink to="/scent">The Scent</TextLink>
               </div>
             </Reveal>
           </div>
@@ -83,7 +85,7 @@ export function HomePage() {
         <Container>
           <Reveal>
             <Eyebrow>The line</Eyebrow>
-            <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-20">
+            <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-20 lg:grid-cols-3">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Shop</p>
                 <ul className="mt-5 space-y-3">
@@ -116,6 +118,22 @@ export function HomePage() {
                     </li>
                   ))}
                 </ol>
+              </div>
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Scent</p>
+                <ul className="mt-5 space-y-3">
+                  {scents.map((scent) => (
+                    <li key={scent.id}>
+                      <Link
+                        to={scentPath(scent)}
+                        className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
+                      >
+                        {scent.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-[11px] uppercase tracking-[0.22em] text-stone">Coming</p>
               </div>
             </div>
           </Reveal>

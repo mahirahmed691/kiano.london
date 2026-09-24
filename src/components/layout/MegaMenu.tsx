@@ -19,6 +19,7 @@ const megaItems: MegaItem[] = [
 ]
 
 const simpleNav = [
+  { label: 'Scent', to: '/scent' },
   { label: 'Stills', to: '/stills' },
   { label: 'Story', to: '/story' },
   { label: 'Visit', to: '/visit' },
@@ -73,6 +74,9 @@ function HouseLinks() {
       <ul className="mt-5 space-y-3">
         <li>
           <TextLink to="/stills">Stills</TextLink>
+        </li>
+        <li>
+          <TextLink to="/scent">Scent</TextLink>
         </li>
         <li>
           <TextLink to="/story">Story</TextLink>
