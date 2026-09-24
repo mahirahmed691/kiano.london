@@ -36,22 +36,17 @@ export function ScentPiecePage() {
         image={scent.image}
         imageAlt={scent.imageAlt}
         objectPosition={scent.objectPosition}
-        kicker={scentComing}
-        title={`${scent.name}.`}
         minHeight="screen"
         priority
-      >
-        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
-          {scentArabic}
-        </p>
-      </Hero>
+        quiet
+      />
 
       <Section>
         <Container>
           <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-5">
               <Eyebrow>{scentComing}</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">
+              <Display as="h1" className="mt-4 text-4xl md:text-5xl">
                 {scent.name}.
               </Display>
               <p
