@@ -81,7 +81,8 @@
             "image": "./assets/images/splash-lockup.png"
           }
         }
-      ]
+      ],
+      "expo-font"
     ]
   }
 }

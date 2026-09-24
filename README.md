@@ -61,7 +61,7 @@ The logotype returns to the homepage. Collection pieces are driven from `src/dat
 - Stripe Checkout
 - Semantic HTML, CSS transitions, `prefers-reduced-motion`
 
-The site installs as a standalone app from Safari or Chrome (Add to Home Screen). After a visit, the house, the shop, and the collection can be read without a network; the till and the account need a connection. Native iOS and Android use the Expo shell in `mobile/`, which opens the live house.
+The site installs as a standalone app from Safari or Chrome (Add to Home Screen). After a visit, the house, the shop, and the collection can be read without a network; the till and the account need a connection. Native iOS and Android use the Expo app in `mobile/`: rooms (house, stills, shop, collection, a piece, a visit, the story, the making) are native, using the same tokens and line as the site. The bag, the word, the account, and the till remain the live house in a WebView, because Clerk and Stripe sit there.
 
 ## Local development
 
@@ -77,7 +77,7 @@ cd mobile
 npm start
 ```
 
-Scan the QR code with Expo Go from the App Store (SDK 54). The native shell loads [https://www.kiano.london](https://www.kiano.london).
+Scan the QR code with Expo Go from the App Store (SDK 54). Native rooms share `src/data` with the site. Bag, account, and checkout still load [https://www.kiano.london](https://www.kiano.london).
 
 ```bash
 npm run build
@@ -131,4 +131,4 @@ Visual language, type, colour and spacing are recorded in `DESIGN.md`.
 | `npm run preview` | Serve the production build |
 | `npm run lint` | Oxlint |
 | `npm run db:migrate` | Create inventory, members, orders, list, webhook, and appointment tables |
-| `cd mobile && npm start` | Expo Go shell for the house app |
+| `cd mobile && npm start` | Native house app (Expo Go, SDK 54) |

@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics'
 import * as Linking from 'expo-linking'
 import * as Notifications from 'expo-notifications'
 import * as SystemUI from 'expo-system-ui'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BackHandler, Linking as RNLinking, Platform, StyleSheet, View } from 'react-native'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { WebView, type WebViewMessageEvent, type WebViewNavigation } from 'react-native-webview'
@@ -12,170 +12,160 @@ import { HouseChrome, quietChrome, tabFromPath, type HouseTab } from './HouseChr
 import { HouseFailed } from './HouseFailed'
 import { HouseSplash } from './HouseSplash'
 import { HouseWord } from './HouseWord'
+import {
+  getProduct,
+  isNativeBrowse,
+  overlayRoom,
+  pieceIdFromPath,
+} from './catalogue'
+import { useHouseFonts } from './fonts'
+import {
+  goScript,
+  houseOrigin,
+  nativeMark,
+  openEvent,
+  openHousePath,
+  pathOf,
+  pushBridge,
+  scrollTopScript,
+  shouldOpenOutside,
+  urlForHouse,
+} from './house'
 import { pathFromNotificationResponse, registerHousePush, setHouseBadge } from './HousePush'
+import { HouseRoom } from './rooms/HouseRoom'
+import { LineRoom } from './rooms/LineRoom'
+import { MakingRoom } from './rooms/MakingRoom'
+import { PieceRoom } from './rooms/PieceRoom'
+import { StillsRoom } from './rooms/StillsRoom'
+import { StoryRoom } from './rooms/StoryRoom'
+import { VisitRoom } from './rooms/VisitRoom'
+import { color } from './theme'
 
-const DEFAULT_ORIGIN = 'https://www.kiano.london'
-
-function houseOrigin() {
-  const fromEnv = process.env.EXPO_PUBLIC_HOUSE_URL?.trim()
-  if (!fromEnv) return DEFAULT_ORIGIN
-  return fromEnv.replace(/\/$/, '')
-}
-
-function isHouseHost(hostname: string | null | undefined) {
-  if (!hostname) return false
-  return (
-    hostname === 'www.kiano.london' ||
-    hostname === 'kiano.london' ||
-    hostname === 'localhost' ||
-    hostname === '127.0.0.1'
-  )
-}
-
-function urlForHouse(incoming: string | null) {
-  const origin = houseOrigin()
-  if (!incoming) return origin
-
-  const parsed = Linking.parse(incoming)
-  if (parsed.scheme === 'kiano') {
-    const host = parsed.hostname?.replace(/^\/+/, '') ?? ''
-    const path = (parsed.path ?? '').replace(/^\/+/, '')
-    const route = [host, path].filter(Boolean).join('/')
-    if (!route) return origin
-    return `${origin}/${route}`
-  }
-
-  if (isHouseHost(parsed.hostname)) {
-    return incoming
-  }
-
-  return origin
-}
-
-function shouldOpenOutside(url: string) {
-  return url.startsWith('tel:') || url.startsWith('mailto:') || url.startsWith('sms:')
-}
-
-function openHousePath(href: string) {
-  if (!href.startsWith('/') || href.startsWith('//')) return ''
-  return `${houseOrigin()}${href}`
-}
-
-function pathOf(url: string) {
-  try {
-    return new URL(url).pathname || '/'
-  } catch {
-    return '/'
-  }
-}
+void SystemUI.setBackgroundColorAsync(color.ivory)
 
 function overlayStatus(pathname: string) {
+  const path = pathname.split('?')[0] || '/'
+  return overlayRoom(path)
+}
+
+function isAccountPath(pathname: string) {
+  const path = pathname.split('?')[0] || '/'
   return (
-    pathname === '/' ||
-    pathname === '/stills' ||
-    pathname === '/shop' ||
-    pathname === '/collection' ||
-    pathname === '/visit' ||
-    pathname === '/story' ||
-    pathname.startsWith('/craftsmanship')
+    path.startsWith('/account') ||
+    path.startsWith('/sign-in') ||
+    path.startsWith('/sign-up') ||
+    path.startsWith('/admin')
   )
 }
 
-function nativeMark() {
-  return `
-    window.__KIANO_NATIVE = true;
-    try { document.documentElement.classList.add('shell-app'); } catch (e) {}
-    window.dispatchEvent(new Event('kiano-native'));
-    true;
-  `
-}
-
-function pushBridge(token: string) {
-  const encoded = JSON.stringify(token)
-  return `
-    window.__KIANO_NATIVE = true;
-    window.__KIANO_EXPO_PUSH = ${encoded};
-    try { document.documentElement.classList.add('shell-app'); } catch (e) {}
-    window.dispatchEvent(new Event('kiano-native'));
-    window.dispatchEvent(new Event('kiano-expo-push'));
-    true;
-  `
-}
-
-function goScript(path: string) {
-  const encoded = JSON.stringify(path)
-  return `
-    (function () {
-      var path = ${encoded};
-      window.__KIANO_NATIVE = true;
-      if (window.location.pathname === path) {
-        window.scrollTo(0, 0);
-        return true;
-      }
-      window.history.pushState({}, '', path);
-      window.dispatchEvent(new PopStateEvent('popstate'));
-      window.scrollTo(0, 0);
-      true;
-    })();
-  `
-}
-
-function openEvent(name: 'kiano-open-bag' | 'kiano-open-word' | 'kiano-close-bag' | 'kiano-close-word') {
-  return `
-    window.dispatchEvent(new Event(${JSON.stringify(name)}));
-    true;
-  `
-}
-
-const scrollTopScript = 'window.scrollTo(0, 0); true;'
-
-void SystemUI.setBackgroundColorAsync('#F2EBDC')
-
 function HouseApp() {
+  const fontsReady = useHouseFonts()
   const insets = useSafeAreaInsets()
   const [uri, setUri] = useState(houseOrigin)
   const [path, setPath] = useState('/')
-  const [houseReady, setHouseReady] = useState(false)
+  const [plateId, setPlateId] = useState('')
+  const [webKind, setWebKind] = useState<'hidden' | 'bag' | 'word' | 'account' | 'sheet'>('hidden')
+  const [heroOverlay, setHeroOverlay] = useState(true)
   const [failed, setFailed] = useState(false)
   const [pushToken, setPushToken] = useState('')
   const [bag, setBag] = useState(0)
   const [word, setWord] = useState(0)
   const [bagOpen, setBagOpen] = useState(false)
   const [wordOpen, setWordOpen] = useState(false)
-  const firstLoad = useRef(true)
+  const [roomHeight, setRoomHeight] = useState(640)
+  const nativePath = useRef('/')
   const canGoBack = useRef(false)
   const webView = useRef<WebView>(null)
+
+  const rememberNative = useCallback((next: string) => {
+    if (isNativeBrowse(next)) nativePath.current = next.split('?')[0] || '/'
+  }, [])
+
+  const goNative = useCallback(
+    (next: string) => {
+      const [pathname, hash] = next.split('#')
+      setPath(pathname || '/')
+      setPlateId(hash ?? '')
+      setWebKind('hidden')
+      setBagOpen(false)
+      setWordOpen(false)
+      rememberNative(pathname || '/')
+      setHeroOverlay(overlayRoom(pathname || '/'))
+    },
+    [rememberNative],
+  )
+
+  const webReady = useRef(false)
+
+  const send = useCallback((script: string, fallbackPath?: string) => {
+    if (webReady.current) {
+      webView.current?.injectJavaScript(script)
+      return
+    }
+    if (fallbackPath) setUri(`${houseOrigin()}${fallbackPath}`)
+  }, [])
+
+  const goWeb = useCallback(
+    (next: string, kind: 'bag' | 'word' | 'account' | 'sheet') => {
+      setPath(next)
+      setWebKind(kind)
+      send(goScript(next), next)
+    },
+    [send],
+  )
+
+  const open = useCallback(
+    (next: string) => {
+      const pathname = next.split('#')[0] || '/'
+      if (isNativeBrowse(pathname)) {
+        goNative(next)
+        return
+      }
+      if (isAccountPath(pathname)) {
+        goWeb(pathname, 'account')
+        return
+      }
+      goWeb(pathname, 'sheet')
+    },
+    [goNative, goWeb],
+  )
+
+  const openWeb = useCallback(
+    (next: string) => {
+      setWebKind('sheet')
+      send(goScript(next), next)
+    },
+    [send],
+  )
 
   useEffect(() => {
     void Linking.getInitialURL().then((url) => {
       const next = urlForHouse(url)
       setUri(next)
-      setPath(pathOf(next))
+      const pathname = pathOf(next)
+      if (isNativeBrowse(pathname)) goNative(pathname)
+      else open(pathname)
     })
     const subscription = Linking.addEventListener('url', ({ url }) => {
       const next = urlForHouse(url)
       setUri(next)
-      setPath(pathOf(next))
+      const pathname = pathOf(next)
+      if (isNativeBrowse(pathname)) goNative(pathname)
+      else open(pathname)
     })
     return () => subscription.remove()
-  }, [])
+  }, [goNative, open])
 
   useEffect(() => {
     const opened = pathFromNotificationResponse(Notifications.getLastNotificationResponse())
-    if (opened) {
-      setUri(openHousePath(opened))
-      setPath(opened)
-    }
+    if (opened) open(opened)
 
     const listening = Notifications.addNotificationResponseReceivedListener((response) => {
       const href = pathFromNotificationResponse(response)
-      if (href) {
-        setUri(openHousePath(href))
-        setPath(href)
-      }
+      if (href) open(href)
     })
     return () => listening.remove()
-  }, [])
+  }, [open])
 
   const onNav = useCallback((request: WebViewNavigation) => {
     if (shouldOpenOutside(request.url)) {
@@ -183,12 +173,6 @@ function HouseApp() {
       return false
     }
     return true
-  }, [])
-
-  const onHousePainted = useCallback(() => {
-    if (!firstLoad.current) return
-    firstLoad.current = false
-    setHouseReady(true)
   }, [])
 
   const onMessage = useCallback((event: WebViewMessageEvent) => {
@@ -219,6 +203,12 @@ function HouseApp() {
       setBagOpen(payload.bagOpen === true)
       setWordOpen(payload.wordOpen === true)
       void setHouseBadge(nextWord)
+      if (payload.bagOpen !== true && webKind === 'bag') {
+        goNative(nativePath.current)
+      }
+      if (payload.wordOpen !== true && webKind === 'word') {
+        goNative(nativePath.current)
+      }
       return
     }
 
@@ -231,81 +221,116 @@ function HouseApp() {
         webView.current?.injectJavaScript(pushBridge(token))
       })
       .catch(() => undefined)
-  }, [])
-
-  const go = useCallback(
-    (next: string) => {
-      setPath(next)
-      if (!houseReady) {
-        setUri(`${houseOrigin()}${next}`)
-        return
-      }
-      webView.current?.injectJavaScript(goScript(next))
-    },
-    [houseReady],
-  )
+  }, [goNative, webKind])
 
   const tap = useCallback((fn: () => void) => {
     void Haptics.selectionAsync().catch(() => undefined)
     fn()
   }, [])
 
-  const routeTab = tabFromPath(path)
-  const tab: HouseTab = bagOpen ? 'bag' : routeTab
-  const hideChrome = quietChrome(path)
-  const lightStatus = overlayStatus(path) && !bagOpen && !wordOpen && !hideChrome
+  const webVisible = webKind !== 'hidden' || bagOpen || wordOpen
+  const routeTab = tabFromPath(isNativeBrowse(path) ? path : nativePath.current)
+  const tab: HouseTab = bagOpen || webKind === 'bag' ? 'bag' : webKind === 'account' || isAccountPath(path) ? 'account' : routeTab
+  const hideChrome = quietChrome(path) || wordOpen || webKind === 'word'
+  const lightStatus =
+    !webVisible && overlayRoom(path) && heroOverlay && !bagOpen && !wordOpen && !hideChrome
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (bagOpen) {
+      if (bagOpen || webKind === 'bag') {
         webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
+        goNative(nativePath.current)
         return true
       }
-      if (wordOpen) {
+      if (wordOpen || webKind === 'word') {
         webView.current?.injectJavaScript(openEvent('kiano-close-word'))
+        goNative(nativePath.current)
         return true
       }
-      if (canGoBack.current) {
+      if (webKind === 'sheet') {
+        goNative(nativePath.current)
+        return true
+      }
+      const current = path.split('?')[0] || '/'
+      if (current.startsWith('/shop/') || current.startsWith('/collection/')) {
+        const piece = getProduct(pieceIdFromPath(current))
+        goNative(piece?.cut === 'Jubbah' ? '/shop' : '/collection')
+        return true
+      }
+      if (current === '/stills' || current === '/visit' || current === '/story' || current === '/craftsmanship') {
+        goNative('/')
+        return true
+      }
+      if (canGoBack.current && webVisible) {
         webView.current?.goBack()
         return true
       }
       return false
     })
     return () => sub.remove()
-  }, [bagOpen, wordOpen])
+  }, [bagOpen, goNative, path, webKind, webVisible, wordOpen])
 
   const retry = useCallback(() => {
     setFailed(false)
-    firstLoad.current = true
-    setHouseReady(false)
     webView.current?.reload()
   }, [])
+
+  const nav = useMemo(
+    () => ({
+      open,
+      openWeb,
+      roomHeight,
+      bottomInset: 0,
+      onOverlay: setHeroOverlay,
+    }),
+    [open, openWeb, roomHeight],
+  )
+
+  const room = path.split('?')[0] || '/'
+  const pieceId = pieceIdFromPath(room)
 
   return (
     <View style={styles.shell}>
       <StatusBar style={lightStatus ? 'light' : 'dark'} />
-      {lightStatus ? null : <View style={[styles.status, { height: insets.top }]} />}
+      {lightStatus ? null : webVisible ? null : <View style={[styles.status, { height: insets.top }]} />}
+      <View
+        style={styles.rooms}
+        onLayout={(event) => setRoomHeight(event.nativeEvent.layout.height)}
+      >
+        {room === '/' ? <HouseRoom {...nav} /> : null}
+        {room === '/stills' ? <StillsRoom {...nav} plateId={plateId} /> : null}
+        {room === '/shop' ? <LineRoom {...nav} /> : null}
+        {room === '/collection' ? <LineRoom {...nav} collection /> : null}
+        {room.startsWith('/shop/') || room.startsWith('/collection/') ? (
+          <PieceRoom {...nav} pieceId={pieceId} />
+        ) : null}
+        {room === '/visit' ? <VisitRoom {...nav} /> : null}
+        {room === '/story' ? <StoryRoom {...nav} /> : null}
+        {room === '/craftsmanship' ? <MakingRoom {...nav} /> : null}
+      </View>
       <WebView
         ref={webView}
         source={{ uri }}
-        style={styles.frame}
+        style={[styles.frame, webVisible ? styles.frameOn : styles.frameOff]}
+        pointerEvents={webVisible ? 'auto' : 'none'}
         originWhitelist={['https://*', 'http://*', 'about:*']}
         onShouldStartLoadWithRequest={onNav}
-        onNavigationStateChange={(nav) => {
-          canGoBack.current = nav.canGoBack
-          if (!nav.url) return
-          setPath(pathOf(nav.url))
+        onNavigationStateChange={(navState) => {
+          canGoBack.current = navState.canGoBack
+          if (!navState.url || !webVisible) return
+          const next = pathOf(navState.url)
+          if (isNativeBrowse(next) && webKind === 'sheet') return
+          setPath(next)
         }}
         onLoadEnd={() => {
+          webReady.current = true
           setFailed(false)
-          onHousePainted()
         }}
         onError={() => {
-          onHousePainted()
-          setFailed(true)
+          if (webVisible) setFailed(true)
         }}
         onHttpError={(event) => {
-          if (event.nativeEvent.statusCode >= 500) setFailed(true)
+          if (webVisible && event.nativeEvent.statusCode >= 500) setFailed(true)
         }}
         onMessage={onMessage}
         injectedJavaScriptBeforeContentLoaded={nativeMark()}
@@ -320,13 +345,14 @@ function HouseApp() {
         setSupportMultipleWindows={false}
         decelerationRate="normal"
       />
-      {houseReady && !failed && !hideChrome && !wordOpen && !bagOpen ? (
+      {fontsReady && !failed && !hideChrome && !wordOpen ? (
         <HouseWord
           count={word}
           top={insets.top + 8}
-          inverted={lightStatus}
+          inverted={lightStatus || (webVisible && overlayStatus(path))}
           onPress={() =>
             tap(() => {
+              setWebKind('word')
               webView.current?.injectJavaScript(openEvent('kiano-open-word'))
             })
           }
@@ -334,7 +360,7 @@ function HouseApp() {
       ) : null}
       {hideChrome ? null : (
         <HouseChrome
-          path={path}
+          path={isNativeBrowse(path) ? path : nativePath.current}
           tab={tab}
           bag={bag}
           inset={insets.bottom}
@@ -343,54 +369,54 @@ function HouseApp() {
               if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
               if (routeTab === 'house') {
-                if (path === '/' || path === '') {
-                  go('/stills')
+                if (room === '/' || room === '') {
+                  goNative('/stills')
                   return
                 }
-                if (path === '/stills') {
-                  webView.current?.injectJavaScript(scrollTopScript)
+                if (room === '/stills') {
                   return
                 }
               }
-              go('/')
+              goNative('/')
             })
           }
           onLine={() =>
             tap(() => {
               if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
-              if (routeTab === 'line') {
-                webView.current?.injectJavaScript(scrollTopScript)
-                return
-              }
-              go('/shop')
+              if (routeTab === 'line') return
+              goNative('/shop')
             })
           }
-          onShop={() => tap(() => go('/shop'))}
-          onCollection={() => tap(() => go('/collection'))}
+          onShop={() => tap(() => goNative('/shop'))}
+          onCollection={() => tap(() => goNative('/collection'))}
           onBag={() =>
             tap(() => {
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
-              webView.current?.injectJavaScript(
-                openEvent(bagOpen ? 'kiano-close-bag' : 'kiano-open-bag'),
-              )
+              if (bagOpen || webKind === 'bag') {
+                webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
+                goNative(nativePath.current)
+                return
+              }
+              setWebKind('bag')
+              webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
             })
           }
           onAccount={() =>
             tap(() => {
               if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
-              if (routeTab === 'account') {
+              if (tab === 'account') {
                 webView.current?.injectJavaScript(scrollTopScript)
                 return
               }
-              go('/account')
+              goWeb('/account', 'account')
             })
           }
         />
       )}
-      {failed ? <HouseFailed onRetry={retry} /> : null}
-      <HouseSplash houseReady={houseReady} />
+      {failed && webVisible ? <HouseFailed onRetry={retry} /> : null}
+      <HouseSplash houseReady={fontsReady} />
     </View>
   )
 }
@@ -406,13 +432,28 @@ export default function App() {
 const styles = StyleSheet.create({
   shell: {
     flex: 1,
-    backgroundColor: '#F2EBDC',
+    backgroundColor: color.night,
+  },
+  rooms: {
+    flex: 1,
+    backgroundColor: color.night,
   },
   frame: {
-    flex: 1,
-    backgroundColor: '#F2EBDC',
+    backgroundColor: color.ivory,
+  },
+  frameOn: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 8,
+  },
+  frameOff: {
+    position: 'absolute',
+    width: 1,
+    height: 1,
+    opacity: 0,
+    left: 0,
+    top: 0,
   },
   status: {
-    backgroundColor: '#F2EBDC',
+    backgroundColor: color.ivory,
   },
 })
