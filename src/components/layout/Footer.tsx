@@ -93,7 +93,8 @@ export function Footer() {
           <div>
             <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">The list</p>
             <p className="mt-4 text-[14px] font-light leading-relaxed text-ivory/65">
-              Cloth and when a piece can be reserved. A few letters a year.
+              Cloth, and when a piece can be reserved. The scent, when it is of the house.
+              A few letters a year.
             </p>
             <div className="mt-6">
               <SubscribeForm idPrefix="letters-footer" source="footer" variant="dark" />

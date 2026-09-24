@@ -135,6 +135,7 @@ export function LineRoom({
           ) : (
             <OutlineButton label="The thobes" onPress={() => open('/collection')} />
           )}
+          <GhostLink label="The Scent" onPress={() => open('/scent')} />
         </View>
       </View>
       <HouseMotto quiet />
@@ -194,6 +195,7 @@ const styles = StyleSheet.create({
   },
   foot: {
     marginTop: 12,
+    gap: 22,
   },
   pressed: {
     opacity: 0.55,

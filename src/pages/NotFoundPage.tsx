@@ -24,6 +24,7 @@ export function NotFoundPage() {
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <Button to="/shop">The Shop</Button>
               <TextLink to="/collection">The Collection</TextLink>
+              <TextLink to="/scent">The Scent</TextLink>
               <TextLink to="/visit">Visit</TextLink>
             </div>
           </div>

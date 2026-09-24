@@ -1,6 +1,7 @@
 import { thisWeekPlate } from './instagram-plates.js'
 import { creedIntent, creedMotto, creedSpoken, creedWoven } from '../data/creed.js'
 import { getProduct, productPath } from '../data/products.js'
+import { getScent, scentPath } from '../data/scent.js'
 import { site } from '../data/site.js'
 
 export type PageMeta = {
@@ -38,6 +39,14 @@ const pages: Record<string, PageMeta> = {
     path: '/collection',
     image: '/images/thobe-raml.jpg',
     imageAlt: 'The Raml thobe.',
+  },
+  '/scent': {
+    title: 'The Scent — Kiano London',
+    description:
+      'Mayfair, Bond Street and Kensington. The scent is coming. Arabian Oud, and eau de parfum. Not yet of the bag.',
+    path: '/scent',
+    image: '/images/scent-mayfair.jpg',
+    imageAlt: 'Mayfair: a bottle of Kiano London, Arabian Oud, in still light.',
   },
   '/story': {
     title: 'Story — Kiano London',
@@ -182,6 +191,20 @@ export function getShareMeta(pathname: string): PageMeta {
         path: productPath(product),
         image: product.image,
         imageAlt: product.imageAlt,
+      }
+    }
+  }
+
+  const scentHit = path.match(/^\/scent\/([^/]+)$/)
+  if (scentHit) {
+    const scent = getScent(scentHit[1])
+    if (scent) {
+      return {
+        title: `${scent.name} — Kiano London`,
+        description: `${scent.name}. The scent is coming. Arabian Oud, and eau de parfum. Not yet of the bag.`,
+        path: scentPath(scent),
+        image: scent.image,
+        imageAlt: scent.imageAlt,
       }
     }
   }

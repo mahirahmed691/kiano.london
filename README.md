@@ -11,6 +11,8 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | `/` | Home |
 | `/shop` | The Shop (jubbah) |
 | `/collection` | The Collection |
+| `/scent` | The Scent (coming) |
+| `/scent/:id` | A named scent, not yet of the bag |
 | `/stills` | The stills (one a week, in order). Home opens on the plate of the week |
 | `/story` | Our Story |
 | `/craftsmanship` | Craftsmanship |

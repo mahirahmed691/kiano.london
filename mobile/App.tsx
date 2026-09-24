@@ -35,6 +35,7 @@ import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingRoom } from './rooms/MakingRoom'
 import { PieceRoom } from './rooms/PieceRoom'
+import { ScentRoom } from './rooms/ScentRoom'
 import { StillsRoom } from './rooms/StillsRoom'
 import { StoryRoom } from './rooms/StoryRoom'
 import { VisitRoom } from './rooms/VisitRoom'
@@ -251,7 +252,11 @@ function HouseApp() {
         goNative(piece?.cut === 'Jubbah' ? '/shop' : '/collection')
         return true
       }
-      if (current === '/stills' || current === '/visit' || current === '/story' || current === '/craftsmanship') {
+      if (current.startsWith('/scent/')) {
+        goNative('/scent')
+        return true
+      }
+      if (current === '/stills' || current === '/visit' || current === '/story' || current === '/craftsmanship' || current === '/scent') {
         goNative('/')
         return true
       }
@@ -295,6 +300,8 @@ function HouseApp() {
         {room === '/stills' ? <StillsRoom {...nav} plateId={plateId} /> : null}
         {room === '/shop' ? <LineRoom {...nav} /> : null}
         {room === '/collection' ? <LineRoom {...nav} collection /> : null}
+        {room === '/scent' ? <ScentRoom {...nav} /> : null}
+        {room.startsWith('/scent/') ? <ScentRoom {...nav} scentId={pieceId} /> : null}
         {room.startsWith('/shop/') || room.startsWith('/collection/') ? (
           <PieceRoom {...nav} pieceId={pieceId} />
         ) : null}
@@ -389,6 +396,7 @@ function HouseApp() {
           }
           onShop={() => tap(() => goNative('/shop'))}
           onCollection={() => tap(() => goNative('/collection'))}
+          onScent={() => tap(() => goNative('/scent'))}
           onBag={() =>
             tap(() => {
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
