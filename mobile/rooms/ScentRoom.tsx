@@ -98,13 +98,10 @@ export function ScentRoom({
           src={named.image}
           alt={named.imageAlt}
           objectPosition={named.objectPosition}
-          kicker={scentComing}
-          title={`${named.name}.`}
+          quiet
           height={roomHeight}
           priority
-        >
-          <Text style={styles.arabicIvory}>{scentArabic}</Text>
-        </HouseStill>
+        />
 
         <View style={paper()}>
           <Eyebrow>{scentComing}</Eyebrow>
