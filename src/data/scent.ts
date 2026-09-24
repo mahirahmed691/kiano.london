@@ -12,6 +12,10 @@ export type Scent = {
   imageAlt: string
   objectPosition?: string
   gallery: ScentStill[]
+  /** One line of the juice, in the house voice. */
+  line: string
+  /** Stands in until the juice is of the house. One set per name; not two pyramids. */
+  notes: string[]
 }
 
 export const scentArabic = 'العطر'
@@ -42,6 +46,8 @@ export const scents: Scent[] = [
     image: '/images/scent-mayfair.jpg',
     imageAlt: 'Mayfair: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
+    line: 'A rose, held. Oud after it.',
+    notes: ['Damask rose', 'Saffron', 'Oud', 'Amber'],
     gallery: [
       {
         src: '/images/scent-mayfair.jpg',
@@ -68,6 +74,8 @@ export const scents: Scent[] = [
     image: '/images/scent-bond-street.jpg',
     imageAlt: 'Bond Street: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
+    line: 'Citrus on stone, then leather and wood.',
+    notes: ['Bergamot', 'Saffron', 'Leather', 'Sandalwood', 'Oud'],
     gallery: [
       {
         src: '/images/scent-bond-street.jpg',
@@ -94,6 +102,8 @@ export const scents: Scent[] = [
     image: '/images/scent-kensington.jpg',
     imageAlt: 'Kensington: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
+    line: 'Green at first. Vetiver, and the garden at dusk.',
+    notes: ['Fig leaf', 'Vetiver', 'Oakmoss', 'Oud'],
     gallery: [
       {
         src: '/images/scent-kensington.jpg',
@@ -119,6 +129,14 @@ export const scents: Scent[] = [
 export function getScent(id: string | undefined) {
   if (!id) return undefined
   return scents.find((item) => item.id === id)
+}
+
+export function notesJoin(scent: Scent) {
+  const notes = scent.notes
+  if (notes.length === 0) return ''
+  if (notes.length === 1) return notes[0]!
+  if (notes.length === 2) return `${notes[0]} and ${notes[1]}`
+  return `${notes.slice(0, -1).join(', ')} and ${notes[notes.length - 1]}`
 }
 
 export function scentPath(scent: Scent) {

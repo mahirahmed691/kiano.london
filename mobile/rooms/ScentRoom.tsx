@@ -8,6 +8,7 @@ import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../Hou
 import {
   creedIntent,
   getScent,
+  notesJoin,
   relatedScents,
   scentArabic,
   scentComing,
@@ -24,6 +25,7 @@ type Props = HouseNav & {
 
 function ScentStillCard({
   name,
+  notes,
   src,
   alt,
   objectPosition,
@@ -31,6 +33,7 @@ function ScentStillCard({
   index,
 }: {
   name: string
+  notes: string
   src: string
   alt: string
   objectPosition?: string
@@ -55,6 +58,7 @@ function ScentStillCard({
         <View style={styles.copy}>
           {index ? <Text style={styles.index}>{index}</Text> : null}
           <Text style={styles.name}>{name}</Text>
+          <Text style={styles.notesLine}>{notes}</Text>
         </View>
         <Text style={styles.coming}>{scentComing}</Text>
       </View>
@@ -110,9 +114,20 @@ export function ScentRoom({
           <View style={styles.space} />
           <Arabic>{scentArabic}</Arabic>
           <View style={styles.gap} />
+          <Body>{named.line}</Body>
+          <View style={styles.gap} />
           <Body>
             Arabian Oud, and eau de parfum. The name is of the house. The bottle is not yet of the bag.
           </Body>
+          <View style={styles.notesBlock}>
+            <Eyebrow>The notes</Eyebrow>
+            <View style={styles.space} />
+            {named.notes.map((note) => (
+              <Text key={note} style={styles.noteItem}>
+                {note}
+              </Text>
+            ))}
+          </View>
           <View style={styles.actions}>
             <OutlineButton label="The Scent" onPress={() => open('/scent')} />
             <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />
@@ -142,6 +157,7 @@ export function ScentRoom({
             <ScentStillCard
               key={piece.id}
               name={piece.name}
+              notes={notesJoin(piece)}
               src={piece.image}
               alt={piece.imageAlt}
               objectPosition={piece.objectPosition}
@@ -188,6 +204,7 @@ export function ScentRoom({
           <ScentStillCard
             key={scent.id}
             name={scent.name}
+            notes={notesJoin(scent)}
             src={scent.image}
             alt={scent.imageAlt}
             objectPosition={scent.objectPosition}
@@ -354,6 +371,25 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     letterSpacing: -0.3,
     lineHeight: 28,
+  },
+  notesLine: {
+    marginTop: 6,
+    color: color.stone,
+    fontFamily: type.sans,
+    fontSize: 11,
+    letterSpacing: 1.8,
+  },
+  notesBlock: {
+    marginTop: 36,
+  },
+  noteItem: {
+    marginBottom: 12,
+    color: color.inkSoft,
+    fontFamily: type.sans,
+    fontSize: 15,
+    fontWeight: '300',
+    lineHeight: 26,
+    maxWidth: 340,
   },
   coming: {
     color: color.inkSoft,

@@ -201,7 +201,7 @@ export function getShareMeta(pathname: string): PageMeta {
     if (scent) {
       return {
         title: `${scent.name} — Kiano London`,
-        description: `${scent.name}. The scent is coming. Arabian Oud, and eau de parfum. Not yet of the bag.`,
+        description: `${scent.name}. ${scent.line} The scent is coming. Arabian Oud, and eau de parfum. Not yet of the bag.`,
         path: scentPath(scent),
         image: scent.image,
         imageAlt: scent.imageAlt,
