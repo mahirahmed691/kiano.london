@@ -65,13 +65,18 @@ export const scents: Scent[] = [
   {
     id: 'bond-street',
     name: 'Bond Street',
-    image: '/images/scent-oud.jpg',
-    imageAlt: 'Bond Street among the three: a champagne bottle of Arabian Oud.',
-    objectPosition: '50% 26%',
+    image: '/images/scent-bond-street.jpg',
+    imageAlt: 'Bond Street: a bottle of Kiano London, Arabian Oud, in still light.',
+    objectPosition: 'center 42%',
     gallery: [
       {
+        src: '/images/scent-bond-street.jpg',
+        alt: 'Bond Street: a bottle of Kiano London, Arabian Oud, in still light.',
+        objectPosition: 'center 42%',
+      },
+      {
         src: '/images/scent-oud.jpg',
-        alt: 'Bond Street among the three: a champagne bottle of Arabian Oud.',
+        alt: 'Bond Street among the three, Arabian Oud.',
         objectPosition: '50% 26%',
         kicker: 'Arabian Oud',
       },
@@ -86,13 +91,18 @@ export const scents: Scent[] = [
   {
     id: 'kensington',
     name: 'Kensington',
-    image: '/images/scent-oud.jpg',
-    imageAlt: 'Kensington among the three: a green bottle of Arabian Oud.',
-    objectPosition: '82% 58%',
+    image: '/images/scent-kensington.jpg',
+    imageAlt: 'Kensington: a bottle of Kiano London, Arabian Oud, in still light.',
+    objectPosition: 'center 42%',
     gallery: [
       {
+        src: '/images/scent-kensington.jpg',
+        alt: 'Kensington: a bottle of Kiano London, Arabian Oud, in still light.',
+        objectPosition: 'center 42%',
+      },
+      {
         src: '/images/scent-oud.jpg',
-        alt: 'Kensington among the three: a green bottle of Arabian Oud.',
+        alt: 'Kensington among the three, Arabian Oud.',
         objectPosition: '82% 58%',
         kicker: 'Arabian Oud',
       },
