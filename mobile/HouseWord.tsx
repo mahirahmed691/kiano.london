@@ -6,12 +6,13 @@ import { color, type } from './theme'
 
 type Props = {
   count: number
-  top: number
+  top?: number
   inverted: boolean
+  embedded?: boolean
   onPress: () => void
 }
 
-export function HouseWord({ count, top, inverted, onPress }: Props) {
+export function HouseWord({ count, top = 0, inverted, embedded = false, onPress }: Props) {
   const ink = inverted ? color.ivory : color.ink
   const waiting = count > 0
 
@@ -24,8 +25,8 @@ export function HouseWord({ count, top, inverted, onPress }: Props) {
       }
       hitSlop={10}
       style={({ pressed }) => [
-        styles.hit,
-        { top, right: 16 },
+        embedded ? styles.slot : styles.hit,
+        embedded ? null : { top, right: 16 },
         pressed && styles.pressed,
       ]}
     >
@@ -60,6 +61,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingHorizontal: 4,
+  },
+  slot: {
+    minHeight: 44,
+    minWidth: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   pressed: {
     opacity: 0.55,
