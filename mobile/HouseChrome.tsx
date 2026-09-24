@@ -138,6 +138,7 @@ export function HouseChrome({
 
 const styles = StyleSheet.create({
   chrome: {
+    zIndex: 9,
     backgroundColor: color.ivory,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: color.rule,
