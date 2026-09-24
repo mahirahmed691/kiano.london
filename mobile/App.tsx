@@ -9,8 +9,9 @@ import { WebView, type WebViewMessageEvent, type WebViewNavigation } from 'react
 
 import { HouseChrome, quietChrome, tabFromPath, type HouseTab } from './HouseChrome'
 import { HouseFailed } from './HouseFailed'
+import { HouseHeader } from './HouseHeader'
+import { HouseMenu } from './HouseMenu'
 import { HouseSplash } from './HouseSplash'
-import { HouseWord } from './HouseWord'
 import {
   getProduct,
   isNativeBrowse,
@@ -35,6 +36,7 @@ import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingRoom } from './rooms/MakingRoom'
 import { PieceRoom } from './rooms/PieceRoom'
+import { ScentRoom } from './rooms/ScentRoom'
 import { StillsRoom } from './rooms/StillsRoom'
 import { StoryRoom } from './rooms/StoryRoom'
 import { VisitRoom } from './rooms/VisitRoom'
@@ -42,10 +44,6 @@ import { color } from './theme'
 
 void SystemUI.setBackgroundColorAsync(color.ivory)
 
-function overlayStatus(pathname: string) {
-  const path = pathname.split('?')[0] || '/'
-  return overlayRoom(path)
-}
 
 function isAccountPath(pathname: string) {
   const path = pathname.split('?')[0] || '/'
@@ -71,6 +69,8 @@ function HouseApp() {
   const [word, setWord] = useState(0)
   const [bagOpen, setBagOpen] = useState(false)
   const [wordOpen, setWordOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [headerHeight, setHeaderHeight] = useState(120)
   const [roomHeight, setRoomHeight] = useState(640)
   const nativePath = useRef('/')
   const canGoBack = useRef(false)
@@ -88,6 +88,7 @@ function HouseApp() {
       setWebKind('hidden')
       setBagOpen(false)
       setWordOpen(false)
+      setMenuOpen(false)
       rememberNative(pathname || '/')
       setHeroOverlay(overlayRoom(pathname || '/'))
     },
@@ -108,6 +109,7 @@ function HouseApp() {
     (next: string, kind: 'bag' | 'word' | 'account' | 'sheet') => {
       setPath(next)
       setWebKind(kind)
+      setMenuOpen(false)
       send(goScript(next), next)
     },
     [send],
@@ -227,10 +229,20 @@ function HouseApp() {
   const tab: HouseTab = bagOpen || webKind === 'bag' ? 'bag' : webKind === 'account' || isAccountPath(path) ? 'account' : routeTab
   const hideChrome = quietChrome(path) || wordOpen || webKind === 'word'
   const lightStatus =
-    !webVisible && overlayRoom(path) && heroOverlay && !bagOpen && !wordOpen && !hideChrome
+    !menuOpen &&
+    !webVisible &&
+    overlayRoom(path) &&
+    heroOverlay &&
+    !bagOpen &&
+    !wordOpen &&
+    !hideChrome
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (menuOpen) {
+        setMenuOpen(false)
+        return true
+      }
       if (bagOpen || webKind === 'bag') {
         webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
         goNative(nativePath.current)
@@ -251,7 +263,11 @@ function HouseApp() {
         goNative(piece?.cut === 'Jubbah' ? '/shop' : '/collection')
         return true
       }
-      if (current === '/stills' || current === '/visit' || current === '/story' || current === '/craftsmanship') {
+      if (current.startsWith('/scent/')) {
+        goNative('/scent')
+        return true
+      }
+      if (current === '/stills' || current === '/visit' || current === '/story' || current === '/craftsmanship' || current === '/scent') {
         goNative('/')
         return true
       }
@@ -262,7 +278,7 @@ function HouseApp() {
       return false
     })
     return () => sub.remove()
-  }, [bagOpen, goNative, path, webKind, webVisible, wordOpen])
+  }, [bagOpen, goNative, menuOpen, path, webKind, webVisible, wordOpen])
 
   const retry = useCallback(() => {
     setFailed(false)
@@ -286,7 +302,7 @@ function HouseApp() {
   return (
     <View style={styles.shell}>
       <StatusBar style={lightStatus ? 'light' : 'dark'} />
-      {lightStatus ? null : webVisible ? null : <View style={[styles.status, { height: insets.top }]} />}
+      {hideChrome && !lightStatus && !webVisible ? <View style={[styles.status, { height: insets.top }]} /> : null}
       <View
         style={styles.rooms}
         onLayout={(event) => setRoomHeight(event.nativeEvent.layout.height)}
@@ -295,6 +311,8 @@ function HouseApp() {
         {room === '/stills' ? <StillsRoom {...nav} plateId={plateId} /> : null}
         {room === '/shop' ? <LineRoom {...nav} /> : null}
         {room === '/collection' ? <LineRoom {...nav} collection /> : null}
+        {room === '/scent' ? <ScentRoom {...nav} /> : null}
+        {room.startsWith('/scent/') ? <ScentRoom {...nav} scentId={pieceId} /> : null}
         {room.startsWith('/shop/') || room.startsWith('/collection/') ? (
           <PieceRoom {...nav} pieceId={pieceId} />
         ) : null}
@@ -344,18 +362,67 @@ function HouseApp() {
         decelerationRate="normal"
       />
       )}
-      {fontsReady && !failed && !hideChrome && !wordOpen ? (
-        <HouseWord
-          count={word}
-          top={insets.top + 8}
-          inverted={lightStatus || (webVisible && overlayStatus(path))}
-          onPress={() =>
-            tap(() => {
-              setWebKind('word')
-              webView.current?.injectJavaScript(openEvent('kiano-open-word'))
-            })
-          }
-        />
+      {fontsReady && !failed && !hideChrome ? (
+        <>
+          <HouseMenu
+            open={menuOpen}
+            path={isNativeBrowse(path) ? path : nativePath.current}
+            bag={bag}
+            topInset={headerHeight}
+            bottomInset={insets.bottom}
+            onClose={() => setMenuOpen(false)}
+            onOpen={(next) => tap(() => open(next))}
+            onAccount={() =>
+              tap(() => {
+                setMenuOpen(false)
+                if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
+                goWeb('/account', 'account')
+              })
+            }
+            onWord={() =>
+              tap(() => {
+                setMenuOpen(false)
+                setWebKind('word')
+                webView.current?.injectJavaScript(openEvent('kiano-open-word'))
+              })
+            }
+            onBag={() =>
+              tap(() => {
+                setMenuOpen(false)
+                if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
+                if (bagOpen || webKind === 'bag') {
+                  webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
+                  return
+                }
+                setWebKind('bag')
+                webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
+              })
+            }
+          />
+          <HouseHeader
+            inverted={lightStatus}
+            menuOpen={menuOpen}
+            topInset={insets.top}
+            word={word}
+            onHeight={setHeaderHeight}
+            onToggle={() => tap(() => setMenuOpen((value) => !value))}
+            onHome={() =>
+              tap(() => {
+                setMenuOpen(false)
+                if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
+                if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
+                goNative('/')
+              })
+            }
+            onWord={() =>
+              tap(() => {
+                setMenuOpen(false)
+                setWebKind('word')
+                webView.current?.injectJavaScript(openEvent('kiano-open-word'))
+              })
+            }
+          />
+        </>
       ) : null}
       {hideChrome ? null : (
         <HouseChrome
@@ -389,6 +456,7 @@ function HouseApp() {
           }
           onShop={() => tap(() => goNative('/shop'))}
           onCollection={() => tap(() => goNative('/collection'))}
+          onScent={() => tap(() => goNative('/scent'))}
           onBag={() =>
             tap(() => {
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))

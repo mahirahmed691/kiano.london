@@ -41,6 +41,8 @@ import { PrivacyPage } from '@/pages/PrivacyPage'
 import { ProductPage } from '@/pages/ProductPage'
 import { ReservationPage } from '@/pages/ReservationPage'
 import { ReturnsPage } from '@/pages/ReturnsPage'
+import { ScentPage } from '@/pages/ScentPage'
+import { ScentPiecePage } from '@/pages/ScentPiecePage'
 import { ShopPage } from '@/pages/ShopPage'
 import { SignInPage } from '@/pages/SignInPage'
 import { SignUpPage } from '@/pages/SignUpPage'
@@ -62,6 +64,8 @@ export default function App() {
                 <Route path="/shop/:id" element={<ProductPage />} />
                 <Route path="/collection" element={<CollectionPage />} />
                 <Route path="/collection/:id" element={<ProductPage />} />
+                <Route path="/scent" element={<ScentPage />} />
+                <Route path="/scent/:id" element={<ScentPiecePage />} />
                 <Route path="/stills" element={<StillsPage />} />
                 <Route path="/story" element={<StoryPage />} />
                 <Route path="/craftsmanship" element={<CraftsmanshipPage />} />

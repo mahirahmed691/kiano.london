@@ -14,6 +14,7 @@ type Props = {
   onLine: () => void
   onShop: () => void
   onCollection: () => void
+  onScent: () => void
   onBag: () => void
   onAccount: () => void
 }
@@ -28,7 +29,7 @@ export function tabFromPath(pathname: string): HouseTab {
   ) {
     return 'account'
   }
-  if (path.startsWith('/shop') || path.startsWith('/collection')) {
+  if (path.startsWith('/shop') || path.startsWith('/collection') || path.startsWith('/scent')) {
     return 'line'
   }
   return 'house'
@@ -76,12 +77,14 @@ export function HouseChrome({
   onLine,
   onShop,
   onCollection,
+  onScent,
   onBag,
   onAccount,
 }: Props) {
   const line = tabFromPath(path) === 'line' || tab === 'line'
   const collection = path.startsWith('/collection')
-  const shop = path.startsWith('/shop') || (line && !collection)
+  const scent = path.startsWith('/scent')
+  const shop = path.startsWith('/shop') || (line && !collection && !scent)
 
   return (
     <View style={[styles.chrome, { paddingBottom: Math.max(inset, 10) }]}>
@@ -105,6 +108,15 @@ export function HouseChrome({
           >
             <Text style={[styles.sub, collection ? styles.active : styles.quiet]}>Collection</Text>
           </Pressable>
+          <Pressable
+            onPress={onScent}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: scent }}
+            hitSlop={8}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <Text style={[styles.sub, scent ? styles.active : styles.quiet]}>Scent</Text>
+          </Pressable>
         </View>
       ) : null}
 
@@ -126,6 +138,7 @@ export function HouseChrome({
 
 const styles = StyleSheet.create({
   chrome: {
+    zIndex: 9,
     backgroundColor: color.ivory,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: color.rule,
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 28,
+    gap: 22,
     paddingTop: 12,
     paddingBottom: 2,
   },

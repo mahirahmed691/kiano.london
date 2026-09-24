@@ -4,7 +4,7 @@ import { LookbookStrip } from '@/components/editorial/LookbookStrip'
 import { NightMotto } from '@/components/editorial/NightMotto'
 import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
-import { Button } from '@/components/ui/Button'
+import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
@@ -115,9 +115,12 @@ export function ShopPage() {
             <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">
               The house also keeps the thobe. The jubbah is the outer column; the thobe
               is the one beneath. Each piece leaves unscented, in a garment bag and a
-              rigid box.
+              rigid box. The scent is coming, as its own line.
             </p>
-            <Button to="/collection">The thobes</Button>
+            <div className="flex flex-wrap items-center gap-6">
+              <Button to="/collection">The thobes</Button>
+              <TextLink to="/scent">The Scent</TextLink>
+            </div>
           </div>
         </Container>
       </Section>

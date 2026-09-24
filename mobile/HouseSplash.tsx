@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import * as SplashScreen from 'expo-splash-screen'
 
+import { HouseLockup } from './HouseLockup'
 import { color } from './theme'
 
 const MIN_HOLD_MS = 1600
@@ -80,11 +81,15 @@ export function HouseSplash({ houseReady }: Props) {
       onLayout={onLayout}
       style={[styles.veil, { opacity }]}
     >
-      <Image
-        source={require('./assets/images/splash-lockup.png')}
-        style={styles.lockup}
-        resizeMode="contain"
-      />
+      {houseReady ? (
+        <HouseLockup tone="ink" />
+      ) : (
+        <Image
+          source={require('./assets/images/splash-lockup.png')}
+          style={styles.lockup}
+          resizeMode="contain"
+        />
+      )}
     </Animated.View>
   )
 }

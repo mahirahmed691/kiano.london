@@ -16,6 +16,9 @@ import {
   plateCopy,
   productPath,
   recentPlates,
+  scentComing,
+  scentPath,
+  scents,
   thisWeekPlate,
   thobes,
 } from '../catalogue'
@@ -56,12 +59,13 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         <Body>{weekCopy.lines[0] ?? week.name}</Body>
         <View style={styles.gap} />
         <Body>
-          {`${creedWoven} ${creedIntent} Five columns, and the outer garment in three colours. The house does not invent a second look for a feed.`}
+          {`${creedWoven} ${creedIntent} Five columns, and the outer garment in three colours. The scent is coming.`}
         </Body>
         <View style={styles.actions}>
           <OutlineButton label="The stills" onPress={() => open('/stills')} />
           <GhostLink label="The Shop" onPress={() => open('/shop')} />
           <GhostLink label="The Collection" onPress={() => open('/collection')} />
+          <GhostLink label="The Scent" onPress={() => open('/scent')} />
         </View>
       </View>
 
@@ -124,6 +128,21 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
               <Text style={styles.lineName}>{piece.name}</Text>
             </Pressable>
           ))}
+        </View>
+        <View style={styles.lineBlock}>
+          <Text style={styles.lineKicker}>The Scent</Text>
+          {scents.map((scent) => (
+            <Pressable
+              key={scent.id}
+              onPress={() => open(scentPath(scent))}
+              accessibilityRole="link"
+              accessibilityLabel={scent.name}
+              style={({ pressed }) => pressed && styles.pressed}
+            >
+              <Text style={styles.lineName}>{scent.name}</Text>
+            </Pressable>
+          ))}
+          <Text style={styles.lineKicker}>{scentComing}</Text>
         </View>
       </View>
 
