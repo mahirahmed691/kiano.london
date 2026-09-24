@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import * as Haptics from 'expo-haptics'
 import * as Linking from 'expo-linking'
-import * as Notifications from 'expo-notifications'
 import * as SystemUI from 'expo-system-ui'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BackHandler, Linking as RNLinking, Platform, StyleSheet, View } from 'react-native'
@@ -31,7 +30,7 @@ import {
   shouldOpenOutside,
   urlForHouse,
 } from './house'
-import { pathFromNotificationResponse, registerHousePush, setHouseBadge } from './HousePush'
+import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
 import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingRoom } from './rooms/MakingRoom'
@@ -157,14 +156,9 @@ function HouseApp() {
   }, [goNative, open])
 
   useEffect(() => {
-    const opened = pathFromNotificationResponse(Notifications.getLastNotificationResponse())
+    const opened = lastHousePath()
     if (opened) open(opened)
-
-    const listening = Notifications.addNotificationResponseReceivedListener((response) => {
-      const href = pathFromNotificationResponse(response)
-      if (href) open(href)
-    })
-    return () => listening.remove()
+    return listenHousePush((href) => open(href))
   }, [open])
 
   const onNav = useCallback((request: WebViewNavigation) => {
@@ -308,11 +302,15 @@ function HouseApp() {
         {room === '/story' ? <StoryRoom {...nav} /> : null}
         {room === '/craftsmanship' ? <MakingRoom {...nav} /> : null}
       </View>
+      {Platform.OS === 'web' ? null : (
       <WebView
         ref={webView}
         source={{ uri }}
-        style={[styles.frame, webVisible ? styles.frameOn : styles.frameOff]}
-        pointerEvents={webVisible ? 'auto' : 'none'}
+        style={[
+          styles.frame,
+          webVisible ? styles.frameOn : styles.frameOff,
+          { pointerEvents: webVisible ? 'auto' : 'none' },
+        ]}
         originWhitelist={['https://*', 'http://*', 'about:*']}
         onShouldStartLoadWithRequest={onNav}
         onNavigationStateChange={(navState) => {
@@ -345,6 +343,7 @@ function HouseApp() {
         setSupportMultipleWindows={false}
         decelerationRate="normal"
       />
+      )}
       {fontsReady && !failed && !hideChrome && !wordOpen ? (
         <HouseWord
           count={word}

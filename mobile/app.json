@@ -82,7 +82,8 @@
           }
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ]
   }
 }
