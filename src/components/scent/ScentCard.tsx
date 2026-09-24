@@ -1,7 +1,7 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { Link } from 'react-router-dom'
 import { Reveal } from '@/components/ui/Reveal'
-import { scentComing, scentPath, type Scent } from '@/data/scent'
+import { notesJoin, scentComing, scentPath, type Scent } from '@/data/scent'
 
 type Props = {
   scent: Scent
@@ -34,6 +34,9 @@ export function ScentCard({ scent, index, className, delay = 0 }: Props) {
               <h3 className="font-display text-2xl font-light leading-tight tracking-[-0.02em] md:text-[1.65rem]">
                 {scent.name}
               </h3>
+              <p className="mt-1.5 text-[11px] font-light tracking-[0.16em] text-stone">
+                {notesJoin(scent)}
+              </p>
             </div>
             <p className="shrink-0 text-[11px] tracking-[0.16em] text-ink-soft">{scentComing}</p>
           </div>
