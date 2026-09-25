@@ -121,7 +121,7 @@ export function HomePage() {
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Scent</p>
-                <ul className="mt-5 space-y-3">
+                <ul className="mt-5 space-y-5">
                   {scents.map((scent) => (
                     <li key={scent.id}>
                       <Link
@@ -130,6 +130,7 @@ export function HomePage() {
                       >
                         {scent.name}
                       </Link>
+                      <p className="mt-1.5 text-[13px] font-light text-stone">{scent.line}</p>
                     </li>
                   ))}
                 </ul>

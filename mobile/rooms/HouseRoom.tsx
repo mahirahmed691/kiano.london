@@ -140,6 +140,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
               style={({ pressed }) => pressed && styles.pressed}
             >
               <Text style={styles.lineName}>{scent.name}</Text>
+              <Text style={styles.lineNote}>{scent.line}</Text>
             </Pressable>
           ))}
           <Text style={styles.lineKicker}>{scentComing}</Text>
@@ -263,6 +264,15 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: '300',
     letterSpacing: -0.3,
+  },
+  lineNote: {
+    marginTop: 4,
+    marginBottom: 6,
+    color: color.stone,
+    fontFamily: type.sans,
+    fontSize: 13,
+    fontWeight: '300',
+    lineHeight: 20,
   },
   thobeRow: {
     flexDirection: 'row',

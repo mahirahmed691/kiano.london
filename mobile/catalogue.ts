@@ -24,6 +24,7 @@ export {
 } from '../src/data/products'
 export {
   getScent,
+  movementLine,
   notesJoin,
   relatedScents,
   scentNotes,

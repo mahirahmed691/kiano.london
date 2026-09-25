@@ -93,7 +93,7 @@ export function ScentPage() {
               Two stills. Arabian Oud, and eau de parfum. The cloth still leaves
               unscented. This line is its own still, when it is of the house.
             </Body>
-            <ul className="mt-8 space-y-3">
+            <ul className="mt-8 space-y-5">
               {scents.map((scent) => (
                 <li key={scent.id}>
                   <Link
@@ -102,6 +102,7 @@ export function ScentPage() {
                   >
                     {scent.name}
                   </Link>
+                  <p className="mt-1.5 text-[13px] font-light text-stone">{scent.line}</p>
                 </li>
               ))}
             </ul>

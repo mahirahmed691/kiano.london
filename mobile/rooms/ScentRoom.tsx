@@ -8,7 +8,7 @@ import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../Hou
 import {
   creedIntent,
   getScent,
-  notesJoin,
+  movementLine,
   relatedScents,
   scentArabic,
   scentComing,
@@ -25,7 +25,7 @@ type Props = HouseNav & {
 
 function ScentStillCard({
   name,
-  notes,
+  line,
   src,
   alt,
   objectPosition,
@@ -33,7 +33,7 @@ function ScentStillCard({
   index,
 }: {
   name: string
-  notes: string
+  line: string
   src: string
   alt: string
   objectPosition?: string
@@ -58,7 +58,7 @@ function ScentStillCard({
         <View style={styles.copy}>
           {index ? <Text style={styles.index}>{index}</Text> : null}
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.notesLine}>{notes}</Text>
+          <Text style={styles.notesLine}>{line}</Text>
         </View>
         <Text style={styles.coming}>{scentComing}</Text>
       </View>
@@ -114,7 +114,7 @@ export function ScentRoom({
           <View style={styles.space} />
           <Arabic>{scentArabic}</Arabic>
           <View style={styles.gap} />
-          <Body>{named.line}</Body>
+          <Text style={styles.pull}>{named.line}</Text>
           <View style={styles.gap} />
           <Body>{named.wear}</Body>
           <View style={styles.gap} />
@@ -126,11 +126,7 @@ export function ScentRoom({
             {named.movements.map((move) => (
               <View key={move.kicker} style={styles.movement}>
                 <Text style={styles.movementKicker}>{move.kicker}</Text>
-                {move.notes.map((note) => (
-                  <Text key={note} style={styles.noteItem}>
-                    {note}
-                  </Text>
-                ))}
+                <Text style={styles.noteItem}>{`${movementLine(move)}.`}</Text>
               </View>
             ))}
           </View>
@@ -163,7 +159,7 @@ export function ScentRoom({
             <ScentStillCard
               key={piece.id}
               name={piece.name}
-              notes={notesJoin(piece)}
+              line={piece.line}
               src={piece.image}
               alt={piece.imageAlt}
               objectPosition={piece.objectPosition}
@@ -210,7 +206,7 @@ export function ScentRoom({
           <ScentStillCard
             key={scent.id}
             name={scent.name}
-            notes={notesJoin(scent)}
+            line={scent.line}
             src={scent.image}
             alt={scent.imageAlt}
             objectPosition={scent.objectPosition}
@@ -255,6 +251,7 @@ export function ScentRoom({
               style={({ pressed }) => pressed && styles.pressed}
             >
               <Text style={styles.lineName}>{scent.name}</Text>
+              <Text style={styles.lineNote}>{scent.line}</Text>
             </Pressable>
           ))}
         </View>
@@ -382,8 +379,20 @@ const styles = StyleSheet.create({
     marginTop: 6,
     color: color.stone,
     fontFamily: type.sans,
-    fontSize: 11,
-    letterSpacing: 1.8,
+    fontSize: 13,
+    fontWeight: '300',
+    letterSpacing: 0.2,
+    lineHeight: 20,
+  },
+  pull: {
+    color: color.ink,
+    fontFamily: type.displayLight,
+    fontSize: 22,
+    fontStyle: 'italic',
+    fontWeight: '300',
+    letterSpacing: -0.3,
+    lineHeight: 30,
+    maxWidth: 360,
   },
   notesBlock: {
     marginTop: 36,
@@ -392,7 +401,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   movementKicker: {
-    marginBottom: 12,
+    marginBottom: 8,
     color: color.stone,
     fontFamily: type.sansRegular,
     fontSize: 11,
@@ -400,7 +409,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   noteItem: {
-    marginBottom: 12,
+    marginBottom: 0,
     color: color.inkSoft,
     fontFamily: type.sans,
     fontSize: 15,
@@ -437,6 +446,14 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: '300',
     letterSpacing: -0.3,
+  },
+  lineNote: {
+    marginTop: 4,
+    color: color.stone,
+    fontFamily: type.sans,
+    fontSize: 13,
+    fontWeight: '300',
+    lineHeight: 20,
   },
   pressed: {
     opacity: 0.62,
