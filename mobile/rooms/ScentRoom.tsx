@@ -49,10 +49,6 @@ function ScentStillCard({
     >
       <View style={styles.still}>
         <HouseImage src={src} alt={alt} objectPosition={objectPosition} style={styles.image} />
-        <View style={styles.label} pointerEvents="none">
-          <Text style={styles.woven}>KIANO</Text>
-          <Text style={styles.wovenCity}>LONDON</Text>
-        </View>
       </View>
       <View style={styles.meta}>
         <View style={styles.copy}>
@@ -188,13 +184,16 @@ export function ScentRoom({
         objectPosition="center 42%"
         kicker={scentComing}
         title="The Scent."
+        quiet
         height={roomHeight}
         priority
-      >
-        <Text style={styles.arabicIvory}>{scentArabic}</Text>
-      </HouseStill>
+      />
 
       <View style={paper()}>
+        <Eyebrow>{scentComing}</Eyebrow>
+        <View style={styles.space} />
+        <Arabic>{scentArabic}</Arabic>
+        <View style={styles.gap} />
         <Display size={28}>Three names: Mayfair, Bond Street, Kensington.</Display>
         <View style={styles.gap} />
         <Body>{`The scent is coming. It is not yet of the bag. ${creedIntent}`}</Body>
@@ -278,14 +277,6 @@ export function ScentRoom({
 }
 
 const styles = StyleSheet.create({
-  arabicIvory: {
-    marginTop: 18,
-    color: 'rgba(242, 235, 220, 0.7)',
-    fontFamily: type.arabic,
-    fontSize: 24,
-    writingDirection: 'rtl',
-    alignSelf: 'flex-start',
-  },
   space: { height: 18 },
   gap: { height: 16 },
   actions: {
@@ -323,31 +314,6 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-  },
-  label: {
-    position: 'absolute',
-    left: 10,
-    bottom: 10,
-    width: 64,
-    paddingVertical: 10,
-    paddingHorizontal: 6,
-    alignItems: 'center',
-    backgroundColor: color.night,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(184, 160, 129, 0.35)',
-  },
-  woven: {
-    color: color.bronze,
-    fontFamily: type.display,
-    fontSize: 9,
-    letterSpacing: 2.4,
-  },
-  wovenCity: {
-    marginTop: 3,
-    color: color.bronze,
-    fontFamily: type.sansRegular,
-    fontSize: 6,
-    letterSpacing: 1.8,
   },
   meta: {
     marginTop: 16,
