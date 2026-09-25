@@ -5,6 +5,11 @@ export type ScentStill = {
   kicker?: string
 }
 
+export type ScentMovement = {
+  kicker: string
+  notes: string[]
+}
+
 export type Scent = {
   id: string
   name: string
@@ -14,8 +19,10 @@ export type Scent = {
   gallery: ScentStill[]
   /** One line of the juice, in the house voice. */
   line: string
-  /** Stands in until the juice is of the house. One set per name; not two pyramids. */
-  notes: string[]
+  /** How it wears. Stands in until the juice is of the house. */
+  wear: string
+  /** At first, then, what remains. One set per name; not two pyramids. */
+  movements: ScentMovement[]
 }
 
 export const scentArabic = 'العطر'
@@ -47,7 +54,12 @@ export const scents: Scent[] = [
     imageAlt: 'Mayfair: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
     line: 'A rose, held. Oud after it.',
-    notes: ['Damask rose', 'Saffron', 'Oud', 'Amber'],
+    wear: 'Rose first, close, with saffron through it. The rose does not sweeten. Oud is the room after; amber keeps the last of it on the cloth.',
+    movements: [
+      { kicker: 'At first', notes: ['Damask rose', 'Saffron', 'Pink pepper'] },
+      { kicker: 'Then', notes: ['Rose otto', 'Labdanum'] },
+      { kicker: 'What remains', notes: ['Oud', 'Amber', 'Musk'] },
+    ],
     gallery: [
       {
         src: '/images/scent-mayfair.jpg',
@@ -75,7 +87,12 @@ export const scents: Scent[] = [
     imageAlt: 'Bond Street: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
     line: 'Citrus on stone, then leather and wood.',
-    notes: ['Bergamot', 'Saffron', 'Leather', 'Sandalwood', 'Oud'],
+    wear: 'Bergamot on stone. The citrus leaves. Leather and saffron take the street; sandalwood and oud are what the cloth keeps.',
+    movements: [
+      { kicker: 'At first', notes: ['Bergamot', 'Cardamom', 'Pink pepper'] },
+      { kicker: 'Then', notes: ['Saffron', 'Leather', 'Cedar'] },
+      { kicker: 'What remains', notes: ['Sandalwood', 'Oud'] },
+    ],
     gallery: [
       {
         src: '/images/scent-bond-street.jpg',
@@ -103,7 +120,12 @@ export const scents: Scent[] = [
     imageAlt: 'Kensington: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
     line: 'Green at first. Vetiver, and the garden at dusk.',
-    notes: ['Fig leaf', 'Vetiver', 'Oakmoss', 'Oud'],
+    wear: 'Fig leaf at the gate, green and a little bitter. Vetiver when the light goes. Oakmoss and oud, the garden after rain, close to the cloth.',
+    movements: [
+      { kicker: 'At first', notes: ['Fig leaf', 'Green mandarin'] },
+      { kicker: 'Then', notes: ['Vetiver', 'Iris'] },
+      { kicker: 'What remains', notes: ['Oakmoss', 'Oud', 'Cedar'] },
+    ],
     gallery: [
       {
         src: '/images/scent-kensington.jpg',
@@ -131,8 +153,12 @@ export function getScent(id: string | undefined) {
   return scents.find((item) => item.id === id)
 }
 
+export function scentNotes(scent: Scent) {
+  return scent.movements.flatMap((move) => move.notes)
+}
+
 export function notesJoin(scent: Scent) {
-  const notes = scent.notes
+  const notes = scentNotes(scent)
   if (notes.length === 0) return ''
   if (notes.length === 1) return notes[0]!
   if (notes.length === 2) return `${notes[0]} and ${notes[1]}`

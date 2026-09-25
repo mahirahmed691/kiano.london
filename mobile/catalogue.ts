@@ -26,12 +26,14 @@ export {
   getScent,
   notesJoin,
   relatedScents,
+  scentNotes,
   scentArabic,
   scentComing,
   scentFamilies,
   scentPath,
   scents,
   type Scent,
+  type ScentMovement,
   type ScentStill,
 } from '../src/data/scent'
 export { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven, houseCreed } from '../src/data/creed'

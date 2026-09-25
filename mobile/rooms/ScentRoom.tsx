@@ -116,16 +116,22 @@ export function ScentRoom({
           <View style={styles.gap} />
           <Body>{named.line}</Body>
           <View style={styles.gap} />
+          <Body>{named.wear}</Body>
+          <View style={styles.gap} />
           <Body>
             Arabian Oud, and eau de parfum. The name is of the house. The bottle is not yet of the bag.
           </Body>
           <View style={styles.notesBlock}>
             <Eyebrow>The notes</Eyebrow>
-            <View style={styles.space} />
-            {named.notes.map((note) => (
-              <Text key={note} style={styles.noteItem}>
-                {note}
-              </Text>
+            {named.movements.map((move) => (
+              <View key={move.kicker} style={styles.movement}>
+                <Text style={styles.movementKicker}>{move.kicker}</Text>
+                {move.notes.map((note) => (
+                  <Text key={note} style={styles.noteItem}>
+                    {note}
+                  </Text>
+                ))}
+              </View>
             ))}
           </View>
           <View style={styles.actions}>
@@ -381,6 +387,17 @@ const styles = StyleSheet.create({
   },
   notesBlock: {
     marginTop: 36,
+  },
+  movement: {
+    marginTop: 22,
+  },
+  movementKicker: {
+    marginBottom: 12,
+    color: color.stone,
+    fontFamily: type.sansRegular,
+    fontSize: 11,
+    letterSpacing: 2.4,
+    textTransform: 'uppercase',
   },
   noteItem: {
     marginBottom: 12,
