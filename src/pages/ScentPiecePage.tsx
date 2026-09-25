@@ -5,9 +5,9 @@ import { NightMotto } from '@/components/editorial/NightMotto'
 import { ScentCard } from '@/components/scent/ScentCard'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
-import { Body, Display, Eyebrow } from '@/components/ui/Heading'
+import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { scentArabic, scentComing, getScent, relatedScents } from '@/data/scent'
+import { scentArabic, scentComing, getScent, movementLine, relatedScents } from '@/data/scent'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -56,7 +56,7 @@ export function ScentPiecePage() {
               >
                 {scentArabic}
               </p>
-              <Body className="mt-6">{scent.line}</Body>
+              <Lead className="mt-6 italic">{scent.line}</Lead>
               <Body className="mt-6">{scent.wear}</Body>
               <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
                 Arabian Oud, and eau de parfum. The name is of the house. The bottle is
@@ -64,25 +64,18 @@ export function ScentPiecePage() {
               </p>
               <div className="mt-10">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The notes</p>
-                <div className="mt-8 space-y-8">
+                <dl className="mt-6 space-y-5">
                   {scent.movements.map((move) => (
                     <div key={move.kicker}>
-                      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                      <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">
                         {move.kicker}
-                      </p>
-                      <ul className="mt-4 space-y-3">
-                        {move.notes.map((note) => (
-                          <li
-                            key={note}
-                            className="max-w-sm text-[14px] font-light leading-relaxed text-ink-soft"
-                          >
-                            {note}
-                          </li>
-                        ))}
-                      </ul>
+                      </dt>
+                      <dd className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-ink-soft">
+                        {movementLine(move)}.
+                      </dd>
                     </div>
                   ))}
-                </div>
+                </dl>
               </div>
               <div className="mt-10 flex flex-wrap items-center gap-6">
                 <Button to="/scent">The Scent</Button>

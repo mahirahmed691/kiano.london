@@ -54,7 +54,7 @@ export const scents: Scent[] = [
     imageAlt: 'Mayfair: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
     line: 'A rose, held. Oud after it.',
-    wear: 'Rose first, close, with saffron through it. The rose does not sweeten. Oud is the room after; amber keeps the last of it on the cloth.',
+    wear: 'Saffron threads it so the rose does not sweeten. Amber keeps the last of the oud on the cloth.',
     movements: [
       { kicker: 'At first', notes: ['Damask rose', 'Saffron', 'Pink pepper'] },
       { kicker: 'Then', notes: ['Rose otto', 'Labdanum'] },
@@ -87,7 +87,7 @@ export const scents: Scent[] = [
     imageAlt: 'Bond Street: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
     line: 'Citrus on stone, then leather and wood.',
-    wear: 'Bergamot on stone. The citrus leaves. Leather and saffron take the street; sandalwood and oud are what the cloth keeps.',
+    wear: 'The citrus is short. Leather takes the street. Sandalwood and oud stay on the cloth.',
     movements: [
       { kicker: 'At first', notes: ['Bergamot', 'Cardamom', 'Pink pepper'] },
       { kicker: 'Then', notes: ['Saffron', 'Leather', 'Cedar'] },
@@ -120,7 +120,7 @@ export const scents: Scent[] = [
     imageAlt: 'Kensington: a bottle of Kiano London, Arabian Oud, in still light.',
     objectPosition: 'center 42%',
     line: 'Green at first. Vetiver, and the garden at dusk.',
-    wear: 'Fig leaf at the gate, green and a little bitter. Vetiver when the light goes. Oakmoss and oud, the garden after rain, close to the cloth.',
+    wear: 'Fig leaf at the gate, a little bitter. When the light goes, oakmoss and oud sit close to the cloth.',
     movements: [
       { kicker: 'At first', notes: ['Fig leaf', 'Green mandarin'] },
       { kicker: 'Then', notes: ['Vetiver', 'Iris'] },
@@ -157,12 +157,22 @@ export function scentNotes(scent: Scent) {
   return scent.movements.flatMap((move) => move.notes)
 }
 
+export function joinNames(names: string[]) {
+  if (names.length === 0) return ''
+  const items = names.map((name, index) =>
+    index === 0 ? name : `${name.charAt(0).toLowerCase()}${name.slice(1)}`,
+  )
+  if (items.length === 1) return items[0]!
+  if (items.length === 2) return `${items[0]} and ${items[1]}`
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`
+}
+
+export function movementLine(move: ScentMovement) {
+  return joinNames(move.notes)
+}
+
 export function notesJoin(scent: Scent) {
-  const notes = scentNotes(scent)
-  if (notes.length === 0) return ''
-  if (notes.length === 1) return notes[0]!
-  if (notes.length === 2) return `${notes[0]} and ${notes[1]}`
-  return `${notes.slice(0, -1).join(', ')} and ${notes[notes.length - 1]}`
+  return joinNames(scentNotes(scent))
 }
 
 export function scentPath(scent: Scent) {
