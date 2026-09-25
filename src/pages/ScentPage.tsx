@@ -27,17 +27,18 @@ export function ScentPage() {
         kicker={scentComing}
         title="The Scent."
         minHeight="screen"
+        quiet
         priority
-      >
-        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
-          {scentArabic}
-        </p>
-      </Hero>
+      />
 
       <Section>
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
-            <p className="font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
+            <Eyebrow>{scentComing}</Eyebrow>
+            <p lang="ar" dir="rtl" className="mt-4 w-fit font-arabic text-2xl font-light text-ink-soft">
+              {scentArabic}
+            </p>
+            <p className="mt-6 font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
               Three names: Mayfair, Bond Street, Kensington.
             </p>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">

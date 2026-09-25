@@ -1,4 +1,3 @@
-import { WovenLabel } from '@/components/brand/WovenLabel'
 import { Link } from 'react-router-dom'
 import { Reveal } from '@/components/ui/Reveal'
 import { scentComing, scentPath, type Scent } from '@/data/scent'
@@ -24,7 +23,6 @@ export function ScentCard({ scent, index, className, delay = 0 }: Props) {
               className="size-full object-cover"
               style={scent.objectPosition ? { objectPosition: scent.objectPosition } : undefined}
             />
-            <WovenLabel size="sm" className="pointer-events-none absolute bottom-3 left-3 z-10" />
           </div>
           <div className="mt-6 flex items-baseline justify-between gap-4">
             <div>

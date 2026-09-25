@@ -60,13 +60,13 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Share and search',
     completion: 82,
     status: 'complete',
-    note: 'Open Graph, canonical URLs, share bots get a document. Home names the line and the creed. Shop and collection keep colour in the address. No type-ahead search.',
+    note: 'Open Graph, canonical URLs, share bots get a document. Home names the line and the creed. The default share still is the cloth on the chair, without a second lockup. Shop and collection keep colour in the address. No type-ahead search.',
   },
   {
     name: 'Cloth at touching distance',
-    completion: 80,
+    completion: 88,
     status: 'partial',
-    note: 'Pinch-zoom on the piece page. Measure against a worn column, not a tape. The house card can be printed from the work, the reservation, the account, and by asking after a cut. The work also prints the table of cuts still here, and the face of the box. Care is written when it is packed. Packing photographs are still missing.',
+    note: 'Pinch-zoom on the piece page. Measure against a worn column, not a tape. The house card can be printed from the work, the reservation, the account, and by asking after a cut. The work also prints the table of cuts still here, and the face of the box. Care is written when it is packed. The bag, the tissue, and the box sit as stills on the piece. Replace them with photographs of the real packing when it exists.',
   },
   {
     name: 'House film',
@@ -276,5 +276,5 @@ export const houseScope = [
   'Cut a new iOS EAS production archive so TestFlight holds Word as a mark, and so later shell JS can arrive without another store pass. Add FCM to EAS before an Android store build.',
   'In Stripe Dashboard, finish Kiano London live onboarding (business, representative, bank, terms) so live charges can be taken. Then put the live restricted key on Vercel as STRIPE_SECRET_KEY, add a live webhook at https://www.kiano.london/api/stripe-webhook for checkout.session.completed, checkout.session.async_payment_succeeded, and charge.refunded, and put the live STRIPE_WEBHOOK_SECRET on Vercel.',
   'Real walks in public/films, then a player that does not invent motion from a still.',
-  'Photographs of the bag, tissue, and box, so packing is an object.',
+  'When the real bag, tissue, and box exist, replace the packing stills in public/images.',
 ] as const

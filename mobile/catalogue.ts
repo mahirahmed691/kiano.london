@@ -42,14 +42,14 @@ export { processSteps, materials, stitchStudies } from '../src/data/craftsmanshi
 export { site } from '../src/data/site'
 export { instagramPlates, type InstagramPlate } from '../src/data/instagram-plates'
 export { carriageLine, carriageLineAr } from '../src/data/shipping'
-
-export const packingNote =
-  'It leaves in a garment bag, unscented tissue, and a rigid box. The cloth is never scented.'
-
-export const packingNoteAr =
-  'يخرج في كيس للثوب، وورق خالٍ من العطر، وصندوق صلب. القماش لا يُعطَّر.'
-
-export const careLine = 'Cold wash or wet clean. Press from the reverse. Hang.'
+export {
+  careLine,
+  careLineAr,
+  packingNote,
+  packingNoteAr,
+  packingSteps,
+  sewnLabels,
+} from '../src/data/packing'
 
 export const sizeChart = [
   { size: 52, chest: '112 cm', length: '142 cm', shoulder: '46 cm' },
