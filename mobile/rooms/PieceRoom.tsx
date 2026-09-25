@@ -13,6 +13,7 @@ import {
   getProduct,
   packingNote,
   packingNoteAr,
+  packingSteps,
   productLineName,
   productPath,
   relatedProducts,
@@ -137,6 +138,24 @@ export function PieceRoom({
         <Text style={styles.detail}>{packingNote}</Text>
         <Arabic>{packingNoteAr}</Arabic>
         <Text style={styles.detail}>{carriageLine}</Text>
+      </View>
+
+      <View style={section()}>
+        <Eyebrow>The packing</Eyebrow>
+        <View style={styles.space} />
+        <Display size={32}>How it leaves.</Display>
+        {packingSteps.map((step) => (
+          <View key={step.src} style={styles.packStep}>
+            <HouseImage
+              src={step.src}
+              alt={step.alt}
+              objectPosition={step.objectPosition}
+              style={styles.packStill}
+            />
+            <Text style={styles.kicker}>{`${step.number} · ${step.title}`}</Text>
+            <Body>{step.copy}</Body>
+          </View>
+        ))}
       </View>
 
       {rest.map((still) => (
@@ -276,6 +295,15 @@ const styles = StyleSheet.create({
   gallery: {
     width: '100%',
     backgroundColor: color.night,
+  },
+  packStep: {
+    marginTop: 28,
+  },
+  packStill: {
+    width: '100%',
+    aspectRatio: 3 / 4,
+    marginBottom: 16,
+    backgroundColor: color.ivoryDeep,
   },
   related: {
     marginBottom: 28,

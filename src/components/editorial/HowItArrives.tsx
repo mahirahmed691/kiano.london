@@ -1,5 +1,6 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { HangTag } from '@/components/editorial/HangTag'
+import { ImageFrame } from '@/components/editorial/ImageFrame'
 import { creedIntent, creedMotto, creedWoven } from '@/data/creed'
 import { packingNote, packingNoteAr, packingSteps, sewnLabels } from '@/data/packing'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
@@ -31,6 +32,20 @@ export function HowItArrives() {
               </Reveal>
             ))}
           </div>
+        </div>
+
+        <div className="mt-16 grid gap-6 sm:grid-cols-3 md:mt-20">
+          {packingSteps.map((step, index) => (
+            <Reveal key={step.src} delay={index * 80}>
+              <ImageFrame
+                src={step.src}
+                alt={step.alt}
+                objectPosition={step.objectPosition}
+                caption={`${step.number} · ${step.title}`}
+                className="aspect-[3/4]"
+              />
+            </Reveal>
+          ))}
         </div>
 
         <Reveal className="mt-20 md:mt-28">
