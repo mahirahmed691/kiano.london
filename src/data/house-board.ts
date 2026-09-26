@@ -12,7 +12,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Editorial rooms',
     completion: 94,
     status: 'complete',
-    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first. The house speaks Discipline, Craftsmanship, Purpose — a higher standard, built to last, worn with purpose. The cookie strip waits until the plate has been seen.',
+    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first. The house speaks Discipline, Craftsmanship, Purpose — a higher standard, built to last, worn with purpose. The house cuts cloth; it does not write fatwas. The cookie strip waits until the plate has been seen.',
   },
   {
     name: 'The line',
@@ -90,7 +90,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Word from the house',
     completion: 88,
     status: 'complete',
-    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a named week, a cut held for cloth, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, when it is packed or leaves, and when a reservation is returned. A member device is pushed for the plate of the week, and when a cut has left. Other Word stays in the inbox.',
+    note: 'Members and the ledger share one inbox. A reserved cut, a visit letter, a named morning, a named week, a cut held for cloth, a confirmed name, a size at none or back on the line, a new account, when a paid cut moves, when it is packed or leaves, and when a reservation is returned. A member device is pushed for the plate of the week, and when a cut has left. Other Word stays in the inbox. Word is cloth, not a ruling: the house does not write fatwas.',
   },
   {
     name: 'Analytics',

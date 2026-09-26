@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { houseNotRulings } from '../../src/data/creed.js'
 import { careLine } from '../../src/data/packing.js'
 import { site } from '../../src/data/site.js'
 
@@ -22,8 +23,10 @@ export async function sendMail(input: {
       from: fromAddress(),
       to: [input.to],
       subject: input.subject,
-      text: input.text,
-      html: input.html,
+      text: input.text.includes(houseNotRulings) ? input.text : `${input.text}\n\n${houseNotRulings}`,
+      html: input.html.includes(houseNotRulings)
+        ? input.html
+        : input.html.replace('</body>', `<p style="margin:16px 0 0;font-size:13px;color:#6F675C;line-height:1.6;">${houseNotRulings}</p></body>`),
     },
     { idempotencyKey: input.idempotencyKey },
   )
@@ -78,6 +81,7 @@ function letterFrame(title: string, body: string, footer: string) {
             <tr>
               <td style="padding-top:32px;font-size:13px;color:#6F675C;line-height:1.6;">
                 ${footer}
+                <p style="margin:16px 0 0;">${houseNotRulings}</p>
               </td>
             </tr>
           </table>
@@ -548,6 +552,7 @@ export function confirmLetterHtml(url: string) {
             <tr>
               <td style="padding-top:32px;font-size:13px;color:#6F675C;line-height:1.6;">
                 If you did not ask for this, ignore the letter. Questions: ${site.email}.
+                <p style="margin:16px 0 0;">${houseNotRulings}</p>
               </td>
             </tr>
           </table>

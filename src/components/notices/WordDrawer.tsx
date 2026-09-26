@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Monogram } from '@/components/brand/Monogram'
 import { Button } from '@/components/ui/Button'
+import { houseNotRulings } from '@/data/creed'
 import { cn } from '@/lib/cn'
 import { clerkEnabled } from '@/lib/clerk'
 import { WordPlates } from '@/components/notices/WordPlates'
@@ -40,20 +41,23 @@ export function WordDrawer() {
         aria-hidden={!open}
         aria-label="Word from the house"
       >
-        <div className="flex items-center justify-between border-b border-rule px-6 py-5">
-          <div className="flex items-center gap-3">
-            <Monogram decorative className="h-5 w-auto" />
-            <p className="text-[11px] uppercase tracking-[0.22em]">
-              Word{unread ? ` · ${String(unread).padStart(2, '0')}` : ''}
-            </p>
+        <div className="border-b border-rule px-6 py-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Monogram decorative className="h-5 w-auto" />
+              <p className="text-[11px] uppercase tracking-[0.22em]">
+                Word{unread ? ` · ${String(unread).padStart(2, '0')}` : ''}
+              </p>
+            </div>
+            <button
+              type="button"
+              className="text-[11px] uppercase tracking-[0.22em] opacity-60 transition-opacity hover:opacity-100"
+              onClick={() => setOpen(false)}
+            >
+              Close
+            </button>
           </div>
-          <button
-            type="button"
-            className="text-[11px] uppercase tracking-[0.22em] opacity-60 transition-opacity hover:opacity-100"
-            onClick={() => setOpen(false)}
-          >
-            Close
-          </button>
+          <p className="mt-3 text-[14px] font-light leading-relaxed text-stone">{houseNotRulings}</p>
         </div>
 
         {notices.length === 0 ? (
@@ -166,9 +170,10 @@ function WordEmptyGuest({ onClose }: { onClose: () => void }) {
   return (
     <div className="flex flex-1 flex-col justify-center px-8">
       <p className="font-display text-3xl font-light">Nothing is waiting.</p>
-      <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-        When a cut is reserved, or the house has word for the ledger, it will sit here.
-      </p>
+        <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
+          When a cut is reserved, or the house has word for the ledger, it will sit here.{' '}
+          {houseNotRulings}
+        </p>
       <div className="mt-8">
         <Button to="/account" onClick={onClose}>
           Account

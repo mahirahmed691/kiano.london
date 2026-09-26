@@ -37,7 +37,7 @@ export {
   type ScentMovement,
   type ScentStill,
 } from '../src/data/scent'
-export { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven, houseCreed } from '../src/data/creed'
+export { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven, houseCreed, houseNotRulings, houseNotRulingsLine } from '../src/data/creed'
 export { processSteps, materials, stitchStudies } from '../src/data/craftsmanship'
 export { site } from '../src/data/site'
 export { instagramPlates, type InstagramPlate } from '../src/data/instagram-plates'
