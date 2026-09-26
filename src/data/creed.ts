@@ -13,6 +13,11 @@ export const creedIntent = 'Hand-finished by artisans, made to be worn with inte
 
 export const creedMotto = 'Built to last. Worn with purpose.'
 
+export const houseNotRulings = 'The house cuts cloth. It does not write fatwas.'
+
+export const houseNotRulingsLine =
+  'Word, the letters, and the stills are the line as it is worn. They are not rulings.'
+
 export const houseCreed = [
   {
     word: 'Discipline',
