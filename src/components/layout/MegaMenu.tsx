@@ -188,9 +188,10 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
 
 type Props = {
   inverted: boolean
+  installed?: boolean
 }
 
-export function MegaMenu({ inverted }: Props) {
+export function MegaMenu({ inverted, installed = false }: Props) {
   const [open, setOpen] = useState<MegaId | null>(null)
   const openTimer = useRef(0)
   const closeTimer = useRef(0)
@@ -261,7 +262,7 @@ export function MegaMenu({ inverted }: Props) {
   return (
     <div
       ref={rootRef}
-      className="hidden md:block"
+      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden md:block')}
       onMouseLeave={scheduleClose}
       onMouseEnter={() => window.clearTimeout(closeTimer.current)}
     >

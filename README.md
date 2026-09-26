@@ -63,7 +63,7 @@ The logotype returns to the homepage. Collection pieces are driven from `src/dat
 - Stripe Checkout
 - Semantic HTML, CSS transitions, `prefers-reduced-motion`
 
-The site installs as a standalone app from Safari or Chrome (Add to Home Screen). After a visit, the house, the shop, and the collection can be read without a network; the till and the account need a connection. Native iOS and Android use the Expo app in `mobile/`: rooms (house, stills, shop, collection, a piece, a visit, the story, the making) are native, using the same tokens and line as the site. The bag, the word, the account, and the till remain the live house in a WebView, because Clerk and Stripe sit there.
+The site installs as a standalone app from Safari or Chrome (Add to Home Screen). After a visit, the house, the shop, and the collection can be read without a network; the till and the account need a connection. Native iOS and Android use the Expo app in `mobile/`: rooms (house, stills, shop, collection, a piece, a visit, the story, the making) are native, using the same tokens and line as the site. The hamburger is the house menu in both shells (rooms, this week’s plate, lockup); Word, the London clock, and Bag sit on the right. The bag, the word, the account, and the till remain the live house in a WebView, because Clerk and Stripe sit there.
 
 ## Local development
 
