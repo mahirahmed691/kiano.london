@@ -3,14 +3,11 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { HouseImage } from './HouseImage'
 import { HouseLockup } from './HouseLockup'
 import {
-  jubbahs,
+  houseMenuAccount,
+  houseMenuHome,
+  houseMenuTree,
   pad,
-  productLineName,
-  productPath,
-  scentPath,
-  scents,
   thisWeekPlate,
-  thobes,
 } from './catalogue'
 import { color, type } from './theme'
 
@@ -71,6 +68,7 @@ export function HouseMenu({
 }: Props) {
   const week = thisWeekPlate()
   const room = path.split('?')[0] || '/'
+  const sections = houseMenuTree()
   const go = (next: string) => {
     onClose()
     onOpen(next)
@@ -79,11 +77,7 @@ export function HouseMenu({
   if (!open) return null
 
   return (
-    <View
-      accessibilityViewIsModal
-      testID="house-menu"
-      style={styles.veil}
-    >
+    <View accessibilityViewIsModal testID="house-menu" style={styles.veil}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={{
@@ -93,75 +87,48 @@ export function HouseMenu({
         }}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.stack}>
-          <RoomLink label="Home" large active={room === '/'} onPress={() => go('/')} />
+        <View style={styles.stack} accessibilityLabel="House">
+          <RoomLink
+            label={houseMenuHome.label}
+            large
+            active={room === houseMenuHome.to}
+            onPress={() => go(houseMenuHome.to)}
+          />
 
-          <View style={styles.block}>
-            <SectionLabel>The Shop</SectionLabel>
-            <RoomLink label="Shop" large active={room === '/shop'} onPress={() => go('/shop')} />
-            <View style={styles.lines}>
-              {jubbahs.map((piece) => (
+          {sections.map((block) => {
+            const hub = block.hub
+            return (
+            <View key={block.id} style={styles.block}>
+              <SectionLabel>{block.section}</SectionLabel>
+              {hub ? (
                 <RoomLink
-                  key={piece.id}
-                  label={productLineName(piece)}
-                  active={room === productPath(piece)}
-                  onPress={() => go(productPath(piece))}
+                  label={hub.label}
+                  large
+                  active={room === hub.to}
+                  onPress={() => go(hub.to)}
                 />
-              ))}
+              ) : null}
+              <View style={[styles.lines, Boolean(block.hub) && styles.linesUnderHub]}>
+                {block.lines.map((line) => (
+                  <RoomLink
+                    key={line.to}
+                    label={line.label}
+                    large={!block.hub}
+                    active={room === line.to}
+                    onPress={() => go(line.to)}
+                  />
+                ))}
+              </View>
             </View>
-          </View>
+            )
+          })}
 
-          <View style={styles.block}>
-            <SectionLabel>The Collection</SectionLabel>
-            <RoomLink
-              label="Collection"
-              large
-              active={room === '/collection'}
-              onPress={() => go('/collection')}
-            />
-            <View style={styles.lines}>
-              {thobes.map((piece) => (
-                <RoomLink
-                  key={piece.id}
-                  label={piece.name}
-                  active={room === productPath(piece)}
-                  onPress={() => go(productPath(piece))}
-                />
-              ))}
-            </View>
-          </View>
-
-          <View style={styles.block}>
-            <SectionLabel>The Scent</SectionLabel>
-            <RoomLink label="Scent" large active={room === '/scent'} onPress={() => go('/scent')} />
-            <View style={styles.lines}>
-              {scents.map((scent) => (
-                <RoomLink
-                  key={scent.id}
-                  label={scent.name}
-                  active={room === scentPath(scent)}
-                  onPress={() => go(scentPath(scent))}
-                />
-              ))}
-            </View>
-          </View>
-
-          <View style={styles.block}>
-            <SectionLabel>The house</SectionLabel>
-            <View style={styles.lines}>
-              <RoomLink label="Stills" large active={room === '/stills'} onPress={() => go('/stills')} />
-              <RoomLink label="Story" large active={room === '/story'} onPress={() => go('/story')} />
-              <RoomLink
-                label="Craftsmanship"
-                large
-                active={room === '/craftsmanship'}
-                onPress={() => go('/craftsmanship')}
-              />
-              <RoomLink label="Visit" large active={room === '/visit'} onPress={() => go('/visit')} />
-            </View>
-          </View>
-
-          <RoomLink label="Account" large active={room.startsWith('/account')} onPress={onAccount} />
+          <RoomLink
+            label={houseMenuAccount.label}
+            large
+            active={room.startsWith(houseMenuAccount.to)}
+            onPress={onAccount}
+          />
           <RoomLink label="Word" large active={false} onPress={onWord} />
           <RoomLink label={bag > 0 ? `Bag ${pad(bag)}` : 'Bag'} large active={false} onPress={onBag} />
         </View>
@@ -209,6 +176,8 @@ const styles = StyleSheet.create({
   },
   lines: {
     gap: 4,
+  },
+  linesUnderHub: {
     paddingTop: 4,
   },
   section: {
