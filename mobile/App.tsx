@@ -24,7 +24,6 @@ import {
   houseOrigin,
   nativeMark,
   openEvent,
-  openHousePath,
   pathOf,
   pushBridge,
   scrollTopScript,
@@ -107,13 +106,38 @@ function HouseApp() {
 
   const goWeb = useCallback(
     (next: string, kind: 'bag' | 'word' | 'account' | 'sheet') => {
+      setMenuOpen(false)
+      if (Platform.OS === 'web') {
+        void Linking.openURL(`${houseOrigin()}${next}`)
+        return
+      }
       setPath(next)
       setWebKind(kind)
-      setMenuOpen(false)
       send(goScript(next), next)
     },
     [send],
   )
+
+  const revealWord = useCallback(() => {
+    setMenuOpen(false)
+    if (Platform.OS === 'web') {
+      void Linking.openURL(houseOrigin())
+      return
+    }
+    setWebKind('word')
+    webView.current?.injectJavaScript(openEvent('kiano-open-word'))
+  }, [])
+
+  const revealBag = useCallback(() => {
+    setMenuOpen(false)
+    if (Platform.OS === 'web') {
+      void Linking.openURL(houseOrigin())
+      return
+    }
+    if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
+    setWebKind('bag')
+    webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
+  }, [wordOpen])
 
   const open = useCallback(
     (next: string) => {
@@ -133,6 +157,10 @@ function HouseApp() {
 
   const openWeb = useCallback(
     (next: string) => {
+      if (Platform.OS === 'web') {
+        void Linking.openURL(`${houseOrigin()}${next}`)
+        return
+      }
       setWebKind('sheet')
       send(goScript(next), next)
     },
@@ -374,36 +402,19 @@ function HouseApp() {
             onOpen={(next) => tap(() => open(next))}
             onAccount={() =>
               tap(() => {
-                setMenuOpen(false)
                 if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
                 goWeb('/account', 'account')
               })
             }
-            onWord={() =>
-              tap(() => {
-                setMenuOpen(false)
-                setWebKind('word')
-                webView.current?.injectJavaScript(openEvent('kiano-open-word'))
-              })
-            }
-            onBag={() =>
-              tap(() => {
-                setMenuOpen(false)
-                if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
-                if (bagOpen || webKind === 'bag') {
-                  webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
-                  return
-                }
-                setWebKind('bag')
-                webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
-              })
-            }
+            onWord={() => tap(revealWord)}
+            onBag={() => tap(revealBag)}
           />
           <HouseHeader
             inverted={lightStatus}
             menuOpen={menuOpen}
             topInset={insets.top}
             word={word}
+            bag={bag}
             onHeight={setHeaderHeight}
             onToggle={() => tap(() => setMenuOpen((value) => !value))}
             onHome={() =>
@@ -414,13 +425,8 @@ function HouseApp() {
                 goNative('/')
               })
             }
-            onWord={() =>
-              tap(() => {
-                setMenuOpen(false)
-                setWebKind('word')
-                webView.current?.injectJavaScript(openEvent('kiano-open-word'))
-              })
-            }
+            onWord={() => tap(revealWord)}
+            onBag={() => tap(revealBag)}
           />
         </>
       ) : null}
@@ -459,6 +465,10 @@ function HouseApp() {
           onScent={() => tap(() => goNative('/scent'))}
           onBag={() =>
             tap(() => {
+              if (Platform.OS === 'web') {
+                void Linking.openURL(houseOrigin())
+                return
+              }
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
               if (bagOpen || webKind === 'bag') {
                 webView.current?.injectJavaScript(openEvent('kiano-close-bag'))

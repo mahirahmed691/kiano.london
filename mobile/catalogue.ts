@@ -50,6 +50,14 @@ export {
   packingSteps,
   sewnLabels,
 } from '../src/data/packing'
+export {
+  houseMenuAccount,
+  houseMenuHome,
+  houseMenuHouse,
+  houseMenuTree,
+  type HouseMenuLink,
+  type HouseMenuSection,
+} from '../src/data/house-menu'
 
 export const sizeChart = [
   { size: 52, chest: '112 cm', length: '142 cm', shoulder: '46 cm' },
@@ -120,22 +128,7 @@ export function isNativeBrowse(pathname: string) {
   )
 }
 
-export function overlayRoom(pathname: string) {
-  const path = pathname.split('?')[0] || '/'
-  return (
-    path === '/' ||
-    path === '/stills' ||
-    path === '/shop' ||
-    path === '/collection' ||
-    path === '/scent' ||
-    path === '/visit' ||
-    path === '/story' ||
-    path === '/craftsmanship' ||
-    path.startsWith('/shop/') ||
-    path.startsWith('/collection/') ||
-    path.startsWith('/scent/')
-  )
-}
+export { headerOverlays as overlayRoom } from '../src/data/navigation'
 
 export function pad(value: number) {
   return String(value).padStart(2, '0')

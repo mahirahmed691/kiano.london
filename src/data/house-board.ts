@@ -52,9 +52,9 @@ export const houseFeatures: HouseFeature[] = [
   },
   {
     name: 'Installable house',
-    completion: 92,
+    completion: 95,
     status: 'partial',
-    note: 'PWA on the site keeps the editorial header. After a visit, the line can be read without a network; the till and the account need a connection. Expo is a WebView with house tabs: House, Line, Bag, Account. Shop, collection, and a visit overlay the lockup as the site does. A second tap of House on the week’s plate opens the book. Word sits as a hairline mark. The buy bar and notices sit above the tabs. Android still needs FCM in EAS.',
+    note: 'The hamburger is the house menu on the installed site and in Expo: the same rooms, this week’s plate, and the compact lockup. The browser keeps the mega menu from md. Word, the London clock, and Bag sit on the right in both shells. After a visit, the line can be read without a network; the till and the account need a connection. Expo rooms are native; bag, word, account, and the till remain the live house in a WebView. Tabs stay for the thumb: House, Line, Bag, Account. Android still needs FCM in EAS.',
   },
   {
     name: 'Share and search',

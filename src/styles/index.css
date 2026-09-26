@@ -32,11 +32,43 @@ html {
   color-scheme: light;
 }
 
-@media (display-mode: standalone) {
+@media (display-mode: standalone), (display-mode: fullscreen) {
   html {
     min-height: 100svh;
     min-height: -webkit-fill-available;
   }
+
+  .house-browser-nav {
+    display: none !important;
+  }
+
+  .house-app-menu {
+    display: flex !important;
+  }
+
+  .house-installed-hide {
+    display: none !important;
+  }
+
+  #mobile-navigation {
+    display: block;
+  }
+}
+
+html.shell-installed .house-browser-nav {
+  display: none !important;
+}
+
+html.shell-installed .house-app-menu {
+  display: flex !important;
+}
+
+html.shell-installed .house-installed-hide {
+  display: none !important;
+}
+
+html.shell-installed #mobile-navigation {
+  display: block;
 }
 
 body {

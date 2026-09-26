@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
+import { Lockup } from '@/components/brand/Lockup'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
-import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
-import { scentPath, scents } from '@/data/scent'
-import { site } from '@/data/site'
+import { houseMenuAccount, houseMenuHome, houseMenuTree } from '@/data/house-menu'
 import { thisWeekPlate } from '@/lib/instagram-plates'
+import { useInstalledHouse } from '@/lib/shell'
 import { cn } from '@/lib/cn'
 
 type Props = {
@@ -49,6 +49,8 @@ function RoomLink({
 export function MobileNav({ open, onClose }: Props) {
   const { count, setOpen } = useCart()
   const week = thisWeekPlate()
+  const sections = houseMenuTree()
+  const installed = useInstalledHouse()
   useEffect(() => {
     if (!open) return
     const onKey = (event: KeyboardEvent) => {
@@ -66,94 +68,44 @@ export function MobileNav({ open, onClose }: Props) {
     <div
       id="mobile-navigation"
       className={cn(
-        'fixed inset-0 z-40 overflow-y-auto bg-ivory text-ink transition-opacity duration-500 md:hidden',
+        'fixed inset-0 z-40 overflow-y-auto bg-ivory text-ink transition-opacity duration-500',
         open ? 'opacity-100' : 'pointer-events-none opacity-0',
+        !installed && 'md:hidden',
       )}
       aria-hidden={!open}
     >
       <nav
         className="flex min-h-full flex-col justify-center px-8 py-28 pt-[max(7rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))]"
-        aria-label="Mobile"
+        aria-label="House"
       >
         <ul className={cn('space-y-8', open && 'stagger-in')}>
           <li>
-            <RoomLink to="/" onClose={onClose} large>
-              Home
+            <RoomLink to={houseMenuHome.to} onClose={onClose} large>
+              {houseMenuHome.label}
             </RoomLink>
           </li>
-          <li className="space-y-3">
-            <SectionLabel>The Shop</SectionLabel>
-            <RoomLink to="/shop" onClose={onClose} large>
-              Shop
-            </RoomLink>
-            <ul className="space-y-1 pt-1">
-              {jubbahs.map((piece) => (
-                <li key={piece.id}>
-                  <RoomLink to={productPath(piece)} onClose={onClose}>
-                    {productLineName(piece)}
-                  </RoomLink>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li className="space-y-3">
-            <SectionLabel>The Collection</SectionLabel>
-            <RoomLink to="/collection" onClose={onClose} large>
-              Collection
-            </RoomLink>
-            <ul className="space-y-1 pt-1">
-              {thobes.map((piece) => (
-                <li key={piece.id}>
-                  <RoomLink to={productPath(piece)} onClose={onClose}>
-                    {piece.name}
-                  </RoomLink>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li className="space-y-3">
-            <SectionLabel>The Scent</SectionLabel>
-            <RoomLink to="/scent" onClose={onClose} large>
-              Scent
-            </RoomLink>
-            <ul className="space-y-1 pt-1">
-              {scents.map((scent) => (
-                <li key={scent.id}>
-                  <RoomLink to={scentPath(scent)} onClose={onClose}>
-                    {scent.name}
-                  </RoomLink>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li className="space-y-3">
-            <SectionLabel>The house</SectionLabel>
-            <ul className="space-y-1">
-              <li>
-                <RoomLink to="/stills" onClose={onClose} large>
-                  Stills
+          {sections.map((block) => (
+            <li key={block.id} className="space-y-3">
+              <SectionLabel>{block.section}</SectionLabel>
+              {block.hub ? (
+                <RoomLink to={block.hub.to} onClose={onClose} large>
+                  {block.hub.label}
                 </RoomLink>
-              </li>
-              <li>
-                <RoomLink to="/story" onClose={onClose} large>
-                  Story
-                </RoomLink>
-              </li>
-              <li>
-                <RoomLink to="/craftsmanship" onClose={onClose} large>
-                  Craftsmanship
-                </RoomLink>
-              </li>
-              <li>
-                <RoomLink to="/visit" onClose={onClose} large>
-                  Visit
-                </RoomLink>
-              </li>
-            </ul>
-          </li>
+              ) : null}
+              <ul className={cn('space-y-1', block.hub && 'pt-1')}>
+                {block.lines.map((line) => (
+                  <li key={line.to}>
+                    <RoomLink to={line.to} onClose={onClose} large={!block.hub}>
+                      {line.label}
+                    </RoomLink>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
           <li>
-            <RoomLink to="/account" onClose={onClose} large>
-              Account
+            <RoomLink to={houseMenuAccount.to} onClose={onClose} large>
+              {houseMenuAccount.label}
             </RoomLink>
           </li>
           <li>
@@ -191,18 +143,15 @@ export function MobileNav({ open, onClose }: Props) {
             />
           </span>
           <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
-            This week · {week.place}
+            {week.place === week.name ? 'This week' : `This week · ${week.place}`}
           </span>
           <span className="mt-2 block font-display text-2xl font-light tracking-[-0.02em]">
             {week.name}
           </span>
         </NavLink>
-        <p className="mt-10 text-[0.68rem] uppercase tracking-[0.42em] text-ink/70">
-          {site.lockup}
-        </p>
-        <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">
-          {site.city} · Est. {site.established}
-        </p>
+        <div className="mt-10 text-ink">
+          <Lockup compact align="start" />
+        </div>
       </nav>
     </div>
   )

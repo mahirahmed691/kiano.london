@@ -1,18 +1,22 @@
 import { useEffect, useRef } from 'react'
-import { Animated, Easing, Pressable, StyleSheet, View } from 'react-native'
+import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native'
 
+import { pad } from './catalogue'
+import { HouseClock } from './HouseClock'
 import { HouseLockup } from './HouseLockup'
 import { HouseWord } from './HouseWord'
-import { color } from './theme'
+import { color, type } from './theme'
 
 type Props = {
   inverted: boolean
   menuOpen: boolean
   topInset: number
   word: number
+  bag: number
   onToggle: () => void
   onHome: () => void
   onWord: () => void
+  onBag: () => void
   onHeight?: (height: number) => void
 }
 
@@ -21,9 +25,11 @@ export function HouseHeader({
   menuOpen,
   topInset,
   word,
+  bag,
   onToggle,
   onHome,
   onWord,
+  onBag,
   onHeight,
 }: Props) {
   const paper = menuOpen || !inverted
@@ -84,6 +90,23 @@ export function HouseHeader({
       onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
     >
       <View style={styles.row} pointerEvents="box-none">
+        <View style={styles.side}>
+          <Pressable
+            onPress={onToggle}
+            accessibilityRole="button"
+            accessibilityLabel={menuOpen ? 'Close menu' : 'Open menu'}
+            accessibilityState={{ expanded: menuOpen }}
+            testID="house-menu-toggle"
+            hitSlop={8}
+            style={({ pressed }) => [styles.hit, pressed && styles.pressed]}
+          >
+            <View style={styles.burger}>
+              <Animated.View style={[styles.hair, { backgroundColor: ink }, topBar]} />
+              <Animated.View style={[styles.hair, { backgroundColor: ink }, bottomBar]} />
+            </View>
+          </Pressable>
+        </View>
+
         <Pressable
           onPress={onHome}
           accessibilityRole="link"
@@ -95,23 +118,21 @@ export function HouseHeader({
           <HouseLockup compact tone={lockupTone} />
         </Pressable>
 
-        <Pressable
-          onPress={onToggle}
-          accessibilityRole="button"
-          accessibilityLabel={menuOpen ? 'Close menu' : 'Open menu'}
-          accessibilityState={{ expanded: menuOpen }}
-          testID="house-menu-toggle"
-          hitSlop={8}
-          style={({ pressed }) => [styles.hit, styles.hitLeft, pressed && styles.pressed]}
-        >
-          <View style={styles.burger}>
-            <Animated.View style={[styles.hair, { backgroundColor: ink }, topBar]} />
-            <Animated.View style={[styles.hair, { backgroundColor: ink }, bottomBar]} />
-          </View>
-        </Pressable>
-
-        <View style={[styles.hit, styles.hitRight]}>
+        <View style={[styles.side, styles.sideEnd]}>
           <HouseWord count={word} inverted={!paper} embedded onPress={onWord} />
+          <View style={styles.clock} testID="house-clock">
+            <HouseClock inverted={!paper} />
+          </View>
+          <Pressable
+            onPress={onBag}
+            accessibilityRole="button"
+            accessibilityLabel={bag ? `Open bag, ${bag} pieces` : 'Open bag'}
+            testID="house-bag"
+            hitSlop={6}
+            style={({ pressed }) => [styles.bagHit, pressed && styles.pressed]}
+          >
+            <Text style={[styles.bag, { color: ink }]}>{bag > 0 ? `Bag ${pad(bag)}` : 'Bag'}</Text>
+          </Pressable>
         </View>
       </View>
     </View>
@@ -134,29 +155,48 @@ const styles = StyleSheet.create({
   row: {
     minHeight: 96,
     paddingHorizontal: 12,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  side: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    minWidth: 0,
+  },
+  sideEnd: {
+    justifyContent: 'flex-end',
+    gap: 8,
   },
   hit: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
     width: 44,
+    height: 44,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 2,
-  },
-  hitLeft: {
-    left: 12,
-  },
-  hitRight: {
-    right: 12,
   },
   mark: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 10,
-    zIndex: 1,
+    paddingHorizontal: 4,
+  },
+  clock: {
+    width: 22,
+    height: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bagHit: {
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: 2,
+  },
+  bag: {
+    fontFamily: type.sansRegular,
+    fontSize: 10,
+    fontWeight: '400',
+    letterSpacing: 2.8,
+    textTransform: 'uppercase',
   },
   burger: {
     width: 24,

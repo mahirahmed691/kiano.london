@@ -25,10 +25,11 @@ export const overlayPaths = [
 ] as const
 
 export function headerOverlays(pathname: string) {
-  if ((overlayPaths as readonly string[]).includes(pathname)) return true
+  const path = pathname.split('?')[0] || '/'
+  if ((overlayPaths as readonly string[]).includes(path)) return true
   return (
-    pathname.startsWith('/shop/') ||
-    pathname.startsWith('/collection/') ||
-    pathname.startsWith('/scent/')
+    path.startsWith('/shop/') ||
+    path.startsWith('/collection/') ||
+    path.startsWith('/scent/')
   )
 }

@@ -8,6 +8,7 @@ import { MobileNav } from '@/components/layout/MobileNav'
 import { WordLink } from '@/components/notices/WordLink'
 import { headerOverlays } from '@/data/navigation'
 import { useCart } from '@/lib/cart'
+import { useInstalledHouse } from '@/lib/shell'
 import { cn } from '@/lib/cn'
 
 export function Header() {
@@ -15,6 +16,7 @@ export function Header() {
   const { count, setOpen } = useCart()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const installed = useInstalledHouse()
   const overlay = headerOverlays(pathname)
   const inverted = overlay && !scrolled && !menuOpen
 
@@ -23,6 +25,10 @@ export function Header() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [pathname])
+
+  useEffect(() => {
+    setMenuOpen(false)
   }, [pathname])
 
   return (
@@ -46,13 +52,14 @@ export function Header() {
             !inverted && 'border-rule/80',
           )}
         >
-          <MegaMenu key={pathname} inverted={inverted} />
+          <MegaMenu key={pathname} inverted={inverted} installed={installed} />
 
           <button
             type="button"
             className={cn(
-              'relative z-50 flex h-11 w-11 items-center justify-center md:hidden',
+              'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
               inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.8)]',
+              !installed && 'md:hidden',
             )}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
@@ -81,15 +88,17 @@ export function Header() {
           <div className="flex items-center justify-end gap-6 lg:gap-9">
             <AdminNavLink
               className={cn(
-                'hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
+                'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
                 inverted && 'drop-shadow-[0_1px_8px_rgba(20,18,16,0.55)]',
+                installed && '!hidden',
               )}
             />
             <NavLink
               to="/account"
               className={cn(
-                'hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
+                'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
                 inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
+                installed && '!hidden',
               )}
             >
               Account
