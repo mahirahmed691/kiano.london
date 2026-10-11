@@ -4,7 +4,7 @@ Extracted and implemented as a restrained London house of the jubbah and the tho
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. The house cuts cloth; it does not write fatwas. Typography, proportion and photography carry the identity. Whitespace is structural, not empty: more air than type, stills held as plates, motion slow enough to be ceremonial. Arabic sits with the English on garment names, size, packing, a visit, and the scent room; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty: more air than type, stills held as plates, motion slow enough to be ceremonial. Arabic sits with the English on garment names, size, packing, a visit, and the scent room; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
 
 ## Colour
 
@@ -61,4 +61,3 @@ Fade and a short rise on enter. Image scale `1.018 → 1.045` on hover, 2.6s. Pa
 - Oversized controls
 - Bounce, parallax, loaders
 - Stock-template sections or generic icon rows
-- Fatwas, religious rulings, or dress as law. The house cuts cloth.
