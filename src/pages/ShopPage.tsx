@@ -6,6 +6,7 @@ import { ColourFilter } from '@/components/product/ColourFilter'
 import { ProductCard } from '@/components/product/ProductCard'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
+import { Display } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { creedIntent } from '@/data/creed'
@@ -34,19 +35,19 @@ export function ShopPage() {
         kicker="The outer garment"
         title="The Shop."
         minHeight="screen"
+        quiet
         priority
-      >
-        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
-          الجُبَّة
-        </p>
-      </Hero>
+      />
 
       <Section>
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
-            <p className="font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
-              The jubbah, in three colours for now: black, sand, charcoal.
+            <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl font-light text-ink-soft">
+              الجُبَّة
             </p>
+            <Display as="h1" className="mt-5 text-4xl md:text-5xl">
+              The jubbah, in three colours for now: black, sand, charcoal.
+            </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               Five sizes, 52 to 60. {creedIntent}
             </p>

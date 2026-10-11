@@ -22,6 +22,7 @@ export function StoryPage() {
         kicker={creedStandard}
         title="The house."
         minHeight="screen"
+        quiet
         priority
       />
 
@@ -34,7 +35,7 @@ export function StoryPage() {
             imageOn="right"
           >
             <Eyebrow>{site.established}</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">
+            <Display as="h1" className="mt-4 text-4xl md:text-5xl">
               Founded for those who preferred to be well dressed rather than noticed.
             </Display>
             <Body className="mt-6">

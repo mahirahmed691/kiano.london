@@ -35,19 +35,19 @@ export function CollectionPage() {
         kicker="Emirati thobe"
         title="The Collection."
         minHeight="screen"
+        quiet
         priority
-      >
-        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
-          الثوب
-        </p>
-      </Hero>
+      />
 
       <Section>
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
-            <p className="font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
-              Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.
+            <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl font-light text-ink-soft">
+              الثوب
             </p>
+            <Display as="h1" className="mt-5 text-4xl md:text-5xl">
+              Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.
+            </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               Black, charcoal, grey, beige and bone. {creedMotto}
             </p>

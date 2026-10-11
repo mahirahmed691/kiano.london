@@ -64,6 +64,7 @@ function ScentStillCard({
 
 export function ScentRoom({
   open,
+  openWeb,
   scentId,
   roomHeight,
   bottomInset,
@@ -98,6 +99,8 @@ export function ScentRoom({
           src={named.image}
           alt={named.imageAlt}
           objectPosition={named.objectPosition}
+          kicker={scentComing}
+          title={`${named.name}.`}
           quiet
           height={roomHeight}
           priority
@@ -267,7 +270,8 @@ export function ScentRoom({
           Write if you wish to be told. A visit is still for cloth. The scent is not yet reserved.
         </Body>
         <View style={styles.actions}>
-          <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />
+          <OutlineButton label="Join the list" onPress={() => openWeb('/scent#letters')} />
+          <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />
           <GhostLink label="The Shop" onPress={() => open('/shop')} />
           <GhostLink label="The Collection" onPress={() => open('/collection')} />
         </View>

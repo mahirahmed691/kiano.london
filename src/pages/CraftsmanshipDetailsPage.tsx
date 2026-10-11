@@ -20,9 +20,10 @@ export function CraftsmanshipDetailsPage() {
         image="/images/stitch-felled.jpg"
         imageAlt="A felled seam at close range: the allowance enclosed, the face a single plane."
         objectPosition="center"
-        kicker="Craftsmanship · Details"
-        title="What the cloth conceals."
+        kicker="The making"
+        title="In detail."
         minHeight="page"
+        quiet
         priority
       />
 
@@ -30,7 +31,7 @@ export function CraftsmanshipDetailsPage() {
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <Eyebrow>An editorial of four</Eyebrow>
-            <Display as="h2" className="mt-4 text-4xl md:text-5xl">
+            <Display as="h1" className="mt-4 text-4xl md:text-5xl">
               Seam, stitch, fastening, the unseen.
             </Display>
             <Body className="mx-auto mt-6">
