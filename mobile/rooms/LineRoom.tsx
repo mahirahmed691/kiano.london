@@ -81,7 +81,7 @@ export function LineRoom({
       <View style={paper()}>
         <Display size={28}>
           {collection
-            ? thobes.map((piece) => piece.name).join('\n')
+            ? 'The Collection.'
             : jubbahs.map((piece) => productLineName(piece)).join('\n')}
         </Display>
         <View style={styles.gap} />

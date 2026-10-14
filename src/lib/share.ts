@@ -20,7 +20,7 @@ const pages: Record<string, PageMeta> = {
   '/': {
     title: site.fullName,
     description:
-      `${creedWoven} Layl, Hadīd, Ghabār, Raml and Hajar. Urban Emirati in stone grey, cream and black. A London house, sizes 52 to 60.`,
+      `${creedWoven} Urban Emirati in stone grey, cream and black. A London house, sizes 52 to 60.`,
     path: '/',
     image: '/images/featured-overcoat.jpg',
     imageAlt: 'Hadīd: a charcoal Emirati thobe with a standing collar, worn at full length.',
@@ -35,7 +35,7 @@ const pages: Record<string, PageMeta> = {
   '/collection': {
     title: 'The Collection — Kiano London',
     description:
-      `Layl, Hadīd, Ghabār, Raml and Hajar. Five Emirati thobes, sizes 52 to 60, from the house block. ${creedMotto}`,
+      `Emirati thobes, sizes 52 to 60, from the house block. ${creedMotto}`,
     path: '/collection',
     image: '/images/thobe-raml.jpg',
     imageAlt: 'The Raml thobe.',

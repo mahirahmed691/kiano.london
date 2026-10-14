@@ -132,7 +132,7 @@ function CollectionPanel({ onNavigate }: { onNavigate: () => void }) {
               src={piece.image}
               alt={piece.imageAlt}
               objectPosition={piece.objectPosition}
-              name={piece.name}
+              name={piece.colour}
             />
           ))}
         </ul>

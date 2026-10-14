@@ -45,11 +45,7 @@ export function CollectionPage() {
               الثوب
             </p>
             <Display as="h1" className="mt-5 text-4xl md:text-5xl">
-              {thobes.map((piece) => (
-                <span key={piece.id} className="block">
-                  {piece.name}
-                </span>
-              ))}
+              The Collection.
             </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               Black, charcoal, grey, beige and bone. {creedMotto}
