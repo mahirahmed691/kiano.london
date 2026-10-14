@@ -5,7 +5,7 @@ import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
-import { creedIntent, creedMotto, creedSpoken, creedStandard, creedWoven, houseNotRulings, houseNotRulingsLine, site } from '../catalogue'
+import { creedIntent, creedMotto, creedSpoken, creedStandard, creedWoven, site } from '../catalogue'
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
 
@@ -45,10 +45,6 @@ export function StoryRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         <View style={styles.gap} />
         <Body>
           The name is Kiano London. It is not a translation, and not a legend taken from elsewhere. We remain a single address and the same silhouette: ankle, shoulder, placket concealed.
-        </Body>
-        <View style={styles.gap} />
-        <Body>
-          {`${houseNotRulings} ${houseNotRulingsLine}`}
         </Body>
       </View>
 
