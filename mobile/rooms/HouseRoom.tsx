@@ -21,7 +21,6 @@ import {
   scentPath,
   scents,
   thisWeekPlate,
-  thobes,
 } from '../catalogue'
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
@@ -117,18 +116,14 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         </View>
         <View style={styles.lineBlock}>
           <Text style={styles.lineKicker}>The Collection</Text>
-          {thobes.map((piece, index) => (
-            <Pressable
-              key={piece.id}
-              onPress={() => open(productPath(piece))}
-              accessibilityRole="link"
-              accessibilityLabel={piece.name}
-              style={({ pressed }) => [styles.thobeRow, pressed && styles.pressed]}
-            >
-              <Text style={styles.index}>{String(index + 1).padStart(2, '0')}</Text>
-              <Text style={styles.lineName}>{piece.name}</Text>
-            </Pressable>
-          ))}
+          <Pressable
+            onPress={() => open('/collection')}
+            accessibilityRole="link"
+            accessibilityLabel="The Collection"
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <Text style={styles.lineName}>The thobes</Text>
+          </Pressable>
         </View>
         <View style={styles.lineBlock}>
           <Text style={styles.lineKicker}>The Scent</Text>
@@ -186,7 +181,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         <Display size={36}>By appointment</Display>
         <View style={styles.gap} />
         <Body>
-          Fittings are by appointment. We do not keep a shop window. The work is the invitation: Layl, Hadīd, Urban Emirati. A visit is the next still.
+          Fittings are by appointment. We do not keep a shop window. The work is the invitation: Urban Emirati. A visit is the next still.
         </Body>
         <View style={styles.actions}>
           <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />
@@ -274,11 +269,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '300',
     lineHeight: 20,
-  },
-  thobeRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    gap: 14,
   },
   splitStill: {
     width: '100%',

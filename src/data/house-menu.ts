@@ -1,4 +1,4 @@
-import { jubbahs, productLineName, productPath, thobes } from './products'
+import { jubbahs, productLineName, productPath } from './products'
 import { scentPath, scents } from './scent'
 
 export type HouseMenuLink = {
@@ -44,10 +44,7 @@ export function houseMenuTree(): HouseMenuSection[] {
       id: 'collection',
       section: 'The Collection',
       hub: { label: 'Collection', to: '/collection' },
-      lines: thobes.map((piece) => ({
-        label: piece.name,
-        to: productPath(piece),
-      })),
+      lines: [],
     },
     {
       id: 'scent',
