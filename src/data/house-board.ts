@@ -12,7 +12,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Editorial rooms',
     completion: 94,
     status: 'complete',
-    note: 'Home, shop, collection, story, craft, visit. Quiet entrance: still first. The house speaks Discipline, Craftsmanship, Purpose — a higher standard, built to last, worn with purpose. The cookie strip waits until the plate has been seen.',
+    note: 'Home, shop, collection, scent, stills, story, craft, visit. Quiet entrance: still first — a bronze kicker and a name on the plate, longer copy on paper. The house speaks Discipline, Craftsmanship, Purpose — a higher standard, built to last, worn with purpose. The cookie strip waits until the plate has been seen. The scent list can be joined on /scent.',
   },
   {
     name: 'The line',

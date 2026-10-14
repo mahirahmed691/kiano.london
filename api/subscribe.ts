@@ -25,7 +25,9 @@ export async function POST(request: Request) {
 
   const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
   const source =
-    body.source === 'footer' || body.source === 'account' ? body.source : 'popup'
+    body.source === 'footer' || body.source === 'account' || body.source === 'scent'
+      ? body.source
+      : 'popup'
   if (!emailPattern.test(email)) {
     return Response.json({ error: 'A valid email is needed.' }, { status: 400 })
   }

@@ -9,7 +9,7 @@ type Variant = 'light' | 'dark' | 'panel'
 
 type Props = {
   idPrefix: string
-  source: 'popup' | 'footer' | 'account'
+  source: 'popup' | 'footer' | 'account' | 'scent'
   variant?: Variant
   onJoined?: () => void
 }

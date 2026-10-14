@@ -22,14 +22,11 @@ export function MakingRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }
         alt="A needle on charcoal worsted: the stitch that holds a thobe."
         objectPosition="center"
         kicker="Craftsmanship"
-        title="The art of the stitch."
+        title="The stitch."
+        quiet
         height={roomHeight}
         priority
-      >
-        <View style={styles.heroAction}>
-          <OutlineButton label="The making, in detail" invert onPress={() => openWeb('/craftsmanship-details')} />
-        </View>
-      </HouseStill>
+      />
 
       <View style={paper()}>
         <Eyebrow>Process</Eyebrow>
@@ -39,6 +36,9 @@ export function MakingRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }
         <Body>
           {`${creedSpoken} Cloth. Pattern. Stitch. Finish. Every thobe is built in that order. We do not fuse a collar because it is faster. We do not send buttonholes out. The methods are older than this house; we keep them because they still make a better garment. ${creedIntent}`}
         </Body>
+        <View style={styles.heroAction}>
+          <OutlineButton label="The making, in detail" onPress={() => openWeb('/craftsmanship-details')} />
+        </View>
         <View style={styles.steps}>
           {processSteps.map((step) => (
             <View key={step.number}>

@@ -35,6 +35,7 @@ export function CollectionPage() {
         kicker="Emirati thobe"
         title="The Collection."
         minHeight="screen"
+        quiet
         priority
       />
 

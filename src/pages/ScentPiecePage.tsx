@@ -36,6 +36,8 @@ export function ScentPiecePage() {
         image={scent.image}
         imageAlt={scent.imageAlt}
         objectPosition={scent.objectPosition}
+        kicker={scentComing}
+        title={`${scent.name}.`}
         minHeight="screen"
         priority
         quiet

@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { EditorialSplit } from '@/components/editorial/EditorialSplit'
 import { Hero } from '@/components/editorial/Hero'
 import { NightMotto } from '@/components/editorial/NightMotto'
 import { StillCaption } from '@/components/editorial/StillCaption'
 import { ScentCard } from '@/components/scent/ScentCard'
-import { Button, TextLink } from '@/components/ui/Button'
+import { SubscribeForm } from '@/components/notices/SubscribeForm'
+import { TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
@@ -14,9 +16,15 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function ScentPage() {
+  const { hash } = useLocation()
   usePageMeta(getShareMeta('/scent'))
   const oud = scentFamilies[0]
   const eau = scentFamilies[1]
+
+  useEffect(() => {
+    if (hash !== '#letters') return
+    document.getElementById('letters')?.scrollIntoView({ block: 'center' })
+  }, [hash])
 
   return (
     <>
@@ -38,9 +46,9 @@ export function ScentPage() {
             <p lang="ar" dir="rtl" className="mt-4 w-fit font-arabic text-2xl font-light text-ink-soft">
               {scentArabic}
             </p>
-            <p className="mt-6 font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
+            <Display as="h1" className="mt-6 text-4xl md:text-5xl">
               Three names: Mayfair, Bond Street, Kensington.
-            </p>
+            </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               The scent is coming. It is not yet of the bag. {creedIntent}
             </p>
@@ -115,19 +123,26 @@ export function ScentPage() {
 
       <Section>
         <Container>
-          <Reveal className="max-w-xl">
-            <Eyebrow>The list</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">When it is of the house.</Display>
-            <Body className="mt-6">
-              Write if you wish to be told. A visit is still for cloth. The scent is
-              not yet reserved.
-            </Body>
-            <div className="mt-8 flex flex-wrap items-center gap-6">
-              <Button to="/visit">Visit by appointment</Button>
-              <TextLink to="/shop">The Shop</TextLink>
-              <TextLink to="/collection">The Collection</TextLink>
+          <div className="grid gap-16 lg:grid-cols-12">
+            <Reveal className="max-w-xl lg:col-span-5">
+              <Eyebrow>The list</Eyebrow>
+              <Display className="mt-4 text-4xl md:text-5xl">When it is of the house.</Display>
+              <Body className="mt-6">
+                Write if you wish to be told. A visit is still for cloth. The scent is
+                not yet reserved.
+              </Body>
+              <div className="mt-8 flex flex-wrap items-center gap-6">
+                <TextLink to="/visit">Visit by appointment</TextLink>
+                <TextLink to="/shop">The Shop</TextLink>
+                <TextLink to="/collection">The Collection</TextLink>
+              </div>
+            </Reveal>
+            <div id="letters" className="lg:col-span-6 lg:col-start-7">
+              <Reveal delay={80}>
+                <SubscribeForm idPrefix="letters-scent" source="scent" />
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </Container>
       </Section>
     </>

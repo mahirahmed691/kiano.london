@@ -35,6 +35,7 @@ export function ShopPage() {
         kicker="The outer garment"
         title="The Shop."
         minHeight="screen"
+        quiet
         priority
       />
 

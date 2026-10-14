@@ -5,7 +5,7 @@ import { HouseCard } from '../HouseCard'
 import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Body, Display, GhostLink, OutlineButton } from '../HouseType'
+import { Arabic, Body, Display, GhostLink, OutlineButton } from '../HouseType'
 import {
   creedIntent,
   creedMotto,
@@ -59,11 +59,10 @@ export function LineRoom({
           objectPosition="center 12%"
           kicker="Emirati thobe"
           title="The Collection."
+          quiet
           height={roomHeight}
           priority
-        >
-          <Text style={styles.arabic}>الثوب</Text>
-        </HouseStill>
+        />
       ) : (
         <HouseStill
           src="/images/jubbah-sand-02.jpg"
@@ -71,14 +70,15 @@ export function LineRoom({
           objectPosition="center 22%"
           kicker="The outer garment"
           title="The Shop."
+          quiet
           height={roomHeight}
           priority
-        >
-          <Text style={styles.arabic}>الجُبَّة</Text>
-        </HouseStill>
+        />
       )}
 
       <View style={paper()}>
+        <Arabic>{collection ? 'الثوب' : 'الجُبَّة'}</Arabic>
+        <View style={styles.space} />
         <Display size={28}>
           {collection
             ? 'The Collection.'
@@ -144,14 +144,7 @@ export function LineRoom({
 }
 
 const styles = StyleSheet.create({
-  arabic: {
-    marginTop: 18,
-    color: 'rgba(242, 235, 220, 0.7)',
-    fontFamily: type.arabic,
-    fontSize: 24,
-    writingDirection: 'rtl',
-    alignSelf: 'flex-start',
-  },
+  space: { height: 18 },
   gap: { height: 16 },
   meta: {
     marginTop: 36,
