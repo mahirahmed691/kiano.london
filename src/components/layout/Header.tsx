@@ -32,7 +32,7 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-50 bg-black text-ivory"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="relative grid h-16 grid-cols-[1fr_auto_1fr] items-center border-b border-ivory/10 px-5 md:h-[4.5rem] md:px-12 lg:px-16">
+        <div className="relative grid h-16 grid-cols-[minmax(0,1.35fr)_auto_minmax(0,1fr)] items-center border-b border-ivory/10 px-5 md:h-[4.5rem] md:px-12 lg:px-16">
           <MegaMenu key={pathname} inverted installed={installed} />
 
           <button

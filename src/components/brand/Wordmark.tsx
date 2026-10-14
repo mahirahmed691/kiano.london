@@ -19,7 +19,7 @@ export function Wordmark({ to = '/', className }: Props) {
         alt=""
         width={1351}
         height={266}
-        className="h-8 w-auto md:h-9"
+        className="h-7 w-auto md:h-8"
       />
     </Link>
   )
