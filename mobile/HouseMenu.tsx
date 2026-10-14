@@ -7,7 +7,7 @@ import {
   houseMenuHome,
   houseMenuTree,
   pad,
-  thisWeekPlate,
+  thisWeekShopPlate,
 } from './catalogue'
 import { color, type } from './theme'
 
@@ -66,7 +66,7 @@ export function HouseMenu({
   onWord,
   onBag,
 }: Props) {
-  const week = thisWeekPlate()
+  const week = thisWeekShopPlate()
   const room = path.split('?')[0] || '/'
   const sections = houseMenuTree()
   const go = (next: string) => {

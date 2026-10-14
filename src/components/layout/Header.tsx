@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { HouseClock } from '@/components/brand/HouseClock'
-import { HouseMark } from '@/components/brand/HouseMark'
+import { Wordmark } from '@/components/brand/Wordmark'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { WordLink } from '@/components/notices/WordLink'
-import { headerOverlays } from '@/data/navigation'
 import { useCart } from '@/lib/cart'
 import { useInstalledHouse } from '@/lib/shell'
 import { cn } from '@/lib/cn'
@@ -14,18 +13,8 @@ import { cn } from '@/lib/cn'
 export function Header() {
   const { pathname } = useLocation()
   const { count, setOpen } = useCart()
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const installed = useInstalledHouse()
-  const overlay = headerOverlays(pathname)
-  const inverted = overlay && !scrolled && !menuOpen
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [pathname])
 
   useEffect(() => {
     setMenuOpen(false)
@@ -40,25 +29,16 @@ export function Header() {
         Skip to content
       </a>
       <header
-        className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-colors duration-700',
-          inverted ? 'bg-transparent text-ivory' : 'bg-ivory text-ink',
-        )}
+        className="fixed inset-x-0 top-0 z-50 bg-black text-ivory"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div
-          className={cn(
-            'relative grid h-[6.75rem] grid-cols-[1fr_auto_1fr] items-center border-b border-transparent px-5 md:h-[7.25rem] md:px-12 lg:px-16',
-            !inverted && 'border-rule/80',
-          )}
-        >
-          <MegaMenu key={pathname} inverted={inverted} installed={installed} />
+        <div className="relative grid h-16 grid-cols-[1fr_auto_1fr] items-center border-b border-ivory/10 px-5 md:h-[4.5rem] md:px-12 lg:px-16">
+          <MegaMenu key={pathname} inverted installed={installed} />
 
           <button
             type="button"
             className={cn(
               'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
-              inverted && 'drop-shadow-[0_1px_10px_rgba(0,0,0,0.8)]',
               !installed && 'md:hidden',
             )}
             aria-expanded={menuOpen}
@@ -83,13 +63,12 @@ export function Header() {
             </span>
           </button>
 
-          <HouseMark inverted={inverted} />
+          <Wordmark />
 
           <div className="flex items-center justify-end gap-6 lg:gap-9">
             <AdminNavLink
               className={cn(
                 'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
-                inverted && 'drop-shadow-[0_1px_8px_rgba(20,18,16,0.55)]',
                 installed && '!hidden',
               )}
             />
@@ -97,28 +76,17 @@ export function Header() {
               to="/account"
               className={cn(
                 'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
-                inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
                 installed && '!hidden',
               )}
             >
               Account
             </NavLink>
-            <WordLink
-              className={cn(
-                'text-[10px] uppercase tracking-[0.28em]',
-                inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
-              )}
-            />
+            <WordLink className="text-[10px] uppercase tracking-[0.28em]" />
             <span className="flex items-center gap-3 md:gap-3.5">
-              <HouseClock
-                className={cn(inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]')}
-              />
+              <HouseClock />
               <button
                 type="button"
-                className={cn(
-                  'text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70',
-                  inverted && 'drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]',
-                )}
+                className="text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70"
                 aria-label={count ? `Open bag, ${count} pieces` : 'Open bag'}
                 onClick={() => setOpen(true)}
               >

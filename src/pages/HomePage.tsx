@@ -13,13 +13,13 @@ import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath } from '@/data/products'
 import { scentPath, scents } from '@/data/scent'
 import { site } from '@/data/site'
-import { plateCopy, recentPlates, stillsHash, thisWeekPlate } from '@/lib/instagram-plates'
+import { plateCopy, recentShopPlates, stillsHash, thisWeekShopPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
 export function HomePage() {
-  const week = thisWeekPlate()
-  const previous = recentPlates(4)
+  const week = thisWeekShopPlate()
+  const previous = recentShopPlates(4)
   const weekCopy = plateCopy(week.caption)
 
   usePageMeta(getShareMeta('/'))

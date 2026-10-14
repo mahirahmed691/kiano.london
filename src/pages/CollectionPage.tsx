@@ -93,24 +93,24 @@ export function CollectionPage() {
           plates={[
             {
               src: '/images/featured-overcoat.jpg',
-              alt: 'The Hadīd thobe at full length: standing collar, charcoal column.',
+              alt: 'A charcoal Emirati thobe at full length: standing collar, charcoal column.',
               objectPosition: '72% 18%',
               kicker: 'Charcoal',
-              name: 'Hadīd',
+              name: 'Charcoal',
             },
             {
               src: '/images/thobe-ghabar.jpg',
-              alt: 'The Ghabār thobe: earth grey compact cotton, hem to the ankle.',
+              alt: 'An earth-grey Emirati thobe, compact cotton, hem to the ankle.',
               objectPosition: 'center 12%',
               kicker: 'Grey',
-              name: 'Ghabār',
+              name: 'Grey',
             },
             {
               src: '/images/thobe-raml.jpg',
-              alt: 'The Raml thobe: sand extra-long staple, the cloth to the ankle.',
+              alt: 'A sand extra-long staple Emirati thobe, the cloth to the ankle.',
               objectPosition: 'center 12%',
               kicker: 'Beige',
-              name: 'Raml',
+              name: 'Beige',
             },
           ]}
         />
@@ -122,12 +122,12 @@ export function CollectionPage() {
         <Container>
           <div className="grid items-end gap-12 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>Hajar</Eyebrow>
+              <Eyebrow>Bone</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">The bone column.</Display>
               <Body className="mt-6">
                 The last of the five: a pale extra-long staple, cut from the same block
-                as Layl. Fittings are by appointment. Come if you wish to see a cloth
-                before it is reserved.
+                as the rest of the line. Fittings are by appointment. Come if you wish
+                to see a cloth before it is reserved.
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
                 <Button to="/visit">Visit by appointment</Button>
@@ -138,10 +138,10 @@ export function CollectionPage() {
             <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
               <ImageFrame
                 src="/images/thobe-hajar.jpg"
-                alt="The Hajar thobe at rest: bone extra-long staple, a pale column."
+                alt="A bone extra-long staple Emirati thobe at rest: a pale column."
                 className="aspect-[4/5] w-full"
                 objectPosition="center 12%"
-                caption="Hajar."
+                caption="Bone."
               />
             </Reveal>
           </div>

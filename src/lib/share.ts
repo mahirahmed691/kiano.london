@@ -1,4 +1,4 @@
-import { thisWeekPlate } from './instagram-plates.js'
+import { thisWeekPlate, thisWeekShopPlate } from './instagram-plates.js'
 import { creedIntent, creedMotto, creedSpoken, creedWoven } from '../data/creed.js'
 import { getProduct, productLineName, productPath } from '../data/products.js'
 import { getScent, scentPath } from '../data/scent.js'
@@ -22,8 +22,8 @@ const pages: Record<string, PageMeta> = {
     description:
       `${creedWoven} Urban Emirati in stone grey, cream and black. A London house, sizes 52 to 60.`,
     path: '/',
-    image: '/images/featured-overcoat.jpg',
-    imageAlt: 'Hadīd: a charcoal Emirati thobe with a standing collar, worn at full length.',
+    image: '/images/jubbah-black.jpg',
+    imageAlt: 'Urban Emirati in black, worn at full length.',
   },
   '/shop': {
     title: 'Shop — Kiano London',
@@ -37,8 +37,8 @@ const pages: Record<string, PageMeta> = {
     description:
       `Emirati thobes, sizes 52 to 60, from the house block. ${creedMotto}`,
     path: '/collection',
-    image: '/images/thobe-raml.jpg',
-    imageAlt: 'The Raml thobe.',
+    image: '/images/jubbah-sand.jpg',
+    imageAlt: 'Urban Emirati in cream, a modest column.',
   },
   '/scent': {
     title: 'The Scent — Kiano London',
@@ -59,15 +59,15 @@ const pages: Record<string, PageMeta> = {
   '/stills': {
     title: 'Stills — Kiano London',
     description:
-      `One still a week. ${creedWoven} Layl, Hyde Park Corner, Raml, Urban Emirati, Ghabār, Hadīd, Hajar.`,
+      `One still a week. ${creedWoven} Urban Emirati, and the rooms of the house.`,
     path: '/stills',
-    image: '/images/thobe-layl.jpg',
-    imageAlt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
+    image: '/images/jubbah-black.jpg',
+    imageAlt: 'Urban Emirati in black, worn at full length.',
   },
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',
     description:
-      `${creedSpoken} Cloth, pattern, stitch and finish. How Layl, Hadīd and the rest of the line are built.`,
+      `${creedSpoken} Cloth, pattern, stitch and finish. How the column is built.`,
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
     imageAlt: 'A needle on charcoal worsted: the stitch that holds a thobe.',
@@ -167,7 +167,17 @@ export function normalizePath(pathname: string) {
 export function getShareMeta(pathname: string): PageMeta {
   const path = normalizePath(pathname)
 
-  if (path === '/' || path === '/stills') {
+  if (path === '/') {
+    const week = thisWeekShopPlate()
+    const base = pages[path]!
+    return {
+      ...base,
+      image: week.src,
+      imageAlt: week.alt,
+    }
+  }
+
+  if (path === '/stills') {
     const week = thisWeekPlate()
     const base = pages[path]!
     return {

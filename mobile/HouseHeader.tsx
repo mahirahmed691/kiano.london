@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image } from 'expo-image'
 
 import { pad } from './catalogue'
 import { HouseClock } from './HouseClock'
-import { HouseLockup } from './HouseLockup'
 import { HouseWord } from './HouseWord'
 import { color, type } from './theme'
 
@@ -21,7 +21,6 @@ type Props = {
 }
 
 export function HouseHeader({
-  inverted,
   menuOpen,
   topInset,
   word,
@@ -32,9 +31,7 @@ export function HouseHeader({
   onBag,
   onHeight,
 }: Props) {
-  const paper = menuOpen || !inverted
-  const ink = paper ? color.ink : color.ivory
-  const lockupTone = paper ? 'ink' : 'bronze'
+  const ink = color.ivory
   const progress = useRef(new Animated.Value(menuOpen ? 1 : 0)).current
 
   useEffect(() => {
@@ -82,11 +79,7 @@ export function HouseHeader({
   return (
     <View
       pointerEvents="box-none"
-      style={[
-        styles.bar,
-        { paddingTop: topInset, backgroundColor: paper ? color.ivory : 'transparent' },
-        paper && styles.ruled,
-      ]}
+      style={[styles.bar, { paddingTop: topInset }]}
       onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
     >
       <View style={styles.row} pointerEvents="box-none">
@@ -115,13 +108,18 @@ export function HouseHeader({
           hitSlop={6}
           style={({ pressed }) => [styles.mark, pressed && styles.pressed]}
         >
-          <HouseLockup compact tone={lockupTone} />
+          <Image
+            source={require('./assets/images/kiano-london.png')}
+            style={styles.wordmark}
+            contentFit="contain"
+            accessibilityLabel="Kiano London"
+          />
         </Pressable>
 
         <View style={[styles.side, styles.sideEnd]}>
-          <HouseWord count={word} inverted={!paper} embedded onPress={onWord} />
+          <HouseWord count={word} inverted embedded onPress={onWord} />
           <View style={styles.clock} testID="house-clock">
-            <HouseClock inverted={!paper} />
+            <HouseClock inverted />
           </View>
           <Pressable
             onPress={onBag}
@@ -147,13 +145,10 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 13,
     overflow: 'hidden',
-  },
-  ruled: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: color.rule,
+    backgroundColor: '#000000',
   },
   row: {
-    minHeight: 96,
+    minHeight: 64,
     paddingHorizontal: 12,
     flexDirection: 'row',
     alignItems: 'center',
@@ -179,6 +174,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 10,
     paddingHorizontal: 4,
+  },
+  wordmark: {
+    width: 148,
+    height: 30,
   },
   clock: {
     width: 22,

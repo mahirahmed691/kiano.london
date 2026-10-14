@@ -5,7 +5,7 @@ import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
 import { houseMenuAccount, houseMenuHome, houseMenuTree } from '@/data/house-menu'
-import { thisWeekPlate } from '@/lib/instagram-plates'
+import { thisWeekShopPlate } from '@/lib/instagram-plates'
 import { useInstalledHouse } from '@/lib/shell'
 import { cn } from '@/lib/cn'
 
@@ -48,7 +48,7 @@ function RoomLink({
 
 export function MobileNav({ open, onClose }: Props) {
   const { count, setOpen } = useCart()
-  const week = thisWeekPlate()
+  const week = thisWeekShopPlate()
   const sections = houseMenuTree()
   const installed = useInstalledHouse()
   useEffect(() => {
@@ -75,7 +75,7 @@ export function MobileNav({ open, onClose }: Props) {
       aria-hidden={!open}
     >
       <nav
-        className="flex min-h-full flex-col justify-center px-8 py-28 pt-[max(7rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))]"
+        className="flex min-h-full flex-col justify-center px-8 py-28 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.75rem))] pb-[max(3rem,env(safe-area-inset-bottom,0px))]"
         aria-label="House"
       >
         <ul className={cn('space-y-8', open && 'stagger-in')}>
