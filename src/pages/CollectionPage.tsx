@@ -36,18 +36,21 @@ export function CollectionPage() {
         title="The Collection."
         minHeight="screen"
         priority
-      >
-        <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl text-ivory/70">
-          الثوب
-        </p>
-      </Hero>
+      />
 
       <Section>
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
-            <p className="font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
-              Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.
+            <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl font-light text-ink-soft">
+              الثوب
             </p>
+            <Display as="h1" className="mt-5 text-4xl md:text-5xl">
+              {thobes.map((piece) => (
+                <span key={piece.id} className="block">
+                  {piece.name}
+                </span>
+              ))}
+            </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               Black, charcoal, grey, beige and bone. {creedMotto}
             </p>
@@ -76,7 +79,6 @@ export function CollectionPage() {
                   key={product.id}
                   product={product}
                   to={productPath(product)}
-                  index={String(index + 1).padStart(2, '0')}
                   delay={index * 80}
                   className={
                     index === 0

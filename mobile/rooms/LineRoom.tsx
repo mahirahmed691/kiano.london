@@ -81,7 +81,7 @@ export function LineRoom({
       <View style={paper()}>
         <Display size={28}>
           {collection
-            ? 'Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.'
+            ? thobes.map((piece) => piece.name).join('\n')
             : jubbahs.map((piece) => productLineName(piece)).join('\n')}
         </Display>
         <View style={styles.gap} />
@@ -115,11 +115,10 @@ export function LineRoom({
         {shown.length === 0 ? (
           <Body>{collection ? 'No thobe in this colour.' : 'No piece in this colour.'}</Body>
         ) : (
-          shown.map((product, index) => (
+          shown.map((product) => (
             <HouseCard
               key={product.id}
               product={product}
-              index={collection ? String(index + 1).padStart(2, '0') : undefined}
               onPress={() => open(productPath(product))}
             />
           ))

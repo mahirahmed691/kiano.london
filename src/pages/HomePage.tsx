@@ -103,12 +103,9 @@ export function HomePage() {
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Collection</p>
-                <ol className="mt-5 space-y-3">
-                  {thobes.map((piece, index) => (
-                    <li key={piece.id} className="flex items-baseline gap-4">
-                      <span className="w-6 shrink-0 text-[11px] uppercase tracking-[0.22em] text-stone">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
+                <ul className="mt-5 space-y-3">
+                  {thobes.map((piece) => (
+                    <li key={piece.id}>
                       <Link
                         to={productPath(piece)}
                         className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
@@ -117,7 +114,7 @@ export function HomePage() {
                       </Link>
                     </li>
                   ))}
-                </ol>
+                </ul>
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Scent</p>

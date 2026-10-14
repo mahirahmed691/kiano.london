@@ -117,15 +117,14 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         </View>
         <View style={styles.lineBlock}>
           <Text style={styles.lineKicker}>The Collection</Text>
-          {thobes.map((piece, index) => (
+          {thobes.map((piece) => (
             <Pressable
               key={piece.id}
               onPress={() => open(productPath(piece))}
               accessibilityRole="link"
               accessibilityLabel={piece.name}
-              style={({ pressed }) => [styles.thobeRow, pressed && styles.pressed]}
+              style={({ pressed }) => pressed && styles.pressed}
             >
-              <Text style={styles.index}>{String(index + 1).padStart(2, '0')}</Text>
               <Text style={styles.lineName}>{piece.name}</Text>
             </Pressable>
           ))}
@@ -274,11 +273,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '300',
     lineHeight: 20,
-  },
-  thobeRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    gap: 14,
   },
   splitStill: {
     width: '100%',
