@@ -5,7 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
-import { productPath } from '@/data/products'
+import { productLineName, productPath } from '@/data/products'
 import { shippingCountries } from '@/data/shipping'
 import { useCart } from '@/lib/cart'
 import {
@@ -396,7 +396,7 @@ export function CheckoutPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="font-display text-xl font-light leading-tight">
-                            {item.product.name}
+                            {productLineName(item.product)}
                           </p>
                           <p className="mt-1 text-[12px] font-light text-stone">
                             Size {item.size} · {item.product.colour}

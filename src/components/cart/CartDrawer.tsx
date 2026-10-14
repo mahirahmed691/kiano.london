@@ -1,7 +1,7 @@
 import { Monogram } from '@/components/brand/Monogram'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
-import { productPath } from '@/data/products'
+import { productLineName, productPath } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
@@ -88,7 +88,7 @@ export function CartDrawer() {
                           className="font-display text-xl font-light leading-tight"
                           onClick={() => setOpen(false)}
                         >
-                          {item.product.name}
+                          {productLineName(item.product)}
                         </Link>
                         <p className="mt-1 text-[12px] font-light text-stone">
                           Size {item.size} · {item.product.colour}

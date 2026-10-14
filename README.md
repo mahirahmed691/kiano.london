@@ -1,6 +1,6 @@
 # Kiano London
 
-A bespoke React website for **Kiano London**, a London house of the jubbah and the thobe.
+A bespoke React website for **Kiano London**, a London house of the garment and the thobe.
 
 This is not a theme, a WordPress site, or a generic landing page. It is a small, production-ready application: Vite, React, TypeScript and Tailwind CSS, structured so the house can be extended without rewriting pages.
 
@@ -9,7 +9,7 @@ This is not a theme, a WordPress site, or a generic landing page. It is a small,
 | URL | Page |
 | --- | --- |
 | `/` | Home |
-| `/shop` | The Shop (jubbah) |
+| `/shop` | The Shop (Urban Emirati) |
 | `/collection` | The Collection |
 | `/scent` | The Scent (coming) |
 | `/scent/:id` | A named scent, not yet of the bag |

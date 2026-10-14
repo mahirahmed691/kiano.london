@@ -1,6 +1,6 @@
 # Kiano London — design system
 
-Extracted and implemented as a restrained London house of the jubbah and the thobe, with a scent line coming: night canvas `#25282B`, ivory reading rooms, espresso type on paper, bronze lockup on night plates, the interlocking KK monogram over a three-line English lockup (KIANO / LONDON / EST. MMXXIV), serif display, generous measure, no decorative chrome.
+Extracted and implemented as a restrained London house of the garment and the thobe, with a scent line coming: night canvas `#25282B`, ivory reading rooms, espresso type on paper, bronze lockup on night plates, the interlocking KK monogram over a three-line English lockup (KIANO / LONDON / EST. MMXXIV), serif display, generous measure, no decorative chrome.
 
 ## Character
 

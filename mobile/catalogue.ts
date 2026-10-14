@@ -135,5 +135,5 @@ export function pad(value: number) {
 }
 
 export function lineName(product: Product) {
-  return product.cut === 'Jubbah' ? `${product.name} · ${product.colour}` : product.name
+  return product.cut === 'Jubbah' ? `${product.name} in ${product.colour}` : product.name
 }

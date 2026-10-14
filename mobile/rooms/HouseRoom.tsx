@@ -14,6 +14,7 @@ import {
   houseCreed,
   jubbahs,
   plateCopy,
+  productLineName,
   productPath,
   recentPlates,
   scentComing,
@@ -107,10 +108,10 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
               key={piece.id}
               onPress={() => open(productPath(piece))}
               accessibilityRole="link"
-              accessibilityLabel={`${piece.name} ${piece.colour}`}
+              accessibilityLabel={productLineName(piece)}
               style={({ pressed }) => pressed && styles.pressed}
             >
-              <Text style={styles.lineName}>{`${piece.name} · ${piece.colour}`}</Text>
+              <Text style={styles.lineName}>{productLineName(piece)}</Text>
             </Pressable>
           ))}
         </View>
@@ -185,7 +186,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         <Display size={36}>By appointment</Display>
         <View style={styles.gap} />
         <Body>
-          Fittings are by appointment. We do not keep a shop window. The work is the invitation: Layl, Hadīd, the jubbah. A visit is the next still.
+          Fittings are by appointment. We do not keep a shop window. The work is the invitation: Layl, Hadīd, Urban Emirati. A visit is the next still.
         </Body>
         <View style={styles.actions}>
           <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />

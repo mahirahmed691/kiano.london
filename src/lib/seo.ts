@@ -19,7 +19,7 @@ function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
 export function applyPageMeta({ title, description, path, image, imageAlt, robots }: PageMeta) {
   const url = `${SITE_URL}${path}`
   const ogImage = image?.startsWith('http') ? image : `${SITE_URL}${image ?? '/images/og.jpg'}`
-  const alt = imageAlt ?? 'Kiano London. Emirati thobes and jubbahs.'
+  const alt = imageAlt ?? 'Kiano London. Emirati thobes and garments.'
 
   document.title = title
   upsertMeta('name', 'description', description)

@@ -12,6 +12,7 @@ import {
   jubbahColours,
   jubbahs,
   productColours,
+  productLineName,
   productPath,
   thobes,
   type ProductColour,
@@ -66,7 +67,7 @@ export function LineRoom({
       ) : (
         <HouseStill
           src="/images/jubbah-sand-02.jpg"
-          alt="The sand jubbah at rest, the cloth to the ankle."
+          alt="Urban Emirati in cream at rest, the cloth to the ankle."
           objectPosition="center 22%"
           kicker="The outer garment"
           title="The Shop."
@@ -81,13 +82,13 @@ export function LineRoom({
         <Display size={28}>
           {collection
             ? 'Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.'
-            : 'The jubbah, in three colours for now: black, sand, charcoal.'}
+            : jubbahs.map((piece) => productLineName(piece)).join('\n')}
         </Display>
         <View style={styles.gap} />
         <Body>
           {collection
             ? `Black, charcoal, grey, beige and bone. ${creedMotto}`
-            : `Five sizes, 52 to 60. ${creedIntent}`}
+            : `Cotton viscose mix, light GSM. Five sizes, 52 to 60. ${creedIntent}`}
         </Body>
         <View style={styles.meta}>
           <Text style={styles.count}>{countLabel}</Text>
@@ -112,7 +113,7 @@ export function LineRoom({
           ))}
         </View>
         {shown.length === 0 ? (
-          <Body>{collection ? 'No thobe in this colour.' : 'No jubbah in this colour.'}</Body>
+          <Body>{collection ? 'No thobe in this colour.' : 'No piece in this colour.'}</Body>
         ) : (
           shown.map((product, index) => (
             <HouseCard
@@ -126,8 +127,8 @@ export function LineRoom({
         <View style={styles.foot}>
           <Body>
             {collection
-              ? 'The jubbah is the outer column; the thobe is the one beneath.'
-              : 'The house also keeps the thobe. The jubbah is the outer column; the thobe is the one beneath.'}
+              ? 'The garment is the outer column; the thobe is the one beneath.'
+              : 'The house also keeps the thobe. This garment is the outer column; the thobe is the one beneath.'}
           </Body>
           <View style={styles.gap} />
           {collection ? (
