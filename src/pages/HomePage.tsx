@@ -170,7 +170,7 @@ export function HomePage() {
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
               Fittings are by appointment. We do not keep a shop window. The work is
-              the invitation: Layl, Hadīd, the jubbah. A visit is the next still.
+              the invitation: Layl, Hadīd, Urban Emirati. A visit is the next still.
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>

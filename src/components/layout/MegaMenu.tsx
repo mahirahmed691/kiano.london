@@ -96,7 +96,7 @@ function ShopPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="grid gap-12 lg:grid-cols-12" onClick={onNavigate}>
       <div className="lg:col-span-9">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The jubbah</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Urban Emirati</p>
         <ul className="mt-6 grid grid-cols-3 gap-4 md:gap-6">
           {jubbahs.map((piece) => (
             <PieceStill

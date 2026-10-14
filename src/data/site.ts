@@ -11,6 +11,6 @@ export const site = {
   telephone: '+44 20 7499 2026',
   telephoneHref: 'tel:+442074992026',
   hours: 'Visits by appointment',
-  tagline: 'Emirati thobes and jubbahs. Worn with purpose.',
+  tagline: 'Emirati thobes and garments. Worn with purpose.',
   note: 'Kiano London',
 } as const

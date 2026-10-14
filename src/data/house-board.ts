@@ -18,7 +18,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'The line',
     completion: 90,
     status: 'complete',
-    note: 'Five thobes, jubbah in three colours, sizes 52–60, colour swatches, size guide. Each colour keeps its own second still. The size last chosen is kept on the device, and on the account if signed in, so the line starts there. Measure against a thobe you already own; a visit is not required. Carriage is named on the piece. When a size is held at none, a letter can ask that the house write if it returns.',
+    note: 'Five thobes, Urban Emirati in stone grey, cream and black, sizes 52–60, colour swatches, size guide. Cotton viscose mix, light GSM, £79. Each colour keeps its own second still. The size last chosen is kept on the device, and on the account if signed in, so the line starts there. Measure against a thobe you already own; a visit is not required. Carriage is named on the piece. When a size is held at none, a letter can ask that the house write if it returns.',
   },
   {
     name: 'Bag and checkout',
@@ -185,7 +185,7 @@ export const houseCompetitors = [
     name: 'Dar Al Ahad',
     where: 'GCC e-commerce',
     stance: 'Many regional cuts (Emirati, Saudi, Qatari) as a catalogue.',
-    vs: 'Kiano keeps five thobes and a jubbah. Fewer SKUs, more still.',
+    vs: 'Kiano keeps five thobes and Urban Emirati. Fewer SKUs, more still.',
   },
   {
     name: 'Al Nashama',
@@ -229,7 +229,7 @@ export const houseVisualAudit = [
   {
     surface: 'Shop',
     finding:
-      'Type beside the sand jubbah, ivory header, then three colours. On a phone the lookbook stacks, one still at a time. Quick-add is on the card.',
+      'Type beside Urban Emirati in cream, ivory header, then three colours. On a phone the lookbook stacks, one still at a time. Quick-add is on the card.',
     rank: 'Hold',
   },
   {

@@ -60,7 +60,7 @@ function kianoReference(): CompetitorHouse {
   const high = Math.max(...prices)
   const thobeLow = Math.min(...thobes.map((piece) => piece.pricePence))
   const thobeHigh = Math.max(...thobes.map((piece) => piece.pricePence))
-  const jubbahPrice = jubbahs[0]?.pricePence ?? 8500
+  const jubbahPrice = jubbahs[0]?.pricePence ?? 7900
 
   return {
     id: 'kiano',
@@ -69,16 +69,16 @@ function kianoReference(): CompetitorHouse {
     origin: 'London house',
     channels: ['web'],
     garment: 'emirati-thobe',
-    garmentLabel: 'Emirati thobe and jubbah',
+    garmentLabel: 'Emirati thobe and garment',
     priceLowPence: low,
     priceHighPence: high,
     priceStatus: 'published',
-    priceNote: `The line: thobes ${formatGbp(thobeLow)}–${formatGbp(thobeHigh)}, jubbah ${formatGbp(jubbahPrice)}. Native GBP on the piece pages.`,
+    priceNote: `The line: thobes ${formatGbp(thobeLow)}–${formatGbp(thobeHigh)}, Urban Emirati ${formatGbp(jubbahPrice)}. Native GBP on the piece pages.`,
     lead: 'Made to order, four to eight weeks.',
     scentLabel: packingNote,
     fit: 'house-block',
     fitLabel: 'House block, made to order. An appointment if the block will not do.',
-    cuts: `${thobes.length} thobes, jubbah in ${jubbahs.length} colours, ${colours.size} colours on the line, sizes 52–60.`,
+    cuts: `${thobes.length} thobes, Urban Emirati in ${jubbahs.length} colours, ${colours.size} colours on the line, sizes 52–60.`,
     stance: 'A short Emirati column. London is the name of the house.',
     vs: 'The reference. Everything else is read against this line.',
     isKiano: true,
@@ -129,7 +129,7 @@ export const fieldHouses: CompetitorHouse[] = [
     fitLabel: 'Ready-to-wear catalogue, sized S–XXL.',
     cuts: 'Eight shop results. Several colours per cut, including kids.',
     stance: 'Many regional cuts as a catalogue.',
-    vs: 'Kiano keeps five thobes and a jubbah. Fewer SKUs, more still.',
+    vs: 'Kiano keeps five thobes and Urban Emirati. Fewer SKUs, more still.',
     sourced: 'daralahad.ae shop, August 2026',
   },
   {

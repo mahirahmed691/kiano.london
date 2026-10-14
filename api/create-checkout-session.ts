@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import { getProduct, thobeSizes } from '../src/data/products.js'
+import { getProduct, productLineName, thobeSizes } from '../src/data/products.js'
 import {
   parseCheckoutDetails,
   shippingCountryCodes,
@@ -99,7 +99,7 @@ async function createSession(request: Request) {
       return Response.json({ error: 'A line in the bag is not valid.' }, { status: 400 })
     }
 
-    const name = `${product.name}${product.cut === 'Jubbah' ? ` · ${product.colour}` : ''} · ${size}`
+    const name = `${productLineName(product)} · ${size}`
     summary.push(`${name} × ${quantity}`)
     stockLines.push({ productId: product.id, size, quantity })
 

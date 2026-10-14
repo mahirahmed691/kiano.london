@@ -10,7 +10,7 @@ import { Display } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { creedIntent } from '@/data/creed'
-import { jubbahColours, jubbahs, productPath } from '@/data/products'
+import { jubbahColours, jubbahs, productLineName, productPath } from '@/data/products'
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -30,7 +30,7 @@ export function ShopPage() {
     <>
       <Hero
         image="/images/jubbah-sand-02.jpg"
-        imageAlt="The sand jubbah at rest, the cloth to the ankle."
+        imageAlt="Urban Emirati in cream at rest, the cloth to the ankle."
         objectPosition="center 22%"
         kicker="The outer garment"
         title="The Shop."
@@ -46,10 +46,14 @@ export function ShopPage() {
               الجُبَّة
             </p>
             <Display as="h1" className="mt-5 text-4xl md:text-5xl">
-              The jubbah, in three colours for now: black, sand, charcoal.
+              {jubbahs.map((piece) => (
+                <span key={piece.id} className="block">
+                  {productLineName(piece)}
+                </span>
+              ))}
             </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
-              Five sizes, 52 to 60. {creedIntent}
+              Cotton viscose mix, light GSM. Five sizes, 52 to 60. {creedIntent}
             </p>
           </Reveal>
           <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
@@ -68,7 +72,7 @@ export function ShopPage() {
           />
 
           {shown.length === 0 ? (
-            <p className="text-[15px] font-light text-ink-soft">No jubbah in this colour.</p>
+            <p className="text-[15px] font-light text-ink-soft">No piece in this colour.</p>
           ) : (
             <div className="grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
               {shown.map((product, index) => (
@@ -91,22 +95,22 @@ export function ShopPage() {
           plates={[
             {
               src: '/images/jubbah-black-02.jpg',
-              alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
+              alt: 'Urban Emirati in black from behind: a clean column, hem to the ankle.',
               kicker: 'Black',
-              name: 'The jubbah',
+              name: 'Urban Emirati',
             },
             {
               src: '/images/jubbah-charcoal-cloth.jpg',
-              alt: 'Charcoal wool-cotton for the jubbah, still in the piece.',
+              alt: 'Cotton viscose mix for the garment, still in the piece.',
               objectPosition: 'center 40%',
               kicker: 'The cloth',
-              name: 'Charcoal',
+              name: 'Light GSM',
             },
             {
               src: '/images/jubbah-charcoal-02.jpg',
-              alt: 'The charcoal jubbah walking: wool-cotton, ankle hem, concealed placket.',
-              kicker: 'Charcoal',
-              name: 'The jubbah',
+              alt: 'Urban Emirati in stone grey walking: ankle hem, concealed placket.',
+              kicker: 'Stone Grey',
+              name: 'Urban Emirati',
             },
           ]}
         />
@@ -114,7 +118,7 @@ export function ShopPage() {
           <Rule className="mt-20 md:mt-28" />
           <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">
-              The house also keeps the thobe. The jubbah is the outer column; the thobe
+              The house also keeps the thobe. This garment is the outer column; the thobe
               is the one beneath. Each piece leaves unscented, in a garment bag and a
               rigid box. The scent is coming, as its own line.
             </p>

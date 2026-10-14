@@ -144,7 +144,7 @@ export function ProductPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Product',
-            name: product.name,
+            name: productLineName(product),
             image: `${SITE_URL}${product.image}`,
             description: product.description,
             brand: { '@type': 'Brand', name: site.fullName },
@@ -341,13 +341,13 @@ export function ProductPage() {
               <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
                 The lockup is woven, not printed — KIANO, London, Est. MMXXIV — and set
                 at the nape by hand after the last press. Size is a separate tab. Care
-                sits at the side seam. The same mark is on every thobe and every jubbah.
+                sits at the side seam. The same mark is on every thobe and every garment.
               </p>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">
               <Eyebrow>The making</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">
-                How this {product.cut.toLowerCase()} is held.
+                How this {product.cut === 'Jubbah' ? 'garment' : 'thobe'} is held.
               </Display>
               <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
                 {product.composition}
@@ -446,7 +446,7 @@ function PieceHeading({ product }: { product: Product }) {
         {product.colour}
       </p>
       <Display as="h1" className="mt-6 text-4xl md:text-5xl">
-        {product.name}
+        {productLineName(product)}
       </Display>
       <p lang="ar" dir="rtl" className="mt-3 w-fit font-arabic text-2xl text-ink/55">
         {product.arabicName}
