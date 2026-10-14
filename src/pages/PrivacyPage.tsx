@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
-import { houseNotRulings, houseNotRulingsLine } from '@/data/creed'
 import { site } from '@/data/site'
 import { social } from '@/data/social'
 import { getShareMeta } from '@/lib/share'
@@ -19,16 +18,10 @@ export function PrivacyPage() {
         </Display>
         <Body className="mt-6">
           We hold what is needed to cut a garment, keep an account, or write when you asked us to.
-          We do not sell a list. {houseNotRulings}
+          We do not sell a list.
         </Body>
 
         <ul className="mt-14 space-y-10">
-          <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Not a ruling</p>
-            <Body className="mt-3">
-              {houseNotRulings} {houseNotRulingsLine}
-            </Body>
-          </li>
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">A visit or a note</p>
             <Body className="mt-3">
@@ -68,8 +61,7 @@ export function PrivacyPage() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The list</p>
             <Body className="mt-3">
               If you join the list, we store the email and wait for you to confirm it. Letters are
-              about cloth and when a piece can be reserved. They are not rulings. Leave by writing to{' '}
-              {site.email}.
+              about cloth and when a piece can be reserved. Leave by writing to {site.email}.
             </Body>
           </li>
           <li>
@@ -77,7 +69,7 @@ export function PrivacyPage() {
             <Body className="mt-3">
               If you keep an account, notices of a reserved cut sit against it. The ledger receives
               word of visits, the list, and remaining cuts. On the installable app, that word can
-              also arrive as a device notice, if you allow it. {houseNotRulingsLine}
+              also arrive as a device notice, if you allow it.
             </Body>
           </li>
           {social.length ? (

@@ -5,7 +5,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedIntent, creedMotto, creedSpoken, creedStandard, creedWoven, houseNotRulings, houseNotRulingsLine } from '@/data/creed'
+import { creedIntent, creedMotto, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { site } from '@/data/site'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -46,9 +46,6 @@ export function StoryPage() {
               The name is Kiano London. It is not a translation, and not a legend taken
               from elsewhere. We remain a single address and the same silhouette: ankle,
               shoulder, placket concealed.
-            </Body>
-            <Body className="mt-4">
-              {houseNotRulings} {houseNotRulingsLine}
             </Body>
           </EditorialSplit>
         </Container>
