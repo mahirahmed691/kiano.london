@@ -6,7 +6,7 @@ import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
-import { creedIntent, plateCopy, site, sizeChart, thisWeekPlate } from '../catalogue'
+import { creedIntent, plateCopy, site, sizeChart, thisWeekShopPlate } from '../catalogue'
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
 
@@ -29,7 +29,7 @@ const visitSteps = [
 ]
 
 export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }: HouseNav) {
-  const week = thisWeekPlate()
+  const week = thisWeekShopPlate()
   const weekCopy = plateCopy(week.caption)
 
   return (

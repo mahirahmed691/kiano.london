@@ -16,18 +16,18 @@ import {
   plateCopy,
   productLineName,
   productPath,
-  recentPlates,
+  recentShopPlates,
   scentComing,
   scentPath,
   scents,
-  thisWeekPlate,
+  thisWeekShopPlate,
 } from '../catalogue'
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
 
 export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav) {
-  const week = thisWeekPlate()
-  const previous = recentPlates(4)
+  const week = thisWeekShopPlate()
+  const previous = recentShopPlates(4)
   const weekCopy = plateCopy(week.caption)
   const kicker = week.place === week.name ? 'This week' : `This week · ${week.place}`
 

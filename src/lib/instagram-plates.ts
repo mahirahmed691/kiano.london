@@ -75,6 +75,36 @@ export function thisWeekPlate(now = Date.now()) {
   return instagramPlates[plateWeekIndex(now)]!
 }
 
+/** The shop stills: Urban Emirati only. Home and this-week chrome cycle these. */
+export function shopPlates() {
+  return instagramPlates.filter((plate) => plate.id.startsWith('jubbah-'))
+}
+
+export function shopPlateWeekIndex(now = Date.now()) {
+  const plates = shopPlates()
+  const elapsed = now - Date.parse(plateWeekOrigin)
+  const weeks = Math.max(0, Math.floor(elapsed / (plateIntervalDays * 24 * 60 * 60 * 1000)))
+  return weeks % plates.length
+}
+
+export function thisWeekShopPlate(now = Date.now()) {
+  const plates = shopPlates()
+  return plates[shopPlateWeekIndex(now)]!
+}
+
+export function recentShopPlates(count = 4, now = Date.now()) {
+  const plates = shopPlates()
+  const week = shopPlateWeekIndex(now)
+  const total = plates.length
+  const take = Math.min(count, Math.max(0, total - 1))
+  const out: InstagramPlate[] = []
+  for (let step = 1; step <= take; step += 1) {
+    const index = (week - step + total) % total
+    out.push(plates[index]!)
+  }
+  return out
+}
+
 export function plateNumber(plate: InstagramPlate) {
   const index = instagramPlates.findIndex((item) => item.id === plate.id)
   return String(Math.max(0, index) + 1).padStart(2, '0')

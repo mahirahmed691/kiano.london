@@ -267,7 +267,7 @@ export function MegaMenu({ inverted, installed = false }: Props) {
       onMouseEnter={() => window.clearTimeout(closeTimer.current)}
     >
       <nav aria-label="Primary">
-        <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 lg:gap-x-9">
+        <ul className="flex flex-nowrap items-center gap-x-5 lg:gap-x-7">
           {megaItems.map((item) => {
             const expanded = open === item.id
             return (

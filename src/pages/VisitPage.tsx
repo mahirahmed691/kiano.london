@@ -10,7 +10,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { AppointmentForm } from '@/components/visit/AppointmentForm'
 import { creedIntent } from '@/data/creed'
 import { site } from '@/data/site'
-import { plateCopy, thisWeekPlate } from '@/lib/instagram-plates'
+import { plateCopy, thisWeekShopPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -33,7 +33,7 @@ const visitSteps = [
 ]
 
 export function VisitPage() {
-  const week = thisWeekPlate()
+  const week = thisWeekShopPlate()
   const weekCopy = plateCopy(week.caption)
 
   usePageMeta(getShareMeta('/visit'))

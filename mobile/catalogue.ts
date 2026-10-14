@@ -41,6 +41,7 @@ export { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWo
 export { processSteps, materials, stitchStudies } from '../src/data/craftsmanship'
 export { site } from '../src/data/site'
 export { instagramPlates, type InstagramPlate } from '../src/data/instagram-plates'
+export { recentShopPlates, thisWeekShopPlate } from '../src/lib/instagram-plates'
 export { carriageLine, carriageLineAr } from '../src/data/shipping'
 export {
   careLine,

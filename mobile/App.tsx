@@ -61,7 +61,7 @@ function HouseApp() {
   const [path, setPath] = useState('/')
   const [plateId, setPlateId] = useState('')
   const [webKind, setWebKind] = useState<'hidden' | 'bag' | 'word' | 'account' | 'sheet'>('hidden')
-  const [heroOverlay, setHeroOverlay] = useState(true)
+  const [, setHeroOverlay] = useState(true)
   const [failed, setFailed] = useState(false)
   const [pushToken, setPushToken] = useState('')
   const [bag, setBag] = useState(0)
@@ -256,14 +256,7 @@ function HouseApp() {
   const routeTab = tabFromPath(isNativeBrowse(path) ? path : nativePath.current)
   const tab: HouseTab = bagOpen || webKind === 'bag' ? 'bag' : webKind === 'account' || isAccountPath(path) ? 'account' : routeTab
   const hideChrome = quietChrome(path) || wordOpen || webKind === 'word'
-  const lightStatus =
-    !menuOpen &&
-    !webVisible &&
-    overlayRoom(path) &&
-    heroOverlay &&
-    !bagOpen &&
-    !wordOpen &&
-    !hideChrome
+  const lightStatus = !hideChrome
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
