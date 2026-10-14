@@ -10,7 +10,7 @@ import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { creedIntent, creedJoin, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
 import { type InstagramPlate } from '@/data/instagram-plates'
-import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
+import { jubbahs, productLineName, productPath } from '@/data/products'
 import { scentPath, scents } from '@/data/scent'
 import { site } from '@/data/site'
 import { plateCopy, recentPlates, stillsHash, thisWeekPlate } from '@/lib/instagram-plates'
@@ -103,21 +103,14 @@ export function HomePage() {
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Collection</p>
-                <ol className="mt-5 space-y-3">
-                  {thobes.map((piece, index) => (
-                    <li key={piece.id} className="flex items-baseline gap-4">
-                      <span className="w-6 shrink-0 text-[11px] uppercase tracking-[0.22em] text-stone">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <Link
-                        to={productPath(piece)}
-                        className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
-                      >
-                        {piece.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
+                <p className="mt-5">
+                  <Link
+                    to="/collection"
+                    className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
+                  >
+                    The thobes
+                  </Link>
+                </p>
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Scent</p>
@@ -170,7 +163,7 @@ export function HomePage() {
             <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
             <Body className="mt-6">
               Fittings are by appointment. We do not keep a shop window. The work is
-              the invitation: Layl, Hadīd, Urban Emirati. A visit is the next still.
+              the invitation: Urban Emirati. A visit is the next still.
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>

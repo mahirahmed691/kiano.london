@@ -46,7 +46,7 @@ export function CollectionPage() {
               الثوب
             </p>
             <Display as="h1" className="mt-5 text-4xl md:text-5xl">
-              Five columns: Layl, Hadīd, Ghabār, Raml and Hajar.
+              The Collection.
             </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               Black, charcoal, grey, beige and bone. {creedMotto}
@@ -76,7 +76,6 @@ export function CollectionPage() {
                   key={product.id}
                   product={product}
                   to={productPath(product)}
-                  index={String(index + 1).padStart(2, '0')}
                   delay={index * 80}
                   className={
                     index === 0
