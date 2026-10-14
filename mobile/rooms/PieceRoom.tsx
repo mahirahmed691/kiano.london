@@ -82,7 +82,7 @@ export function PieceRoom({
       <View style={paper()}>
         <Eyebrow>{product.cloth}</Eyebrow>
         <View style={styles.space} />
-        <Display size={36}>{product.name}</Display>
+        <Display size={36}>{productLineName(product)}</Display>
         <Arabic>{product.arabicName}</Arabic>
         <View style={styles.gap} />
         <Body>{product.description}</Body>

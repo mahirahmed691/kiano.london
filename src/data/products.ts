@@ -4,7 +4,7 @@ export type ThobeSize = (typeof thobeSizes)[number]
 
 export type ProductCut = 'Thobe' | 'Jubbah'
 
-export type ProductColour = 'Black' | 'Charcoal' | 'Grey' | 'Beige' | 'Bone' | 'Sand'
+export type ProductColour = 'Black' | 'Charcoal' | 'Grey' | 'Beige' | 'Bone' | 'Cream' | 'Stone Grey'
 
 export type ProductImage = {
   src: string
@@ -225,146 +225,148 @@ export const products: Product[] = [
   },
   {
     id: 'jubbah-black',
-    name: 'The Jubbah',
+    name: 'Urban Emirati',
     arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Black',
     swatch: '#1B1714',
     variantGroup: 'jubbah',
-    cloth: 'Matte Japanese cotton, band collar',
-    mill: 'Compact cotton, 80s two-ply',
-    price: '£85',
-    pricePence: 8500,
+    cloth: 'Cotton viscose mix, light GSM',
+    mill: 'Cotton viscose mix',
+    price: '£79',
+    pricePence: 7900,
     image: '/images/jubbah-black.jpg',
-    imageAlt: 'A black Emirati jubbah worn at full length.',
+    imageAlt: 'Urban Emirati in black, worn at full length.',
     objectPosition: 'center 12%',
     featured: true,
     description:
-      'The jubbah in black: compact Japanese cotton, a modest column with more air through the chest than the thobe. Band collar, concealed placket, hem to the ankle. Cut from the house block in five sizes.',
+      'Urban Emirati in black: cotton viscose mix, light GSM. A modest column with more air through the chest than the thobe. Band collar, concealed placket, hem to the ankle. Cut from the house block in five sizes.',
     details: [
       'The outer garment. Worn alone, or over a thobe.',
+      'Cotton viscose mix, light GSM.',
       'Band collar, pad-stitched by hand. Concealed placket.',
       'Felled side seams. Interior pocket bagged in the lining.',
       napeFinish,
     ],
-    composition: '100% compact Japanese cotton, 80s two-ply. Silk-twist buttonholes. Buffalo horn.',
+    composition: 'Cotton viscose mix. Light GSM. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
         src: '/images/jubbah-black.jpg',
-        alt: 'A black Emirati jubbah worn at full length.',
+        alt: 'Urban Emirati in black, worn at full length.',
         objectPosition: 'center 12%',
       },
       {
         src: '/images/jubbah-black-02.jpg',
-        alt: 'The black jubbah from behind: a clean column, hem to the ankle.',
+        alt: 'Urban Emirati in black from behind: a clean column, hem to the ankle.',
       },
       {
         src: '/images/concealed-pocket.jpg',
-        alt: 'The interior of the jubbah, the woven label set by hand.',
+        alt: 'The interior of the garment, the woven label set by hand.',
         objectPosition: 'center 62%',
       },
     ],
   },
   {
     id: 'jubbah-sand',
-    name: 'The Jubbah',
+    name: 'Urban Emirati',
     arabicName: 'الجُبَّة',
     cut: 'Jubbah',
-    colour: 'Sand',
-    swatch: '#C4B49A',
+    colour: 'Cream',
+    swatch: '#E8DCC8',
     variantGroup: 'jubbah',
-    cloth: 'Egyptian extra-long staple cotton',
-    mill: 'Giza 86, washed for drape',
-    price: '£85',
-    pricePence: 8500,
+    cloth: 'Cotton viscose mix, light GSM',
+    mill: 'Cotton viscose mix',
+    price: '£79',
+    pricePence: 7900,
     image: '/images/jubbah-sand.jpg',
-    imageAlt: 'A sand Emirati jubbah worn at full length in a sunlit plaster room.',
+    imageAlt: 'Urban Emirati in cream, worn at full length in a sunlit plaster room.',
     objectPosition: 'center 8%',
     featured: true,
     description:
-      'The jubbah in sand: Giza 86 extra-long staple, washed so the fibre drapes. The daylight colour. Same block as black and charcoal, five sizes, 52 to 60.',
+      'Urban Emirati in cream: cotton viscose mix, light GSM. The daylight colour. Same house block as black and stone grey, five sizes, 52 to 60.',
     details: [
       'The outer garment. Worn alone, or over a thobe.',
-      'Giza 86 extra-long staple cotton, washed for drape.',
+      'Cotton viscose mix, light GSM.',
       'Band collar. Concealed placket. Felled seams.',
-      'A quiet sheen from the long fibre, never a gloss.',
       napeFinish,
     ],
-    composition: '100% extra-long staple cotton, Giza 86. Silk-twist buttonholes. Buffalo horn.',
+    composition: 'Cotton viscose mix. Light GSM. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
         src: '/images/jubbah-sand.jpg',
-        alt: 'A sand Emirati jubbah worn at full length in a sunlit plaster room.',
+        alt: 'Urban Emirati in cream, worn at full length in a sunlit plaster room.',
         objectPosition: 'center 8%',
       },
       {
         src: '/images/jubbah-sand-02.jpg',
-        alt: 'The sand jubbah at rest: the cloth draped to the ankle.',
+        alt: 'Urban Emirati in cream at rest: the cloth draped to the ankle.',
       },
       {
         src: '/images/cloth-giza.jpg',
-        alt: 'Sand extra-long staple cotton in the piece.',
+        alt: 'Cotton viscose mix in the piece, light GSM.',
       },
     ],
   },
   {
     id: 'jubbah-charcoal',
-    name: 'The Jubbah',
+    name: 'Urban Emirati',
     arabicName: 'الجُبَّة',
     cut: 'Jubbah',
-    colour: 'Charcoal',
-    swatch: '#5C5854',
+    colour: 'Stone Grey',
+    swatch: '#8A8682',
     variantGroup: 'jubbah',
-    cloth: 'Super 150s wool-cotton, concealed placket',
-    mill: 'Huddersfield Super 150s',
-    price: '£85',
-    pricePence: 8500,
+    cloth: 'Cotton viscose mix, light GSM',
+    mill: 'Cotton viscose mix',
+    price: '£79',
+    pricePence: 7900,
     image: '/images/jubbah-charcoal.jpg',
-    imageAlt: 'A charcoal Emirati jubbah worn at full length.',
+    imageAlt: 'Urban Emirati in stone grey, worn at full length.',
     objectPosition: 'center 10%',
     featured: true,
     description:
-      'The jubbah in charcoal: Huddersfield Super 150s wool-cotton, a winter handle. The silhouette stays architectural. Same house block as black and sand, sizes 52 to 60.',
+      'Urban Emirati in stone grey: cotton viscose mix, light GSM. Same house block as black and cream, sizes 52 to 60.',
     details: [
       'The outer garment. Worn alone, or over a thobe.',
-      'Super 150s wool-cotton from Huddersfield; compact, resilient.',
+      'Cotton viscose mix, light GSM.',
       'Concealed placket. Side seams felled, never overlocked.',
       'Hem set to the ankle of the house block.',
       napeFinish,
     ],
-    composition: 'Wool-cotton Super 150s, Huddersfield. Silk-twist buttonholes. Buffalo horn.',
+    composition: 'Cotton viscose mix. Light GSM. Silk-twist buttonholes. Buffalo horn.',
     leadTime: 'Made to order, four to eight weeks.',
     gallery: [
       {
         src: '/images/jubbah-charcoal.jpg',
-        alt: 'A charcoal Emirati jubbah worn at full length.',
+        alt: 'Urban Emirati in stone grey, worn at full length.',
         objectPosition: 'center 10%',
       },
       {
         src: '/images/jubbah-charcoal-02.jpg',
-        alt: 'The charcoal jubbah walking: wool-cotton, ankle hem, concealed placket.',
+        alt: 'Urban Emirati in stone grey walking: ankle hem, concealed placket.',
       },
       {
         src: '/images/jubbah-charcoal-cloth.jpg',
-        alt: 'Charcoal Super 150s in the piece, before it is cut.',
+        alt: 'Cotton viscose mix in the piece, before it is cut.',
       },
     ],
   },
 ]
 
+export const productColours: ProductColour[] = ['Black', 'Charcoal', 'Grey', 'Beige', 'Bone']
+
+export const jubbahColours: ProductColour[] = ['Stone Grey', 'Cream', 'Black']
+
 export const thobes = products.filter((item) => item.cut === 'Thobe')
 
-export const jubbahs = products.filter((item) => item.cut === 'Jubbah')
+export const jubbahs = jubbahColours.flatMap((colour) =>
+  products.filter((item) => item.cut === 'Jubbah' && item.colour === colour),
+)
 
 export const featuredProducts = thobes.filter((item) => item.featured)
 
 export const featuredJubbahs = jubbahs
-
-export const productColours: ProductColour[] = ['Black', 'Charcoal', 'Grey', 'Beige', 'Bone']
-
-export const jubbahColours: ProductColour[] = ['Black', 'Sand', 'Charcoal']
 
 export function getProduct(id: string | undefined) {
   if (!id) return undefined
@@ -372,7 +374,7 @@ export function getProduct(id: string | undefined) {
 }
 
 export function productLineName(product: Product) {
-  return product.cut === 'Jubbah' ? `${product.name} · ${product.colour}` : product.name
+  return product.cut === 'Jubbah' ? `${product.name} in ${product.colour}` : product.name
 }
 
 export function reservedCutName(

@@ -1,6 +1,6 @@
 import { thisWeekPlate } from './instagram-plates.js'
 import { creedIntent, creedMotto, creedSpoken, creedWoven } from '../data/creed.js'
-import { getProduct, productPath } from '../data/products.js'
+import { getProduct, productLineName, productPath } from '../data/products.js'
 import { getScent, scentPath } from '../data/scent.js'
 import { site } from '../data/site.js'
 
@@ -14,23 +14,23 @@ export type PageMeta = {
 }
 
 const defaultImage = '/images/og.jpg'
-const defaultAlt = 'Kiano London. Emirati thobes and jubbahs.'
+const defaultAlt = 'Kiano London. Emirati thobes and garments.'
 
 const pages: Record<string, PageMeta> = {
   '/': {
     title: site.fullName,
     description:
-      `${creedWoven} Layl, Hadīd, Ghabār, Raml and Hajar. The jubbah in black, sand and charcoal. A London house, sizes 52 to 60.`,
+      `${creedWoven} Layl, Hadīd, Ghabār, Raml and Hajar. Urban Emirati in stone grey, cream and black. A London house, sizes 52 to 60.`,
     path: '/',
     image: '/images/featured-overcoat.jpg',
     imageAlt: 'Hadīd: a charcoal Emirati thobe with a standing collar, worn at full length.',
   },
   '/shop': {
     title: 'Shop — Kiano London',
-    description: `The jubbah in three colours: black, sand and charcoal. ${creedIntent} Sizes 52 to 60, from the house block.`,
+    description: `Urban Emirati in stone grey, cream and black. Cotton viscose mix, light GSM. ${creedIntent} Sizes 52 to 60, from the house block.`,
     path: '/shop',
     image: '/images/jubbah-sand-02.jpg',
-    imageAlt: 'The jubbah in sand, hem to the ankle.',
+    imageAlt: 'Urban Emirati in cream, hem to the ankle.',
   },
   '/collection': {
     title: 'The Collection — Kiano London',
@@ -51,7 +51,7 @@ const pages: Record<string, PageMeta> = {
   '/story': {
     title: 'Story — Kiano London',
     description:
-      `A London house of the Emirati thobe and jubbah. ${creedSpoken} ${creedMotto}`,
+      `A London house of the Emirati thobe and garment. ${creedSpoken} ${creedMotto}`,
     path: '/story',
     image: '/images/look-lanesborough.jpg',
     imageAlt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
@@ -59,7 +59,7 @@ const pages: Record<string, PageMeta> = {
   '/stills': {
     title: 'Stills — Kiano London',
     description:
-      `One still a week. ${creedWoven} Layl, Hyde Park Corner, Raml, the jubbah, Ghabār, Hadīd, Hajar.`,
+      `One still a week. ${creedWoven} Layl, Hyde Park Corner, Raml, Urban Emirati, Ghabār, Hadīd, Hajar.`,
     path: '/stills',
     image: '/images/thobe-layl.jpg',
     imageAlt: 'The Layl thobe: matte black, band collar, hem to the ankle.',
@@ -149,7 +149,7 @@ const pages: Record<string, PageMeta> = {
   },
   '/checkout': {
     title: 'Checkout — Kiano London',
-    description: 'Reserve a thobe or jubbah. Made to order, four to eight weeks.',
+    description: 'Reserve a thobe or a piece. Made to order, four to eight weeks.',
     path: '/checkout',
   },
   '/order/confirmed': {
@@ -186,8 +186,8 @@ export function getShareMeta(pathname: string): PageMeta {
     const product = getProduct(productHit[2])
     if (product) {
       return {
-        title: `${product.name} — Kiano London`,
-        description: `${product.name}: ${product.colour.toLowerCase()} Emirati ${product.cut.toLowerCase()} in ${product.cloth.toLowerCase()}. Sizes 52 to 60, from the house block.`,
+        title: `${productLineName(product)} — Kiano London`,
+        description: `${productLineName(product)}. ${product.cloth}. Sizes 52 to 60, from the house block.`,
         path: productPath(product),
         image: product.image,
         imageAlt: product.imageAlt,

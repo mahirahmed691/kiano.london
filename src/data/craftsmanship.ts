@@ -74,12 +74,12 @@ export const materials: Material[] = [
   {
     name: 'Super 150s wool-cotton',
     origin: 'Huddersfield',
-    copy: 'For Hadīd, and the charcoal jubbah. Compact, resilient, a memory in the fibre so the silhouette stays architectural.',
+    copy: 'For Hadīd. Compact, resilient, a memory in the fibre so the silhouette stays architectural.',
   },
   {
     name: 'Extra-long staple cotton',
     origin: 'Giza',
-    copy: 'For Raml, and the sand jubbah. Long fibre, a quiet sheen, washed so the cloth drapes rather than stands.',
+    copy: 'For Raml. Long fibre, a quiet sheen, washed so the cloth drapes rather than stands.',
   },
   {
     name: 'Silk twist & horn',
