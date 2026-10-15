@@ -15,7 +15,11 @@
     "updates": {
       "url": "https://u.expo.dev/d1786b49-0e68-46d1-a5f7-37c57a92f025",
       "enabled": true,
-      "checkAutomatically": "ON_LOAD"
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 4000,
+      "requestHeaders": {
+        "expo-channel-name": "production"
+      }
     },
     "splash": {
       "image": "./assets/images/splash-lockup.png",
