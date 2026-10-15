@@ -32,6 +32,7 @@ import {
 } from './house'
 import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
 import { listenHouseUpdate } from './HouseUpdate'
+import { houseScreenHeight } from './houseScreen'
 import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingDetailsRoom } from './rooms/MakingDetailsRoom'
@@ -60,6 +61,7 @@ function HouseApp() {
   const fontsReady = useHouseFonts()
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
+  const roomHeight = Math.max(windowHeight, houseScreenHeight())
   const [uri, setUri] = useState(houseOrigin)
   const [path, setPath] = useState('/')
   const [plateId, setPlateId] = useState('')
@@ -319,11 +321,11 @@ function HouseApp() {
     () => ({
       open,
       openWeb,
-      roomHeight: windowHeight,
+      roomHeight,
       bottomInset: hideChrome ? insets.bottom : chromeHeight,
       onOverlay: setHeroOverlay,
     }),
-    [chromeHeight, hideChrome, insets.bottom, open, openWeb, windowHeight],
+    [chromeHeight, hideChrome, insets.bottom, open, openWeb, roomHeight],
   )
 
   const room = path.split('?')[0] || '/'
@@ -513,7 +515,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.night,
   },
   rooms: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: color.night,
   },
   frame: {

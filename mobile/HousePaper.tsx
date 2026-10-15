@@ -21,7 +21,7 @@ export function RoomScroll({
   return (
     <ScrollView
       style={styles.scroll}
-      contentContainerStyle={{ paddingBottom: bottomInset + 36 }}
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: bottomInset + 36 }}
       contentInsetAdjustmentBehavior="never"
       automaticallyAdjustContentInsets={false}
       showsVerticalScrollIndicator={false}

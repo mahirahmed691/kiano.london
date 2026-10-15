@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-na
 
 import { HouseImage } from './HouseImage'
 import { HousePatch } from './HousePatch'
+import { houseScreenHeight } from './houseScreen'
 import { type ProductColour } from './catalogue'
 import { color, type } from './theme'
 
@@ -36,10 +37,11 @@ export function HouseStill({
   children,
 }: Props) {
   const { height: windowHeight } = useWindowDimensions()
-  const plateHeight = Math.max(height, windowHeight)
+  const plateHeight = Math.max(height, windowHeight, houseScreenHeight())
   const dock = Math.max(bottomInset, 20)
   const caption = quiet && Boolean(kicker || title)
-  const plate = (
+
+  return (
     <View style={[styles.plate, { height: plateHeight }]}>
       <HouseImage
         src={src}
@@ -61,29 +63,21 @@ export function HouseStill({
         </View>
       ) : null}
       {!quiet && (kicker || title || children) ? (
-        <View style={[styles.heroCopy, { paddingBottom: 16 + dock }]}>
+        <View style={[styles.heroCopy, { paddingBottom: 16 + dock }]} pointerEvents="box-none">
           {kicker ? <Text style={styles.heroKicker}>{kicker}</Text> : null}
           {title ? <Text style={styles.heroTitle}>{title}</Text> : null}
           {children}
         </View>
       ) : null}
+      {onPress ? (
+        <Pressable
+          onPress={onPress}
+          accessibilityRole="button"
+          accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
+          style={({ pressed }) => [StyleSheet.absoluteFill, pressed && styles.pressed]}
+        />
+      ) : null}
     </View>
-  )
-
-  if (!onPress) return plate
-
-  return (
-    <Pressable
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
-      style={({ pressed }) => [
-        { width: '100%', height: plateHeight },
-        pressed && styles.pressed,
-      ]}
-    >
-      {plate}
-    </Pressable>
   )
 }
 
