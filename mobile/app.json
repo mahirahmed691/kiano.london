@@ -13,7 +13,13 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/d1786b49-0e68-46d1-a5f7-37c57a92f025"
+      "url": "https://u.expo.dev/d1786b49-0e68-46d1-a5f7-37c57a92f025",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 4000,
+      "requestHeaders": {
+        "expo-channel-name": "production"
+      }
     },
     "splash": {
       "image": "./assets/images/splash-lockup.png",
@@ -58,6 +64,7 @@
       }
     },
     "plugins": [
+      "expo-updates",
       "expo-dev-client",
       "expo-system-ui",
       "expo-web-browser",

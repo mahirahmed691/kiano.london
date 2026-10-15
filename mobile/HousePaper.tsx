@@ -20,9 +20,17 @@ export function RoomScroll({
 }: Props) {
   return (
     <ScrollView
-      style={styles.scroll}
+      testID="house-scroll"
+      style={[styles.scroll, { height: heroHeight }]}
       contentContainerStyle={{ paddingBottom: bottomInset + 36 }}
+      contentInsetAdjustmentBehavior="never"
+      automaticallyAdjustContentInsets={false}
       showsVerticalScrollIndicator={false}
+      scrollEnabled
+      bounces
+      nestedScrollEnabled
+      keyboardShouldPersistTaps="handled"
+      canCancelContentTouches
       scrollEventThrottle={16}
       onScroll={(event) => {
         if (!overlayHero || !onOverlay) return

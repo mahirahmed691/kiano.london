@@ -13,6 +13,7 @@ type Props = {
   topInset: number
   word: number
   bag: number
+  onBack?: () => void
   onToggle: () => void
   onHome: () => void
   onWord: () => void
@@ -25,6 +26,7 @@ export function HouseHeader({
   topInset,
   word,
   bag,
+  onBack,
   onToggle,
   onHome,
   onWord,
@@ -102,6 +104,18 @@ export function HouseHeader({
         </View>
 
         <View style={styles.side}>
+          {onBack ? (
+            <Pressable
+              onPress={onBack}
+              accessibilityRole="button"
+              accessibilityLabel="Back"
+              testID="house-back"
+              hitSlop={8}
+              style={({ pressed }) => [styles.hit, pressed && styles.pressed]}
+            >
+              <Text style={[styles.back, { color: ink }]}>‹</Text>
+            </Pressable>
+          ) : null}
           <Pressable
             onPress={onToggle}
             accessibilityRole="button"
@@ -119,7 +133,6 @@ export function HouseHeader({
         </View>
 
         <View style={[styles.side, styles.sideEnd]}>
-          <HouseWord count={word} inverted embedded onPress={onWord} />
           <View style={styles.clock} testID="house-clock">
             <HouseClock inverted />
           </View>
@@ -133,6 +146,7 @@ export function HouseHeader({
           >
             <Text style={[styles.bag, { color: ink }]}>{bag > 0 ? `Bag ${pad(bag)}` : 'Bag'}</Text>
           </Pressable>
+          <HouseWord count={word} inverted embedded onPress={onWord} />
         </View>
       </View>
     </View>
@@ -151,7 +165,8 @@ const styles = StyleSheet.create({
   },
   row: {
     minHeight: 64,
-    paddingHorizontal: 12,
+    paddingLeft: 12,
+    paddingRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -201,6 +216,13 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: 2,
+  },
+  back: {
+    fontFamily: type.displayLight,
+    fontSize: 32,
+    fontWeight: '300',
+    lineHeight: 32,
+    marginTop: -2,
   },
   bag: {
     fontFamily: type.sansRegular,

@@ -23,6 +23,7 @@ export function HouseWord({ count, top = 0, inverted, embedded = false, onPress 
       accessibilityLabel={
         waiting ? `Word from the house, ${count} unread` : 'Word from the house'
       }
+      testID="house-word"
       hitSlop={10}
       style={({ pressed }) => [
         embedded ? styles.slot : styles.hit,
@@ -31,6 +32,7 @@ export function HouseWord({ count, top = 0, inverted, embedded = false, onPress 
       ]}
     >
       <View style={styles.row}>
+        {waiting ? <Text style={[styles.count, { color: ink }]}>{pad(count)}</Text> : null}
         <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
           <Path
             d="M12 4.5c-2.6 0-4.5 2-4.5 5.2v4.2L5 17.5h14l-2.5-3.6v-4.2c0-3.2-1.9-5.2-4.5-5.2z"
@@ -46,7 +48,6 @@ export function HouseWord({ count, top = 0, inverted, embedded = false, onPress 
             strokeLinecap="square"
           />
         </Svg>
-        {waiting ? <Text style={[styles.count, { color: ink }]}>{pad(count)}</Text> : null}
       </View>
     </Pressable>
   )
@@ -65,8 +66,9 @@ const styles = StyleSheet.create({
   slot: {
     minHeight: 44,
     minWidth: 44,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
+    paddingRight: 0,
   },
   pressed: {
     opacity: 0.55,

@@ -1,5 +1,12 @@
-import { type ReactNode } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { type ReactNode, useRef } from 'react'
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  type GestureResponderEvent,
+} from 'react-native'
 
 import { HouseImage } from './HouseImage'
 import { HousePatch } from './HousePatch'
@@ -35,10 +42,12 @@ export function HouseStill({
   onPress,
   children,
 }: Props) {
+  const plateHeight = height
   const dock = Math.max(bottomInset, 20)
   const caption = quiet && Boolean(kicker || title)
-  const plate = (
-    <View style={[styles.plate, { height }]}>
+  const plateStyle = [styles.plate, { height: plateHeight }]
+  const body = (
+    <>
       <HouseImage
         src={src}
         alt={alt}
@@ -59,26 +68,82 @@ export function HouseStill({
         </View>
       ) : null}
       {!quiet && (kicker || title || children) ? (
-        <View style={[styles.heroCopy, { paddingBottom: 16 + dock }]}>
+        <View style={[styles.heroCopy, { paddingBottom: 16 + dock }]} pointerEvents="box-none">
           {kicker ? <Text style={styles.heroKicker}>{kicker}</Text> : null}
           {title ? <Text style={styles.heroTitle}>{title}</Text> : null}
           {children}
         </View>
       ) : null}
-    </View>
+    </>
   )
 
-  if (!onPress) return plate
+  const label = title ? `${kicker ?? ''} ${title}`.trim() : alt
+
+  if (onPress) {
+    return (
+      <StillTap onPress={onPress} label={label} style={plateStyle}>
+        {body}
+      </StillTap>
+    )
+  }
 
   return (
-    <Pressable
-      onPress={onPress}
+    <View style={plateStyle} collapsable={false}>
+      {body}
+    </View>
+  )
+}
+
+function StillTap({
+  onPress,
+  label,
+  style,
+  children,
+}: {
+  onPress: () => void
+  label: string
+  style: object
+  children: ReactNode
+}) {
+  const origin = useRef({ x: 0, y: 0 })
+
+  if (Platform.OS === 'web') {
+    return (
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        unstable_pressDelay={80}
+        collapsable={false}
+        style={({ pressed }) => [style, pressed && styles.pressed]}
+      >
+        {children}
+      </Pressable>
+    )
+  }
+
+  const mark = (event: GestureResponderEvent) => {
+    origin.current = { x: event.nativeEvent.pageX, y: event.nativeEvent.pageY }
+  }
+  const release = (event: GestureResponderEvent) => {
+    const dx = Math.abs(event.nativeEvent.pageX - origin.current.x)
+    const dy = Math.abs(event.nativeEvent.pageY - origin.current.y)
+    if (dx < 12 && dy < 12) onPress()
+  }
+
+  return (
+    <View
+      accessible
       accessibilityRole="button"
-      accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
-      style={({ pressed }) => pressed && styles.pressed}
+      accessibilityLabel={label}
+      collapsable={false}
+      style={style}
+      onStartShouldSetResponder={() => false}
+      onTouchStart={mark}
+      onTouchEnd={release}
     >
-      {plate}
-    </Pressable>
+      {children}
+    </View>
   )
 }
 
@@ -94,8 +159,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 168,
-    backgroundColor: 'rgba(37, 40, 43, 0.38)',
+    height: 48,
+    backgroundColor: 'rgba(37, 40, 43, 0.28)',
   },
   heroScrim: {
     ...StyleSheet.absoluteFillObject,
