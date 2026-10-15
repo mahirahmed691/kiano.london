@@ -31,6 +31,7 @@ import {
   urlForHouse,
 } from './house'
 import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
+import { listenHouseUpdate } from './HouseUpdate'
 import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingDetailsRoom } from './rooms/MakingDetailsRoom'
@@ -192,6 +193,8 @@ function HouseApp() {
     if (opened) open(opened)
     return listenHousePush((href) => open(href))
   }, [open])
+
+  useEffect(() => listenHouseUpdate(), [])
 
   const onNav = useCallback((request: WebViewNavigation) => {
     if (shouldOpenOutside(request.url)) {
