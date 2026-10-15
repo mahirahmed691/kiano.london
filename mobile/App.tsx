@@ -32,7 +32,6 @@ import {
 } from './house'
 import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
 import { listenHouseUpdate } from './HouseUpdate'
-import { houseScreenHeight } from './houseScreen'
 import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingDetailsRoom } from './rooms/MakingDetailsRoom'
@@ -78,7 +77,8 @@ function HouseApp() {
   const hideChrome = quietChrome(path) || wordOpen || webKind === 'word'
   const topChrome = hideChrome ? 0 : headerHeight
   const tabChrome = hideChrome ? 0 : chromeHeight
-  const roomHeight = Math.max(1, Math.max(windowHeight, houseScreenHeight()) - topChrome)
+  const wellHeight = Math.max(1, windowHeight - topChrome)
+  const roomHeight = wellHeight
   const nativePath = useRef('/')
   const canGoBack = useRef(false)
   const webView = useRef<WebView>(null)
@@ -337,7 +337,7 @@ function HouseApp() {
     <View style={styles.shell}>
       <StatusBar style={lightStatus ? 'light' : 'dark'} />
       {hideChrome && !lightStatus && !webVisible ? <View style={[styles.status, { height: insets.top }]} /> : null}
-      <View style={[styles.rooms, { top: topChrome }]}>
+      <View style={[styles.rooms, { top: topChrome, height: wellHeight }]}>
         {room === '/' ? <HouseRoom {...nav} /> : null}
         {room === '/stills' ? <StillsRoom {...nav} plateId={plateId} /> : null}
         {room === '/shop' ? <LineRoom {...nav} /> : null}
@@ -356,10 +356,11 @@ function HouseApp() {
       <WebView
         ref={webView}
         source={{ uri }}
+        pointerEvents={webVisible ? 'auto' : 'none'}
+        scrollEnabled={webVisible}
         style={[
           styles.frame,
           webVisible ? [styles.frameOn, { top: topChrome, bottom: tabChrome }] : styles.frameOff,
-          { pointerEvents: webVisible ? 'auto' : 'none' },
         ]}
         originWhitelist={['https://*', 'http://*', 'about:*']}
         onShouldStartLoadWithRequest={onNav}
@@ -520,7 +521,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    overflow: 'hidden',
+    zIndex: 1,
     backgroundColor: color.night,
   },
   frame: {
@@ -537,8 +539,9 @@ const styles = StyleSheet.create({
     width: 1,
     height: 1,
     opacity: 0,
-    left: 0,
+    left: -4000,
     top: 0,
+    zIndex: 0,
   },
   status: {
     backgroundColor: color.ivory,

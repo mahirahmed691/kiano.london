@@ -38,9 +38,9 @@ export function HouseStill({
   const plateHeight = height
   const dock = Math.max(bottomInset, 20)
   const caption = quiet && Boolean(kicker || title)
-
-  return (
-    <View style={[styles.plate, { height: plateHeight }]}>
+  const plateStyle = [styles.plate, { height: plateHeight }]
+  const body = (
+    <>
       <HouseImage
         src={src}
         alt={alt}
@@ -67,14 +67,27 @@ export function HouseStill({
           {children}
         </View>
       ) : null}
-      {onPress ? (
-        <Pressable
-          onPress={onPress}
-          accessibilityRole="button"
-          accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
-          style={({ pressed }) => [StyleSheet.absoluteFill, pressed && styles.pressed]}
-        />
-      ) : null}
+    </>
+  )
+
+  if (onPress) {
+    return (
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
+        unstable_pressDelay={80}
+        collapsable={false}
+        style={({ pressed }) => [plateStyle, pressed && styles.pressed]}
+      >
+        {body}
+      </Pressable>
+    )
+  }
+
+  return (
+    <View style={plateStyle} collapsable={false}>
+      {body}
     </View>
   )
 }
