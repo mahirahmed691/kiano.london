@@ -7,6 +7,6 @@ export const site = {
   city: 'London',
   email: 'atelier@kiano.london',
   hours: 'Visits by appointment',
-  tagline: 'Emirati thobes and garments. Worn with purpose.',
+  tagline: 'Urban Emirati garments. Worn with purpose.',
   note: 'Kiano London',
 } as const

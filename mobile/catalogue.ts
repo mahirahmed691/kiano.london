@@ -45,7 +45,9 @@ export { processSteps, materials, stitchStudies, detailSections } from '../src/d
 export { site } from '../src/data/site'
 export { instagramPlates, plateIntervalDays, type InstagramPlate } from '../src/data/instagram-plates'
 export {
+  plateDestination,
   plateKindLabel,
+  plateLinkLabel,
   recentShopPlates,
   thisWeekShopPlate,
 } from '../src/lib/instagram-plates'

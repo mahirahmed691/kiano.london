@@ -7,7 +7,7 @@ const plates = [
     title: 'Running stitch',
     caption: 'Even bites on the face. The foundation of every seam.',
     src: '/images/stitch-running.jpg',
-    alt: 'A running stitch in ivory silk on charcoal cloth, the needle still in the work.',
+    alt: 'A running stitch in ivory thread on charcoal cloth, the needle still in the work.',
   },
   {
     id: 'fell',
@@ -21,7 +21,7 @@ const plates = [
     title: 'Pad stitch',
     caption: 'Rows of hand stitches through the canvas. They shape the collar, then vanish.',
     src: '/images/stitch-pad.jpg',
-    alt: 'Pad stitching on collar canvas, rows of espresso silk following the stand.',
+    alt: 'Pad stitching on collar canvas, rows of espresso thread following the stand.',
   },
   {
     id: 'keyhole',
@@ -39,7 +39,7 @@ export function StitchArt() {
         <Eyebrow>The grammar</Eyebrow>
         <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, and the hand.</Display>
         <Body className="mt-6">
-          A thobe is a column of cloth. The art is what holds it: a seam that does
+          A garment is a column of cloth. The art is what holds it: a seam that does
           not show, a stitch that shapes the neck, a placket that closes without
           announcing itself.
         </Body>

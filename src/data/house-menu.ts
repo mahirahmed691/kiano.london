@@ -44,7 +44,10 @@ export function houseMenuTree(): HouseMenuSection[] {
       id: 'collection',
       section: 'The Collection',
       hub: { label: 'Collection', to: '/collection' },
-      lines: [],
+      lines: jubbahs.map((piece) => ({
+        label: productLineName(piece),
+        to: `/collection/${piece.id}`,
+      })),
     },
     {
       id: 'scent',

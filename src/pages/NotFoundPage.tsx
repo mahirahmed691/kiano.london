@@ -31,7 +31,7 @@ export function NotFoundPage() {
           <div className="lg:col-span-5 lg:col-start-8">
             <ImageFrame
               src="/images/atelier-rail.jpg"
-              alt="The house line on the rail: black, sand, and bone."
+              alt="The house line on the rail."
               className="aspect-[4/5] w-full"
               objectPosition="18% 40%"
               caption="The line."

@@ -14,7 +14,7 @@ export type PageMeta = {
 }
 
 const defaultImage = '/images/og.jpg'
-const defaultAlt = 'Kiano London. Emirati thobes and garments.'
+const defaultAlt = 'Kiano London. Urban Emirati garments.'
 
 const pages: Record<string, PageMeta> = {
   '/': {
@@ -51,7 +51,7 @@ const pages: Record<string, PageMeta> = {
   '/story': {
     title: 'Story — Kiano London',
     description:
-      `A London house of the Emirati thobe and garment. ${creedSpoken} ${creedMotto}`,
+      `A London house of the garment. ${creedSpoken} ${creedMotto}`,
     path: '/story',
     image: '/images/look-lanesborough.jpg',
     imageAlt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
