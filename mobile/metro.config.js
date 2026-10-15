@@ -12,7 +12,9 @@ config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, 'node_modules'),
   path.resolve(workspaceRoot, 'node_modules'),
 ]
-config.resolver.disableHierarchicalLookup = true
+// Nested RN packages (e.g. @react-native/virtualized-lists) live under
+// react-native/node_modules. Hierarchical lookup is required for the EAS
+// "Bundle JavaScript" phase; nodeModulesPaths alone does not see them.
 
 const originalResolveRequest = config.resolver.resolveRequest
 config.resolver.resolveRequest = (context, moduleName, platform) => {
