@@ -1,9 +1,8 @@
 import { type ReactNode } from 'react'
-import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from './HouseImage'
 import { HousePatch } from './HousePatch'
-import { houseScreenHeight } from './houseScreen'
 import { type ProductColour } from './catalogue'
 import { color, type } from './theme'
 
@@ -36,8 +35,7 @@ export function HouseStill({
   onPress,
   children,
 }: Props) {
-  const { height: windowHeight } = useWindowDimensions()
-  const plateHeight = Math.max(height, windowHeight, houseScreenHeight())
+  const plateHeight = height
   const dock = Math.max(bottomInset, 20)
   const caption = quiet && Boolean(kicker || title)
 
@@ -93,8 +91,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 168,
-    backgroundColor: 'rgba(37, 40, 43, 0.38)',
+    height: 48,
+    backgroundColor: 'rgba(37, 40, 43, 0.28)',
   },
   heroScrim: {
     ...StyleSheet.absoluteFillObject,

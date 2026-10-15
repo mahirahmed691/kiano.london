@@ -72,7 +72,12 @@ export function shouldOpenOutside(url: string) {
 export function nativeMark() {
   return `
     window.__KIANO_NATIVE = true;
-    try { document.documentElement.classList.add('shell-app'); } catch (e) {}
+    try {
+      var root = document.documentElement;
+      root.classList.add('shell-app');
+      root.style.setProperty('--header-offset', '0px');
+      root.style.setProperty('--app-tab', '0px');
+    } catch (e) {}
     window.dispatchEvent(new Event('kiano-native'));
     true;
   `
@@ -83,7 +88,12 @@ export function pushBridge(token: string) {
   return `
     window.__KIANO_NATIVE = true;
     window.__KIANO_EXPO_PUSH = ${encoded};
-    try { document.documentElement.classList.add('shell-app'); } catch (e) {}
+    try {
+      var root = document.documentElement;
+      root.classList.add('shell-app');
+      root.style.setProperty('--header-offset', '0px');
+      root.style.setProperty('--app-tab', '0px');
+    } catch (e) {}
     window.dispatchEvent(new Event('kiano-native'));
     window.dispatchEvent(new Event('kiano-expo-push'));
     true;

@@ -61,7 +61,6 @@ function HouseApp() {
   const fontsReady = useHouseFonts()
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
-  const roomHeight = Math.max(windowHeight, houseScreenHeight())
   const [uri, setUri] = useState(houseOrigin)
   const [path, setPath] = useState('/')
   const [plateId, setPlateId] = useState('')
@@ -76,6 +75,10 @@ function HouseApp() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [headerHeight, setHeaderHeight] = useState(120)
   const [chromeHeight, setChromeHeight] = useState(92)
+  const hideChrome = quietChrome(path) || wordOpen || webKind === 'word'
+  const topChrome = hideChrome ? 0 : headerHeight
+  const tabChrome = hideChrome ? 0 : chromeHeight
+  const roomHeight = Math.max(1, Math.max(windowHeight, houseScreenHeight()) - topChrome)
   const nativePath = useRef('/')
   const canGoBack = useRef(false)
   const webView = useRef<WebView>(null)
@@ -262,7 +265,6 @@ function HouseApp() {
   const webVisible = webKind !== 'hidden' || bagOpen || wordOpen
   const routeTab = tabFromPath(isNativeBrowse(path) ? path : nativePath.current)
   const tab: HouseTab = bagOpen || webKind === 'bag' ? 'bag' : webKind === 'account' || isAccountPath(path) ? 'account' : routeTab
-  const hideChrome = quietChrome(path) || wordOpen || webKind === 'word'
   const lightStatus = !hideChrome
 
   useEffect(() => {
@@ -335,7 +337,7 @@ function HouseApp() {
     <View style={styles.shell}>
       <StatusBar style={lightStatus ? 'light' : 'dark'} />
       {hideChrome && !lightStatus && !webVisible ? <View style={[styles.status, { height: insets.top }]} /> : null}
-      <View style={styles.rooms}>
+      <View style={[styles.rooms, { top: topChrome }]}>
         {room === '/' ? <HouseRoom {...nav} /> : null}
         {room === '/stills' ? <StillsRoom {...nav} plateId={plateId} /> : null}
         {room === '/shop' ? <LineRoom {...nav} /> : null}
@@ -356,7 +358,7 @@ function HouseApp() {
         source={{ uri }}
         style={[
           styles.frame,
-          webVisible ? styles.frameOn : styles.frameOff,
+          webVisible ? [styles.frameOn, { top: topChrome, bottom: tabChrome }] : styles.frameOff,
           { pointerEvents: webVisible ? 'auto' : 'none' },
         ]}
         originWhitelist={['https://*', 'http://*', 'about:*']}
@@ -515,14 +517,19 @@ const styles = StyleSheet.create({
     backgroundColor: color.night,
   },
   rooms: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: color.night,
   },
   frame: {
     backgroundColor: color.ivory,
   },
   frameOn: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    left: 0,
+    right: 0,
     zIndex: 8,
   },
   frameOff: {

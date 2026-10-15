@@ -299,8 +299,8 @@ select {
 }
 
 html.shell-app {
-  --header-offset: 1.25rem;
-  --app-tab: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  --header-offset: 7.5rem;
+  --app-tab: calc(5.75rem + env(safe-area-inset-bottom, 0px));
 }
 
 html.shell-app.shell-quiet {
@@ -309,6 +309,11 @@ html.shell-app.shell-quiet {
 
 html.shell-app .shell-app-main {
   padding-bottom: var(--app-tab);
+}
+
+html.shell-app .shell-sheet {
+  top: var(--header-offset);
+  bottom: var(--app-tab);
 }
 
 .shell-lift {
@@ -326,7 +331,7 @@ html.shell-app .pt-32 {
 
 @media (min-width: 768px) {
   html.shell-app {
-    --header-offset: 1.5rem;
+    --header-offset: 7.5rem;
   }
 
   html.shell-app .md\:pt-40 {
