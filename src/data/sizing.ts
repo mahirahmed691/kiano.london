@@ -1,4 +1,4 @@
-import { type ThobeSize, thobeSizes } from '@/data/products'
+import { type ThobeSize, thobeSizes } from './products'
 
 export type SizeRow = {
   size: ThobeSize

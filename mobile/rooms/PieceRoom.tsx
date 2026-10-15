@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { HouseImage } from '../HouseImage'
 import { HouseMotto } from '../HouseMotto'
 import { HousePatch } from '../HousePatch'
+import { HouseSizeGuide } from '../HouseSizeGuide'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
@@ -13,6 +14,8 @@ import {
   clothSwatch,
   colourVariants,
   getProduct,
+  measureLead,
+  measureStill,
   packingNote,
   packingSteps,
   productLineName,
@@ -74,12 +77,13 @@ export function PieceRoom({
         objectPosition={first.objectPosition ?? product.objectPosition}
         kicker={product.cut === 'Jubbah' ? 'The outer garment' : 'Emirati thobe'}
         title={productLineName(product)}
+        colour={product.colour}
         height={roomHeight}
         priority
       />
 
       <View style={paper()}>
-        <Eyebrow>{product.cloth}</Eyebrow>
+        <Eyebrow>{`${product.cut === 'Jubbah' ? 'The Shop' : 'The Collection'} · ${product.colour}`}</Eyebrow>
         <View style={styles.space} />
         <Display size={36}>{productLineName(product)}</Display>
         <View style={styles.gap} />
@@ -131,8 +135,14 @@ export function PieceRoom({
           ))}
         </View>
         <View style={styles.actions}>
-          <OutlineButton label="Reserve" onPress={() => openWeb(reservePath)} />
-          <GhostLink label="A visit" onPress={() => open('/visit')} />
+          <OutlineButton
+            label={size ? 'Add to bag' : 'Choose a size'}
+            onPress={() => {
+              if (!size) return
+              openWeb(reservePath)
+            }}
+          />
+          <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />
         </View>
         <View style={styles.gap} />
         {product.details.map((line) => (
@@ -144,6 +154,45 @@ export function PieceRoom({
         <Text style={styles.detail}>{careLine}</Text>
         <Text style={styles.detail}>{packingNote}</Text>
         <Text style={styles.detail}>{carriageLine}</Text>
+      </View>
+
+      <View style={section()}>
+        <Eyebrow>The nape</Eyebrow>
+        <View style={styles.space} />
+        <Display size={32}>The woven mark.</Display>
+        <View style={styles.mark}>
+          <HousePatch colour={product.colour} size={88} />
+        </View>
+        <Body>
+          The square mark is sewn, not printed — the interlocking KK, in the cloth of the piece — and set at the nape by hand after the last press. Size is a separate tab. Care sits at the side seam.
+        </Body>
+        <View style={styles.space} />
+        <Eyebrow>The making</Eyebrow>
+        <View style={styles.space} />
+        <Display size={32}>{`How this ${product.cut === 'Jubbah' ? 'garment' : 'thobe'} is held.`}</Display>
+        <View style={styles.gap} />
+        <Body>{product.composition}</Body>
+        <View style={styles.space} />
+        <Eyebrow>Sizes 52–60</Eyebrow>
+        <View style={styles.space} />
+        <Display size={32}>The house block.</Display>
+        <View style={styles.gap} />
+        <HouseSizeGuide />
+      </View>
+
+      <View style={section()}>
+        <HouseImage
+          src={measureStill.src}
+          alt={measureStill.alt}
+          objectPosition={measureStill.objectPosition}
+          style={styles.measureStill}
+        />
+        <View style={styles.space} />
+        <Eyebrow>Sizes 52–60</Eyebrow>
+        <View style={styles.space} />
+        <Display size={32}>Against a thobe you own.</Display>
+        <View style={styles.gap} />
+        <Body>{measureLead}</Body>
       </View>
 
       <View style={section()}>
@@ -182,7 +231,14 @@ export function PieceRoom({
 
       {related.length > 0 ? (
         <View style={section()}>
-          <Eyebrow>Also on the line</Eyebrow>
+          <Eyebrow>The line</Eyebrow>
+          <View style={styles.space} />
+          <Display size={32}>{product.cut === 'Jubbah' ? 'The other colours' : 'The other pieces'}</Display>
+          <View style={styles.space} />
+          <GhostLink
+            label={product.cut === 'Jubbah' ? 'All of the shop' : 'All of the collection'}
+            onPress={() => open(product.cut === 'Jubbah' ? '/shop' : '/collection')}
+          />
           <View style={styles.space} />
           {related.map((item) => (
             <Pressable
@@ -318,6 +374,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 20,
     bottom: 20,
+  },
+  mark: {
+    marginTop: 24,
+    marginBottom: 24,
+    alignItems: 'flex-start',
+  },
+  measureStill: {
+    width: '100%',
+    aspectRatio: 4 / 5,
+    backgroundColor: color.ivoryDeep,
   },
   packStep: {
     marginTop: 28,

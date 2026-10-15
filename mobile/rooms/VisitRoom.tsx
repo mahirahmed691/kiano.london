@@ -2,11 +2,21 @@ import { Linking } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from '../HouseImage'
+import { HousePatch } from '../HousePatch'
 import { HouseMotto } from '../HouseMotto'
+import { HouseSizeGuide } from '../HouseSizeGuide'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
-import { creedIntent, plateCopy, site, sizeChart, thisWeekShopPlate } from '../catalogue'
+import {
+  colourOfPiece,
+  creedIntent,
+  measureLead,
+  measureStill,
+  plateCopy,
+  site,
+  thisWeekShopPlate,
+} from '../catalogue'
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
 
@@ -67,12 +77,19 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
         </View>
       </View>
 
-      <HouseImage
-        src={week.src}
-        alt={week.alt}
-        objectPosition={week.objectPosition}
-        style={[styles.weekStill, { height: roomHeight * 0.72 }]}
-      />
+      <View style={[styles.weekHold, { height: roomHeight * 0.72 }]}>
+        <HouseImage
+          src={week.src}
+          alt={week.alt}
+          objectPosition={week.objectPosition}
+          style={styles.weekStill}
+        />
+        {colourOfPiece(week.id) ? (
+          <View style={styles.weekPatch} pointerEvents="none">
+            <HousePatch colour={colourOfPiece(week.id)!} size={52} />
+          </View>
+        ) : null}
+      </View>
       <View style={paper()}>
         <Eyebrow>{`This week · ${week.place}`}</Eyebrow>
         <View style={styles.space} />
@@ -106,13 +123,24 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
         </View>
         <Text style={styles.kicker}>The house</Text>
         <Body>{`${site.city}\n${site.hours}`}</Body>
-        <View style={styles.sizes}>
-          {sizeChart.map((row) => (
-            <Text key={row.size} style={styles.sizeRow}>
-              {`${row.size}  ·  chest ${row.chest}  ·  length ${row.length}  ·  shoulder ${row.shoulder}`}
-            </Text>
-          ))}
-        </View>
+      </View>
+
+      <View style={section()}>
+        <HouseImage
+          src={measureStill.src}
+          alt={measureStill.alt}
+          objectPosition={measureStill.objectPosition}
+          style={styles.measureStill}
+        />
+        <View style={styles.space} />
+        <Eyebrow>Sizes 52–60</Eyebrow>
+        <View style={styles.space} />
+        <Display size={36}>Against a thobe you own.</Display>
+        <View style={styles.gap} />
+        <Body>{measureLead}</Body>
+        <View style={styles.gap} />
+        <HouseSizeGuide compact />
+        <View style={styles.gap} />
         <Body>Prices include VAT. Each piece is made to order. A visit is not required.</Body>
       </View>
     </RoomScroll>
@@ -142,26 +170,30 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '300',
   },
-  weekStill: {
+  weekHold: {
+    position: 'relative',
     width: '100%',
     backgroundColor: color.night,
+    overflow: 'hidden',
+  },
+  weekStill: {
+    width: '100%',
+    height: '100%',
+  },
+  weekPatch: {
+    position: 'absolute',
+    left: 20,
+    bottom: 20,
+  },
+  measureStill: {
+    width: '100%',
+    aspectRatio: 4 / 5,
+    backgroundColor: color.ivoryDeep,
   },
   actions: {
     marginTop: 24,
     marginBottom: 8,
     gap: 20,
     alignItems: 'flex-start',
-  },
-  sizes: {
-    marginTop: 28,
-    marginBottom: 20,
-    gap: 8,
-  },
-  sizeRow: {
-    color: color.stone,
-    fontFamily: type.sans,
-    fontSize: 13,
-    fontWeight: '300',
-    lineHeight: 20,
   },
 })

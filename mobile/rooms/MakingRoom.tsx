@@ -9,7 +9,7 @@ import { creedIntent, creedSpoken, materials, processSteps, stitchStudies } from
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
 
-export function MakingRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }: HouseNav) {
+export function MakingRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav) {
   return (
     <RoomScroll
       bottomInset={bottomInset}
@@ -37,7 +37,7 @@ export function MakingRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }
           {`${creedSpoken} Cloth. Pattern. Stitch. Finish. Every piece is built in that order. We do not fuse a collar because it is faster. The methods are kept because they still make a better garment. ${creedIntent}`}
         </Body>
         <View style={styles.heroAction}>
-          <OutlineButton label="The making, in detail" onPress={() => openWeb('/craftsmanship-details')} />
+          <OutlineButton label="The making, in detail" onPress={() => open('/craftsmanship-details')} />
         </View>
         <View style={styles.steps}>
           {processSteps.map((step) => (

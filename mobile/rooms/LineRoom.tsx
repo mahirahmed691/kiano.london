@@ -2,10 +2,11 @@ import { useMemo, useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { HouseCard } from '../HouseCard'
+import { HouseLookbook } from '../HouseLookbook'
 import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Arabic, Body, Display, GhostLink, OutlineButton } from '../HouseType'
+import { Body, Display, GhostLink, OutlineButton } from '../HouseType'
 import {
   clothSwatch,
   creedIntent,
@@ -23,6 +24,57 @@ type Filter = 'All' | ProductColour
 type Props = HouseNav & {
   collection?: boolean
 }
+
+const shopLooks = [
+  {
+    src: '/images/jubbah-black-02.jpg',
+    alt: 'Urban Emirati in black from behind: a clean column, hem to the ankle.',
+    kicker: 'Black',
+    name: 'Urban Emirati',
+    colour: 'Black' as const,
+  },
+  {
+    src: '/images/jubbah-charcoal-cloth.jpg',
+    alt: 'Cotton viscose mix for the garment, still in the piece.',
+    objectPosition: 'center 40%',
+    kicker: 'The cloth',
+    name: 'Light GSM',
+    colour: 'Stone Grey' as const,
+  },
+  {
+    src: '/images/jubbah-charcoal-02.jpg',
+    alt: 'Urban Emirati in stone grey walking: ankle hem, concealed placket.',
+    kicker: 'Stone Grey',
+    name: 'Urban Emirati',
+    colour: 'Stone Grey' as const,
+  },
+]
+
+const collectionLooks = [
+  {
+    src: '/images/jubbah-black-02.jpg',
+    alt: 'Urban Emirati in black from behind: a clean column, hem to the ankle.',
+    kicker: 'Black',
+    name: 'Urban Emirati',
+    colour: 'Black' as const,
+  },
+  {
+    src: '/images/jubbah-sand-02.jpg',
+    alt: 'Urban Emirati in cream at rest: the cloth draped to the ankle.',
+    objectPosition: 'center 18%',
+    kicker: 'Cream',
+    name: 'Urban Emirati',
+    colour: 'Cream' as const,
+  },
+  {
+    src: '/images/jubbah-charcoal-02.jpg',
+    alt: 'Urban Emirati in stone grey walking: ankle hem, concealed placket.',
+    objectPosition: 'center 18%',
+    kicker: 'Stone Grey',
+    name: 'Urban Emirati',
+    colour: 'Stone Grey' as const,
+  },
+]
 
 export function LineRoom({
   open,
@@ -54,13 +106,12 @@ export function LineRoom({
         objectPosition={collection ? 'center 8%' : 'center 22%'}
         kicker={collection ? 'The line' : 'The outer garment'}
         title={collection ? 'The Collection.' : 'The Shop.'}
+        colour="Cream"
         height={roomHeight}
         priority
       />
 
       <View style={paper()}>
-        <Arabic>{collection ? 'الثوب' : 'الجُبَّة'}</Arabic>
-        <View style={styles.space} />
         <Display size={28}>
           {jubbahs.map((piece) => productLineName(piece)).join('\n')}
         </Display>
@@ -104,18 +155,29 @@ export function LineRoom({
             />
           ))
         )}
-        <View style={styles.foot}>
-          <Body>
-            Each piece leaves unscented, in a garment bag and a rigid box. The scent is coming, as its own line.
-          </Body>
-          <View style={styles.gap} />
-          {collection ? (
-            <GhostLink label="The Shop" onPress={() => open('/shop')} />
-          ) : (
+      </View>
+
+      <View style={styles.looks}>
+        <HouseLookbook plates={collection ? collectionLooks : shopLooks} />
+      </View>
+
+      <View style={paper()}>
+        {collection ? (
+          <View style={styles.foot}>
+            <OutlineButton label="The Shop" onPress={() => open('/shop')} />
+            <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />
+            <GhostLink label="The Scent" onPress={() => open('/scent')} />
+          </View>
+        ) : (
+          <View style={styles.foot}>
+            <Body>
+              Each piece leaves unscented, in a garment bag and a rigid box. The scent is coming, as its own line.
+            </Body>
+            <View style={styles.gap} />
             <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />
-          )}
-          <GhostLink label="The Scent" onPress={() => open('/scent')} />
-        </View>
+            <GhostLink label="The Scent" onPress={() => open('/scent')} />
+          </View>
+        )}
       </View>
       <HouseMotto quiet />
     </RoomScroll>
@@ -175,9 +237,12 @@ const styles = StyleSheet.create({
   filterOff: {
     color: color.stone,
   },
+  looks: {
+    backgroundColor: color.ivory,
+  },
   foot: {
-    marginTop: 12,
     gap: 22,
+    alignItems: 'flex-start',
   },
   pressed: {
     opacity: 0.55,

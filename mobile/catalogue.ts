@@ -41,10 +41,15 @@ export {
   type ScentStill,
 } from '../src/data/scent'
 export { creedIntent, creedJoin, creedMotto, creedSpoken, creedStandard, creedWoven, houseCreed } from '../src/data/creed'
-export { processSteps, materials, stitchStudies } from '../src/data/craftsmanship'
+export { processSteps, materials, stitchStudies, detailSections } from '../src/data/craftsmanship'
 export { site } from '../src/data/site'
-export { instagramPlates, type InstagramPlate } from '../src/data/instagram-plates'
-export { recentShopPlates, thisWeekShopPlate } from '../src/lib/instagram-plates'
+export { instagramPlates, plateIntervalDays, type InstagramPlate } from '../src/data/instagram-plates'
+export {
+  plateKindLabel,
+  recentShopPlates,
+  thisWeekShopPlate,
+} from '../src/lib/instagram-plates'
+export { measureLead, measureStill, sizeChart, sizeMeasures, sizeNote } from '../src/data/sizing'
 export { carriageLine } from '../src/data/shipping'
 export {
   careLine,
@@ -60,14 +65,6 @@ export {
   type HouseMenuLink,
   type HouseMenuSection,
 } from '../src/data/house-menu'
-
-export const sizeChart = [
-  { size: 52, chest: '112 cm', length: '142 cm', shoulder: '46 cm' },
-  { size: 54, chest: '116 cm', length: '145 cm', shoulder: '47 cm' },
-  { size: 56, chest: '120 cm', length: '148 cm', shoulder: '50 cm' },
-  { size: 58, chest: '124 cm', length: '152 cm', shoulder: '49 cm' },
-  { size: 60, chest: '128 cm', length: '156 cm', shoulder: '50 cm' },
-] as const
 
 export function plateCopy(caption: string) {
   const parts = caption
@@ -124,6 +121,7 @@ export function isNativeBrowse(pathname: string) {
     path === '/visit' ||
     path === '/story' ||
     path === '/craftsmanship' ||
+    path === '/craftsmanship-details' ||
     path.startsWith('/shop/') ||
     path.startsWith('/collection/') ||
     path.startsWith('/scent/')
