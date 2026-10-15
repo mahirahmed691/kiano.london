@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics'
 import * as Linking from 'expo-linking'
 import * as SystemUI from 'expo-system-ui'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { BackHandler, Linking as RNLinking, Platform, StyleSheet, View } from 'react-native'
+import { BackHandler, Linking as RNLinking, Platform, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { WebView, type WebViewMessageEvent, type WebViewNavigation } from 'react-native-webview'
 
@@ -59,6 +59,7 @@ function isAccountPath(pathname: string) {
 function HouseApp() {
   const fontsReady = useHouseFonts()
   const insets = useSafeAreaInsets()
+  const { height: windowHeight } = useWindowDimensions()
   const [uri, setUri] = useState(houseOrigin)
   const [path, setPath] = useState('/')
   const [plateId, setPlateId] = useState('')
@@ -73,7 +74,6 @@ function HouseApp() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [headerHeight, setHeaderHeight] = useState(120)
   const [chromeHeight, setChromeHeight] = useState(92)
-  const [roomHeight, setRoomHeight] = useState(640)
   const nativePath = useRef('/')
   const canGoBack = useRef(false)
   const webView = useRef<WebView>(null)
@@ -319,11 +319,11 @@ function HouseApp() {
     () => ({
       open,
       openWeb,
-      roomHeight,
+      roomHeight: windowHeight,
       bottomInset: hideChrome ? insets.bottom : chromeHeight,
       onOverlay: setHeroOverlay,
     }),
-    [chromeHeight, hideChrome, insets.bottom, open, openWeb, roomHeight],
+    [chromeHeight, hideChrome, insets.bottom, open, openWeb, windowHeight],
   )
 
   const room = path.split('?')[0] || '/'
@@ -333,10 +333,7 @@ function HouseApp() {
     <View style={styles.shell}>
       <StatusBar style={lightStatus ? 'light' : 'dark'} />
       {hideChrome && !lightStatus && !webVisible ? <View style={[styles.status, { height: insets.top }]} /> : null}
-      <View
-        style={styles.rooms}
-        onLayout={(event) => setRoomHeight(event.nativeEvent.layout.height)}
-      >
+      <View style={styles.rooms}>
         {room === '/' ? <HouseRoom {...nav} /> : null}
         {room === '/stills' ? <StillsRoom {...nav} plateId={plateId} /> : null}
         {room === '/shop' ? <LineRoom {...nav} /> : null}

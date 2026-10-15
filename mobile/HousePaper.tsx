@@ -22,6 +22,8 @@ export function RoomScroll({
     <ScrollView
       style={styles.scroll}
       contentContainerStyle={{ paddingBottom: bottomInset + 36 }}
+      contentInsetAdjustmentBehavior="never"
+      automaticallyAdjustContentInsets={false}
       showsVerticalScrollIndicator={false}
       scrollEventThrottle={16}
       onScroll={(event) => {

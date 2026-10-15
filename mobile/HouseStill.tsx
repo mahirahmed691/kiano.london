@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 
 import { HouseImage } from './HouseImage'
 import { HousePatch } from './HousePatch'
@@ -35,10 +35,12 @@ export function HouseStill({
   onPress,
   children,
 }: Props) {
+  const { height: windowHeight } = useWindowDimensions()
+  const plateHeight = Math.max(height, windowHeight)
   const dock = Math.max(bottomInset, 20)
   const caption = quiet && Boolean(kicker || title)
   const plate = (
-    <View style={[styles.plate, { height }]}>
+    <View style={[styles.plate, { height: plateHeight }]}>
       <HouseImage
         src={src}
         alt={alt}
@@ -75,7 +77,10 @@ export function HouseStill({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
-      style={({ pressed }) => pressed && styles.pressed}
+      style={({ pressed }) => [
+        { width: '100%', height: plateHeight },
+        pressed && styles.pressed,
+      ]}
     >
       {plate}
     </Pressable>
