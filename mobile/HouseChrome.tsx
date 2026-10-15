@@ -60,6 +60,7 @@ function Tab({
       accessibilityRole={role}
       accessibilityState={role === 'tab' ? { selected } : undefined}
       accessibilityLabel={accessibilityLabel}
+      testID={`house-tab-${label.split('·')[0].trim().toLowerCase()}`}
       hitSlop={4}
       style={({ pressed }) => [styles.tab, pressed && styles.pressed]}
     >

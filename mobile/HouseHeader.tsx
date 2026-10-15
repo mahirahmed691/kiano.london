@@ -13,6 +13,7 @@ type Props = {
   topInset: number
   word: number
   bag: number
+  onBack?: () => void
   onToggle: () => void
   onHome: () => void
   onWord: () => void
@@ -25,6 +26,7 @@ export function HouseHeader({
   topInset,
   word,
   bag,
+  onBack,
   onToggle,
   onHome,
   onWord,
@@ -102,6 +104,18 @@ export function HouseHeader({
         </View>
 
         <View style={styles.side}>
+          {onBack ? (
+            <Pressable
+              onPress={onBack}
+              accessibilityRole="button"
+              accessibilityLabel="Back"
+              testID="house-back"
+              hitSlop={8}
+              style={({ pressed }) => [styles.hit, pressed && styles.pressed]}
+            >
+              <Text style={[styles.back, { color: ink }]}>‹</Text>
+            </Pressable>
+          ) : null}
           <Pressable
             onPress={onToggle}
             accessibilityRole="button"
@@ -202,6 +216,13 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: 2,
+  },
+  back: {
+    fontFamily: type.displayLight,
+    fontSize: 32,
+    fontWeight: '300',
+    lineHeight: 32,
+    marginTop: -2,
   },
   bag: {
     fontFamily: type.sansRegular,
