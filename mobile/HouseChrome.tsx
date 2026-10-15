@@ -17,6 +17,7 @@ type Props = {
   onScent: () => void
   onBag: () => void
   onAccount: () => void
+  onHeight?: (height: number) => void
 }
 
 export function tabFromPath(pathname: string): HouseTab {
@@ -80,6 +81,7 @@ export function HouseChrome({
   onScent,
   onBag,
   onAccount,
+  onHeight,
 }: Props) {
   const line = tabFromPath(path) === 'line' || tab === 'line'
   const collection = path.startsWith('/collection')
@@ -87,7 +89,10 @@ export function HouseChrome({
   const shop = path.startsWith('/shop') || (line && !collection && !scent)
 
   return (
-    <View style={[styles.chrome, { paddingBottom: Math.max(inset, 10) }]}>
+    <View
+      style={[styles.chrome, { paddingBottom: Math.max(inset, 10) }]}
+      onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
+    >
       {line && tab !== 'bag' && tab !== 'account' ? (
         <View style={styles.segment}>
           <Pressable
@@ -138,6 +143,10 @@ export function HouseChrome({
 
 const styles = StyleSheet.create({
   chrome: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
     zIndex: 9,
     backgroundColor: color.ivory,
     borderTopWidth: StyleSheet.hairlineWidth,

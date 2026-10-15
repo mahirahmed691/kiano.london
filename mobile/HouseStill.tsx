@@ -15,6 +15,7 @@ type Props = {
   colour?: ProductColour
   quiet?: boolean
   height: number
+  bottomInset?: number
   priority?: boolean
   onPress?: () => void
   children?: ReactNode
@@ -29,10 +30,12 @@ export function HouseStill({
   colour,
   quiet,
   height,
+  bottomInset = 0,
   priority,
   onPress,
   children,
 }: Props) {
+  const dock = Math.max(bottomInset, 20)
   const caption = quiet && Boolean(kicker || title)
   const plate = (
     <View style={[styles.plate, { height }]}>
@@ -45,18 +48,18 @@ export function HouseStill({
       />
       <View pointerEvents="none" style={quiet ? styles.quietScrim : styles.heroScrim} />
       {colour ? (
-        <View style={styles.patch} pointerEvents="none">
+        <View style={[styles.patch, { bottom: 20 + Math.max(bottomInset, 0) }]} pointerEvents="none">
           <HousePatch colour={colour} size={52} />
         </View>
       ) : null}
       {caption ? (
-        <View style={styles.caption} pointerEvents="none">
+        <View style={[styles.caption, { paddingBottom: dock }]} pointerEvents="none">
           {kicker ? <Text style={styles.kicker}>{kicker}</Text> : null}
           {title ? <Text style={styles.title}>{title}</Text> : null}
         </View>
       ) : null}
       {!quiet && (kicker || title || children) ? (
-        <View style={styles.heroCopy}>
+        <View style={[styles.heroCopy, { paddingBottom: 16 + dock }]}>
           {kicker ? <Text style={styles.heroKicker}>{kicker}</Text> : null}
           {title ? <Text style={styles.heroTitle}>{title}</Text> : null}
           {children}

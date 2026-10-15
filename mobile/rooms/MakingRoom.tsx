@@ -25,6 +25,7 @@ export function MakingRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNa
         title="The stitch."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 

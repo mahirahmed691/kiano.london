@@ -25,6 +25,7 @@ export function StoryRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         title="The house."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 

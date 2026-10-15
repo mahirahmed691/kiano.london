@@ -42,7 +42,7 @@ import { StoryRoom } from './rooms/StoryRoom'
 import { VisitRoom } from './rooms/VisitRoom'
 import { color } from './theme'
 
-void SystemUI.setBackgroundColorAsync(color.ivory)
+void SystemUI.setBackgroundColorAsync(color.night)
 
 
 function isAccountPath(pathname: string) {
@@ -71,6 +71,7 @@ function HouseApp() {
   const [wordOpen, setWordOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [headerHeight, setHeaderHeight] = useState(120)
+  const [chromeHeight, setChromeHeight] = useState(92)
   const [roomHeight, setRoomHeight] = useState(640)
   const nativePath = useRef('/')
   const canGoBack = useRef(false)
@@ -316,10 +317,10 @@ function HouseApp() {
       open,
       openWeb,
       roomHeight,
-      bottomInset: 0,
+      bottomInset: hideChrome ? insets.bottom : chromeHeight,
       onOverlay: setHeroOverlay,
     }),
-    [open, openWeb, roomHeight],
+    [chromeHeight, hideChrome, insets.bottom, open, openWeb, roomHeight],
   )
 
   const room = path.split('?')[0] || '/'
@@ -435,6 +436,7 @@ function HouseApp() {
           tab={tab}
           bag={bag}
           inset={insets.bottom}
+          onHeight={setChromeHeight}
           onHouse={() =>
             tap(() => {
               if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
