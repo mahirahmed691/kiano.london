@@ -21,7 +21,7 @@ export function RoomScroll({
   return (
     <ScrollView
       testID="house-scroll"
-      style={styles.scroll}
+      style={[styles.scroll, { height: heroHeight }]}
       contentContainerStyle={{ paddingBottom: bottomInset + 36 }}
       contentInsetAdjustmentBehavior="never"
       automaticallyAdjustContentInsets={false}

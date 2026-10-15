@@ -1,5 +1,12 @@
-import { type ReactNode } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { type ReactNode, useRef } from 'react'
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  type GestureResponderEvent,
+} from 'react-native'
 
 import { HouseImage } from './HouseImage'
 import { HousePatch } from './HousePatch'
@@ -70,24 +77,72 @@ export function HouseStill({
     </>
   )
 
+  const label = title ? `${kicker ?? ''} ${title}`.trim() : alt
+
   if (onPress) {
     return (
-      <Pressable
-        onPress={onPress}
-        accessibilityRole="button"
-        accessibilityLabel={title ? `${kicker ?? ''} ${title}`.trim() : alt}
-        unstable_pressDelay={80}
-        collapsable={false}
-        style={({ pressed }) => [plateStyle, pressed && styles.pressed]}
-      >
+      <StillTap onPress={onPress} label={label} style={plateStyle}>
         {body}
-      </Pressable>
+      </StillTap>
     )
   }
 
   return (
     <View style={plateStyle} collapsable={false}>
       {body}
+    </View>
+  )
+}
+
+function StillTap({
+  onPress,
+  label,
+  style,
+  children,
+}: {
+  onPress: () => void
+  label: string
+  style: object
+  children: ReactNode
+}) {
+  const origin = useRef({ x: 0, y: 0 })
+
+  if (Platform.OS === 'web') {
+    return (
+      <Pressable
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        unstable_pressDelay={80}
+        collapsable={false}
+        style={({ pressed }) => [style, pressed && styles.pressed]}
+      >
+        {children}
+      </Pressable>
+    )
+  }
+
+  const mark = (event: GestureResponderEvent) => {
+    origin.current = { x: event.nativeEvent.pageX, y: event.nativeEvent.pageY }
+  }
+  const release = (event: GestureResponderEvent) => {
+    const dx = Math.abs(event.nativeEvent.pageX - origin.current.x)
+    const dy = Math.abs(event.nativeEvent.pageY - origin.current.y)
+    if (dx < 12 && dy < 12) onPress()
+  }
+
+  return (
+    <View
+      accessible
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      collapsable={false}
+      style={style}
+      onStartShouldSetResponder={() => false}
+      onTouchStart={mark}
+      onTouchEnd={release}
+    >
+      {children}
     </View>
   )
 }
