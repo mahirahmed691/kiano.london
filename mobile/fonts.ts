@@ -1,4 +1,3 @@
-import { Amiri_400Regular } from '@expo-google-fonts/amiri'
 import {
   CormorantGaramond_300Light,
   CormorantGaramond_300Light_Italic,
@@ -14,7 +13,6 @@ export function useHouseFonts() {
     CormorantGaramond_400Regular,
     Jost_300Light,
     Jost_400Regular,
-    Amiri_400Regular,
   })
   return loaded || Boolean(error)
 }

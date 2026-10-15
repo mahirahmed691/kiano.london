@@ -16,7 +16,6 @@ export const type = {
   displayItalic: 'CormorantGaramond_300Light_Italic',
   sans: 'Jost_300Light',
   sansRegular: 'Jost_400Regular',
-  arabic: 'Amiri_400Regular',
 } as const
 
 export const space = {

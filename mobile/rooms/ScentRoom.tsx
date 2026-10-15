@@ -4,13 +4,12 @@ import { HouseImage } from '../HouseImage'
 import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
+import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
 import {
   creedIntent,
   getScent,
   movementLine,
   relatedScents,
-  scentArabic,
   scentComing,
   scentFamilies,
   scentPath,
@@ -107,8 +106,6 @@ export function ScentRoom({
           <Eyebrow>{scentComing}</Eyebrow>
           <View style={styles.space} />
           <Display size={36}>{`${named.name}.`}</Display>
-          <View style={styles.space} />
-          <Arabic>{scentArabic}</Arabic>
           <View style={styles.gap} />
           <Text style={styles.pull}>{named.line}</Text>
           <View style={styles.gap} />
@@ -192,8 +189,6 @@ export function ScentRoom({
       <View style={paper()}>
         <Eyebrow>{scentComing}</Eyebrow>
         <View style={styles.space} />
-        <Arabic>{scentArabic}</Arabic>
-        <View style={styles.gap} />
         <Display size={28}>Three names: Mayfair, Bond Street, Kensington.</Display>
         <View style={styles.gap} />
         <Body>{`The scent is coming. It is not yet of the bag. ${creedIntent}`}</Body>

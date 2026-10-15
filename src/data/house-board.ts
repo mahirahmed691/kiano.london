@@ -48,7 +48,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Visit',
     completion: 94,
     status: 'complete',
-    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. The house names a morning, or writes that it cannot be kept, on the account. A visit is not required; measure against a thobe you own. Arabic sits with the English on the letter. Confirmation letters wait on kiano.london DNS. Held, not booked. No calendar widget.',
+    note: 'The form writes the diary. When the house keeps the letter, mail does not have to open. The house names a morning, or writes that it cannot be kept, on the account. A visit is not required; measure against a thobe you own. Confirmation letters wait on kiano.london DNS. Held, not booked. No calendar widget.',
   },
   {
     name: 'Installable house',

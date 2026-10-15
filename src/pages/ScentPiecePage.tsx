@@ -7,7 +7,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { scentArabic, scentComing, getScent, movementLine, relatedScents } from '@/data/scent'
+import { scentComing, getScent, movementLine, relatedScents } from '@/data/scent'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -49,13 +49,6 @@ export function ScentPiecePage() {
               <Display as="h1" className="mt-4 text-4xl md:text-5xl">
                 {scent.name}.
               </Display>
-              <p
-                lang="ar"
-                dir="rtl"
-                className="mt-4 w-fit font-arabic text-2xl font-light text-ink-soft"
-              >
-                {scentArabic}
-              </p>
               <Lead className="mt-6 italic">{scent.line}</Lead>
               <Body className="mt-6">{scent.wear}</Body>
               <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">

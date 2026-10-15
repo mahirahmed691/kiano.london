@@ -95,7 +95,7 @@ export function visitLetterHtml(input: { name: string; piece: string; size: stri
   const named = `<p style="margin:16px 0 0;">You named ${piece}, ${size}.</p>`
   return letterFrame(
     'The letter is held.',
-    `<p style="margin:0;">${name}, the request is with the house. This is not a booking. We write when a morning can be kept.</p>${named}<p lang="ar" dir="rtl" style="margin:16px 0 0;">الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.</p>`,
+    `<p style="margin:0;">${name}, the request is with the house. This is not a booking. We write when a morning can be kept.</p>${named}`,
     `Questions: ${site.email}.`,
   )
 }
@@ -105,7 +105,6 @@ export function visitLetterText(input: { name: string; piece: string; size: stri
     `${input.name}, the request is with the house.`,
     'This is not a booking. We write when a morning can be kept.',
     `You named ${input.piece}, ${input.size}.`,
-    'الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.',
     `Questions: ${site.email}.`,
   ].join('\n\n')
 }

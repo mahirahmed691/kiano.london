@@ -32,7 +32,6 @@ export type ProductImage = {
 export type Product = {
   id: string
   name: string
-  arabicName: string
   cut: ProductCut
   colour: ProductColour
   swatch?: string
@@ -59,7 +58,6 @@ export const products: Product[] = [
   {
     id: 'layl-thobe',
     name: 'The Layl Thobe',
-    arabicName: 'ليل',
     cut: 'Thobe',
     colour: 'Black',
     swatch: clothSwatch.Black,
@@ -97,7 +95,6 @@ export const products: Product[] = [
   {
     id: 'hadid-thobe',
     name: 'The Hadīd Thobe',
-    arabicName: 'حديد',
     cut: 'Thobe',
     colour: 'Charcoal',
     swatch: clothSwatch.Charcoal,
@@ -135,7 +132,6 @@ export const products: Product[] = [
   {
     id: 'ghabar-thobe',
     name: 'The Ghabār Thobe',
-    arabicName: 'غبار',
     cut: 'Thobe',
     colour: 'Grey',
     swatch: clothSwatch.Grey,
@@ -173,7 +169,6 @@ export const products: Product[] = [
   {
     id: 'raml-thobe',
     name: 'The Raml Thobe',
-    arabicName: 'رمل',
     cut: 'Thobe',
     colour: 'Beige',
     swatch: clothSwatch.Beige,
@@ -210,7 +205,6 @@ export const products: Product[] = [
   {
     id: 'hajar-thobe',
     name: 'The Hajar Thobe',
-    arabicName: 'حجر',
     cut: 'Thobe',
     colour: 'Bone',
     swatch: clothSwatch.Bone,
@@ -248,7 +242,6 @@ export const products: Product[] = [
   {
     id: 'jubbah-black',
     name: 'Urban Emirati',
-    arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Black',
     swatch: clothSwatch.Black,
@@ -292,7 +285,6 @@ export const products: Product[] = [
   {
     id: 'jubbah-sand',
     name: 'Urban Emirati',
-    arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Cream',
     swatch: clothSwatch.Cream,
@@ -334,7 +326,6 @@ export const products: Product[] = [
   {
     id: 'jubbah-charcoal',
     name: 'Urban Emirati',
-    arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Stone Grey',
     swatch: clothSwatch['Stone Grey'],

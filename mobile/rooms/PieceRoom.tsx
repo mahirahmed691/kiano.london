@@ -6,7 +6,7 @@ import { HouseMotto } from '../HouseMotto'
 import { HousePatch } from '../HousePatch'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
+import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
 import {
   careLine,
   carriageLine,
@@ -14,7 +14,6 @@ import {
   colourVariants,
   getProduct,
   packingNote,
-  packingNoteAr,
   packingSteps,
   productLineName,
   productPath,
@@ -77,15 +76,12 @@ export function PieceRoom({
         title={productLineName(product)}
         height={roomHeight}
         priority
-      >
-        <Text style={styles.arabicIvory}>{product.arabicName}</Text>
-      </HouseStill>
+      />
 
       <View style={paper()}>
         <Eyebrow>{product.cloth}</Eyebrow>
         <View style={styles.space} />
         <Display size={36}>{productLineName(product)}</Display>
-        <Arabic>{product.arabicName}</Arabic>
         <View style={styles.gap} />
         <Body>{product.description}</Body>
         <Text style={styles.price}>{product.price}</Text>
@@ -147,7 +143,6 @@ export function PieceRoom({
         <Text style={styles.detail}>{product.composition}</Text>
         <Text style={styles.detail}>{careLine}</Text>
         <Text style={styles.detail}>{packingNote}</Text>
-        <Arabic>{packingNoteAr}</Arabic>
         <Text style={styles.detail}>{carriageLine}</Text>
       </View>
 
@@ -223,14 +218,6 @@ export function PieceRoom({
 const styles = StyleSheet.create({
   space: { height: 16 },
   gap: { height: 18 },
-  arabicIvory: {
-    marginTop: 16,
-    color: 'rgba(242, 235, 220, 0.72)',
-    fontFamily: type.arabic,
-    fontSize: 24,
-    writingDirection: 'rtl',
-    alignSelf: 'flex-start',
-  },
   price: {
     marginTop: 24,
     color: color.ink,

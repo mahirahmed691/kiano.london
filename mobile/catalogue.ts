@@ -32,7 +32,6 @@ export {
   notesJoin,
   relatedScents,
   scentNotes,
-  scentArabic,
   scentComing,
   scentFamilies,
   scentPath,
@@ -46,12 +45,10 @@ export { processSteps, materials, stitchStudies } from '../src/data/craftsmanshi
 export { site } from '../src/data/site'
 export { instagramPlates, type InstagramPlate } from '../src/data/instagram-plates'
 export { recentShopPlates, thisWeekShopPlate } from '../src/lib/instagram-plates'
-export { carriageLine, carriageLineAr } from '../src/data/shipping'
+export { carriageLine } from '../src/data/shipping'
 export {
   careLine,
-  careLineAr,
   packingNote,
-  packingNoteAr,
   packingSteps,
   sewnLabels,
 } from '../src/data/packing'

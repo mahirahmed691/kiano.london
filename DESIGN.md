@@ -4,7 +4,7 @@ Extracted and implemented as a restrained London house of the garment and the th
 
 ## Character
 
-Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty: more air than type, stills held as plates, motion slow enough to be ceremonial. Arabic sits with the English on garment names, size, packing, a visit, and the scent room; it is not the house mark. Keep it `w-fit` so RTL does not stretch the line across the plate.
+Luxurious, refined, modest, timeless, understated, editorial, craft-focused. The house speaks three words: Discipline, Craftsmanship, Purpose. A higher standard; built to last, worn with purpose. London is the name of the house, not a costume. Typography, proportion and photography carry the identity. Whitespace is structural, not empty: more air than type, stills held as plates, motion slow enough to be ceremonial. The house reads in English.
 
 ## Colour
 
@@ -26,7 +26,6 @@ No gradients as decoration. Hero overlays are photographic scrims only, tinted w
 
 - **Display:** Cormorant Garamond. The house lockup (KIANO) is Regular, 400. Headlines and pull quotes are Light, 300.
 - **Interface:** Jost, 300–400. Navigation, labels, body, and LONDON / EST. MMXXIV.
-- **Arabic:** Amiri, 400. Garment names, the scent room, and a second line on size, packing, and a visit. Not the house mark.
 
 Labels are 10–11px, uppercase, tracking `0.28em–0.36em`. Headlines are light weight with tight tracking and discretionary ligatures. The lockup is Regular, widely tracked, upright. Body is 15–16px, weight 300, leading near `1.85`, `max-width: 65ch` in practice.
 

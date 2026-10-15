@@ -28,14 +28,6 @@ export function Body({ children, ivory }: { children: string; ivory?: boolean })
   return <Text style={[styles.body, ivory && styles.ivorySoft]}>{children}</Text>
 }
 
-export function Arabic({ children }: { children: string }) {
-  return (
-    <Text style={styles.arabic}>
-      {children}
-    </Text>
-  )
-}
-
 export function OutlineButton({
   label,
   onPress,
@@ -118,13 +110,6 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     lineHeight: 28,
     maxWidth: 340,
-  },
-  arabic: {
-    color: color.inkSoft,
-    fontFamily: type.arabic,
-    fontSize: 18,
-    lineHeight: 28,
-    writingDirection: 'rtl',
   },
   outline: {
     alignSelf: 'flex-start',

@@ -62,9 +62,7 @@ export function LineRoom({
           title="The Collection."
           height={roomHeight}
           priority
-        >
-          <Text style={styles.arabic}>الثوب</Text>
-        </HouseStill>
+        />
       ) : (
         <HouseStill
           src="/images/jubbah-sand-02.jpg"
@@ -74,9 +72,7 @@ export function LineRoom({
           title="The Shop."
           height={roomHeight}
           priority
-        >
-          <Text style={styles.arabic}>الجُبَّة</Text>
-        </HouseStill>
+        />
       )}
 
       <View style={paper()}>
@@ -150,14 +146,6 @@ export function LineRoom({
 }
 
 const styles = StyleSheet.create({
-  arabic: {
-    marginTop: 18,
-    color: 'rgba(242, 235, 220, 0.7)',
-    fontFamily: type.arabic,
-    fontSize: 24,
-    writingDirection: 'rtl',
-    alignSelf: 'flex-start',
-  },
   gap: { height: 16 },
   meta: {
     marginTop: 36,

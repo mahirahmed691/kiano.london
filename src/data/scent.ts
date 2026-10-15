@@ -25,8 +25,6 @@ export type Scent = {
   movements: ScentMovement[]
 }
 
-export const scentArabic = 'العطر'
-
 export const scentComing = 'Coming'
 
 export const scentFamilies = [

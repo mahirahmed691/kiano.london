@@ -5,7 +5,7 @@ import { HouseImage } from '../HouseImage'
 import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
+import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
 import { creedIntent, plateCopy, site, sizeChart, thisWeekShopPlate } from '../catalogue'
 import { color, type } from '../theme'
 import { type HouseNav } from './nav'
@@ -94,8 +94,6 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
         <Body>
           The house keeps the letter in the diary. It is held, not a booking. The house names a morning, or writes that it cannot be kept.
         </Body>
-        <View style={styles.gap} />
-        <Arabic>الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.</Arabic>
         <View style={styles.actions}>
           <OutlineButton label="Write" onPress={() => openWeb('/visit')} />
           <GhostLink
@@ -121,8 +119,6 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
           ))}
         </View>
         <Body>Prices include VAT. Each thobe is made to order. A visit is not required.</Body>
-        <View style={styles.gap} />
-        <Arabic>الزيارة ليست واجبة.</Arabic>
       </View>
     </RoomScroll>
   )
