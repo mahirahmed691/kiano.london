@@ -77,6 +77,7 @@ export function PieceRoom({
         objectPosition={first.objectPosition ?? product.objectPosition}
         colour={product.colour}
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 

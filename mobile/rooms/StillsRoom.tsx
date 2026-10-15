@@ -53,6 +53,7 @@ export function StillsRoom({ open, roomHeight, bottomInset, onOverlay, plateId }
         title={focus.name}
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
         onPress={
           plateDestination(focus) ? () => open(plateDestination(focus)!) : undefined

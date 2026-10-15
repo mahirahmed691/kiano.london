@@ -107,6 +107,7 @@ export function LineRoom({
         kicker={collection ? 'The line' : 'The outer garment'}
         title={collection ? 'The Collection.' : 'The Shop.'}
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 

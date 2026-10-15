@@ -46,6 +46,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         title={week.name}
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
         onPress={() => open('/stills')}
       />
@@ -156,6 +157,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
           title={plate.name}
           quiet
           height={roomHeight}
+          bottomInset={bottomInset}
           onPress={() => open(plate.to ?? '/stills')}
         />
       ))}
@@ -168,6 +170,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         title="Closer."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         onPress={() => open('/craftsmanship')}
       />
 

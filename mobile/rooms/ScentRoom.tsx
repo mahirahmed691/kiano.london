@@ -102,6 +102,7 @@ export function ScentRoom({
           title={`${named.name}.`}
           quiet
           height={roomHeight}
+          bottomInset={bottomInset}
           priority
         />
 
@@ -186,6 +187,7 @@ export function ScentRoom({
         title="The Scent."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 
@@ -221,6 +223,7 @@ export function ScentRoom({
         title="The three."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
       />
 
       <View style={section()}>

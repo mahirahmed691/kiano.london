@@ -57,6 +57,7 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
         title="By appointment."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 

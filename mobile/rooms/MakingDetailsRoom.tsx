@@ -24,6 +24,7 @@ export function MakingDetailsRoom({ open, roomHeight, bottomInset, onOverlay }: 
         title="In detail."
         quiet
         height={roomHeight}
+        bottomInset={bottomInset}
         priority
       />
 

@@ -81,6 +81,8 @@ npm start
 
 Scan the QR code with Expo Go from the App Store (SDK 54). Native rooms share `src/data` with the site. Bag, account, and checkout still load [https://www.kiano.london](https://www.kiano.london).
 
+Store listing assets (1024 icon, iPhone and iPad screenshots, Play feature graphic) live in `mobile/store/`. Listing copy is `mobile/store.config.js`. How to upload and what still needs a person is in `mobile/store/LISTING.md`.
+
 ```bash
 npm run build
 npm run preview
@@ -134,3 +136,5 @@ Visual language, type, colour and spacing are recorded in `DESIGN.md`.
 | `npm run lint` | Oxlint |
 | `npm run db:migrate` | Create inventory, members, orders, list, webhook, and appointment tables |
 | `cd mobile && npm start` | Native house app (Expo Go, SDK 54) |
+| `cd mobile && npm run build:ios` | EAS iOS production archive and auto-submit to App Store Connect |
+| `cd mobile && npm run store:push` | Push App Store listing copy from `mobile/store.config.js` |

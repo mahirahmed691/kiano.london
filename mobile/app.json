@@ -44,7 +44,7 @@
     "android": {
       "package": "london.kiano.app",
       "adaptiveIcon": {
-        "backgroundColor": "#1B1714",
+        "backgroundColor": "#F2EBDC",
         "foregroundImage": "./assets/images/adaptive-icon.png"
       },
       "predictiveBackGestureEnabled": false
