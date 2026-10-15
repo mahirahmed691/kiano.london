@@ -6,7 +6,7 @@ Assets and copy to ship the Expo app (`london.kiano.app`, App Store Connect `680
 
 | File | Use |
 | --- | --- |
-| `icon-1024.png` | App Store icon. Same mark as `mobile/assets/images/icon.png`. Night `#25282B`, ivory K, RGB, no alpha, no rounded mask. |
+| `icon-1024.png` | App Store icon. Same mark as `mobile/assets/images/icon.png`. Interlocking KK in ink `#1B1714` on ivory `#F2EBDC`. RGB, no alpha, no rounded mask. Source: `icon-monogram.svg`. |
 | `icon-512.png` | Play Store high-res icon (512×512). |
 | `promotional/feature-graphic-1024x500.png` | Google Play feature graphic (the store “header”). Also usable as a Connect custom product-page still. |
 | `promotional/promotional-1920x1080.png` | 16:9 featuring / social / product-page header. |
@@ -66,4 +66,4 @@ Android is not in this EAS profile. Add FCM to EAS before a Play build. The feat
 
 ## Icon
 
-Apple applies the squircle. Do not round the PNG. Do not add alpha. The binary icon is the same 1024 file at `mobile/assets/images/icon.png`.
+Apple applies the squircle. Do not round the PNG. Do not add alpha. The binary icon is the same 1024 file at `mobile/assets/images/icon.png`: the interlocking KK, ink on ivory. The Android adaptive foreground is the KK on a transparent field; the adaptive background is ivory.
