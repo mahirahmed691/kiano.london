@@ -5,7 +5,7 @@ import { HouseCard } from '../HouseCard'
 import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Body, Display, GhostLink, OutlineButton } from '../HouseType'
+import { Arabic, Body, Display, GhostLink, OutlineButton } from '../HouseType'
 import {
   clothSwatch,
   creedIntent,
@@ -60,6 +60,7 @@ export function LineRoom({
           objectPosition="center 12%"
           kicker="Emirati thobe"
           title="The Collection."
+          quiet
           height={roomHeight}
           priority
         />
@@ -70,12 +71,15 @@ export function LineRoom({
           objectPosition="center 22%"
           kicker="The outer garment"
           title="The Shop."
+          quiet
           height={roomHeight}
           priority
         />
       )}
 
       <View style={paper()}>
+        <Arabic>{collection ? 'الثوب' : 'الجُبَّة'}</Arabic>
+        <View style={styles.space} />
         <Display size={28}>
           {collection
             ? 'The Collection.'
