@@ -22,29 +22,31 @@ export function WovenLabel({ size = 'sm', colour = 'Cream', className }: Props) 
 
   return (
     <div
-      className={cn('relative shrink-0', sizeClass[size], className)}
+      className={cn('shrink-0', sizeClass[size], className)}
       style={{ backgroundColor: cloth, color: thread }}
       aria-hidden="true"
       data-house-patch={colour}
     >
-      <svg
-        viewBox="0 0 100 100"
-        className="absolute inset-[9%] h-[82%] w-[82%]"
-        fill="none"
-        aria-hidden="true"
-      >
-        <rect
-          x="0.7"
-          y="0.7"
-          width="98.6"
-          height="98.6"
-          stroke="currentColor"
-          strokeWidth="1.15"
-          strokeDasharray="2.3 2.8"
-          strokeLinecap="butt"
-        />
-      </svg>
-      <Monogram decorative className="absolute inset-[22%] m-auto h-auto w-auto" />
+      <div className="relative size-full">
+        <svg
+          viewBox="0 0 100 100"
+          className="absolute inset-[9%] h-[82%] w-[82%]"
+          fill="none"
+          aria-hidden="true"
+        >
+          <rect
+            x="0.7"
+            y="0.7"
+            width="98.6"
+            height="98.6"
+            stroke="currentColor"
+            strokeWidth="1.15"
+            strokeDasharray="2.3 2.8"
+            strokeLinecap="butt"
+          />
+        </svg>
+        <Monogram decorative className="absolute inset-[22%] m-auto h-auto w-auto" />
+      </div>
     </div>
   )
 }
