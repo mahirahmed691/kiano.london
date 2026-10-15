@@ -83,6 +83,24 @@ export function HouseHeader({
       onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
     >
       <View style={styles.row} pointerEvents="box-none">
+        <View pointerEvents="box-none" style={styles.markSlot}>
+          <Pressable
+            onPress={onHome}
+            accessibilityRole="link"
+            accessibilityLabel="Kiano London, home"
+            testID="house-mark"
+            hitSlop={6}
+            style={({ pressed }) => [styles.mark, pressed && styles.pressed]}
+          >
+            <Image
+              source={require('./assets/images/kiano-london.png')}
+              style={styles.wordmark}
+              contentFit="contain"
+              accessibilityLabel="Kiano London"
+            />
+          </Pressable>
+        </View>
+
         <View style={styles.side}>
           <Pressable
             onPress={onToggle}
@@ -99,22 +117,6 @@ export function HouseHeader({
             </View>
           </Pressable>
         </View>
-
-        <Pressable
-          onPress={onHome}
-          accessibilityRole="link"
-          accessibilityLabel="Kiano London, home"
-          testID="house-mark"
-          hitSlop={6}
-          style={({ pressed }) => [styles.mark, pressed && styles.pressed]}
-        >
-          <Image
-            source={require('./assets/images/kiano-london.png')}
-            style={styles.wordmark}
-            contentFit="contain"
-            accessibilityLabel="Kiano London"
-          />
-        </Pressable>
 
         <View style={[styles.side, styles.sideEnd]}>
           <HouseWord count={word} inverted embedded onPress={onWord} />
@@ -168,6 +170,16 @@ const styles = StyleSheet.create({
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  markSlot: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
   },
   mark: {
     alignItems: 'center',
