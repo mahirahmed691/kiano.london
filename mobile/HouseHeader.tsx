@@ -119,7 +119,6 @@ export function HouseHeader({
         </View>
 
         <View style={[styles.side, styles.sideEnd]}>
-          <HouseWord count={word} inverted embedded onPress={onWord} />
           <View style={styles.clock} testID="house-clock">
             <HouseClock inverted />
           </View>
@@ -133,6 +132,7 @@ export function HouseHeader({
           >
             <Text style={[styles.bag, { color: ink }]}>{bag > 0 ? `Bag ${pad(bag)}` : 'Bag'}</Text>
           </Pressable>
+          <HouseWord count={word} inverted embedded onPress={onWord} />
         </View>
       </View>
     </View>
@@ -151,7 +151,8 @@ const styles = StyleSheet.create({
   },
   row: {
     minHeight: 64,
-    paddingHorizontal: 12,
+    paddingLeft: 12,
+    paddingRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },

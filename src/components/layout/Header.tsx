@@ -83,7 +83,6 @@ export function Header() {
             >
               Account
             </NavLink>
-            <WordLink className="text-[10px] uppercase tracking-[0.28em]" />
             <span className="flex items-center gap-3 md:gap-3.5">
               <HouseClock />
               <button
@@ -95,6 +94,7 @@ export function Header() {
                 Bag{count ? ` ${String(count).padStart(2, '0')}` : ''}
               </button>
             </span>
+            <WordLink className="text-[10px] uppercase tracking-[0.28em]" />
           </div>
         </div>
       </header>
