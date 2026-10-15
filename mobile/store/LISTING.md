@@ -36,6 +36,7 @@ Screenshot order for Connect (all RGB PNG, no alpha):
 - Support: https://www.kiano.london/visit
 - Marketing: https://www.kiano.london
 - Age: unrestricted web access is **yes** (Bag, Account, and the till are the live house in a WebView)
+- App Review: Mahir Ahmed, atelier@kiano.london, +44 7784 452854
 
 ## What still needs a person
 
@@ -49,18 +50,11 @@ Screenshot order for Connect (all RGB PNG, no alpha):
 
    First Apple key, if Connect is not already on the Expo project: `npx eas-cli credentials --platform ios`.
 
-2. **App Review phone.** Apple requires a contact number. Do not invent one in git. Export it once, then push metadata:
+2. **Screenshots.** EAS Metadata does not upload the PNGs. In App Store Connect → the 1.0.0 version → iPhone 6.9" and iPad 13", upload the files in `screenshots/` in the order above. iPhone 6.3" if Connect still asks.
 
-   ```bash
-   export APP_STORE_REVIEW_PHONE='+44 …'
-   cd mobile && npm run store:push
-   ```
+3. **Privacy nutrition labels** in Connect (Clerk account, Stripe till, Expo push). The privacy URL is already set.
 
-3. **Screenshots.** EAS Metadata does not upload the PNGs. In App Store Connect → the 1.0.0 version → iPhone 6.9" and iPad 13", upload the files in `screenshots/` in the order above. iPhone 6.3" if Connect still asks.
-
-4. **Privacy nutrition labels** in Connect (Clerk account, Stripe till, Expo push). The privacy URL is already set.
-
-5. **Submit for Review** after the production archive is in TestFlight. Auto-submit only lands the binary; it does not press Submit for Review.
+4. **Submit for Review** after the production archive is in TestFlight. Auto-submit only lands the binary; it does not press Submit for Review.
 
 Android is not in this EAS profile. Add FCM to EAS before a Play build. The feature graphic and 1024 icon are ready for Play when that build exists.
 

@@ -1,5 +1,5 @@
 const year = new Date().getFullYear()
-const phone = process.env.APP_STORE_REVIEW_PHONE?.trim()
+const phone = process.env.APP_STORE_REVIEW_PHONE?.trim() || '+44 7784 452854'
 
 const description = [
   'Kiano London is a London house of Urban Emirati garments.',
@@ -71,6 +71,7 @@ const apple = {
     firstName: 'Mahir',
     lastName: 'Ahmed',
     email: 'atelier@kiano.london',
+    phone,
     demoRequired: false,
     notes: [
       'Native rooms (House, Line, Stills, a piece, Scent, Visit, Story, Craftsmanship) do not require an account.',
@@ -79,10 +80,6 @@ const apple = {
       'ITSAppUsesNonExemptEncryption is false.',
     ].join('\n'),
   },
-}
-
-if (phone) {
-  apple.review.phone = phone
 }
 
 module.exports = {
