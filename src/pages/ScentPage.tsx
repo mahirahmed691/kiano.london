@@ -45,7 +45,7 @@ export function ScentPage() {
             <Eyebrow>{scentComing}</Eyebrow>
             <p className="mt-6 font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
               Three names: Mayfair, Bond Street, Kensington.
-            </Display>
+            </p>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
               The scent is coming. It is not yet of the bag. {creedIntent}
             </p>
