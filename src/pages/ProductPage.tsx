@@ -19,6 +19,7 @@ import { packingNote, packingNoteAr } from '@/data/packing'
 import { carriageLine, carriageLineAr } from '@/data/shipping'
 import { site } from '@/data/site'
 import {
+  clothSwatch,
   colourVariants,
   getProduct,
   productPath,
@@ -160,6 +161,7 @@ export function ProductPage() {
       />
       <PieceHero
         ref={heroRef}
+        colour={product.colour}
         image={
           product.gallery[0] ?? {
             src: product.image,
@@ -222,7 +224,7 @@ export function ProductPage() {
                               ? 'border-ink'
                               : 'border-rule opacity-70 hover:opacity-100',
                           )}
-                          style={{ backgroundColor: variant.swatch ?? '#1B1714' }}
+                          style={{ backgroundColor: variant.swatch ?? clothSwatch[variant.colour] }}
                         />
                       ))}
                     </div>
@@ -309,6 +311,7 @@ export function ProductPage() {
                 <ProductPlate
                   key={`${image.src}-${index + 1}`}
                   image={image}
+                  colour={product.colour}
                   onLook={() => setLooking(index + 1)}
                 />
               ))}
@@ -323,6 +326,7 @@ export function ProductPage() {
                     objectPosition: product.objectPosition,
                   }
                 }
+                colour={product.colour}
                 first
                 onLook={() => setLooking(0)}
               />
@@ -337,11 +341,11 @@ export function ProductPage() {
             <Reveal className="lg:col-span-4">
               <Eyebrow>The nape</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">The woven mark.</Display>
-              <WovenLabel size="lg" className="mt-10" />
+              <WovenLabel size="lg" colour={product.colour} className="mt-10" />
               <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
-                The lockup is woven, not printed — KIANO, London, Est. MMXXIV — and set
-                at the nape by hand after the last press. Size is a separate tab. Care
-                sits at the side seam. The same mark is on every thobe and every garment.
+                The square mark is sewn, not printed — the interlocking KK, in the cloth
+                of the piece — and set at the nape by hand after the last press. Size is
+                a separate tab. Care sits at the side seam.
               </p>
             </Reveal>
             <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">

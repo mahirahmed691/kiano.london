@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { HouseMark } from '@/components/brand/HouseMark'
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Container } from '@/components/ui/Container'
 import { Rule } from '@/components/ui/Rule'
@@ -15,7 +15,9 @@ export function Footer() {
     <footer className="scheme-dark bg-night text-ivory">
       <Container className="pt-28 pb-24 md:pt-40 md:pb-32">
         <div className="flex flex-col items-center text-center">
-          <HouseMark compact={false} className="text-bronze" />
+          <Link to="/" aria-label={`${site.fullName}, home`}>
+            <WovenLabel size="lg" />
+          </Link>
           <p className="mt-6 max-w-xs text-[14px] font-light leading-[1.85] text-ivory/65">
             {site.tagline}
           </p>

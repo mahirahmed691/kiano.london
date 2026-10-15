@@ -37,7 +37,11 @@ function CardImage({ product }: { product: Product }) {
           style={hover.objectPosition ? { objectPosition: hover.objectPosition } : undefined}
         />
       ) : null}
-      <WovenLabel size="sm" className="pointer-events-none absolute bottom-3 left-3 z-10" />
+      <WovenLabel
+        size="sm"
+        colour={product.colour}
+        className="pointer-events-none absolute bottom-3 left-3 z-10"
+      />
     </div>
   )
 }

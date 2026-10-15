@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Lockup } from '@/components/brand/Lockup'
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
 import { houseMenuAccount, houseMenuHome, houseMenuTree } from '@/data/house-menu'
+import { colourOfPiece } from '@/data/products'
 import { thisWeekShopPlate } from '@/lib/instagram-plates'
 import { useInstalledHouse } from '@/lib/shell'
 import { cn } from '@/lib/cn'
@@ -141,6 +142,11 @@ export function MobileNav({ open, onClose }: Props) {
               className="h-full w-full object-cover"
               style={{ objectPosition: week.objectPosition }}
             />
+            <WovenLabel
+              size="sm"
+              colour={colourOfPiece(week.id)}
+              className="pointer-events-none absolute bottom-3 left-3 z-10"
+            />
           </span>
           <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
             {week.place === week.name ? 'This week' : `This week · ${week.place}`}
@@ -149,8 +155,8 @@ export function MobileNav({ open, onClose }: Props) {
             {week.name}
           </span>
         </NavLink>
-        <div className="mt-10 text-ink">
-          <Lockup compact align="start" />
+        <div className="mt-10">
+          <WovenLabel size="md" />
         </div>
       </nav>
     </div>

@@ -32,40 +32,42 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-50 bg-black text-ivory"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="relative grid h-16 grid-cols-[minmax(0,1.35fr)_auto_minmax(0,1fr)] items-center border-b border-ivory/10 px-5 md:h-[4.5rem] md:px-12 lg:px-16">
-          <MegaMenu key={pathname} inverted installed={installed} />
+        <div className="relative flex h-16 items-center justify-between border-b border-ivory/10 px-5 md:h-[4.5rem] md:px-12 lg:px-16">
+          <Wordmark className="pointer-events-auto absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
 
-          <button
-            type="button"
-            className={cn(
-              'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
-              !installed && 'md:hidden',
-            )}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-navigation"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMenuOpen((value) => !value)}
-          >
-            <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
-            <span className="relative block h-3 w-6">
-              <span
-                className={cn(
-                  'absolute left-0 block h-px w-6 bg-current transition-transform duration-300',
-                  menuOpen ? 'top-1.5 rotate-45' : 'top-0',
-                )}
-              />
-              <span
-                className={cn(
-                  'absolute left-0 block h-px w-6 bg-current transition-transform duration-300',
-                  menuOpen ? 'top-1.5 -rotate-45' : 'top-3',
-                )}
-              />
-            </span>
-          </button>
+          <div className="flex min-w-0 items-center">
+            <MegaMenu key={pathname} inverted installed={installed} />
 
-          <Wordmark />
+            <button
+              type="button"
+              className={cn(
+                'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
+                !installed && 'md:hidden',
+              )}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMenuOpen((value) => !value)}
+            >
+              <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+              <span className="relative block h-3 w-6">
+                <span
+                  className={cn(
+                    'absolute left-0 block h-px w-6 bg-current transition-transform duration-300',
+                    menuOpen ? 'top-1.5 rotate-45' : 'top-0',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'absolute left-0 block h-px w-6 bg-current transition-transform duration-300',
+                    menuOpen ? 'top-1.5 -rotate-45' : 'top-3',
+                  )}
+                />
+              </span>
+            </button>
+          </div>
 
-          <div className="flex items-center justify-end gap-6 lg:gap-9">
+          <div className="relative z-20 flex items-center justify-end gap-6 lg:gap-9">
             <AdminNavLink
               className={cn(
                 'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',

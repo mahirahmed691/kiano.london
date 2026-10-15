@@ -1,8 +1,9 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from './HouseImage'
-import { HouseLockup } from './HouseLockup'
+import { HousePatch } from './HousePatch'
 import {
+  colourOfPiece,
   houseMenuAccount,
   houseMenuHome,
   houseMenuTree,
@@ -142,6 +143,9 @@ export function HouseMenu({
         >
           <View style={styles.plate}>
             <HouseImage src={week.src} alt={week.alt} objectPosition={week.objectPosition} style={styles.still} />
+            <View style={styles.weekPatch} pointerEvents="none">
+              <HousePatch colour={colourOfPiece(week.id)} size={52} />
+            </View>
           </View>
           <Text style={styles.weekKicker}>
             {week.place === week.name ? 'This week' : `This week · ${week.place}`}
@@ -150,7 +154,7 @@ export function HouseMenu({
         </Pressable>
 
         <View style={styles.lockup} testID="house-menu-lockup">
-          <HouseLockup compact tone="ink" />
+          <HousePatch size={72} />
         </View>
       </ScrollView>
     </View>
@@ -215,9 +219,15 @@ const styles = StyleSheet.create({
     maxWidth: 224,
   },
   plate: {
+    position: 'relative',
     aspectRatio: 4 / 5,
     overflow: 'hidden',
     backgroundColor: color.ivoryDeep,
+  },
+  weekPatch: {
+    position: 'absolute',
+    left: 10,
+    bottom: 10,
   },
   still: {
     width: '100%',

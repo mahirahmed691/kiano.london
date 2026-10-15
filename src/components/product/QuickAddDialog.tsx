@@ -4,6 +4,7 @@ import { SizeGuide } from '@/components/product/SizeGuide'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Display, Eyebrow } from '@/components/ui/Heading'
 import {
+  clothSwatch,
   colourVariants,
   productPath,
   thobeSizes,
@@ -130,7 +131,7 @@ export function QuickAddDialog() {
                               ? 'border-ink'
                               : 'border-rule opacity-70 hover:opacity-100',
                           )}
-                          style={{ backgroundColor: variant.swatch ?? '#1B1714' }}
+                          style={{ backgroundColor: variant.swatch ?? clothSwatch[variant.colour] }}
                           onClick={() => {
                             setCurrent(variant)
                           }}

@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from './HouseImage'
+import { HousePatch } from './HousePatch'
 import { type Product } from './catalogue'
 import { color, type } from './theme'
 
@@ -26,8 +27,7 @@ export function HouseCard({ product, index, onPress }: Props) {
           style={styles.image}
         />
         <View style={styles.label} pointerEvents="none">
-          <Text style={styles.woven}>KIANO</Text>
-          <Text style={styles.wovenCity}>LONDON</Text>
+          <HousePatch colour={product.colour} size={52} />
         </View>
       </View>
       <View style={styles.meta}>
@@ -62,26 +62,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     bottom: 10,
-    width: 64,
-    paddingVertical: 10,
-    paddingHorizontal: 6,
-    alignItems: 'center',
-    backgroundColor: color.night,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(184, 160, 129, 0.35)',
-  },
-  woven: {
-    color: color.bronze,
-    fontFamily: type.display,
-    fontSize: 9,
-    letterSpacing: 2.4,
-  },
-  wovenCity: {
-    marginTop: 3,
-    color: color.bronze,
-    fontFamily: type.sansRegular,
-    fontSize: 6,
-    letterSpacing: 1.8,
   },
   meta: {
     marginTop: 16,

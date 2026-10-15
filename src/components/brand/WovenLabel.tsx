@@ -1,41 +1,52 @@
-import { Lockup } from '@/components/brand/Lockup'
+import { Monogram } from '@/components/brand/Monogram'
+import { clothSwatch, clothThread, type ProductColour } from '@/data/products'
 import { cn } from '@/lib/cn'
 
 type Size = 'sm' | 'md' | 'lg'
 
 type Props = {
   size?: Size
-  inverted?: boolean
+  colour?: ProductColour
   className?: string
 }
 
 const sizeClass: Record<Size, string> = {
-  sm: 'w-[4.75rem] px-1.5 py-2.5',
-  md: 'w-[7.75rem] px-3 py-3.5',
-  lg: 'w-[13rem] px-5 py-7',
+  sm: 'h-[3.25rem] w-[3.25rem]',
+  md: 'h-[4.5rem] w-[4.5rem]',
+  lg: 'h-[6.5rem] w-[6.5rem]',
 }
 
-export function WovenLabel({ size = 'sm', inverted = true, className }: Props) {
+export function WovenLabel({ size = 'sm', colour = 'Cream', className }: Props) {
+  const cloth = clothSwatch[colour]
+  const thread = clothThread
+
   return (
     <div
-      className={cn(
-        'flex flex-col items-center justify-center border',
-        inverted ? 'border-bronze/35 bg-night text-bronze' : 'border-ink/20 bg-ivory text-ink',
-        sizeClass[size],
-        className,
-      )}
+      className={cn('shrink-0', sizeClass[size], className)}
+      style={{ backgroundColor: cloth, color: thread }}
       aria-hidden="true"
+      data-house-patch={colour}
     >
-      <Lockup
-        compact={size !== 'lg'}
-        className={
-          size === 'sm'
-            ? 'scale-[0.72] origin-center'
-            : size === 'md'
-              ? 'scale-[0.9] origin-center'
-              : undefined
-        }
-      />
+      <div className="relative size-full">
+        <svg
+          viewBox="0 0 100 100"
+          className="absolute inset-[9%] h-[82%] w-[82%]"
+          fill="none"
+          aria-hidden="true"
+        >
+          <rect
+            x="0.7"
+            y="0.7"
+            width="98.6"
+            height="98.6"
+            stroke="currentColor"
+            strokeWidth="1.15"
+            strokeDasharray="2.3 2.8"
+            strokeLinecap="butt"
+          />
+        </svg>
+        <Monogram decorative className="absolute inset-[22%] m-auto h-auto w-auto" />
+      </div>
     </div>
   )
 }
