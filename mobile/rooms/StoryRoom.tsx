@@ -19,7 +19,7 @@ export function StoryRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
     >
       <HouseStill
         src="/images/atelier-rail.jpg"
-        alt="The house line on the rail: black, sand, and bone."
+        alt="The house line on the rail."
         objectPosition="18% 40%"
         kicker={creedStandard}
         title="The house."
@@ -30,7 +30,7 @@ export function StoryRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
       <View style={paper()}>
         <HouseImage
           src="/images/cloth-giza.jpg"
-          alt="Extra-long staple cotton unrolled, before it is chalked."
+          alt="Cloth unrolled, before it is chalked."
           objectPosition="center 40%"
           style={styles.split}
         />
@@ -44,7 +44,7 @@ export function StoryRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         </Body>
         <View style={styles.gap} />
         <Body>
-          The name is Kiano London. It is not a translation, and not a legend taken from elsewhere. We remain a single address and the same silhouette: ankle, shoulder, placket concealed.
+          The name is Kiano London. It is not a translation, and not a legend taken from elsewhere. London is the house. The silhouette stays the same: ankle, shoulder, placket concealed.
         </Body>
       </View>
 

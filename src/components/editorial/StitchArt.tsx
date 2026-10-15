@@ -25,10 +25,10 @@ const plates = [
   },
   {
     id: 'keyhole',
-    title: 'Silk buttonhole',
-    caption: 'Silk twist around the opening. The purl sits proud of the cloth.',
+    title: 'The buttonhole',
+    caption: 'The stitch around the opening. The purl sits proud of the cloth.',
     src: '/images/stitch-buttonhole.jpg',
-    alt: 'A hand-worked silk keyhole buttonhole, the purl catching the light.',
+    alt: 'A buttonhole set into the placket, the stitch catching the light.',
   },
 ] as const
 
@@ -39,9 +39,9 @@ export function StitchArt() {
         <Eyebrow>The grammar</Eyebrow>
         <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, and the hand.</Display>
         <Body className="mt-6">
-          A thobe is a column of cloth. The art is what holds it: a felled seam that
-          does not show, a pad stitch that shapes the neck, a buttonhole worked in silk
-          so the placket closes without announcing itself.
+          A thobe is a column of cloth. The art is what holds it: a seam that does
+          not show, a stitch that shapes the neck, a placket that closes without
+          announcing itself.
         </Body>
       </Reveal>
 

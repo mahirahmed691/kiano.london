@@ -23,9 +23,9 @@ export const houseCreed = [
   },
   {
     word: 'Craftsmanship',
-    line: 'Felled, pad-stitched, finished from the inside. Nothing fused. The work you are not meant to see.',
+    line: 'Finished from the inside. The work you are not meant to see.',
     image: '/images/worsted-wool.jpg',
-    imageAlt: 'A needle on charcoal worsted: the stitch that holds a thobe.',
+    imageAlt: 'A needle on charcoal cloth: the stitch that holds the column.',
     objectPosition: 'center',
   },
   {

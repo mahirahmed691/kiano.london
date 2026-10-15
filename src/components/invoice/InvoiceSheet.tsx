@@ -31,9 +31,8 @@ export function InvoiceSheet({ invoice, reference }: Props) {
           <p className="text-[11px] uppercase tracking-[0.28em] text-stone">Tax invoice</p>
           <h1 className="mt-3 font-display text-4xl font-light md:text-5xl">{site.fullName}</h1>
           <p className="mt-4 text-[15px] font-light leading-relaxed text-ink-soft">
-            {site.address}
+            {site.city}
             <span className="mt-1 block">{site.email}</span>
-            <span className="block">{site.telephone}</span>
           </p>
         </div>
         <div className="text-right">

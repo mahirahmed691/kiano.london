@@ -34,10 +34,9 @@ export function CraftsmanshipDetailsPage() {
               Seam, stitch, fastening, the unseen.
             </Display>
             <Body className="mx-auto mt-6">
-              {creedSpoken} A thobe is judged from ten paces. It is made in millimetres.
-              These are not selling points. They are the reasons a thobe can
-              be recut, relined and worn again. We write them down so they are not
-              treated as folklore.
+              {creedSpoken} A column is judged from ten paces. It is made in millimetres.
+              These are not selling points. They are the reasons a piece can be worn
+              again. We write them down so they are not treated as folklore.
             </Body>
           </Reveal>
         </Container>
@@ -73,7 +72,7 @@ export function CraftsmanshipDetailsPage() {
               <Eyebrow>Continue</Eyebrow>
               <Display className="mt-4 text-4xl md:text-5xl">From the block to the rail.</Display>
               <Body className="mt-6">
-                See the thobes these methods produce, or return to the four acts of
+                See the line these methods produce, or return to the four acts of
                 the making.
               </Body>
             </Reveal>

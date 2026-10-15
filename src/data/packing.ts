@@ -20,7 +20,7 @@ export const packingSteps = [
     src: '/images/pack-tissue.jpg',
     alt: 'Unscented cream tissue around a column of white cloth.',
     objectPosition: 'center 42%',
-    copy: 'Unscented, acid-free tissue. No perfume, no sachet. The piece should smell of cotton or wool.',
+    copy: 'Unscented, acid-free tissue. No perfume, no sachet. The piece should smell of the cloth.',
   },
   {
     number: '03',
@@ -36,7 +36,7 @@ export const sewnLabels = [
   {
     number: '01',
     title: 'Neck',
-    copy: 'The woven mark: KIANO, London, Est. MMXXIV. Set at the nape by hand after the last press.',
+    copy: 'The square mark — the interlocking KK, sewn in the cloth of the piece — set at the nape after the last press.',
   },
   {
     number: '02',

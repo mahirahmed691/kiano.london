@@ -224,7 +224,7 @@ export function workWeekLetterHtml(input: { week: string }) {
   const week = escapeHtml(input.week)
   return letterFrame(
     'A week is named.',
-    `<p style="margin:0;">The house names the week of ${week} for this cut. Four to eight weeks is the usual wait; this is the week the house can keep.</p>`,
+    `<p style="margin:0;">The house names the week of ${week} for this cut. This is the week the house can keep.</p>`,
     `Questions: ${site.email}.`,
   )
 }
@@ -232,7 +232,7 @@ export function workWeekLetterHtml(input: { week: string }) {
 export function workWeekLetterText(input: { week: string }) {
   return [
     `The house names the week of ${input.week} for this cut.`,
-    'Four to eight weeks is the usual wait; this is the week the house can keep.',
+    'This is the week the house can keep.',
     `Questions: ${site.email}.`,
   ].join('\n\n')
 }
@@ -344,7 +344,7 @@ export function reservationLetterHtml(input: {
     .join('')
   return letterFrame(
     'The cut is reserved.',
-    `<p style="margin:0;">${open}</p><ul style="margin:16px 0 0;padding:0;list-style:none;">${list}</ul><p style="margin:16px 0 0;">Reference ${reference}.</p><p style="margin:16px 0 0;">Cloth is cut from the house block in four to eight weeks.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">A record of the cut</a> · <a href="${cardUrl}" style="color:#1B1714;">The house card</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
+    `<p style="margin:0;">${open}</p><ul style="margin:16px 0 0;padding:0;list-style:none;">${list}</ul><p style="margin:16px 0 0;">Reference ${reference}.</p><p style="margin:16px 0 0;">Cloth is cut from the house block. Made to order.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">A record of the cut</a> · <a href="${cardUrl}" style="color:#1B1714;">The house card</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
     `Questions: ${site.email}.`,
   )
 }
@@ -362,7 +362,7 @@ export function reservationLetterText(input: {
     input.name.trim() ? `${input.name.trim()}, payment holds the cloth.` : 'Payment holds the cloth.',
     cuts.map((line) => `${line}.`).join('\n'),
     `Reference ${input.reference}.`,
-    'Cloth is cut from the house block in four to eight weeks.',
+    'Cloth is cut from the house block. Made to order.',
     `A record of the cut: ${input.invoiceUrl}`,
     `The house card: ${input.cardUrl}`,
     `Account: ${input.accountUrl}`,

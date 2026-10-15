@@ -9,13 +9,10 @@ import { Body, Display, GhostLink, OutlineButton } from '../HouseType'
 import {
   clothSwatch,
   creedIntent,
-  creedMotto,
   jubbahColours,
   jubbahs,
-  productColours,
   productLineName,
   productPath,
-  thobes,
   type ProductColour,
 } from '../catalogue'
 import { color, type } from '../theme'
@@ -35,16 +32,14 @@ export function LineRoom({
   collection,
 }: Props) {
   const [filter, setFilter] = useState<Filter>('All')
-  const pieces = collection ? thobes : jubbahs
-  const colours = collection ? productColours : jubbahColours
+  const pieces = jubbahs
+  const colours = jubbahColours
   const shown = useMemo(
     () => (filter === 'All' ? pieces : pieces.filter((item) => item.colour === filter)),
     [filter, pieces],
   )
 
-  const countLabel = collection
-    ? `${String(shown.length).padStart(2, '0')} ${shown.length === 1 ? 'piece' : 'pieces'}`
-    : `${String(shown.length).padStart(2, '0')} ${shown.length === 1 ? 'colour' : 'colours'}`
+  const countLabel = `${String(shown.length).padStart(2, '0')} ${shown.length === 1 ? 'colour' : 'colours'}`
 
   return (
     <RoomScroll
@@ -53,45 +48,27 @@ export function LineRoom({
       heroHeight={roomHeight}
       onOverlay={onOverlay}
     >
-      {collection ? (
-        <HouseStill
-          src="/images/thobe-layl.jpg"
-          alt="The Layl thobe: matte black, band collar, hem to the ankle."
-          objectPosition="center 12%"
-          kicker="Emirati thobe"
-          title="The Collection."
-          height={roomHeight}
-          priority
-        />
-      ) : (
-        <HouseStill
-          src="/images/jubbah-sand-02.jpg"
-          alt="Urban Emirati in cream at rest, the cloth to the ankle."
-          objectPosition="center 22%"
-          kicker="The outer garment"
-          title="The Shop."
-          height={roomHeight}
-          priority
-        />
-      )}
+      <HouseStill
+        src={collection ? '/images/jubbah-sand.jpg' : '/images/jubbah-sand-02.jpg'}
+        alt="Urban Emirati in cream at rest, the cloth to the ankle."
+        objectPosition={collection ? 'center 8%' : 'center 22%'}
+        kicker={collection ? 'The line' : 'The outer garment'}
+        title={collection ? 'The Collection.' : 'The Shop.'}
+        height={roomHeight}
+        priority
+      />
 
       <View style={paper()}>
         <Display size={28}>
-          {collection
-            ? 'The Collection.'
-            : jubbahs.map((piece) => productLineName(piece)).join('\n')}
+          {jubbahs.map((piece) => productLineName(piece)).join('\n')}
         </Display>
         <View style={styles.gap} />
         <Body>
-          {collection
-            ? `Black, charcoal, grey, beige and bone. ${creedMotto}`
-            : `Cotton viscose mix, light GSM. Five sizes, 52 to 60. ${creedIntent}`}
+          {`Cotton viscose mix, light GSM. Five sizes, 52 to 60. ${creedIntent}`}
         </Body>
         <View style={styles.meta}>
           <Text style={styles.count}>{countLabel}</Text>
-          <Text style={styles.note}>
-            Sizes 52–60. Made to order, four to eight weeks.
-          </Text>
+          <Text style={styles.note}>Sizes 52–60. Three colourways. Made to order.</Text>
         </View>
         <View style={styles.filters}>
           {(['All', ...colours] as Filter[]).map((option) => (
@@ -115,7 +92,7 @@ export function LineRoom({
           ))}
         </View>
         {shown.length === 0 ? (
-          <Body>{collection ? 'No thobe in this colour.' : 'No piece in this colour.'}</Body>
+          <Body>No piece in this colour.</Body>
         ) : (
           shown.map((product) => (
             <HouseCard
@@ -127,15 +104,13 @@ export function LineRoom({
         )}
         <View style={styles.foot}>
           <Body>
-            {collection
-              ? 'The garment is the outer column; the thobe is the one beneath.'
-              : 'The house also keeps the thobe. This garment is the outer column; the thobe is the one beneath.'}
+            Each piece leaves unscented, in a garment bag and a rigid box. The scent is coming, as its own line.
           </Body>
           <View style={styles.gap} />
           {collection ? (
             <GhostLink label="The Shop" onPress={() => open('/shop')} />
           ) : (
-            <OutlineButton label="The thobes" onPress={() => open('/collection')} />
+            <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />
           )}
           <GhostLink label="The Scent" onPress={() => open('/scent')} />
         </View>

@@ -57,7 +57,7 @@ export function ShopPage() {
               {String(shown.length).padStart(2, '0')} {shown.length === 1 ? 'colour' : 'colours'}
             </p>
             <p className="text-[13px] font-light text-stone">
-              Sizes 52–60. Three colourways. Made to order, four to eight weeks.
+              Sizes 52–60. Three colourways. Made to order.
             </p>
           </div>
 
@@ -117,12 +117,11 @@ export function ShopPage() {
           <Rule className="mt-20 md:mt-28" />
           <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="max-w-lg text-[14px] font-light leading-relaxed text-stone">
-              The house also keeps the thobe. This garment is the outer column; the thobe
-              is the one beneath. Each piece leaves unscented, in a garment bag and a
-              rigid box. The scent is coming, as its own line.
+              Each piece leaves unscented, in a garment bag and a rigid box. The scent
+              is coming, as its own line.
             </p>
             <div className="flex flex-wrap items-center gap-6">
-              <Button to="/collection">The thobes</Button>
+              <Button to="/visit">Visit by appointment</Button>
               <TextLink to="/scent">The Scent</TextLink>
             </div>
           </div>

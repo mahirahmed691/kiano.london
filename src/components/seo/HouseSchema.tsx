@@ -8,12 +8,9 @@ export function HouseSchema() {
     name: site.fullName,
     url: 'https://www.kiano.london',
     email: site.email,
-    telephone: site.telephone,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '8 Carlos Place',
-      addressLocality: 'London',
-      postalCode: 'W1K 3AS',
+      addressLocality: site.city,
       addressCountry: 'GB',
     },
     ...(social.length ? { sameAs: social.map((item) => item.href) } : {}),

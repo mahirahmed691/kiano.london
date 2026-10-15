@@ -24,7 +24,7 @@ const visitSteps = [
   {
     number: '03',
     title: 'After',
-    copy: 'The piece is made from the house block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
+    copy: 'The piece is made from the house block. A second visit for a fitting if the garment asks for one.',
   },
 ]
 
@@ -103,14 +103,8 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
             }}
           />
         </View>
-        <Text style={styles.kicker}>Address</Text>
-        <Body>{`${site.address}\n${site.hours}\n${site.telephone}`}</Body>
-        <GhostLink
-          label="Telephone"
-          onPress={() => {
-            void Linking.openURL(site.telephoneHref)
-          }}
-        />
+        <Text style={styles.kicker}>The house</Text>
+        <Body>{`${site.city}\n${site.hours}`}</Body>
         <View style={styles.sizes}>
           {sizeChart.map((row) => (
             <Text key={row.size} style={styles.sizeRow}>
@@ -118,7 +112,7 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
             </Text>
           ))}
         </View>
-        <Body>Prices include VAT. Each thobe is made to order. A visit is not required.</Body>
+        <Body>Prices include VAT. Each piece is made to order. A visit is not required.</Body>
       </View>
     </RoomScroll>
   )

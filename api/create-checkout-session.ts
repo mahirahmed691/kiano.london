@@ -170,10 +170,6 @@ async function createSession(request: Request) {
             display_name: 'Carriage, made to order',
             type: 'fixed_amount',
             fixed_amount: { amount: 0, currency: 'gbp' },
-            delivery_estimate: {
-              minimum: { unit: 'week', value: 4 },
-              maximum: { unit: 'week', value: 8 },
-            },
           },
         },
       ],
@@ -182,7 +178,7 @@ async function createSession(request: Request) {
       integration_identifier: 'kiano_bag_xhwpqelm',
       custom_text: {
         submit: {
-          message: 'Payment reserves the cut. Cloth is cut in four to eight weeks.',
+          message: 'Payment reserves the cut. Made to order.',
         },
         shipping_address: {
           message: 'Confirm where the finished piece should be sent.',

@@ -18,7 +18,7 @@ export function CraftsmanshipPage() {
     <>
       <Hero
         image="/images/worsted-wool.jpg"
-        imageAlt="A needle on charcoal worsted: the stitch that holds a thobe."
+        imageAlt="A needle on charcoal cloth: the stitch that holds the column."
         objectPosition="center"
         kicker="Craftsmanship"
         title="The art of the stitch."
@@ -44,10 +44,9 @@ export function CraftsmanshipPage() {
               The thobe is built, not assembled.
             </Display>
             <Body className="mt-6">
-              {creedSpoken} Cloth. Pattern. Stitch. Finish. Every thobe is built in that
-              order. We do not fuse a collar because it is faster. We do not send buttonholes
-              out. The methods are older than this house; we keep them because they still
-              make a better garment. {creedIntent}
+              {creedSpoken} Cloth. Pattern. Stitch. Finish. Every piece is built in that
+              order. We do not fuse a collar because it is faster. The methods are kept
+              because they still make a better garment. {creedIntent}
             </Body>
           </Reveal>
 
@@ -79,7 +78,7 @@ export function CraftsmanshipPage() {
             <Display className="mt-4 text-4xl md:text-5xl">Stitch, seam, fastening, pocket.</Display>
             <Body className="mt-6">
               The photographs are of the work itself: not a campaign, a close look at
-              how a thobe is held together.
+              how the column is held together.
             </Body>
           </Reveal>
           <div className="grid gap-8 sm:grid-cols-2">
@@ -138,9 +137,8 @@ export function CraftsmanshipPage() {
               A closer look at the making.
             </Display>
             <Body className="mt-6">
-              The felled seam, the hand stitch, the concealed placket, the interior
-              pocket. Four details that decide whether a thobe is still itself a
-              decade later. {creedMotto}
+              The seam, the neck, the concealed placket, the nape. Four details that
+              decide whether a piece is still itself a decade later. {creedMotto}
             </Body>
             <div className="mt-8">
               <TextLink to="/craftsmanship-details">Read the details</TextLink>

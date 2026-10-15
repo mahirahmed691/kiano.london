@@ -203,8 +203,7 @@ export function OrderConfirmedPage() {
             </Display>
             <Body className="mt-8">
               Payment is held. Cloth is reserved, not yet on the table. The account will show when
-              it is being cut, when it is packed, and when it has left. Four to eight weeks is the
-              usual wait.{' '}
+              it is being cut, when it is packed, and when it has left. Made to order.{' '}
               {packingNote}
             </Body>
             {order?.customerEmail ? (

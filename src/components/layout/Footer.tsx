@@ -80,15 +80,13 @@ export function Footer() {
           <div>
             <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">Visit</p>
             <address className="mt-5 not-italic text-[14px] font-light leading-[1.85] text-ivory/80">
-              {site.address}
+              {site.city}
               <br />
               {site.hours}
               <br />
               <a className="mt-2 inline-block" href={`mailto:${site.email}`}>
                 {site.email}
               </a>
-              <br />
-              <a href={site.telephoneHref}>{site.telephone}</a>
             </address>
           </div>
 

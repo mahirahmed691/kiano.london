@@ -19,7 +19,7 @@ export function MakingRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }
     >
       <HouseStill
         src="/images/worsted-wool.jpg"
-        alt="A needle on charcoal worsted: the stitch that holds a thobe."
+        alt="A needle on charcoal cloth: the stitch that holds the column."
         objectPosition="center"
         kicker="Craftsmanship"
         title="The art of the stitch."
@@ -37,7 +37,7 @@ export function MakingRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }
         <Display size={36}>The thobe is built, not assembled.</Display>
         <View style={styles.gap} />
         <Body>
-          {`${creedSpoken} Cloth. Pattern. Stitch. Finish. Every thobe is built in that order. We do not fuse a collar because it is faster. We do not send buttonholes out. The methods are older than this house; we keep them because they still make a better garment. ${creedIntent}`}
+          {`${creedSpoken} Cloth. Pattern. Stitch. Finish. Every piece is built in that order. We do not fuse a collar because it is faster. The methods are kept because they still make a better garment. ${creedIntent}`}
         </Body>
         <View style={styles.steps}>
           {processSteps.map((step) => (
