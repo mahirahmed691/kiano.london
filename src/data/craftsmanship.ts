@@ -35,15 +35,15 @@ export const processSteps: ProcessStep[] = [
     number: '01',
     title: 'Cloth',
     summary:
-      'Japanese compact cotton, Super 150s wool-cotton, extra-long staple Giza. Weight and handle are chosen in the piece. An Emirati thobe lives or dies by the drape.',
+      'Cotton viscose mix, light GSM. Weight and handle are chosen in the piece. An Emirati column lives or dies by the drape.',
     image: '/images/cloth-giza.jpg',
-    imageAlt: 'Extra-long staple cotton unrolled, before it is chalked.',
+    imageAlt: 'Cloth unrolled, before it is chalked.',
   },
   {
     number: '02',
     title: 'Pattern',
     summary:
-      'Each thobe is cut from the house block: modest through the chest, clean through the shoulder, the hem set to the ankle. The shears follow the grain.',
+      'Each piece is cut from the house block: modest through the chest, clean through the shoulder, the hem set to the ankle. Five sizes, 52 to 60.',
     image: '/images/cutting-room.jpg',
     imageAlt: 'Paper for the house block, shears, and cloth on the bench.',
   },
@@ -51,40 +51,40 @@ export const processSteps: ProcessStep[] = [
     number: '03',
     title: 'Stitch',
     summary:
-      'Side seams are felled. The collar is pad-stitched. Buttonholes, where they exist, are worked in silk twist. Nothing on a thobe is fused.',
+      'The column is sewn so the face stays a single plane of cloth. The neck holds. Nothing is announced from a few paces.',
     image: '/images/worsted-wool.jpg',
-    imageAlt: 'A needle on charcoal worsted: the stitch that holds a winter thobe.',
+    imageAlt: 'A needle on charcoal cloth: the stitch that holds the column.',
   },
   {
     number: '04',
     title: 'Finish',
     summary:
-      'Concealed plackets, horn buttons, three labels set by hand. The woven mark at the nape, the size beside it, care at the side seam. The last press is as considered as the first cut. The garment should look finished from the inside.',
+      'The square mark is set at the nape, in the cloth of the piece. Size sewn in separately. Care at the side seam. The last press is as considered as the first cut.',
     image: '/images/stitch-buttonhole.jpg',
-    imageAlt: 'A silk-twist buttonhole at the finish of a thobe placket.',
+    imageAlt: 'The finish of a placket, close to the cloth.',
   },
 ]
 
 export const materials: Material[] = [
   {
-    name: 'Japanese compact cotton',
-    origin: 'Shizuoka',
-    copy: 'For Layl and Ghabār. Dense, matte, a high-count two-ply that holds a clean column without stiffness.',
+    name: 'Cotton viscose mix',
+    origin: 'The line',
+    copy: 'Urban Emirati. Light GSM. The cloth of the three colourways: stone grey, cream, and black.',
   },
   {
-    name: 'Super 150s wool-cotton',
-    origin: 'Huddersfield',
-    copy: 'For Hadīd. Compact, resilient, a memory in the fibre so the silhouette stays architectural.',
+    name: 'The square mark',
+    origin: 'Nape',
+    copy: 'The interlocking KK, sewn in the cloth of the piece. Thread is ivory. The colour follows the garment.',
   },
   {
-    name: 'Extra-long staple cotton',
-    origin: 'Giza',
-    copy: 'For Raml. Long fibre, a quiet sheen, washed so the cloth drapes rather than stands.',
+    name: 'The house block',
+    origin: 'Sizes 52–60',
+    copy: 'Modest through the chest, hem to the ankle. Five sizes. Measure against a column you already own.',
   },
   {
-    name: 'Silk twist & horn',
-    origin: 'Thread and closures',
-    copy: 'Buttonholes in silk twist. Dark buffalo horn, never plastic. The hardware should disappear until you need it.',
+    name: 'The packing',
+    origin: 'Unscented',
+    copy: 'A garment bag, unscented tissue, and a rigid box. The cloth is never scented.',
   },
 ]
 
@@ -92,30 +92,30 @@ export const stitchStudies: StitchStudy[] = [
   {
     id: 'stitch',
     title: 'The stitch',
-    note: 'Pad-stitching through the collar stand, silk on linen.',
+    note: 'Work at the collar, so the neck holds.',
     image: '/images/stitch-pad.jpg',
-    imageAlt: 'Pad stitching on collar canvas, rows of espresso silk following the stand.',
+    imageAlt: 'Stitching on the collar stand, rows following the neck.',
   },
   {
     id: 'seam',
     title: 'The seam',
-    note: 'A felled side seam, the allowance enclosed, the face uninterrupted.',
+    note: 'A side seam, the allowance enclosed, the face uninterrupted.',
     image: '/images/stitch-felled.jpg',
-    imageAlt: 'The inside of a felled seam: the fold enclosed, two parallel rows of stitching.',
+    imageAlt: 'The inside of a seam: the fold enclosed, two parallel rows of stitching.',
   },
   {
     id: 'fastening',
     title: 'The fastening',
-    note: 'Integrated closures set into the placket, never sitting on it.',
+    note: 'Closures set into the placket, never sitting on it.',
     image: '/images/stitch-buttonhole.jpg',
-    imageAlt: 'A hand-worked silk keyhole buttonhole, the purl catching the light.',
+    imageAlt: 'A buttonhole set into the placket, the stitch catching the light.',
   },
   {
     id: 'pocket',
     title: 'The pocket',
     note: 'A concealed interior pocket that does not break the silhouette.',
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'A concealed interior pocket set into the lining of a thobe.',
+    imageAlt: 'A concealed interior pocket set into the lining of a garment.',
   },
 ]
 
@@ -123,10 +123,10 @@ export const detailSections: DetailSection[] = [
   {
     id: 'seam',
     kicker: '01 — The seam',
-    title: 'The felled seam',
+    title: 'The side seam',
     copy: [
-      'A machine overlock is a shortcut. A side seam here is felled: the allowance is folded into itself and stitched twice, so the inside of the thobe is as clean as the face.',
-      'It takes longer. It also means the garment can be washed, pressed and worn for years without the seam opening or the edge fraying. The line down the body stays a single plane of cloth.',
+      'The line down the body should stay a single plane of cloth. The allowance is worked so the inside of the garment is as considered as the face.',
+      'It is made to be washed, pressed and worn. The column should still read as a column.',
     ],
     image: '/images/stitch-felled.jpg',
     imageAlt: 'Cloth at close range, where the seam has been worked out of sight.',
@@ -135,13 +135,13 @@ export const detailSections: DetailSection[] = [
   {
     id: 'stitch',
     kicker: '02 — The stitch',
-    title: 'The hand stitch',
+    title: 'The neck',
     copy: [
-      'The collar stand of a thobe is pad-stitched by hand. The stitches are not decorative. They shape the roll of the neck and keep the stand from collapsing after a day’s wear.',
-      'We work in silk twist, the tension set by eye. A fused collar is quicker. It is also why so many garments look tired by the third season.',
+      'The collar stand is worked so the neck holds after a day’s wear. The stitches are not decorative. They keep the stand from collapsing.',
+      'A fused collar is quicker. It is also why so many garments look tired by the third season.',
     ],
     image: '/images/cloth-dust.jpg',
-    imageAlt: 'Earth-grey compact cotton and a needle, the stitch of a thobe.',
+    imageAlt: 'Cloth and a needle, the stitch of the column.',
     imagePosition: 'left',
   },
   {
@@ -149,23 +149,23 @@ export const detailSections: DetailSection[] = [
     kicker: '03 — The fastening',
     title: 'The concealed placket',
     copy: [
-      'Buttons sit inside the placket, not on it. From a few paces the thobe reads as a single column of cloth. The closures are horn, the buttonholes worked in silk, the bartack set by the same hand that cut the first hole.',
+      'From a few paces the garment reads as a single column of cloth. The closures sit inside the placket, not on it.',
       'It is the modest line: nothing announced, everything in place.',
     ],
     image: '/images/stitch-buttonhole.jpg',
-    imageAlt: 'A silk-twist buttonhole set into the placket, never sitting on it.',
+    imageAlt: 'A buttonhole set into the placket, never sitting on it.',
     imagePosition: 'right',
   },
   {
     id: 'pocket',
     kicker: '04 — The unseen',
-    title: 'The interior pocket',
+    title: 'The nape, and the rest',
     copy: [
-      'A telephone, a pair of glasses, a folded letter. The pocket is bagged in the lining and set so it does not pull the cloth. You feel it. Nobody else should see it.',
-      'The label is woven, not printed: KIANO, London, Est. MMXXIV, set at the nape by hand. Size is a separate tab. Care sits at the side seam. Even the parts that remain unseen are made to the same standard.',
+      'The square mark is sewn in the cloth of the piece and set at the nape. Size is a separate tab. Care sits at the side seam.',
+      'Even the parts that remain unseen are made to the same standard. A pocket, if it is cut, should not pull the cloth.',
     ],
     image: '/images/concealed-pocket.jpg',
-    imageAlt: 'The concealed interior pocket of the Layl thobe.',
+    imageAlt: 'The concealed interior of the garment, the mark set by hand.',
     imagePosition: 'left',
   },
 ]

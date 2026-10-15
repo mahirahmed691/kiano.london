@@ -28,7 +28,7 @@ const visitSteps = [
   {
     number: '03',
     title: 'After',
-    copy: 'The piece is made from the house block, four to eight weeks. A second visit for a fitting if the garment asks for one.',
+    copy: 'The piece is made from the house block. A second visit for a fitting if the garment asks for one.',
   },
 ]
 
@@ -118,13 +118,11 @@ export function VisitPage() {
                 .
               </Body>
               <address className="mt-10 not-italic">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Address</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The house</p>
                 <p className="mt-3 max-w-xs text-[15px] font-light leading-relaxed text-ink-soft">
-                  {site.address}
+                  {site.city}
                   <br />
                   {site.hours}
-                  <br />
-                  <a href={site.telephoneHref}>{site.telephone}</a>
                 </p>
               </address>
               <div className="mt-8">
@@ -144,7 +142,7 @@ export function VisitPage() {
           <div className="mt-16 max-w-2xl">
             <SizeGuide compact />
             <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
-              Prices include VAT. Each thobe is made to order. A visit is not required.
+              Prices include VAT. Each piece is made to order. A visit is not required.
             </p>
           </div>
         </Container>

@@ -17,7 +17,7 @@ export function StoryPage() {
     <>
       <Hero
         image="/images/atelier-rail.jpg"
-        imageAlt="The house line on the rail: black, sand, and bone."
+        imageAlt="The house line on the rail."
         objectPosition="18% 40%"
         kicker={creedStandard}
         title="The house."
@@ -30,7 +30,7 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/cloth-giza.jpg"
-            imageAlt="Extra-long staple cotton unrolled, before it is chalked."
+            imageAlt="Cloth unrolled, before it is chalked."
             objectPosition="center 40%"
             imageOn="right"
           >
@@ -45,7 +45,7 @@ export function StoryPage() {
             </Body>
             <Body className="mt-4">
               The name is Kiano London. It is not a translation, and not a legend taken
-              from elsewhere. We remain a single address and the same silhouette: ankle,
+              from elsewhere. London is the house. The silhouette stays the same: ankle,
               shoulder, placket concealed.
             </Body>
           </EditorialSplit>

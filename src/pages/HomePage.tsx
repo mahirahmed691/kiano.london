@@ -55,8 +55,8 @@ export function HomePage() {
               </p>
               <Lead className="mt-5">{weekCopy.lines[0] ?? week.name}</Lead>
               <Body className="mt-8">
-                {creedWoven} {creedIntent} Five columns, and the outer garment in
-                three colours. The scent is coming.
+                {creedWoven} {creedIntent} Urban Emirati in stone grey, cream and
+                black. The scent is coming.
               </Body>
               <div className="mt-10 flex flex-wrap items-center gap-8">
                 <Button to="/stills">The stills</Button>
@@ -103,14 +103,18 @@ export function HomePage() {
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Collection</p>
-                <p className="mt-5">
-                  <Link
-                    to="/collection"
-                    className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
-                  >
-                    The thobes
-                  </Link>
-                </p>
+                <ul className="mt-5 space-y-3">
+                  {jubbahs.map((piece) => (
+                    <li key={`collection-${piece.id}`}>
+                      <Link
+                        to={productPath(piece)}
+                        className="font-display text-2xl font-light tracking-[-0.02em] transition-opacity hover:opacity-70 md:text-3xl"
+                      >
+                        {productLineName(piece)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The Scent</p>
@@ -141,7 +145,7 @@ export function HomePage() {
         <figure className="img-zoom relative min-h-[100svh] overflow-hidden bg-night">
           <img
             src="/images/stitch-pad.jpg"
-            alt="Pad-stitching through the collar stand, silk on linen."
+            alt="Stitching through the collar stand."
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: 'center 40%' }}
             loading="lazy"

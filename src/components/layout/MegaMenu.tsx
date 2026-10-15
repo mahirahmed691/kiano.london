@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { TextLink } from '@/components/ui/Button'
-import { jubbahs, productLineName, productPath, thobes, type ProductColour } from '@/data/products'
+import { jubbahs, productLineName, productPath, type ProductColour } from '@/data/products'
 import { cn } from '@/lib/cn'
 
 type MegaId = 'shop' | 'collection' | 'craft'
@@ -134,17 +134,18 @@ function CollectionPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="grid gap-12 lg:grid-cols-12" onClick={onNavigate}>
       <div className="lg:col-span-9">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The thobes</p>
-        <ul className="mt-6 grid grid-cols-3 gap-4 md:gap-5 lg:grid-cols-5">
-          {thobes.map((piece) => (
+        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Urban Emirati</p>
+        <ul className="mt-6 grid grid-cols-3 gap-4 md:gap-6">
+          {jubbahs.map((piece) => (
             <PieceStill
               key={piece.id}
               to={productPath(piece)}
               src={piece.image}
               alt={piece.imageAlt}
               objectPosition={piece.objectPosition}
-              name={piece.colour}
+              kicker={piece.colour}
               colour={piece.colour}
+              name={productLineName(piece)}
             />
           ))}
         </ul>
@@ -179,7 +180,7 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
           <span className="img-zoom relative block aspect-[4/5] overflow-hidden bg-ivory-deep">
             <img
               src="/images/stitch-pad.jpg"
-              alt="Pad-stitching through the collar stand, silk on linen."
+              alt="Stitching through the collar stand."
               className="h-full w-full object-cover object-[center_40%]"
             />
           </span>

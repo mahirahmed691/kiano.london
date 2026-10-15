@@ -225,9 +225,8 @@ export function invoicePublicView(invoice: LedgerInvoice) {
     ...invoice,
     house: {
       name: site.fullName,
-      address: site.address,
+      address: site.city,
       email: site.email,
-      telephone: site.telephone,
     },
   }
 }

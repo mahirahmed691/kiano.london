@@ -59,7 +59,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         <Body>{weekCopy.lines[0] ?? week.name}</Body>
         <View style={styles.gap} />
         <Body>
-          {`${creedWoven} ${creedIntent} Five columns, and the outer garment in three colours. The scent is coming.`}
+          {`${creedWoven} ${creedIntent} Urban Emirati in stone grey, cream and black. The scent is coming.`}
         </Body>
         <View style={styles.actions}>
           <OutlineButton label="The stills" onPress={() => open('/stills')} />
@@ -116,14 +116,17 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         </View>
         <View style={styles.lineBlock}>
           <Text style={styles.lineKicker}>The Collection</Text>
-          <Pressable
-            onPress={() => open('/collection')}
-            accessibilityRole="link"
-            accessibilityLabel="The Collection"
-            style={({ pressed }) => pressed && styles.pressed}
-          >
-            <Text style={styles.lineName}>The thobes</Text>
-          </Pressable>
+          {jubbahs.map((piece) => (
+            <Pressable
+              key={`collection-${piece.id}`}
+              onPress={() => open(productPath(piece))}
+              accessibilityRole="link"
+              accessibilityLabel={productLineName(piece)}
+              style={({ pressed }) => pressed && styles.pressed}
+            >
+              <Text style={styles.lineName}>{productLineName(piece)}</Text>
+            </Pressable>
+          ))}
         </View>
         <View style={styles.lineBlock}>
           <Text style={styles.lineKicker}>The Scent</Text>
@@ -159,7 +162,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
 
       <HouseStill
         src="/images/stitch-pad.jpg"
-        alt="Pad-stitching through the collar stand, silk on linen."
+        alt="Stitching through the collar stand."
         objectPosition="center 40%"
         kicker="The stitch"
         title="Closer."

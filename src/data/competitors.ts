@@ -53,13 +53,10 @@ function channelsCopy(channels: Channel[]) {
 
 function kianoReference(): CompetitorHouse {
   const prices = products.map((piece) => piece.pricePence)
-  const thobes = products.filter((piece) => piece.cut === 'Thobe')
   const jubbahs = products.filter((piece) => piece.cut === 'Jubbah')
   const colours = new Set(products.map((piece) => piece.colour))
   const low = Math.min(...prices)
   const high = Math.max(...prices)
-  const thobeLow = Math.min(...thobes.map((piece) => piece.pricePence))
-  const thobeHigh = Math.max(...thobes.map((piece) => piece.pricePence))
   const jubbahPrice = jubbahs[0]?.pricePence ?? 7900
 
   return {
@@ -73,12 +70,12 @@ function kianoReference(): CompetitorHouse {
     priceLowPence: low,
     priceHighPence: high,
     priceStatus: 'published',
-    priceNote: `The line: thobes ${formatGbp(thobeLow)}–${formatGbp(thobeHigh)}, Urban Emirati ${formatGbp(jubbahPrice)}. Native GBP on the piece pages.`,
-    lead: 'Made to order, four to eight weeks.',
+    priceNote: `Urban Emirati ${formatGbp(jubbahPrice)}. Native GBP on the piece pages.`,
+    lead: 'Made to order.',
     scentLabel: packingNote,
     fit: 'house-block',
     fitLabel: 'House block, made to order. An appointment if the block will not do.',
-    cuts: `${thobes.length} thobes, Urban Emirati in ${jubbahs.length} colours, ${colours.size} colours on the line, sizes 52–60.`,
+    cuts: `Urban Emirati in ${jubbahs.length} colours, ${colours.size} colours on the line, sizes 52–60.`,
     stance: 'A short Emirati column. London is the name of the house.',
     vs: 'The reference. Everything else is read against this line.',
     isKiano: true,
@@ -129,7 +126,7 @@ export const fieldHouses: CompetitorHouse[] = [
     fitLabel: 'Ready-to-wear catalogue, sized S–XXL.',
     cuts: 'Eight shop results. Several colours per cut, including kids.',
     stance: 'Many regional cuts as a catalogue.',
-    vs: 'Kiano keeps five thobes and Urban Emirati. Fewer SKUs, more still.',
+    vs: 'Kiano keeps Urban Emirati. Fewer SKUs, more still.',
     sourced: 'daralahad.ae shop, August 2026',
   },
   {
@@ -173,7 +170,7 @@ export const fieldHouses: CompetitorHouse[] = [
     fitLabel: 'Ready-to-wear, sized from a guide.',
     cuts: 'Nine thobes listed. Colours include white, navy, cream, burgundy, grey, forest, teal, sand.',
     stance: 'Omani and Emirati cuts for the UK, colour range for Eid and Jumu’ah.',
-    vs: 'Kiano is slower (four to eight weeks), unscented packing, London as the house name.',
+    vs: 'Kiano is made to order, unscented packing, London as the house name.',
     sourced: 'qalbithobes.co.uk, August 2026',
   },
   {
@@ -268,7 +265,7 @@ export const fieldHouses: CompetitorHouse[] = [
 
 export const fieldReading = [
   'Kiano sits in the middle of the published sterling field: above the fast UK catalogues (Qalbi converted near £53–£56, Al Badr near £52, Alif from £27), and beside or just under the converted UAE flagship ready-to-wear bands (Bait Al Kandora £73–£100, Al Nashama £73–£94).',
-  'The pounds are not the argument. The line is short, the packing is unscented, the block is the house, and the wait is four to eight weeks. Volume houses win on colour count and days. This house wins by refusing the catalogue.',
+  'The pounds are not the argument. The line is short, the packing is unscented, the block is the house, and the wait is made to order. Volume houses win on colour count and days. This house wins by refusing the catalogue.',
   'Dar Al Ahad and Shukr did not publish a usable thobe price on the pages read. They stay on the map as stance, not as a number, until someone writes a band on the ledger.',
 ].join(' ')
 

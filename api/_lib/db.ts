@@ -31,8 +31,8 @@ export async function withDb() {
   return db
 }
 
-function seedQuantity(productId: string) {
-  return productId === 'hadid-thobe' ? 2 : 4
+function seedQuantity(_productId: string) {
+  return 4
 }
 
 async function migrate(db: Sql) {

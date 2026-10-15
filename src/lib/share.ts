@@ -35,7 +35,7 @@ const pages: Record<string, PageMeta> = {
   '/collection': {
     title: 'The Collection — Kiano London',
     description:
-      `Emirati thobes, sizes 52 to 60, from the house block. ${creedMotto}`,
+      `Urban Emirati in stone grey, cream and black. Cotton viscose mix, light GSM. ${creedMotto}`,
     path: '/collection',
     image: '/images/jubbah-sand.jpg',
     imageAlt: 'Urban Emirati in cream, a modest column.',
@@ -67,15 +67,15 @@ const pages: Record<string, PageMeta> = {
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',
     description:
-      `${creedSpoken} Cloth, pattern, stitch and finish. How the column is built.`,
+      `${creedSpoken} Cloth, pattern, stitch and finish. Cotton viscose mix, light GSM. How the column is built.`,
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
-    imageAlt: 'A needle on charcoal worsted: the stitch that holds a thobe.',
+    imageAlt: 'A needle on charcoal cloth: the stitch that holds the column.',
   },
   '/craftsmanship-details': {
     title: 'The Making — Kiano London',
     description:
-      'The felled seam, the hand stitch, the concealed placket and the interior pocket: how a thobe is built.',
+      'The seam, the neck, the concealed placket and the nape: how the column is built.',
     path: '/craftsmanship-details',
     image: '/images/stitch-felled.jpg',
     imageAlt: 'A felled seam at close range.',
@@ -149,12 +149,12 @@ const pages: Record<string, PageMeta> = {
   },
   '/checkout': {
     title: 'Checkout — Kiano London',
-    description: 'Reserve a thobe or a piece. Made to order, four to eight weeks.',
+    description: 'Reserve a piece. Made to order.',
     path: '/checkout',
   },
   '/order/confirmed': {
     title: 'Order — Kiano London',
-    description: 'Your piece is reserved. Made to order, four to eight weeks.',
+    description: 'Your piece is reserved. Made to order.',
     path: '/order/confirmed',
   },
 }

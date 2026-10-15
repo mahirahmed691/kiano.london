@@ -171,8 +171,7 @@ export function CheckoutPage() {
             </Display>
             <Body className="mt-6">
               {String(count).padStart(2, '0')} {count === 1 ? 'piece' : 'pieces'}. Each piece is
-              made after payment, from the house block, in four to eight weeks. Carriage is
-              included. {packingNote}
+              made after payment, from the house block. Carriage is included. {packingNote}
             </Body>
             {clerkEnabled ? (
               <CheckoutMember
