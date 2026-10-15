@@ -114,6 +114,19 @@ export function stillsHash(plate: InstagramPlate) {
   return `/stills#${plate.id}`
 }
 
+/** Public destination for a still. Self-links to the stills room are omitted. */
+export function plateDestination(plate: Pick<InstagramPlate, 'to'>): string | undefined {
+  const to = plate.to
+  if (!to || to === '/stills') return undefined
+  return to
+}
+
+export function plateLinkLabel(to: string): string {
+  if (to.startsWith('/shop/') || to.startsWith('/collection/')) return 'The piece'
+  if (to === '/story') return 'The story'
+  return 'The house'
+}
+
 /** Previous plates in the book, newest first, omitting this week's still. */
 export function recentPlates(count = 4, now = Date.now()) {
   const week = plateWeekIndex(now)

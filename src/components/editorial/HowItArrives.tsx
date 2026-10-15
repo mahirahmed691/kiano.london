@@ -46,7 +46,7 @@ export function HowItArrives() {
           <figure className="relative overflow-hidden bg-ivory-deep">
             <img
               src="/images/atelier-rail.jpg"
-              alt="The house line on the rail: black, sand, and bone."
+              alt="The house line on the rail."
               className="aspect-[21/9] min-h-[16rem] w-full object-cover object-[18%_40%] md:min-h-[22rem]"
               loading="lazy"
               decoding="async"
