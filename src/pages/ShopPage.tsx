@@ -97,6 +97,7 @@ export function ShopPage() {
               alt: 'Urban Emirati in black from behind: a clean column, hem to the ankle.',
               kicker: 'Black',
               name: 'Urban Emirati',
+              colour: 'Black',
             },
             {
               src: '/images/jubbah-charcoal-cloth.jpg',
@@ -104,12 +105,14 @@ export function ShopPage() {
               objectPosition: 'center 40%',
               kicker: 'The cloth',
               name: 'Light GSM',
+              colour: 'Stone Grey',
             },
             {
               src: '/images/jubbah-charcoal-02.jpg',
               alt: 'Urban Emirati in stone grey walking: ankle hem, concealed placket.',
               kicker: 'Stone Grey',
               name: 'Urban Emirati',
+              colour: 'Stone Grey',
             },
           ]}
         />

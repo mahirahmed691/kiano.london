@@ -395,6 +395,12 @@ export function getProduct(id: string | undefined) {
   return products.find((item) => item.id === id)
 }
 
+/** Cloth of a piece or still plate: `jubbah-sand` or `layl` → Cream / Black. */
+export function colourOfPiece(id: string | undefined): ProductColour | undefined {
+  if (!id) return undefined
+  return getProduct(id)?.colour ?? getProduct(`${id}-thobe`)?.colour
+}
+
 export function productLineName(product: Product) {
   return product.cut === 'Jubbah' ? `${product.name} in ${product.colour}` : product.name
 }

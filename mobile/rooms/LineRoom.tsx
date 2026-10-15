@@ -7,6 +7,7 @@ import { RoomScroll, paper } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Body, Display, GhostLink, OutlineButton } from '../HouseType'
 import {
+  clothSwatch,
   creedIntent,
   creedMotto,
   jubbahColours,
@@ -104,8 +105,13 @@ export function LineRoom({
               accessibilityRole="button"
               accessibilityState={{ selected: filter === option }}
               hitSlop={6}
-              style={({ pressed }) => pressed && styles.pressed}
+              style={({ pressed }) => [styles.filterBtn, pressed && styles.pressed]}
             >
+              {option === 'All' ? null : (
+                <View
+                  style={[styles.swatch, { backgroundColor: clothSwatch[option] }]}
+                />
+              )}
               <Text style={[styles.filter, filter === option ? styles.filterOn : styles.filterOff]}>
                 {option}
               </Text>
@@ -177,6 +183,17 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 18,
     marginBottom: 28,
+  },
+  filterBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  swatch: {
+    width: 10,
+    height: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(26, 24, 20, 0.15)',
   },
   filter: {
     fontFamily: type.sansRegular,

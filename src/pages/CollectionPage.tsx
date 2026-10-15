@@ -97,6 +97,7 @@ export function CollectionPage() {
               objectPosition: '72% 18%',
               kicker: 'Charcoal',
               name: 'Charcoal',
+              colour: 'Charcoal',
             },
             {
               src: '/images/thobe-ghabar.jpg',
@@ -104,6 +105,7 @@ export function CollectionPage() {
               objectPosition: 'center 12%',
               kicker: 'Grey',
               name: 'Grey',
+              colour: 'Grey',
             },
             {
               src: '/images/thobe-raml.jpg',
@@ -111,6 +113,7 @@ export function CollectionPage() {
               objectPosition: 'center 12%',
               kicker: 'Beige',
               name: 'Beige',
+              colour: 'Beige',
             },
           ]}
         />
@@ -142,6 +145,7 @@ export function CollectionPage() {
                 className="aspect-[4/5] w-full"
                 objectPosition="center 12%"
                 caption="Bone."
+                colour="Bone"
               />
             </Reveal>
           </div>

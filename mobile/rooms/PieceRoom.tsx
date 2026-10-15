@@ -3,12 +3,14 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from '../HouseImage'
 import { HouseMotto } from '../HouseMotto'
+import { HousePatch } from '../HousePatch'
 import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Arabic, Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
 import {
   careLine,
   carriageLine,
+  clothSwatch,
   colourVariants,
   getProduct,
   packingNote,
@@ -89,20 +91,29 @@ export function PieceRoom({
         <Text style={styles.price}>{product.price}</Text>
         <Text style={styles.lead}>{product.leadTime}</Text>
         {variants.length > 1 ? (
-          <View style={styles.row}>
-            {variants.map((item) => (
-              <Pressable
-                key={item.id}
-                onPress={() => open(productPath(item))}
-                accessibilityRole="button"
-                accessibilityState={{ selected: item.id === product.id }}
-                style={({ pressed }) => pressed && styles.pressed}
-              >
-                <Text style={[styles.chip, item.id === product.id ? styles.chipOn : styles.chipOff]}>
-                  {item.colour}
-                </Text>
-              </Pressable>
-            ))}
+          <View>
+            <Text style={styles.kicker}>Colour</Text>
+            <View style={styles.row}>
+              {variants.map((item) => (
+                <Pressable
+                  key={item.id}
+                  onPress={() => open(productPath(item))}
+                  accessibilityRole="button"
+                  accessibilityLabel={item.colour}
+                  accessibilityState={{ selected: item.id === product.id }}
+                  style={({ pressed }) => pressed && styles.pressed}
+                >
+                  <View
+                    style={[
+                      styles.swatch,
+                      { backgroundColor: item.swatch ?? clothSwatch[item.colour] },
+                      item.id === product.id ? styles.swatchOn : styles.swatchOff,
+                    ]}
+                  />
+                </Pressable>
+              ))}
+            </View>
+            <Text style={styles.colourName}>{product.colour}</Text>
           </View>
         ) : null}
         <Text style={styles.kicker}>Size</Text>
@@ -159,13 +170,17 @@ export function PieceRoom({
       </View>
 
       {rest.map((still) => (
-        <HouseImage
-          key={still.src}
-          src={still.src}
-          alt={still.alt}
-          objectPosition={still.objectPosition}
-          style={[styles.gallery, { height: roomHeight * 0.86 }]}
-        />
+        <View key={still.src} style={[styles.galleryWrap, { height: roomHeight * 0.86 }]}>
+          <HouseImage
+            src={still.src}
+            alt={still.alt}
+            objectPosition={still.objectPosition}
+            style={styles.gallery}
+          />
+          <View style={styles.galleryPatch} pointerEvents="none">
+            <HousePatch colour={product.colour} size={52} />
+          </View>
+        </View>
       ))}
 
       <HouseMotto quiet />
@@ -182,12 +197,17 @@ export function PieceRoom({
               accessibilityLabel={productLineName(item)}
               style={({ pressed }) => [styles.related, pressed && styles.pressed]}
             >
-              <HouseImage
-                src={item.image}
-                alt={item.imageAlt}
-                objectPosition={item.objectPosition}
-                style={styles.relatedStill}
-              />
+              <View style={styles.relatedStillWrap}>
+                <HouseImage
+                  src={item.image}
+                  alt={item.imageAlt}
+                  objectPosition={item.objectPosition}
+                  style={styles.relatedStill}
+                />
+                <View style={styles.relatedPatch} pointerEvents="none">
+                  <HousePatch colour={item.colour} size={36} />
+                </View>
+              </View>
               <View style={styles.relatedCopy}>
                 <Text style={styles.relatedName}>{productLineName(item)}</Text>
                 <Text style={styles.relatedMeta}>{`${item.colour} · ${item.price}`}</Text>
@@ -241,20 +261,25 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 24,
   },
-  chip: {
-    fontFamily: type.sansRegular,
-    fontSize: 11,
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-    paddingBottom: 4,
+  swatch: {
+    width: 28,
+    height: 28,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  chipOn: {
-    color: color.ink,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: color.ink,
+  swatchOn: {
+    borderColor: color.ink,
   },
-  chipOff: {
+  swatchOff: {
+    borderColor: color.rule,
+    opacity: 0.7,
+  },
+  colourName: {
+    marginTop: -12,
+    marginBottom: 8,
     color: color.stone,
+    fontFamily: type.sans,
+    fontSize: 13,
+    fontWeight: '300',
   },
   size: {
     minWidth: 48,
@@ -292,9 +317,20 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     maxWidth: 340,
   },
-  gallery: {
+  galleryWrap: {
     width: '100%',
     backgroundColor: color.night,
+    overflow: 'hidden',
+  },
+  gallery: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: color.night,
+  },
+  galleryPatch: {
+    position: 'absolute',
+    left: 20,
+    bottom: 20,
   },
   packStep: {
     marginTop: 28,
@@ -308,9 +344,20 @@ const styles = StyleSheet.create({
   related: {
     marginBottom: 28,
   },
-  relatedStill: {
+  relatedStillWrap: {
     width: '100%',
     aspectRatio: 3 / 4,
+    overflow: 'hidden',
+    backgroundColor: color.ivoryDeep,
+  },
+  relatedStill: {
+    width: '100%',
+    height: '100%',
+  },
+  relatedPatch: {
+    position: 'absolute',
+    left: 10,
+    bottom: 10,
   },
   relatedCopy: {
     marginTop: 14,

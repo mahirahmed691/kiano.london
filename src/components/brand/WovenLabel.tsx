@@ -25,6 +25,7 @@ export function WovenLabel({ size = 'sm', colour = 'Cream', className }: Props) 
       className={cn('relative shrink-0', sizeClass[size], className)}
       style={{ backgroundColor: cloth, color: thread }}
       aria-hidden="true"
+      data-house-patch={colour}
     >
       <svg
         viewBox="0 0 100 100"

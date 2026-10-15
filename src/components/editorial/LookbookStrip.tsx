@@ -1,4 +1,6 @@
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { Reveal } from '@/components/ui/Reveal'
+import { type ProductColour } from '@/data/products'
 import { cn } from '@/lib/cn'
 
 export type LookbookPlate = {
@@ -7,6 +9,7 @@ export type LookbookPlate = {
   objectPosition?: string
   kicker?: string
   name?: string
+  colour?: ProductColour
 }
 
 type Props = {
@@ -20,7 +23,7 @@ export function LookbookStrip({ plates, className }: Props) {
       {plates.map((plate, index) => (
         <Reveal key={plate.src} delay={index * 90}>
           <figure>
-            <div className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep max-sm:min-h-[85svh] max-sm:aspect-auto">
+            <div className="img-zoom relative aspect-[3/4] overflow-hidden bg-ivory-deep max-sm:min-h-[85svh] max-sm:aspect-auto">
               <img
                 src={plate.src}
                 alt={plate.alt}
@@ -29,6 +32,13 @@ export function LookbookStrip({ plates, className }: Props) {
                 className="size-full object-cover"
                 style={plate.objectPosition ? { objectPosition: plate.objectPosition } : undefined}
               />
+              {plate.colour ? (
+                <WovenLabel
+                  size="sm"
+                  colour={plate.colour}
+                  className="pointer-events-none absolute bottom-3 left-3 z-10"
+                />
+              ) : null}
             </div>
             {plate.kicker || plate.name ? (
               <figcaption className="bg-ivory px-1 py-6 text-ink md:py-7">
