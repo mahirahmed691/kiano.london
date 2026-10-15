@@ -42,10 +42,7 @@ export function ShopPage() {
       <Section>
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
-            <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl font-light text-ink-soft">
-              الجُبَّة
-            </p>
-            <Display as="h1" className="mt-5 text-4xl md:text-5xl">
+            <Display as="h1" className="text-4xl md:text-5xl">
               {jubbahs.map((piece) => (
                 <span key={piece.id} className="block">
                   {productLineName(piece)}

@@ -11,7 +11,7 @@ import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { creedIntent } from '@/data/creed'
-import { scentArabic, scentComing, scentFamilies, scentPath, scents } from '@/data/scent'
+import { scentComing, scentFamilies, scentPath, scents } from '@/data/scent'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -43,10 +43,7 @@ export function ScentPage() {
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
             <Eyebrow>{scentComing}</Eyebrow>
-            <p lang="ar" dir="rtl" className="mt-4 w-fit font-arabic text-2xl font-light text-ink-soft">
-              {scentArabic}
-            </p>
-            <Display as="h1" className="mt-6 text-4xl md:text-5xl">
+            <p className="mt-6 font-display text-2xl font-light tracking-[-0.02em] text-ink/75 md:text-3xl">
               Three names: Mayfair, Bond Street, Kensington.
             </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">

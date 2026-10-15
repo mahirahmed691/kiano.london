@@ -19,25 +19,19 @@ export const sizeMeasures = [
   {
     title: 'Chest',
     copy: 'Around the fullest of the chest. Tape level, not tight. Breathe out.',
-    copyAr: 'حول أوسع موضع في الصدر. الشريط مستوٍ، غير مشدود. ازفر.',
   },
   {
     title: 'Length',
     copy: 'From the high point of the shoulder, down the front, to where the hem should sit.',
-    copyAr: 'من أعلى الكتف، نزولاً في الأمام، إلى حيث يقع الذيل.',
   },
   {
     title: 'Shoulder',
     copy: 'Seam to seam across the back, where a well-set sleeve would sit.',
-    copyAr: 'من درز إلى درز عبر الظهر، حيث يجلس كمٌّ مضبوط.',
   },
 ] as const
 
 export const sizeNote =
   'Chest, length and shoulder as cut. A fitting will move a centimetre where it matters. If you are between sizes, write; we cut from the larger and take in.'
-
-export const sizeNoteAr =
-  'الصدر والطول والكتف كما تُقطع. إن كنت بين مقاسين، اكتب؛ نقطع من الأكبر ونأخذ منه.'
 
 export const measureStill = {
   src: '/images/look-lanesborough.jpg',
@@ -47,8 +41,5 @@ export const measureStill = {
 
 export const measureLead =
   'If you already wear a thobe, measure that one: chest, length, shoulder. Name the size that matches, or write that you do not know. A visit is not required.'
-
-export const measureLeadAr =
-  'إن كنت ترتدي ثوباً، قِس ذلك الثوب: الصدر، الطول، الكتف. سمِّ المقاس الذي يوافق، أو اكتب أنك لا تعلم. الزيارة ليست واجبة.'
 
 export { thobeSizes }

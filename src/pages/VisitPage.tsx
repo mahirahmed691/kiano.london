@@ -117,13 +117,6 @@ export function VisitPage() {
                 </a>
                 .
               </Body>
-              <p
-                lang="ar"
-                dir="rtl"
-                className="mt-4 w-fit max-w-md font-arabic text-lg font-light leading-relaxed text-ink-soft"
-              >
-                الطلب عند الدار. هذا ليس حجزاً. نكتب عندما يمكن حفظ صباح.
-              </p>
               <address className="mt-10 not-italic">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Address</p>
                 <p className="mt-3 max-w-xs text-[15px] font-light leading-relaxed text-ink-soft">
@@ -152,13 +145,6 @@ export function VisitPage() {
             <SizeGuide compact />
             <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
               Prices include VAT. Each thobe is made to order. A visit is not required.
-            </p>
-            <p
-              lang="ar"
-              dir="rtl"
-              className="mt-3 w-fit max-w-md font-arabic text-[15px] font-light leading-relaxed text-stone"
-            >
-              الزيارة ليست واجبة.
             </p>
           </div>
         </Container>

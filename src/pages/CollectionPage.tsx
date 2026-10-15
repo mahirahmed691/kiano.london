@@ -42,10 +42,7 @@ export function CollectionPage() {
       <Section>
         <Container>
           <Reveal className="mb-16 max-w-xl md:mb-20">
-            <p lang="ar" dir="rtl" className="w-fit font-arabic text-2xl font-light text-ink-soft">
-              الثوب
-            </p>
-            <Display as="h1" className="mt-5 text-4xl md:text-5xl">
+            <Display as="h1" className="text-4xl md:text-5xl">
               The Collection.
             </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">

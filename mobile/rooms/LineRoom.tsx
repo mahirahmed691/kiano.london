@@ -150,7 +150,6 @@ export function LineRoom({
 }
 
 const styles = StyleSheet.create({
-  space: { height: 18 },
   gap: { height: 16 },
   meta: {
     marginTop: 36,
