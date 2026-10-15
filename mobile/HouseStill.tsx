@@ -2,6 +2,8 @@ import { type ReactNode } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from './HouseImage'
+import { HousePatch } from './HousePatch'
+import { type ProductColour } from './catalogue'
 import { color, type } from './theme'
 
 type Props = {
@@ -10,6 +12,7 @@ type Props = {
   objectPosition?: string
   kicker?: string
   title?: string
+  colour?: ProductColour
   quiet?: boolean
   height: number
   priority?: boolean
@@ -23,6 +26,7 @@ export function HouseStill({
   objectPosition,
   kicker,
   title,
+  colour,
   quiet,
   height,
   priority,
@@ -40,6 +44,11 @@ export function HouseStill({
         style={StyleSheet.absoluteFill}
       />
       <View pointerEvents="none" style={quiet ? styles.quietScrim : styles.heroScrim} />
+      {colour ? (
+        <View style={styles.patch} pointerEvents="none">
+          <HousePatch colour={colour} size={52} />
+        </View>
+      ) : null}
       {caption ? (
         <View style={styles.caption} pointerEvents="none">
           {kicker ? <Text style={styles.kicker}>{kicker}</Text> : null}
@@ -88,6 +97,11 @@ const styles = StyleSheet.create({
   heroScrim: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(37, 40, 43, 0.32)',
+  },
+  patch: {
+    position: 'absolute',
+    left: 20,
+    bottom: 20,
   },
   caption: {
     paddingHorizontal: 24,

@@ -188,6 +188,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         </Body>
         <View style={styles.actions}>
           <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />
+          <GhostLink label="The stills" onPress={() => open('/stills')} />
           <GhostLink label="The story" onPress={() => open('/story')} />
         </View>
       </View>

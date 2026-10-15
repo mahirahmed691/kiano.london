@@ -33,6 +33,7 @@ import {
 import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
 import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
+import { MakingDetailsRoom } from './rooms/MakingDetailsRoom'
 import { MakingRoom } from './rooms/MakingRoom'
 import { PieceRoom } from './rooms/PieceRoom'
 import { ScentRoom } from './rooms/ScentRoom'
@@ -288,6 +289,10 @@ function HouseApp() {
         goNative('/scent')
         return true
       }
+      if (current === '/craftsmanship-details') {
+        goNative('/craftsmanship')
+        return true
+      }
       if (current === '/stills' || current === '/visit' || current === '/story' || current === '/craftsmanship' || current === '/scent') {
         goNative('/')
         return true
@@ -340,6 +345,7 @@ function HouseApp() {
         {room === '/visit' ? <VisitRoom {...nav} /> : null}
         {room === '/story' ? <StoryRoom {...nav} /> : null}
         {room === '/craftsmanship' ? <MakingRoom {...nav} /> : null}
+        {room === '/craftsmanship-details' ? <MakingDetailsRoom {...nav} /> : null}
       </View>
       {Platform.OS === 'web' ? null : (
       <WebView
