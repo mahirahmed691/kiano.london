@@ -7,6 +7,8 @@ import {
 import { type Product } from '../src/data/products'
 
 export {
+  clothSwatch,
+  clothThread,
   colourVariants,
   getProduct,
   jubbahColours,
@@ -16,6 +18,7 @@ export {
   productPath,
   products,
   relatedProducts,
+  swatchOf,
   thobeSizes,
   thobes,
   type Product,

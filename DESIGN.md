@@ -45,7 +45,7 @@ Fixed black bar. Ivory navigation. The house mark in the header is the supplied 
 
 ## Footer
 
-Night ground. The lockup sits centred on the band, bronze, the same stack as the header. Tagline sits under it in ivory; the creed and column labels sit in bronze. Nav, a visit, and the list follow in columns. The list field uses a bronze hairline. No gold fill.
+Night ground. The house mark is the square KK patch, cream cloth, ivory thread, a running stitch around the square — the same sewn mark as on the garment. Tagline sits under it in ivory; the creed and column labels sit in bronze. Nav, a visit, and the list follow in columns. The list field uses a bronze hairline. No gold fill. On product stills the square sits bottom-left and takes the cloth of the piece.
 
 ## Buttons
 

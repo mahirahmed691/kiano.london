@@ -1,7 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { HouseImage } from './HouseImage'
-import { HouseLockup } from './HouseLockup'
+import { HousePatch } from './HousePatch'
 import {
   houseMenuAccount,
   houseMenuHome,
@@ -150,7 +150,7 @@ export function HouseMenu({
         </Pressable>
 
         <View style={styles.lockup} testID="house-menu-lockup">
-          <HouseLockup compact tone="ink" />
+          <HousePatch size={72} />
         </View>
       </ScrollView>
     </View>

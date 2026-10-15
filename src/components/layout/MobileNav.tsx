@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Lockup } from '@/components/brand/Lockup'
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
 import { WordLink } from '@/components/notices/WordLink'
 import { useCart } from '@/lib/cart'
@@ -149,8 +149,8 @@ export function MobileNav({ open, onClose }: Props) {
             {week.name}
           </span>
         </NavLink>
-        <div className="mt-10 text-ink">
-          <Lockup compact align="start" />
+        <div className="mt-10">
+          <WovenLabel size="md" />
         </div>
       </nav>
     </div>

@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { WovenLabel } from '@/components/brand/WovenLabel'
 import { TextLink } from '@/components/ui/Button'
-import { jubbahs, productLineName, productPath, thobes } from '@/data/products'
+import { jubbahs, productLineName, productPath, thobes, type ProductColour } from '@/data/products'
 import { cn } from '@/lib/cn'
 
 type MegaId = 'shop' | 'collection' | 'craft'
@@ -35,6 +36,7 @@ function PieceStill({
   objectPosition,
   name,
   kicker,
+  colour,
 }: {
   to: string
   src: string
@@ -42,6 +44,7 @@ function PieceStill({
   objectPosition?: string
   name: string
   kicker?: string
+  colour?: ProductColour
 }) {
   return (
     <li>
@@ -53,6 +56,13 @@ function PieceStill({
             className="h-full w-full object-cover"
             style={objectPosition ? { objectPosition } : undefined}
           />
+          {colour ? (
+            <WovenLabel
+              size="sm"
+              colour={colour}
+              className="pointer-events-none absolute bottom-3 left-3 z-10"
+            />
+          ) : null}
         </span>
         {kicker ? (
           <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
@@ -106,6 +116,7 @@ function ShopPanel({ onNavigate }: { onNavigate: () => void }) {
               alt={piece.imageAlt}
               objectPosition={piece.objectPosition}
               kicker={piece.colour}
+              colour={piece.colour}
               name={productLineName(piece)}
             />
           ))}
@@ -133,6 +144,7 @@ function CollectionPanel({ onNavigate }: { onNavigate: () => void }) {
               alt={piece.imageAlt}
               objectPosition={piece.objectPosition}
               name={piece.colour}
+              colour={piece.colour}
             />
           ))}
         </ul>

@@ -6,6 +6,23 @@ export type ProductCut = 'Thobe' | 'Jubbah'
 
 export type ProductColour = 'Black' | 'Charcoal' | 'Grey' | 'Beige' | 'Bone' | 'Cream' | 'Stone Grey'
 
+/** Cloth of the square mark, sampled from the piece. Thread is ivory on every colour. */
+export const clothSwatch: Record<ProductColour, string> = {
+  Black: '#1C1C1D',
+  Charcoal: '#4A4C4C',
+  Grey: '#676360',
+  Beige: '#C3AC95',
+  Bone: '#D2CBC3',
+  Cream: '#C4B49A',
+  'Stone Grey': '#8A8682',
+}
+
+export const clothThread = '#F2EBDC'
+
+export function swatchOf(colour: ProductColour) {
+  return clothSwatch[colour]
+}
+
 export type ProductImage = {
   src: string
   alt: string
@@ -36,7 +53,7 @@ export type Product = {
 }
 
 const napeFinish =
-  'The woven mark — KIANO, London, Est. MMXXIV — is set at the nape. Size sewn in separately. Care at the side seam.'
+  'The square mark — the interlocking KK, sewn in the cloth of the piece — is set at the nape. Size sewn in separately. Care at the side seam.'
 
 export const products: Product[] = [
   {
@@ -45,6 +62,7 @@ export const products: Product[] = [
     arabicName: 'ليل',
     cut: 'Thobe',
     colour: 'Black',
+    swatch: clothSwatch.Black,
     cloth: 'Matte Japanese cotton, band collar',
     mill: 'Compact cotton, 80s two-ply',
     price: '£70',
@@ -82,6 +100,7 @@ export const products: Product[] = [
     arabicName: 'حديد',
     cut: 'Thobe',
     colour: 'Charcoal',
+    swatch: clothSwatch.Charcoal,
     cloth: 'Super 150s wool-cotton, concealed placket',
     mill: 'Huddersfield Super 150s',
     price: '£90',
@@ -119,6 +138,7 @@ export const products: Product[] = [
     arabicName: 'غبار',
     cut: 'Thobe',
     colour: 'Grey',
+    swatch: clothSwatch.Grey,
     cloth: 'Italian compact cotton, earth grey',
     mill: 'Albini compact cotton',
     price: '£60',
@@ -156,6 +176,7 @@ export const products: Product[] = [
     arabicName: 'رمل',
     cut: 'Thobe',
     colour: 'Beige',
+    swatch: clothSwatch.Beige,
     cloth: 'Egyptian extra-long staple cotton',
     mill: 'Giza 86, washed for drape',
     price: '£65',
@@ -192,6 +213,7 @@ export const products: Product[] = [
     arabicName: 'حجر',
     cut: 'Thobe',
     colour: 'Bone',
+    swatch: clothSwatch.Bone,
     cloth: 'Washed Italian cotton-silk',
     mill: 'Como cotton-silk',
     price: '£80',
@@ -229,7 +251,7 @@ export const products: Product[] = [
     arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Black',
-    swatch: '#1B1714',
+    swatch: clothSwatch.Black,
     variantGroup: 'jubbah',
     cloth: 'Cotton viscose mix, light GSM',
     mill: 'Cotton viscose mix',
@@ -273,7 +295,7 @@ export const products: Product[] = [
     arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Cream',
-    swatch: '#E8DCC8',
+    swatch: clothSwatch.Cream,
     variantGroup: 'jubbah',
     cloth: 'Cotton viscose mix, light GSM',
     mill: 'Cotton viscose mix',
@@ -315,7 +337,7 @@ export const products: Product[] = [
     arabicName: 'الجُبَّة',
     cut: 'Jubbah',
     colour: 'Stone Grey',
-    swatch: '#8A8682',
+    swatch: clothSwatch['Stone Grey'],
     variantGroup: 'jubbah',
     cloth: 'Cotton viscose mix, light GSM',
     mill: 'Cotton viscose mix',
