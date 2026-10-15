@@ -38,7 +38,7 @@ export function CraftsmanshipPage() {
           <Reveal className="max-w-2xl">
             <Eyebrow>Process</Eyebrow>
             <Display as="h1" className="mt-4 text-4xl md:text-5xl">
-              The thobe is built, not assembled.
+              The garment is built, not assembled.
             </Display>
             <Body className="mt-6">
               {creedSpoken} Cloth. Pattern. Stitch. Finish. Every piece is built in that

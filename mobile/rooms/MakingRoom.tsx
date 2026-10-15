@@ -31,7 +31,7 @@ export function MakingRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNa
       <View style={paper()}>
         <Eyebrow>Process</Eyebrow>
         <View style={styles.space} />
-        <Display size={36}>The thobe is built, not assembled.</Display>
+        <Display size={36}>The garment is built, not assembled.</Display>
         <View style={styles.gap} />
         <Body>
           {`${creedSpoken} Cloth. Pattern. Stitch. Finish. Every piece is built in that order. We do not fuse a collar because it is faster. The methods are kept because they still make a better garment. ${creedIntent}`}

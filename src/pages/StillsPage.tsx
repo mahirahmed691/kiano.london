@@ -8,8 +8,17 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { creedSpoken, creedWoven } from '@/data/creed'
 import { instagramPlates, plateIntervalDays } from '@/data/instagram-plates'
+import { colourOfPiece } from '@/data/products'
 import { site } from '@/data/site'
-import { plateCopy, plateKindLabel, plateNumber, stillsHash, thisWeekPlate } from '@/lib/instagram-plates'
+import {
+  plateCopy,
+  plateDestination,
+  plateKindLabel,
+  plateLinkLabel,
+  plateNumber,
+  stillsHash,
+  thisWeekPlate,
+} from '@/lib/instagram-plates'
 import { cn } from '@/lib/cn'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
@@ -17,6 +26,7 @@ import { usePageMeta } from '@/lib/usePageMeta'
 export function StillsPage() {
   const week = thisWeekPlate()
   const weekCopy = plateCopy(week.caption)
+  const weekTo = plateDestination(week)
 
   usePageMeta(getShareMeta('/stills'))
 
@@ -53,9 +63,9 @@ export function StillsPage() {
               <Body className="mt-6">
                 {weekCopy.lines.join(' ')} Cadence: every {plateIntervalDays} days.
               </Body>
-              {week.to ? (
+              {weekTo ? (
                 <div className="mt-8">
-                  <TextLink to={week.to}>{week.name}</TextLink>
+                  <TextLink to={weekTo}>{week.name}</TextLink>
                 </div>
               ) : null}
             </Reveal>
@@ -104,6 +114,7 @@ export function StillsPage() {
               const copy = plateCopy(plate.caption)
               const current = plate.id === week.id
               const imageLeft = index % 2 === 1
+              const to = plateDestination(plate)
 
               return (
                 <li
@@ -147,9 +158,9 @@ export function StillsPage() {
                           {copy.mark}
                         </p>
                       ) : null}
-                      {plate.to ? (
+                      {to ? (
                         <div className="mt-8">
-                          <TextLink to={plate.to}>The piece</TextLink>
+                          <TextLink to={to}>{plateLinkLabel(to)}</TextLink>
                         </div>
                       ) : null}
                       {plate.children?.[0] ? (
@@ -158,6 +169,7 @@ export function StillsPage() {
                           alt={plate.children[0].alt}
                           objectPosition={plate.children[0].objectPosition}
                           className="mt-10 aspect-[3/4] w-full max-w-sm"
+                          colour={colourOfPiece(plate.id)}
                         />
                       ) : null}
                     </Reveal>

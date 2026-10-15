@@ -33,7 +33,6 @@ export const instagramPlates: readonly InstagramPlate[] = [
     caption: 'Black. Matte, hem to the ankle.\n\nkiano.london',
     alt: 'A black Emirati column: band collar, hem to the ankle.',
     place: 'London',
-    to: '/stills',
     objectPosition: 'center 12%',
   },
   {
@@ -55,7 +54,6 @@ export const instagramPlates: readonly InstagramPlate[] = [
     caption: 'Beige. The daylight column.\n\nkiano.london',
     alt: 'A beige Emirati column, the cloth to the ankle.',
     place: 'London',
-    to: '/stills',
     objectPosition: 'center 12%',
   },
   {
@@ -84,7 +82,6 @@ export const instagramPlates: readonly InstagramPlate[] = [
     caption: 'Grey. A column of cloth.\n\nkiano.london',
     alt: 'An earth-grey Emirati column of cloth.',
     place: 'London',
-    to: '/stills',
     objectPosition: 'center 12%',
   },
   {
@@ -95,7 +92,6 @@ export const instagramPlates: readonly InstagramPlate[] = [
     caption: 'Charcoal. The first still of the house.\n\nkiano.london',
     alt: 'A charcoal Emirati column, the first still of the house.',
     place: 'London',
-    to: '/stills',
     objectPosition: '72% 18%',
   },
   {
@@ -124,7 +120,6 @@ export const instagramPlates: readonly InstagramPlate[] = [
     caption: 'Bone. Pressed once.\n\nkiano.london',
     alt: 'A bone Emirati column, pressed once.',
     place: 'London',
-    to: '/stills',
     objectPosition: 'center 12%',
   },
   {

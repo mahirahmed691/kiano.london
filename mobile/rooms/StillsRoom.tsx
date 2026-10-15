@@ -12,8 +12,10 @@ import {
   creedWoven,
   instagramPlates,
   plateCopy,
+  plateDestination,
   plateIntervalDays,
   plateKindLabel,
+  plateLinkLabel,
   plateNumber,
   site,
   thisWeekPlate,
@@ -52,7 +54,9 @@ export function StillsRoom({ open, roomHeight, bottomInset, onOverlay, plateId }
         quiet
         height={roomHeight}
         priority
-        onPress={focus.to ? () => open(focus.to!) : undefined}
+        onPress={
+          plateDestination(focus) ? () => open(plateDestination(focus)!) : undefined
+        }
       />
 
       <View style={paper()}>
@@ -66,10 +70,10 @@ export function StillsRoom({ open, roomHeight, bottomInset, onOverlay, plateId }
         </Body>
         <View style={styles.gap} />
         <Body>{`${weekCopy.lines.join(' ')} Cadence: every ${plateIntervalDays} days.`}</Body>
-        {week.to ? (
+        {plateDestination(week) ? (
           <>
             <View style={styles.gap} />
-            <GhostLink label={week.name} onPress={() => open(week.to!)} />
+            <GhostLink label={week.name} onPress={() => open(plateDestination(week)!)} />
           </>
         ) : null}
 
@@ -100,6 +104,7 @@ export function StillsRoom({ open, roomHeight, bottomInset, onOverlay, plateId }
         const copy = plateCopy(plate.caption)
         const current = plate.id === week.id
         const child = plate.children?.[0]
+        const to = plateDestination(plate)
         return (
           <View key={plate.id} style={section()}>
             <View style={styles.plateStill}>
@@ -124,9 +129,9 @@ export function StillsRoom({ open, roomHeight, bottomInset, onOverlay, plateId }
               <Body key={line}>{line}</Body>
             ))}
             {copy.mark ? <Text style={styles.lockup}>{copy.mark}</Text> : null}
-            {plate.to ? (
+            {to ? (
               <View style={styles.gap}>
-                <GhostLink label="The piece" onPress={() => open(plate.to!)} />
+                <GhostLink label={plateLinkLabel(to)} onPress={() => open(to)} />
               </View>
             ) : null}
             {child ? (

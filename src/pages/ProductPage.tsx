@@ -197,8 +197,7 @@ export function ProductPage() {
               <div className="mb-10 xl:hidden">
                 <PieceHeading product={product} />
               </div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-stone">{product.mill}</p>
-              <p className="mt-4 font-display text-4xl font-light">{product.price}</p>
+              <p className="font-display text-4xl font-light">{product.price}</p>
               <p className="mt-3 text-[14px] font-light text-ink-soft">
                 {product.colour} · {product.cloth}
               </p>
