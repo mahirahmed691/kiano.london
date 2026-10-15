@@ -49,7 +49,6 @@ export function StillsRoom({ open, roomHeight, bottomInset, onOverlay, plateId }
             : `${plateNumber(focus)} · ${focus.place}`
         }
         title={focus.name}
-        colour={colourOfPiece(focus.id)}
         quiet
         height={roomHeight}
         priority

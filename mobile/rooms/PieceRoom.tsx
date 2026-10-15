@@ -75,8 +75,6 @@ export function PieceRoom({
         src={first.src}
         alt={first.alt}
         objectPosition={first.objectPosition ?? product.objectPosition}
-        kicker={product.cut === 'Jubbah' ? 'The outer garment' : 'Emirati thobe'}
-        title={productLineName(product)}
         colour={product.colour}
         height={roomHeight}
         priority

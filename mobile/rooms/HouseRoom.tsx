@@ -6,7 +6,6 @@ import { RoomScroll, paper, section } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
 import { Body, Display, Eyebrow, GhostLink, OutlineButton } from '../HouseType'
 import {
-  colourOfPiece,
   creedIntent,
   creedJoin,
   creedSpoken,
@@ -45,7 +44,6 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         objectPosition={week.objectPosition}
         kicker={kicker}
         title={week.name}
-        colour={colourOfPiece(week.id)}
         quiet
         height={roomHeight}
         priority
@@ -156,7 +154,6 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
           objectPosition={plate.objectPosition}
           kicker={index === 0 ? `Last week · ${plate.place}` : plate.place}
           title={plate.name}
-          colour={colourOfPiece(plate.id)}
           quiet
           height={roomHeight}
           onPress={() => open(plate.to ?? '/stills')}

@@ -106,7 +106,6 @@ export function LineRoom({
         objectPosition={collection ? 'center 8%' : 'center 22%'}
         kicker={collection ? 'The line' : 'The outer garment'}
         title={collection ? 'The Collection.' : 'The Shop.'}
-        colour="Cream"
         height={roomHeight}
         priority
       />
