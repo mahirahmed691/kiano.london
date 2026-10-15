@@ -34,6 +34,7 @@ export function CollectionPage() {
         kicker="The line"
         title="The Collection."
         minHeight="screen"
+        quiet
         priority
       />
 

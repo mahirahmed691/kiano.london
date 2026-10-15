@@ -23,6 +23,7 @@ export function StoryRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
         objectPosition="18% 40%"
         kicker={creedStandard}
         title="The house."
+        quiet
         height={roomHeight}
         priority
       />

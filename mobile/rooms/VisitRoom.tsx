@@ -45,6 +45,7 @@ export function VisitRoom({ open, openWeb, roomHeight, bottomInset, onOverlay }:
         objectPosition="center 40%"
         kicker="The house"
         title="By appointment."
+        quiet
         height={roomHeight}
         priority
       />

@@ -5,7 +5,7 @@ import { HouseCard } from '../HouseCard'
 import { HouseMotto } from '../HouseMotto'
 import { RoomScroll, paper } from '../HousePaper'
 import { HouseStill } from '../HouseStill'
-import { Body, Display, GhostLink, OutlineButton } from '../HouseType'
+import { Arabic, Body, Display, GhostLink, OutlineButton } from '../HouseType'
 import {
   clothSwatch,
   creedIntent,
@@ -59,6 +59,8 @@ export function LineRoom({
       />
 
       <View style={paper()}>
+        <Arabic>{collection ? 'الثوب' : 'الجُبَّة'}</Arabic>
+        <View style={styles.space} />
         <Display size={28}>
           {jubbahs.map((piece) => productLineName(piece)).join('\n')}
         </Display>

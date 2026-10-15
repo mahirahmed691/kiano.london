@@ -47,6 +47,7 @@ export function VisitPage() {
         kicker="The house"
         title="By appointment."
         minHeight="screen"
+        quiet
         priority
       />
 
@@ -55,7 +56,9 @@ export function VisitPage() {
           <div className="grid gap-16 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
               <Eyebrow>A visit</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">Three acts.</Display>
+              <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+                Three acts.
+              </Display>
               <Body className="mt-6">
                 There is no shop window. Come to see cloth, or to be fitted. Write
                 first. {creedIntent}

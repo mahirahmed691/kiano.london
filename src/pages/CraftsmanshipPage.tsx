@@ -21,14 +21,11 @@ export function CraftsmanshipPage() {
         imageAlt="A needle on charcoal cloth: the stitch that holds the column."
         objectPosition="center"
         kicker="Craftsmanship"
-        title="The art of the stitch."
+        title="The stitch."
         minHeight="screen"
+        quiet
         priority
-      >
-        <Button to="/craftsmanship-details" variant="invert">
-          The making, in detail
-        </Button>
-      </Hero>
+      />
 
       <Section>
         <Container>
@@ -40,7 +37,7 @@ export function CraftsmanshipPage() {
         <Container>
           <Reveal className="max-w-2xl">
             <Eyebrow>Process</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">
+            <Display as="h1" className="mt-4 text-4xl md:text-5xl">
               The thobe is built, not assembled.
             </Display>
             <Body className="mt-6">
@@ -48,6 +45,9 @@ export function CraftsmanshipPage() {
               order. We do not fuse a collar because it is faster. The methods are kept
               because they still make a better garment. {creedIntent}
             </Body>
+            <div className="mt-8">
+              <Button to="/craftsmanship-details">The making, in detail</Button>
+            </div>
           </Reveal>
 
           <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-2 lg:gap-x-10 lg:gap-y-20">
