@@ -1,15 +1,17 @@
 import { useEffect } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
+import { HouseLockup } from './HouseLockup'
 import { houseLandedCopy, houseLandedHoldMs } from './HouseLandedCopy'
 import { color, type } from './theme'
 
 type Props = {
-  bottom: number
+  top?: number
+  bottom?: number
   onRestart: () => void
 }
 
-export function HouseLanded({ bottom, onRestart }: Props) {
+export function HouseLanded({ top = 0, bottom = 0, onRestart }: Props) {
   useEffect(() => {
     const hold = setTimeout(onRestart, houseLandedHoldMs)
     return () => clearTimeout(hold)
@@ -17,13 +19,20 @@ export function HouseLanded({ bottom, onRestart }: Props) {
 
   return (
     <View
-      pointerEvents="box-none"
-      style={[styles.hold, { paddingBottom: Math.max(bottom, 18) }]}
+      pointerEvents="auto"
+      style={[
+        styles.veil,
+        {
+          paddingTop: Math.max(top, 56),
+          paddingBottom: Math.max(bottom, 56),
+        },
+      ]}
       accessibilityRole="alert"
+      accessibilityLabel={`${houseLandedCopy.kicker}. ${houseLandedCopy.display} ${houseLandedCopy.body}`}
       testID="house-landed"
     >
       <View style={styles.plate}>
-        <Text style={styles.kicker}>{houseLandedCopy.kicker}</Text>
+        <HouseLockup tone="bronze" />
         <Text style={styles.display}>{houseLandedCopy.display}</Text>
         <Text style={styles.body}>{houseLandedCopy.body}</Text>
         <Pressable
@@ -45,65 +54,53 @@ export function HouseLanded({ bottom, onRestart }: Props) {
 }
 
 const styles = StyleSheet.create({
-  hold: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 14,
+  veil: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 21,
+    justifyContent: 'center',
+    backgroundColor: color.night,
+    paddingHorizontal: 32,
   },
   plate: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.rule,
-    backgroundColor: color.ivory,
-    paddingTop: 22,
-    paddingHorizontal: 24,
-    paddingBottom: 8,
-  },
-  kicker: {
-    color: color.stone,
-    fontFamily: type.sansRegular,
-    fontSize: 11,
-    letterSpacing: 3,
-    textTransform: 'uppercase',
+    maxWidth: 360,
   },
   display: {
-    marginTop: 12,
-    color: color.ink,
+    marginTop: 36,
+    color: color.ivory,
     fontFamily: type.displayLight,
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: '300',
-    letterSpacing: -0.4,
-    lineHeight: 34,
+    letterSpacing: -0.5,
+    lineHeight: 46,
   },
   body: {
-    marginTop: 10,
+    marginTop: 16,
     maxWidth: 280,
-    color: color.inkSoft,
+    color: color.bronze,
     fontFamily: type.sans,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '300',
-    lineHeight: 24,
+    lineHeight: 26,
   },
   retry: {
     alignSelf: 'flex-start',
-    marginTop: 22,
+    marginTop: 36,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: color.ink,
-    paddingHorizontal: 18,
-    paddingVertical: 12,
+    borderColor: color.ivory,
+    paddingHorizontal: 22,
+    paddingVertical: 14,
   },
   pressed: {
-    backgroundColor: color.ink,
+    backgroundColor: color.ivory,
   },
   retryLabel: {
-    color: color.ink,
+    color: color.ivory,
     fontFamily: type.sansRegular,
     fontSize: 11,
     letterSpacing: 2.2,
     textTransform: 'uppercase',
   },
   retryLabelOn: {
-    color: color.ivory,
+    color: color.night,
   },
 })

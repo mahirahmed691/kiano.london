@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 import { houseLandedCopy, houseLandedHoldMs, houseUpdateRecheckMs } from './HouseLandedCopy.ts'
@@ -14,4 +15,13 @@ test('the landed line reads as the house, not as an engineering note', () => {
 test('the plate holds long enough to be read, then the house keeps upgrading', () => {
   assert.equal(houseLandedHoldMs, 2200)
   assert.ok(houseUpdateRecheckMs >= 10 * 60 * 1000)
+})
+
+test('the landed line is a house night plate, not an engineering note', () => {
+  const source = readFileSync(new URL('./HouseLanded.tsx', import.meta.url), 'utf8')
+  assert.match(source, /absoluteFillObject/)
+  assert.match(source, /zIndex: 21/)
+  assert.match(source, /color\.night/)
+  assert.match(source, /HouseLockup/)
+  assert.equal(/OTA|expo-updates/i.test(source), false)
 })

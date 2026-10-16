@@ -23,6 +23,7 @@ import {
 import { useHouseFonts } from './fonts'
 import {
   goScript,
+  hashOf,
   houseOrigin,
   isStripeUrl,
   isTillPath,
@@ -106,15 +107,27 @@ function HouseApp() {
   const nativePath = useRef('/')
   const pendingBag = useRef('')
   const tillHold = useRef(false)
+  const accountHold = useRef(false)
+  const nativePlate = useRef('')
   const webKindRef = useRef(webKind)
   const webView = useRef<WebView>(null)
 
-  useEffect(() => {
-    webKindRef.current = webKind
-  }, [webKind])
+  const showWeb = useCallback((kind: 'hidden' | 'bag' | 'word' | 'account' | 'sheet') => {
+    webKindRef.current = kind
+    setWebKind(kind)
+  }, [])
 
   const rememberNative = useCallback((next: string) => {
-    if (isNativeBrowse(next)) nativePath.current = next.split('?')[0] || '/'
+    const [pathname, hash] = next.split('#')
+    if (!isNativeBrowse(pathname || '/')) return
+    nativePath.current = (pathname || '/').split('?')[0] || '/'
+    nativePlate.current = hash ?? ''
+  }, [])
+
+  const nativeReturn = useCallback(() => {
+    const path = nativePath.current
+    const plate = nativePlate.current
+    return plate && path === '/stills' ? `${path}#${plate}` : path
   }, [])
 
   const goNative = useCallback(
@@ -122,16 +135,17 @@ function HouseApp() {
       const [pathname, hash] = next.split('#')
       setPath(pathname || '/')
       setPlateId(hash ?? '')
-      setWebKind('hidden')
+      showWeb('hidden')
       setBagOpen(false)
       setWordOpen(false)
       setMenuOpen(false)
       setOnStripe(false)
       tillHold.current = false
-      rememberNative(pathname || '/')
+      accountHold.current = false
+      rememberNative(next)
       setHeroOverlay(overlayRoom(pathname || '/'))
     },
-    [rememberNative],
+    [rememberNative, showWeb],
   )
 
   const webReady = useRef(false)
@@ -152,15 +166,21 @@ function HouseApp() {
         return
       }
       setPath(next)
-      setWebKind(kind)
+      showWeb(kind)
       setOnStripe(false)
-      if (kind === 'sheet' && isTillPath(next)) tillHold.current = true
+      if (kind === 'account') {
+        accountHold.current = true
+        tillHold.current = false
+      } else if (kind === 'sheet' && isTillPath(next)) {
+        tillHold.current = true
+        accountHold.current = false
+      }
       if (kind === 'account' || kind === 'sheet') {
         setUri(`${houseOrigin()}${next}`)
       }
       send(goScript(next), next)
     },
-    [send],
+    [send, showWeb],
   )
 
   const revealWord = useCallback(() => {
@@ -169,9 +189,9 @@ function HouseApp() {
       void Linking.openURL(houseOrigin())
       return
     }
-    setWebKind('word')
+    showWeb('word')
     webView.current?.injectJavaScript(openEvent('kiano-open-word'))
-  }, [])
+  }, [showWeb])
 
   const revealBag = useCallback(() => {
     setMenuOpen(false)
@@ -180,9 +200,9 @@ function HouseApp() {
       return
     }
     if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
-    setWebKind('bag')
+    showWeb('bag')
     webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
-  }, [wordOpen])
+  }, [showWeb, wordOpen])
 
   const open = useCallback(
     (next: string) => {
@@ -217,11 +237,11 @@ function HouseApp() {
       }
       setMenuOpen(false)
       setPath(href)
-      setWebKind('bag')
+      showWeb('bag')
       pendingBag.current = href
       setUri(`${houseOrigin()}${href}&t=${Date.now()}`)
     },
-    [],
+    [showWeb],
   )
 
   useEffect(() => {
@@ -229,14 +249,18 @@ function HouseApp() {
       const next = urlForHouse(url)
       setUri(next)
       const pathname = pathOf(next)
-      if (isNativeBrowse(pathname)) goNative(pathname)
+      const hash = hashOf(next)
+      const href = hash ? `${pathname.split('?')[0] || '/'}#${hash}` : pathname
+      if (isNativeBrowse(pathname)) goNative(href)
       else open(pathname)
     })
     const subscription = Linking.addEventListener('url', ({ url }) => {
       const next = urlForHouse(url)
       setUri(next)
       const pathname = pathOf(next)
-      if (isNativeBrowse(pathname)) goNative(pathname)
+      const hash = hashOf(next)
+      const href = hash ? `${pathname.split('?')[0] || '/'}#${hash}` : pathname
+      if (isNativeBrowse(pathname)) goNative(href)
       else open(pathname)
     })
     return () => subscription.remove()
@@ -285,8 +309,15 @@ function HouseApp() {
       return
     }
 
+    if (payload.type === 'kiano-open') {
+      const next = typeof payload.path === 'string' ? payload.path : ''
+      if (next && isNativeBrowse(next)) goNative(next)
+      return
+    }
+
     if (payload.type === 'kiano-checkout') {
       tillHold.current = true
+      accountHold.current = false
       goWeb('/checkout', 'sheet')
       return
     }
@@ -301,15 +332,21 @@ function HouseApp() {
       setWordOpen(payload.wordOpen === true)
       void setHouseBadge(nextWord)
       if (payload.bagOpen !== true && webKindRef.current === 'bag') {
-        if (tillHold.current || isTillPath(href) || isAccountPath(href)) {
-          setPath(tillHold.current ? '/checkout' : href)
-          setWebKind(isAccountPath(href) ? 'account' : 'sheet')
+        if (accountHold.current || isAccountPath(href)) {
+          const next = accountHold.current ? '/account' : href
+          setPath(next)
+          showWeb('account')
           return
         }
-        goNative(nativePath.current)
+        if (tillHold.current || isTillPath(href)) {
+          setPath(tillHold.current ? '/checkout' : href)
+          showWeb('sheet')
+          return
+        }
+        goNative(nativeReturn())
       }
-      if (payload.wordOpen !== true && webKind === 'word') {
-        goNative(nativePath.current)
+      if (payload.wordOpen !== true && webKindRef.current === 'word') {
+        goNative(nativeReturn())
       }
       return
     }
@@ -323,7 +360,7 @@ function HouseApp() {
         webView.current?.injectJavaScript(pushBridge(token))
       })
       .catch(() => undefined)
-  }, [goNative, goWeb, webKind])
+  }, [goNative, goWeb, nativeReturn, showWeb])
 
   const tap = useCallback((fn: () => void) => {
     void Haptics.selectionAsync().catch(() => undefined)
@@ -331,7 +368,8 @@ function HouseApp() {
   }, [])
 
   const webVisible = webKind !== 'hidden' || bagOpen || wordOpen
-  const routeTab = tabFromPath(isNativeBrowse(path) ? path : nativePath.current)
+  const browsePath = webVisible || !isNativeBrowse(path) ? nativePath.current : path
+  const routeTab = tabFromPath(browsePath)
   const tab: HouseTab = bagOpen || webKind === 'bag' ? 'bag' : webKind === 'account' || isAccountPath(path) ? 'account' : routeTab
   const lightStatus = !hideHeader
   const canBack = webVisible || (isNativeBrowse(path) && !isRootRoom(path))
@@ -342,31 +380,31 @@ function HouseApp() {
       return
     }
     if (onStripe || isTillPath(path)) {
-      goNative(nativePath.current)
+      goNative(nativeReturn())
       return
     }
     if (bagOpen || webKind === 'bag') {
       webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
-      goNative(nativePath.current)
+      goNative(nativeReturn())
       return
     }
     if (wordOpen || webKind === 'word') {
       webView.current?.injectJavaScript(openEvent('kiano-close-word'))
-      goNative(nativePath.current)
+      goNative(nativeReturn())
       return
     }
     if (webKind === 'account') {
-      goNative(nativePath.current)
+      goNative(nativeReturn())
       return
     }
     if (webKind === 'sheet') {
-      goNative(nativePath.current)
+      goNative(nativeReturn())
       return
     }
     if (isNativeBrowse(path) && !isRootRoom(path)) {
       goNative(parentRoom(path))
     }
-  }, [bagOpen, goNative, menuOpen, onStripe, path, webKind, wordOpen])
+  }, [bagOpen, goNative, menuOpen, nativeReturn, onStripe, path, webKind, wordOpen])
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -394,7 +432,7 @@ function HouseApp() {
     [addToBag, chromeHeight, hideTabs, insets.bottom, open, openWeb, roomHeight],
   )
 
-  const room = roomPath(isNativeBrowse(path) ? path : nativePath.current)
+  const room = roomPath(browsePath)
   const pieceId = pieceIdFromPath(room)
 
   return (
@@ -409,7 +447,7 @@ function HouseApp() {
         {room === '/scent' ? <ScentRoom {...nav} /> : null}
         {room.startsWith('/scent/') ? <ScentRoom {...nav} scentId={pieceId} /> : null}
         {room.startsWith('/shop/') || room.startsWith('/collection/') ? (
-          <PieceRoom {...nav} pieceId={pieceId} />
+          <PieceRoom {...nav} pieceId={pieceId} collection={room.startsWith('/collection/')} />
         ) : null}
         {room === '/visit' ? <VisitRoom {...nav} /> : null}
         {room === '/story' ? <StoryRoom {...nav} /> : null}
@@ -490,7 +528,7 @@ function HouseApp() {
         <>
           <HouseMenu
             open={menuOpen}
-            path={isNativeBrowse(path) ? path : nativePath.current}
+            path={browsePath}
             bag={bag}
             topInset={headerHeight}
             bottomInset={insets.bottom}
@@ -529,7 +567,7 @@ function HouseApp() {
       ) : null}
       {hideTabs ? null : (
         <HouseChrome
-          path={isNativeBrowse(path) ? path : nativePath.current}
+          path={browsePath}
           tab={tab}
           bag={bag}
           inset={insets.bottom}
@@ -577,10 +615,10 @@ function HouseApp() {
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
               if (bagOpen || webKind === 'bag') {
                 webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
-                goNative(nativePath.current)
+                goNative(nativeReturn())
                 return
               }
-              setWebKind('bag')
+              showWeb('bag')
               webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
             })
           }
@@ -589,7 +627,7 @@ function HouseApp() {
               if (bagOpen) webView.current?.injectJavaScript(openEvent('kiano-close-bag'))
               if (wordOpen) webView.current?.injectJavaScript(openEvent('kiano-close-word'))
               if (tab === 'account' || webKind === 'account' || isAccountPath(path)) {
-                goNative(nativePath.current)
+                goNative(nativeReturn())
                 return
               }
               goWeb('/account', 'account')
@@ -600,7 +638,8 @@ function HouseApp() {
       {failed && webVisible ? <HouseFailed onRetry={retry} /> : null}
       {landed && !onStripe ? (
         <HouseLanded
-          bottom={hideTabs ? insets.bottom : chromeHeight}
+          top={insets.top}
+          bottom={insets.bottom}
           onRestart={applyLanded}
         />
       ) : null}

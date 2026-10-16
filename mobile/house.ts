@@ -91,6 +91,8 @@ export {
   addToBagScript,
   holdBagLine,
   isCheckoutHref,
+  isRoomEscapePath,
+  isTillSurface,
   nativeMark,
   pieceIdFromHref,
   pushBridge,

@@ -4,7 +4,7 @@ import {
   plateWeekOrigin,
   type InstagramPlate,
 } from '../src/data/instagram-plates'
-import { type Product } from '../src/data/products'
+import { productPath, type Product } from '../src/data/products'
 
 export {
   clothSwatch,
@@ -110,6 +110,10 @@ export function recentPlates(count = 4, now = Date.now()) {
 export function pieceIdFromPath(pathname: string) {
   const match = pathname.match(/^\/(shop|collection|scent)\/([^/?#]+)/)
   return match?.[2] ?? ''
+}
+
+export function linePath(product: Product, collection = false) {
+  return collection ? `/collection/${product.id}` : productPath(product)
 }
 
 export function isNativeBrowse(pathname: string) {

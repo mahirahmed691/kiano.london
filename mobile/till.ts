@@ -35,6 +35,35 @@ export function isCheckoutHref(href: string) {
   }
 }
 
+export function isTillSurface(pathname: string) {
+  const path = pathname.split('?')[0] || '/'
+  return (
+    path.startsWith('/checkout') ||
+    path.startsWith('/order') ||
+    path.startsWith('/account') ||
+    path.startsWith('/sign-in') ||
+    path.startsWith('/sign-up')
+  )
+}
+
+export function isRoomEscapePath(pathname: string) {
+  const path = pathname.split('?')[0] || '/'
+  if (path === '/visit') return false
+  return (
+    path === '/' ||
+    path === '/stills' ||
+    path === '/shop' ||
+    path === '/collection' ||
+    path === '/scent' ||
+    path === '/story' ||
+    path === '/craftsmanship' ||
+    path === '/craftsmanship-details' ||
+    path.startsWith('/shop/') ||
+    path.startsWith('/collection/') ||
+    path.startsWith('/scent/')
+  )
+}
+
 export function pieceIdFromHref(pathname: string) {
   const match = pathname.split('?')[0].match(/^\/(shop|collection)\/([^/]+)$/)
   return match?.[2] ?? ''
@@ -80,10 +109,20 @@ function tillMark() {
               try {
                 if (href) path = new URL(href, window.location.origin).pathname;
               } catch (err) {}
-              if ((path.split('?')[0] === '/checkout') && window.ReactNativeWebView) {
+              var clean = path.split('?')[0];
+              if (clean === '/checkout' && window.ReactNativeWebView) {
                 event.preventDefault();
                 event.stopPropagation();
                 window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'kiano-checkout' }));
+                return false;
+              }
+              var here = (window.location.pathname || '').split('?')[0];
+              var till = here.indexOf('/checkout') === 0 || here.indexOf('/order') === 0 || here.indexOf('/account') === 0 || here.indexOf('/sign-in') === 0 || here.indexOf('/sign-up') === 0;
+              var room = clean === '/' || clean === '/stills' || clean === '/shop' || clean === '/collection' || clean === '/scent' || clean === '/story' || clean === '/craftsmanship' || clean === '/craftsmanship-details' || clean.indexOf('/shop/') === 0 || clean.indexOf('/collection/') === 0 || clean.indexOf('/scent/') === 0;
+              if (till && room && clean !== '/visit' && window.ReactNativeWebView) {
+                event.preventDefault();
+                event.stopPropagation();
+                window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'kiano-open', path: clean || '/' }));
                 return false;
               }
             }
