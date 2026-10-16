@@ -98,8 +98,9 @@ function HouseApp() {
   const [chromeHeight, setChromeHeight] = useState(92)
   const [onStripe, setOnStripe] = useState(false)
   const [landed, setLanded] = useState(false)
-  const hideHeader = wordOpen || webKind === 'word' || onStripe
+  const hideHeader = wordOpen || webKind === 'word' || onStripe || landed
   const hideTabs = hideHeader || isTillPath(path)
+  const lightStatus = landed || !(wordOpen || webKind === 'word' || onStripe)
   const topChrome = hideHeader ? 0 : headerHeight
   const tabChrome = hideTabs ? 0 : chromeHeight
   const wellHeight = Math.max(1, windowHeight - topChrome)
@@ -371,7 +372,6 @@ function HouseApp() {
   const browsePath = webVisible || !isNativeBrowse(path) ? nativePath.current : path
   const routeTab = tabFromPath(browsePath)
   const tab: HouseTab = bagOpen || webKind === 'bag' ? 'bag' : webKind === 'account' || isAccountPath(path) ? 'account' : routeTab
-  const lightStatus = !hideHeader
   const canBack = webVisible || (isNativeBrowse(path) && !isRootRoom(path))
 
   const back = useCallback(() => {

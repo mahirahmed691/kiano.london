@@ -13,7 +13,7 @@ test('the landed line reads as the house, not as an engineering note', () => {
 })
 
 test('the plate holds long enough to be read, then the house keeps upgrading', () => {
-  assert.equal(houseLandedHoldMs, 2200)
+  assert.equal(houseLandedHoldMs, 4800)
   assert.ok(houseUpdateRecheckMs >= 10 * 60 * 1000)
 })
 
@@ -23,5 +23,6 @@ test('the landed line is a house night plate, not an engineering note', () => {
   assert.match(source, /zIndex: 21/)
   assert.match(source, /color\.night/)
   assert.match(source, /HouseLockup/)
+  assert.match(source, /fontSize: 48/)
   assert.equal(/OTA|expo-updates/i.test(source), false)
 })
