@@ -28,10 +28,21 @@ test('dev, web, and a disabled module never take an update', () => {
   assert.equal(houseUpdateCanRun({ ...live, isEnabled: false }), false)
 })
 
+function oldApply(checkIsAvailable: boolean, fetchedIsNew: boolean) {
+  if (!checkIsAvailable) return false
+  return fetchedIsNew
+}
+
 test('reload when a download is already waiting, even if the server has nothing new', () => {
   const pending = { ...live, isUpdatePending: true }
   assert.equal(houseUpdateShouldReload(pending), true)
   assert.equal(houseUpdateShouldReload(live), false)
+})
+
+test('the old isAvailable/isNew gate never reloads a pending ON_LOAD download', () => {
+  assert.equal(oldApply(false, false), false)
+  assert.equal(oldApply(true, false), false)
+  assert.equal(houseUpdateShouldReload({ ...live, isUpdatePending: true }), true)
 })
 
 test('do not start a second fetch while native is still checking or downloading', () => {
