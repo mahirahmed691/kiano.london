@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   row: {
     minHeight: 64,
     paddingLeft: 12,
-    paddingRight: 10,
+    paddingRight: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
   sideEnd: {
     justifyContent: 'flex-end',
     gap: 8,
+    zIndex: 2,
   },
   hit: {
     width: 44,
@@ -209,6 +210,7 @@ const styles = StyleSheet.create({
   clock: {
     width: 22,
     height: 22,
+    marginLeft: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   slot: {
     minHeight: 44,
-    minWidth: 44,
+    minWidth: 18,
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingRight: 0,
