@@ -33,6 +33,7 @@ export const overlayPaths = [
 
 export function headerOverlays(pathname: string) {
   const path = pathname.split('?')[0] || '/'
+  if (path.startsWith('/admin')) return false
   if ((overlayPaths as readonly string[]).includes(path)) return true
   return (
     path.startsWith('/shop/') ||
@@ -40,6 +41,7 @@ export function headerOverlays(pathname: string) {
     path.startsWith('/scent/') ||
     path.startsWith('/sign-in') ||
     path.startsWith('/sign-up') ||
-    path.startsWith('/order')
+    path.startsWith('/order') ||
+    path !== '/'
   )
 }
