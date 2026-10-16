@@ -33,10 +33,11 @@ function oldApply(checkIsAvailable: boolean, fetchedIsNew: boolean) {
   return fetchedIsNew
 }
 
-test('reload when a download is already waiting, even if the server has nothing new', () => {
+test('a waiting download is ready to apply, and does not need another fetch first', () => {
   const pending = { ...live, isUpdatePending: true }
   assert.equal(houseUpdateShouldReload(pending), true)
   assert.equal(houseUpdateShouldReload(live), false)
+  assert.equal(houseUpdateShouldFetch(pending), true)
 })
 
 test('the old isAvailable/isNew gate never reloads a pending ON_LOAD download', () => {

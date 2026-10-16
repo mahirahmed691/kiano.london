@@ -21,7 +21,7 @@ function context(native = Updates.latestContext): HouseUpdateContext {
   }
 }
 
-async function reloadHouseUpdate() {
+export async function restartHouseUpdate() {
   if (reloading || !houseUpdateShouldReload(context())) return
   reloading = true
   try {
@@ -31,10 +31,10 @@ async function reloadHouseUpdate() {
   }
 }
 
-export async function applyHouseUpdate() {
+export async function applyHouseUpdate(onLanded?: () => void) {
   const now = context()
   if (houseUpdateShouldReload(now)) {
-    await reloadHouseUpdate()
+    onLanded?.()
     return
   }
   if (!houseUpdateShouldFetch(now)) return
@@ -44,21 +44,21 @@ export async function applyHouseUpdate() {
     if (check.isAvailable || check.isRollBackToEmbedded) {
       await Updates.fetchUpdateAsync()
     }
-    await reloadHouseUpdate()
+    if (houseUpdateShouldReload(context())) onLanded?.()
   } catch {
-    await reloadHouseUpdate()
+    if (houseUpdateShouldReload(context())) onLanded?.()
   }
 }
 
-export function listenHouseUpdate() {
+export function listenHouseUpdate(onLanded?: () => void) {
   const onChange = (state: AppStateStatus) => {
-    if (state === 'active') void applyHouseUpdate()
+    if (state === 'active') void applyHouseUpdate(onLanded)
   }
   const app = AppState.addEventListener('change', onChange)
   const updates = Updates.addUpdatesStateChangeListener((event) => {
-    if (event.context.isUpdatePending) void reloadHouseUpdate()
+    if (event.context.isUpdatePending) onLanded?.()
   })
-  void applyHouseUpdate()
+  void applyHouseUpdate(onLanded)
   return () => {
     app.remove()
     updates.remove()

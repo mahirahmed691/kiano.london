@@ -10,6 +10,7 @@ import { WebView, type WebViewMessageEvent, type WebViewNavigation } from 'react
 import { HouseChrome, tabFromPath, type HouseTab } from './HouseChrome'
 import { HouseFailed } from './HouseFailed'
 import { HouseHeader } from './HouseHeader'
+import { HouseLanded } from './HouseLanded'
 import { HouseMenu } from './HouseMenu'
 import { HouseSplash } from './HouseSplash'
 import {
@@ -33,7 +34,7 @@ import {
   urlForHouse,
 } from './house'
 import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
-import { listenHouseUpdate } from './HouseUpdate'
+import { listenHouseUpdate, restartHouseUpdate } from './HouseUpdate'
 import { HouseRoom } from './rooms/HouseRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingDetailsRoom } from './rooms/MakingDetailsRoom'
@@ -95,6 +96,7 @@ function HouseApp() {
   const [headerHeight, setHeaderHeight] = useState(120)
   const [chromeHeight, setChromeHeight] = useState(92)
   const [onStripe, setOnStripe] = useState(false)
+  const [landed, setLanded] = useState(false)
   const hideHeader = wordOpen || webKind === 'word' || onStripe
   const hideTabs = hideHeader || isTillPath(path)
   const topChrome = hideHeader ? 0 : headerHeight
@@ -246,7 +248,7 @@ function HouseApp() {
     return listenHousePush((href) => open(href))
   }, [open])
 
-  useEffect(() => listenHouseUpdate(), [])
+  useEffect(() => listenHouseUpdate(() => setLanded(true)), [])
 
   const onNav = useCallback((request: WebViewNavigation) => {
     if (shouldOpenOutside(request.url)) {
@@ -591,6 +593,15 @@ function HouseApp() {
         />
       )}
       {failed && webVisible ? <HouseFailed onRetry={retry} /> : null}
+      {landed && !onStripe ? (
+        <HouseLanded
+          bottom={hideTabs ? insets.bottom : chromeHeight}
+          onRestart={() => {
+            void Haptics.selectionAsync().catch(() => undefined)
+            void restartHouseUpdate()
+          }}
+        />
+      ) : null}
       <HouseSplash houseReady={fontsReady} />
     </View>
   )
