@@ -81,7 +81,7 @@ export function HouseHeader({
   return (
     <View
       pointerEvents="box-none"
-      style={[styles.bar, { paddingTop: topInset }]}
+      style={[styles.bar, { paddingTop: topInset, paddingBottom: 16 }]}
       onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
     >
       <View style={styles.row} pointerEvents="box-none">

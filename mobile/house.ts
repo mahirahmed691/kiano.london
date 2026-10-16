@@ -91,6 +91,7 @@ export {
   addToBagScript,
   holdBagLine,
   holdBagScript,
+  houseTillPad,
   isCheckoutHref,
   isRoomEscapePath,
   isTillSurface,

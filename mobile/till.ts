@@ -78,6 +78,9 @@ export function shouldLeaveTill(
   return isRoomEscapePath(navPath)
 }
 
+/** Air under the native mark on till reading pages. The bag sheet stays at 0. */
+export const houseTillPad = '3.5rem'
+
 export function pieceIdFromHref(pathname: string) {
   const match = pathname.split('?')[0].match(/^\/(shop|collection)\/([^/]+)$/)
   return match?.[2] ?? ''
@@ -89,8 +92,16 @@ function tillMark() {
     try {
       var root = document.documentElement;
       root.classList.add('shell-app');
-      root.style.setProperty('--header-offset', '0px');
+      root.style.setProperty('--header-offset', '${houseTillPad}');
       root.style.setProperty('--app-tab', '0px');
+      try {
+        if (document.getElementById && !document.getElementById('kiano-till-pad')) {
+          var sheet = document.createElement('style');
+          sheet.id = 'kiano-till-pad';
+          sheet.textContent = 'html.shell-app .shell-sheet{top:0;bottom:var(--app-tab,0px)}html.shell-app [class*="pt-24"],html.shell-app [class*="pt-32"],html.shell-app [class*="pt-40"]{padding-top:${houseTillPad} !important}';
+          (document.head || root).appendChild(sheet);
+        }
+      } catch (err) {}
       try {
         if (!localStorage.getItem('kiano.consent')) {
           localStorage.setItem('kiano.consent', JSON.stringify({ choice: 'necessary', version: 1, at: Date.now() }));

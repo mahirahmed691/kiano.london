@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
   paper: {
     backgroundColor: color.ivory,
     paddingHorizontal: 24,
-    paddingTop: 48,
+    paddingTop: 72,
     paddingBottom: 56,
   },
   section: {
     backgroundColor: color.ivory,
     paddingHorizontal: 24,
-    paddingTop: 48,
+    paddingTop: 56,
     paddingBottom: 48,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: color.rule,

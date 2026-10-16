@@ -5,6 +5,7 @@ import { runInNewContext } from 'node:vm'
 import {
   holdBagLine,
   holdBagScript,
+  houseTillPad,
   isCheckoutHref,
   isRoomEscapePath,
   isTillSurface,
@@ -89,6 +90,14 @@ function tillSandbox(overrides: Record<string, unknown> = {}) {
   }
   return { store, window, sandbox }
 }
+
+test('till boot gives reading pages air under the mark, and keeps the bag full-bleed', () => {
+  const mark = nativeMark()
+  assert.equal(houseTillPad, '3.5rem')
+  assert.match(mark, /--header-offset', '3\.5rem'/)
+  assert.match(mark, /shell-sheet\{top:0/)
+  assert.match(mark, /\[class\*="pt-32"\]/)
+})
 
 test('till boot writes necessary consent so the cookie strip cannot sit on the till', () => {
   const { store, window, sandbox } = tillSandbox()
