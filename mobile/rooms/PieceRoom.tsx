@@ -33,7 +33,7 @@ type Props = HouseNav & {
 
 export function PieceRoom({
   open,
-  openWeb,
+  addToBag,
   pieceId,
   roomHeight,
   bottomInset,
@@ -62,7 +62,6 @@ export function PieceRoom({
     objectPosition: product.objectPosition,
   }
   const rest = product.gallery.slice(1)
-  const reservePath = size ? `${productPath(product)}?size=${size}` : productPath(product)
 
   return (
     <RoomScroll
@@ -138,7 +137,7 @@ export function PieceRoom({
             label={size ? 'Add to bag' : 'Choose a size'}
             onPress={() => {
               if (!size) return
-              openWeb(reservePath)
+              addToBag(product.id, size)
             }}
           />
           <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />

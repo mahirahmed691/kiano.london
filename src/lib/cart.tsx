@@ -95,6 +95,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [lines, update],
   )
 
+  useEffect(() => {
+    const hold = (event: Event) => {
+      const detail = (event as CustomEvent<{ productId?: unknown; size?: unknown }>).detail
+      const productId = typeof detail?.productId === 'string' ? detail.productId : ''
+      const size = Number(detail?.size)
+      if (!productId || !getProduct(productId) || !size) return
+      add(productId, size as ThobeSize)
+    }
+    window.addEventListener('kiano-add-to-bag', hold)
+    return () => window.removeEventListener('kiano-add-to-bag', hold)
+  }, [add])
+
   const setQuantity = useCallback(
     (productId: string, size: ThobeSize, quantity: number) => {
       if (quantity < 1) {

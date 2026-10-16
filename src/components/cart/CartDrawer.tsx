@@ -143,7 +143,15 @@ export function CartDrawer() {
                 to="/checkout"
                 variant="solid"
                 className="mt-6 w-full justify-center"
-                onClick={() => setOpen(false)}
+                onClick={(event) => {
+                  if (window.ReactNativeWebView) {
+                    event.preventDefault()
+                    setOpen(false)
+                    window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'kiano-checkout' }))
+                    return
+                  }
+                  setOpen(false)
+                }}
               >
                 Checkout
               </Button>

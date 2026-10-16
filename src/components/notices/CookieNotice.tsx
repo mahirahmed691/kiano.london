@@ -3,8 +3,10 @@ import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { headerOverlays } from '@/data/navigation'
 import { readConsent, writeConsent, type ConsentChoice } from '@/lib/notices'
+import { useHouseApp } from '@/lib/shell'
 
 export function CookieNotice() {
+  const app = useHouseApp()
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const overlay = headerOverlays(pathname)
@@ -15,6 +17,10 @@ export function CookieNotice() {
     setScrolled(false)
   }
   const plateClear = !overlay || scrolled
+
+  useEffect(() => {
+    if (app && !readConsent()) writeConsent('necessary')
+  }, [app])
 
   useEffect(() => {
     const sync = () => setOpen(!readConsent())
@@ -38,7 +44,7 @@ export function CookieNotice() {
     setOpen(false)
   }
 
-  if (!open || !plateClear) return null
+  if (app || !open || !plateClear) return null
 
   return (
     <div
