@@ -1,9 +1,9 @@
 import { Show } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { TillFrame } from '@/components/checkout/TillFrame'
 import { InvoiceSheet } from '@/components/invoice/InvoiceSheet'
 import { Button, TextLink } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
 import { getProduct, productPath } from '@/data/products'
@@ -136,69 +136,63 @@ export function OrderConfirmedPage() {
 
   if (view === 'loading') {
     return (
-      <Section fill className="pt-32 md:pt-40">
-        <Container>
-          <Eyebrow>Order</Eyebrow>
-          <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-            Reading the reservation.
-          </Display>
-          <Body className="mt-8">A moment, while the payment is confirmed.</Body>
-        </Container>
-      </Section>
+      <TillFrame title="Reading the reservation.">
+        <Eyebrow>The till</Eyebrow>
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+          Reading the reservation.
+        </Display>
+        <Body className="mt-8">A moment, while the payment is confirmed.</Body>
+      </TillFrame>
     )
   }
 
   if (view === 'missing') {
     return (
-      <Section fill className="pt-32 md:pt-40">
-        <Container>
-          <Eyebrow>Order</Eyebrow>
-          <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-            This confirmation could not be found.
-          </Display>
-          <Body className="mt-8">
-            If you have just paid, wait a moment and refresh. If the bag is still held, return to
-            checkout.
-          </Body>
-          <div className="mt-12 flex flex-wrap items-center gap-6">
-            <Button to="/checkout">Return to checkout</Button>
-            <TextLink to="/shop">The Shop</TextLink>
-          </div>
-        </Container>
-      </Section>
+      <TillFrame title="Nothing is held.">
+        <Eyebrow>The till</Eyebrow>
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+          This confirmation could not be found.
+        </Display>
+        <Body className="mt-8">
+          If you have just paid, wait a moment and refresh. If the bag is still held, return to
+          checkout.
+        </Body>
+        <div className="mt-12 flex flex-wrap items-center gap-6">
+          <Button to="/checkout">Return to checkout</Button>
+          <TextLink to="/shop">The Shop</TextLink>
+        </div>
+      </TillFrame>
     )
   }
 
   if (view === 'unpaid') {
     return (
-      <Section fill className="pt-32 md:pt-40">
-        <Container>
-          <Eyebrow>Order</Eyebrow>
-          <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-            Payment was not completed.
-          </Display>
-          <Body className="mt-8">
-            Nothing has been taken. The bag is still held. Return to checkout when you are ready
-            to reserve the cut.
-          </Body>
-          <div className="mt-12 flex flex-wrap items-center gap-6">
-            <Button to="/checkout">Return to checkout</Button>
-            <TextLink to="/shop">Continue looking</TextLink>
-          </div>
-        </Container>
-      </Section>
+      <TillFrame title="Payment was not completed.">
+        <Eyebrow>The till</Eyebrow>
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+          Payment was not completed.
+        </Display>
+        <Body className="mt-8">
+          Nothing has been taken. The bag is still held. Return to checkout when you are ready
+          to reserve the cut.
+        </Body>
+        <div className="mt-12 flex flex-wrap items-center gap-6">
+          <Button to="/checkout">Return to checkout</Button>
+          <TextLink to="/shop">Continue looking</TextLink>
+        </div>
+      </TillFrame>
     )
   }
 
   const shippingLines = order?.shipping ? formatOrderAddress(order.shipping) : []
+  const reserved = order?.lines[0] ? getProduct(order.lines[0].productId) : undefined
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container>
+    <TillFrame title="The cut is reserved." product={reserved}>
         <div className="no-print grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <Eyebrow>Order</Eyebrow>
-            <Display as="h1" className="mt-4 max-w-3xl text-5xl md:text-6xl lg:text-7xl">
+            <Eyebrow>Kiano London</Eyebrow>
+            <Display as="h1" className="mt-4 max-w-3xl text-4xl md:text-5xl lg:text-6xl">
               The cut is reserved.
             </Display>
             <Body className="mt-8">
@@ -341,7 +335,6 @@ export function OrderConfirmedPage() {
             <InvoiceSheet invoice={invoice} reference={order ? orderReference(order.id) : undefined} />
           </div>
         ) : null}
-      </Container>
-    </Section>
+    </TillFrame>
   )
 }

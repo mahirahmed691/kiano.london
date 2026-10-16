@@ -235,6 +235,123 @@ test('holding a cut writes the bag then replaces so the live till can read it', 
   assert.match(script, /location\.replace\("https:\/\/www\.kiano\.london\/shop\/jubbah-black\?size=54"\)/)
 })
 
+test('till boot carries the house still and the bronze lockup for live checkout', () => {
+  const mark = nativeMark()
+  assert.match(mark, /kiano-till-plate/)
+  assert.match(mark, /kiano-till-motto/)
+  assert.match(mark, /\.still-in/)
+  assert.match(mark, /The till/)
+  assert.match(mark, /Reserve the cut\./)
+  assert.match(mark, /\/logo\.svg/)
+  assert.match(mark, /Discipline/)
+})
+
+test('live checkout without a house still is dressed with the held piece', () => {
+  const nodes: Record<string, { id: string; innerHTML: string; parentNode: unknown }> = {}
+  const body: {
+    childNodes: unknown[]
+    insertBefore: (node: { parentNode: unknown }, _ref: unknown) => unknown
+    appendChild: (node: { parentNode: unknown }) => unknown
+    removeChild: (node: unknown) => void
+  } = {
+    childNodes: [],
+    insertBefore(node, _ref) {
+      node.parentNode = body
+      return node
+    },
+    appendChild(node) {
+      node.parentNode = body
+      return node
+    },
+    removeChild() {},
+  }
+  const root = { id: 'root', parentNode: body, childElementCount: 1 }
+  const document = {
+    documentElement: { classList: { add() {} }, style: { setProperty() {} } },
+    body,
+    addEventListener() {},
+    createElement() {
+      const node = {
+        innerHTML: '',
+        style: { cssText: '' },
+        parentNode: null as unknown,
+        _id: '',
+        setAttribute() {},
+        set id(value: string) {
+          this._id = value
+          nodes[value] = node
+        },
+        get id() {
+          return this._id
+        },
+      }
+      return node
+    },
+    getElementById(id: string) {
+      if (id === 'root') return root
+      return nodes[id] ?? null
+    },
+    querySelector() {
+      return null
+    },
+  }
+  const { sandbox } = tillSandbox({
+    location: { pathname: '/checkout', search: '', origin: 'https://www.kiano.london' },
+    document,
+  })
+  sandbox.document = document
+  sandbox.window.document = document
+  sandbox.window.localStorage.setItem(
+    'kiano.bag',
+    JSON.stringify([{ productId: 'jubbah-black', size: 54, quantity: 1 }]),
+  )
+  runInNewContext(`${nativeMark()};`, sandbox)
+  assert.match(nodes['kiano-till-plate']?.innerHTML ?? '', /jubbah-black/)
+  assert.match(nodes['kiano-till-plate']?.innerHTML ?? '', /Reserve the cut\./)
+  assert.match(nodes['kiano-till-motto']?.innerHTML ?? '', /logo\.svg/)
+  assert.match(nodes['kiano-till-motto']?.innerHTML ?? '', /Craftsmanship/)
+})
+
+test('a branded checkout still is left as the house wrote it', () => {
+  const ids: string[] = []
+  const document = {
+    documentElement: { classList: { add() {} }, style: { setProperty() {} }, appendChild() {} },
+    addEventListener() {},
+    createElement() {
+      const node = {
+        innerHTML: '',
+        style: { cssText: '' },
+        _id: '',
+        setAttribute() {},
+        set id(value: string) {
+          this._id = value
+          ids.push(value)
+        },
+        get id() {
+          return this._id
+        },
+      }
+      return node
+    },
+    getElementById(id: string) {
+      if (id === 'root') return { id: 'root', parentNode: { insertBefore() {}, appendChild() {} } }
+      return null
+    },
+    querySelector(selector: string) {
+      return selector.includes('still-in') ? { className: 'still-in' } : null
+    },
+  }
+  const { sandbox } = tillSandbox({
+    location: { pathname: '/checkout', search: '', origin: 'https://www.kiano.london' },
+    document,
+  })
+  sandbox.document = document
+  sandbox.window.document = document
+  runInNewContext(`${nativeMark()};`, sandbox)
+  assert.equal(ids.includes('kiano-till-plate'), false)
+  assert.equal(ids.includes('kiano-till-motto'), false)
+})
+
 test('a live history push to checkout posts kiano-checkout', () => {
   const messages: string[] = []
   const calls: unknown[][] = []

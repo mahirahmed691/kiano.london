@@ -169,6 +169,78 @@ function tillMark() {
           }
         }, true);
       }
+      try {
+        function dressTill() {
+          var path = (window.location.pathname || '').split('?')[0];
+          var onTill = path === '/checkout' || path.indexOf('/order/confirmed') === 0;
+          var plate = document.getElementById && document.getElementById('kiano-till-plate');
+          var motto = document.getElementById && document.getElementById('kiano-till-motto');
+          if (!onTill) {
+            if (plate && plate.parentNode) plate.parentNode.removeChild(plate);
+            if (motto && motto.parentNode) motto.parentNode.removeChild(motto);
+            return;
+          }
+          if (document.querySelector && document.querySelector('.still-in')) {
+            if (plate && plate.parentNode) plate.parentNode.removeChild(plate);
+            if (motto && motto.parentNode) motto.parentNode.removeChild(motto);
+            return;
+          }
+          if (plate || !document.createElement) return;
+          var held = false;
+          var src = '/images/cutting-room.jpg';
+          var pos = 'center 40%';
+          try {
+            var lines = JSON.parse(localStorage.getItem('kiano.bag') || '[]');
+            var id = lines && lines[0] && lines[0].productId;
+            var stills = {
+              'jubbah-black': '/images/jubbah-black.jpg',
+              'jubbah-sand': '/images/jubbah-sand.jpg',
+              'jubbah-charcoal': '/images/jubbah-charcoal.jpg',
+            };
+            if (id && stills[id]) {
+              src = stills[id];
+              pos = 'center 18%';
+              held = true;
+            }
+          } catch (err) {}
+          var empty = path === '/checkout' && !held;
+          var title = path.indexOf('/order/confirmed') === 0
+            ? 'The cut is reserved.'
+            : (empty ? 'Nothing is held.' : 'Reserve the cut.');
+          var nextPlate = document.createElement('section');
+          nextPlate.id = 'kiano-till-plate';
+          nextPlate.setAttribute('aria-label', 'Kiano London');
+          nextPlate.style.cssText = 'position:relative;min-height:58svh;overflow:hidden;background:#25282B;color:#F2EBDC';
+          nextPlate.innerHTML = '<img alt="" src="' + src + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:' + pos + '"/>'
+            + '<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(37,40,43,.42) 0%,rgba(37,40,43,0) 32%,rgba(37,40,43,.78) 100%)"></div>'
+            + '<div style="position:absolute;left:0;right:0;bottom:0;padding:4.5rem 1.5rem 2.5rem">'
+            + '<p style="margin:0;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#B8A081">The till</p>'
+            + '<p style="margin:.5rem 0 0;font-family:Cormorant Garamond,Georgia,serif;font-weight:300;font-size:2rem;line-height:1.05;color:#F2EBDC">' + title + '</p>'
+            + '</div>';
+          var nextMotto = document.createElement('section');
+          nextMotto.id = 'kiano-till-motto';
+          nextMotto.style.cssText = 'background:#25282B;color:#B8A081;padding:5.5rem 1.5rem;text-align:center';
+          nextMotto.innerHTML = '<img alt="Kiano London" src="/logo.svg" style="display:block;margin:0 auto;width:7.5rem;height:auto"/>'
+            + '<p style="margin:1.75rem 0 0;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#B8A081">Discipline · Craftsmanship · Purpose</p>';
+          var root = document.getElementById('root');
+          var host = (root && root.parentNode) || document.body;
+          if (!host) return;
+          if (root) host.insertBefore(nextPlate, root);
+          else host.insertBefore(nextPlate, host.firstChild);
+          host.appendChild(nextMotto);
+        }
+        dressTill();
+        if (typeof setTimeout === 'function') {
+          setTimeout(dressTill, 80);
+          setTimeout(dressTill, 480);
+          setTimeout(dressTill, 1400);
+        }
+        var watchRoot = document.getElementById && (document.getElementById('root') || document.documentElement);
+        if (window.MutationObserver && watchRoot && !window.__KIANO_TILL_DRESS) {
+          window.__KIANO_TILL_DRESS = true;
+          new MutationObserver(dressTill).observe(watchRoot, { childList: true, subtree: true });
+        }
+      } catch (err) {}
       if (!window.__KIANO_TILL_HISTORY && window.history && window.history.pushState) {
         window.__KIANO_TILL_HISTORY = true;
         var push = window.history.pushState.bind(window.history);
