@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
-import { houseLandedCopy } from './HouseLandedCopy'
+import { houseLandedCopy, houseLandedHoldMs } from './HouseLandedCopy'
 import { color, type } from './theme'
 
 type Props = {
@@ -9,6 +10,11 @@ type Props = {
 }
 
 export function HouseLanded({ bottom, onRestart }: Props) {
+  useEffect(() => {
+    const hold = setTimeout(onRestart, houseLandedHoldMs)
+    return () => clearTimeout(hold)
+  }, [onRestart])
+
   return (
     <View
       pointerEvents="box-none"

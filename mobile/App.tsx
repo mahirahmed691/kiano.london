@@ -248,6 +248,11 @@ function HouseApp() {
     return listenHousePush((href) => open(href))
   }, [open])
 
+  const applyLanded = useCallback(() => {
+    void Haptics.selectionAsync().catch(() => undefined)
+    void restartHouseUpdate()
+  }, [])
+
   useEffect(() => listenHouseUpdate(() => setLanded(true)), [])
 
   const onNav = useCallback((request: WebViewNavigation) => {
@@ -596,10 +601,7 @@ function HouseApp() {
       {landed && !onStripe ? (
         <HouseLanded
           bottom={hideTabs ? insets.bottom : chromeHeight}
-          onRestart={() => {
-            void Haptics.selectionAsync().catch(() => undefined)
-            void restartHouseUpdate()
-          }}
+          onRestart={applyLanded}
         />
       ) : null}
       <HouseSplash houseReady={fontsReady} />

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { houseLandedCopy } from './HouseLandedCopy.ts'
+import { houseLandedCopy, houseLandedHoldMs, houseUpdateRecheckMs } from './HouseLandedCopy.ts'
 
 test('the landed line reads as the house, not as an engineering note', () => {
   assert.equal(houseLandedCopy.kicker, 'Kiano London')
@@ -9,4 +9,9 @@ test('the landed line reads as the house, not as an engineering note', () => {
   assert.equal(houseLandedCopy.body, 'A short restart applies it.')
   assert.equal(houseLandedCopy.action, 'Restart')
   assert.equal(/OTA|expo|update/i.test(Object.values(houseLandedCopy).join(' ')), false)
+})
+
+test('the plate holds long enough to be read, then the house keeps upgrading', () => {
+  assert.equal(houseLandedHoldMs, 2200)
+  assert.ok(houseUpdateRecheckMs >= 10 * 60 * 1000)
 })

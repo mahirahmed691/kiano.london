@@ -4,3 +4,6 @@ export const houseLandedCopy = {
   body: 'A short restart applies it.',
   action: 'Restart',
 } as const
+
+export const houseLandedHoldMs = 2200
+export const houseUpdateRecheckMs = 10 * 60 * 1000

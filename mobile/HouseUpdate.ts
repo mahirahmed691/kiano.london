@@ -1,6 +1,7 @@
 import { AppState, Platform, type AppStateStatus } from 'react-native'
 import * as Updates from 'expo-updates'
 
+import { houseUpdateRecheckMs } from './HouseLandedCopy'
 import {
   houseUpdateShouldFetch,
   houseUpdateShouldReload,
@@ -58,9 +59,13 @@ export function listenHouseUpdate(onLanded?: () => void) {
   const updates = Updates.addUpdatesStateChangeListener((event) => {
     if (event.context.isUpdatePending) onLanded?.()
   })
+  const tick = setInterval(() => {
+    void applyHouseUpdate(onLanded)
+  }, houseUpdateRecheckMs)
   void applyHouseUpdate(onLanded)
   return () => {
     app.remove()
     updates.remove()
+    clearInterval(tick)
   }
 }
