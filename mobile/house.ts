@@ -90,12 +90,15 @@ export function isTillPath(pathname: string) {
 export {
   addToBagScript,
   holdBagLine,
+  holdBagScript,
   isCheckoutHref,
   isRoomEscapePath,
   isTillSurface,
   nativeMark,
+  openTillScript,
   pieceIdFromHref,
   pushBridge,
+  shouldLeaveTill,
   type BagLine,
 } from './till'
 

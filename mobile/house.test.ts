@@ -4,11 +4,14 @@ import { runInNewContext } from 'node:vm'
 
 import {
   holdBagLine,
+  holdBagScript,
   isCheckoutHref,
   isRoomEscapePath,
   isTillSurface,
   nativeMark,
+  openTillScript,
   pieceIdFromHref,
+  shouldLeaveTill,
 } from './till.ts'
 
 test('holdBagLine adds a new cut and then raises quantity', () => {
@@ -50,8 +53,17 @@ function tillSandbox(overrides: Record<string, unknown> = {}) {
   const window = {
     __KIANO_NATIVE: false,
     __KIANO_TILL_CLICK: false,
+    __KIANO_TILL_HISTORY: false,
     location: { pathname: '/', search: '', origin: 'https://www.kiano.london' },
     localStorage,
+    sessionStorage: {
+      getItem: () => null,
+      setItem() {},
+    },
+    history: {
+      pushState() {},
+      replaceState() {},
+    },
     document,
     dispatchEvent() {},
     URL,
@@ -159,4 +171,66 @@ test('The Shop from the bag on a piece does not steal the native room', () => {
   const { messages, prevented } = tillClick('/shop/jubbah-black', '/shop')
   assert.equal(prevented, false)
   assert.equal(messages.length, 0)
+})
+
+test('a shop URL while the till is still opening does not pull the sheet down', () => {
+  assert.equal(
+    shouldLeaveTill('/shop/jubbah-black?size=54&add=1', { tillReady: false, webKind: 'sheet' }),
+    false,
+  )
+})
+
+test('Continue looking after checkout has landed returns to the shop', () => {
+  assert.equal(shouldLeaveTill('/shop', { tillReady: true, webKind: 'sheet' }), true)
+})
+
+test('the bag and the word keep the webview even after the till has landed', () => {
+  assert.equal(shouldLeaveTill('/shop', { tillReady: true, webKind: 'bag' }), false)
+  assert.equal(shouldLeaveTill('/shop', { tillReady: true, webKind: 'word' }), false)
+})
+
+test('checkout and the order sheet stay in the till', () => {
+  assert.equal(shouldLeaveTill('/checkout', { tillReady: true, webKind: 'sheet' }), false)
+  assert.equal(
+    shouldLeaveTill('/order/confirmed?session_id=cs_test', { tillReady: true, webKind: 'sheet' }),
+    false,
+  )
+})
+
+test('the visit form is not stolen from the order sheet', () => {
+  assert.equal(shouldLeaveTill('/visit', { tillReady: true, webKind: 'sheet' }), false)
+})
+
+test('opening the till assigns checkout instead of a silent history push', () => {
+  const script = openTillScript('/checkout')
+  assert.match(script, /"\/checkout"/)
+  assert.match(script, /location\.assign\(path\)/)
+  assert.match(script, /kiano-close-bag/)
+})
+
+test('holding a cut writes the bag then replaces so the live till can read it', () => {
+  const script = holdBagScript('jubbah-black', 54, 'https://www.kiano.london/shop/jubbah-black?size=54')
+  assert.match(script, /kiano\.bag/)
+  assert.match(script, /jubbah-black/)
+  assert.match(script, /location\.replace\("https:\/\/www\.kiano\.london\/shop\/jubbah-black\?size=54"\)/)
+})
+
+test('a live history push to checkout posts kiano-checkout', () => {
+  const messages: string[] = []
+  const calls: unknown[][] = []
+  const { window, sandbox } = tillSandbox({
+    ReactNativeWebView: { postMessage: (message: string) => messages.push(message) },
+  })
+  const history = {
+    pushState(...args: unknown[]) {
+      calls.push(args)
+    },
+    replaceState() {},
+  }
+  window.history = history
+  sandbox.window.history = history
+  runInNewContext(`${nativeMark()};`, sandbox)
+  window.history.pushState({}, '', '/checkout')
+  assert.equal(calls.length, 1)
+  assert.deepEqual(JSON.parse(messages[0] ?? '{}'), { type: 'kiano-checkout' })
 })

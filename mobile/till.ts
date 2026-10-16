@@ -64,6 +64,20 @@ export function isRoomEscapePath(pathname: string) {
   )
 }
 
+export function shouldLeaveTill(
+  navPath: string,
+  options: {
+    tillReady: boolean
+    webKind: 'hidden' | 'bag' | 'word' | 'account' | 'sheet'
+  },
+) {
+  if (options.webKind === 'bag' || options.webKind === 'word' || options.webKind === 'hidden') {
+    return false
+  }
+  if (!options.tillReady) return false
+  return isRoomEscapePath(navPath)
+}
+
 export function pieceIdFromHref(pathname: string) {
   const match = pathname.split('?')[0].match(/^\/(shop|collection)\/([^/]+)$/)
   return match?.[2] ?? ''
@@ -97,13 +111,21 @@ function tillMark() {
         }
         if (!found) lines.push({ productId: id, size: size, quantity: 1 });
         localStorage.setItem(key, JSON.stringify(lines));
+        var heldRoot = document.getElementById && document.getElementById('root');
+        if (heldRoot && heldRoot.childElementCount > 0) {
+          var stamp = id + ':' + size + ':' + String(lines.length);
+          if (sessionStorage.getItem('kiano.bag.sync') !== stamp) {
+            sessionStorage.setItem('kiano.bag.sync', stamp);
+            window.location.reload();
+          }
+        }
       }
       if (!window.__KIANO_TILL_CLICK) {
         window.__KIANO_TILL_CLICK = true;
         document.addEventListener('click', function (event) {
           var node = event.target;
           while (node && node !== document && node !== document.documentElement) {
-            if (node.tagName === 'A') {
+            if (node.tagName === 'A' || (node.getAttribute && node.getAttribute('href'))) {
               var href = node.getAttribute('href') || '';
               var path = href;
               try {
@@ -129,6 +151,27 @@ function tillMark() {
             node = node.parentNode;
           }
         }, true);
+      }
+      if (!window.__KIANO_TILL_HISTORY && window.history && window.history.pushState) {
+        window.__KIANO_TILL_HISTORY = true;
+        var push = window.history.pushState.bind(window.history);
+        var replace = window.history.replaceState.bind(window.history);
+        function watchTill(url) {
+          if (!url || !window.ReactNativeWebView) return;
+          var path = String(url);
+          try { path = new URL(url, window.location.origin).pathname; } catch (err) {}
+          if (path.split('?')[0] === '/checkout') {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'kiano-checkout' }));
+          }
+        }
+        window.history.pushState = function () {
+          watchTill(arguments[2]);
+          return push.apply(null, arguments);
+        };
+        window.history.replaceState = function () {
+          watchTill(arguments[2]);
+          return replace.apply(null, arguments);
+        };
       }
     } catch (e) {}
     window.dispatchEvent(new Event('kiano-native'));
@@ -176,6 +219,35 @@ export function addToBagScript(productId: string, size: number) {
       } catch (err) {}
       window.dispatchEvent(new CustomEvent('kiano-add-to-bag', { detail: { productId: ${id}, size: ${value} } }));
       window.dispatchEvent(new Event('kiano-open-bag'));
+      true;
+    })();
+  `
+}
+
+export function holdBagScript(productId: string, size: number, href: string) {
+  const next = JSON.stringify(href)
+  return `
+    (function () {
+      ${addToBagScript(productId, size)}
+      try { window.location.replace(${next}); } catch (err) {}
+      true;
+    })();
+  `
+}
+
+export function openTillScript(path: string) {
+  const encoded = JSON.stringify(path)
+  return `
+    (function () {
+      var path = ${encoded};
+      try { window.dispatchEvent(new Event('kiano-close-bag')); } catch (err) {}
+      var here = (window.location.pathname || '').split('?')[0];
+      var next = String(path).split('?')[0];
+      if (here === next) {
+        window.scrollTo(0, 0);
+        return true;
+      }
+      window.location.assign(path);
       true;
     })();
   `

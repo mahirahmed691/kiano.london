@@ -24,13 +24,17 @@ import { useHouseFonts } from './fonts'
 import {
   goScript,
   hashOf,
+  holdBagScript,
   houseOrigin,
+  isHouseHost,
   isStripeUrl,
   isTillPath,
   nativeMark,
   openEvent,
+  openTillScript,
   pathOf,
   pushBridge,
+  shouldLeaveTill,
   shouldOpenOutside,
   urlForHouse,
 } from './house'
@@ -99,7 +103,7 @@ function HouseApp() {
   const [onStripe, setOnStripe] = useState(false)
   const [landed, setLanded] = useState(false)
   const hideHeader = wordOpen || webKind === 'word' || onStripe || landed
-  const hideTabs = hideHeader || isTillPath(path)
+  const hideTabs = hideHeader || isTillPath(path) || webKind === 'sheet'
   const lightStatus = landed || !(wordOpen || webKind === 'word' || onStripe)
   const topChrome = hideHeader ? 0 : headerHeight
   const tabChrome = hideTabs ? 0 : chromeHeight
@@ -108,6 +112,7 @@ function HouseApp() {
   const nativePath = useRef('/')
   const pendingBag = useRef('')
   const tillHold = useRef(false)
+  const tillReady = useRef(false)
   const accountHold = useRef(false)
   const nativePlate = useRef('')
   const webKindRef = useRef(webKind)
@@ -142,6 +147,7 @@ function HouseApp() {
       setMenuOpen(false)
       setOnStripe(false)
       tillHold.current = false
+      tillReady.current = false
       accountHold.current = false
       rememberNative(next)
       setHeroOverlay(overlayRoom(pathname || '/'))
@@ -172,11 +178,20 @@ function HouseApp() {
       if (kind === 'account') {
         accountHold.current = true
         tillHold.current = false
-      } else if (kind === 'sheet' && isTillPath(next)) {
-        tillHold.current = true
-        accountHold.current = false
+        tillReady.current = false
+        setUri(`${houseOrigin()}${next}`)
+        send(goScript(next), next)
+        return
       }
-      if (kind === 'account' || kind === 'sheet') {
+      if (kind === 'sheet' && isTillPath(next)) {
+        tillHold.current = true
+        tillReady.current = false
+        accountHold.current = false
+        setBagOpen(false)
+        send(openTillScript(next), next)
+        return
+      }
+      if (kind === 'sheet') {
         setUri(`${houseOrigin()}${next}`)
       }
       send(goScript(next), next)
@@ -240,7 +255,8 @@ function HouseApp() {
       setPath(href)
       showWeb('bag')
       pendingBag.current = href
-      setUri(`${houseOrigin()}${href}&t=${Date.now()}`)
+      const held = `${houseOrigin()}${piece ? productPath(piece) : `/shop/${productId}`}?size=${size}&t=${Date.now()}`
+      send(holdBagScript(productId, size, held), `${href}&t=${Date.now()}`)
     },
     [showWeb],
   )
@@ -317,8 +333,6 @@ function HouseApp() {
     }
 
     if (payload.type === 'kiano-checkout') {
-      tillHold.current = true
-      accountHold.current = false
       goWeb('/checkout', 'sheet')
       return
     }
@@ -480,12 +494,33 @@ function HouseApp() {
             if (!navState.url) return
             if (isStripeUrl(navState.url)) {
               setOnStripe(true)
+              tillReady.current = true
               return
             }
             setOnStripe(false)
-            if (!webVisible) return
+            if (webKindRef.current === 'hidden') return
+            let host = ''
+            try {
+              host = new URL(navState.url).hostname
+            } catch {
+              return
+            }
+            if (!isHouseHost(host)) return
             const next = pathOf(navState.url)
-            if (isNativeBrowse(next) && isTillPath(path) && webKind !== 'bag' && webKind !== 'word') {
+            if (isTillPath(next) || isAccountPath(next)) {
+              tillReady.current = true
+              setPath(next)
+              if (isTillPath(next) && webKindRef.current !== 'bag' && webKindRef.current !== 'word') {
+                showWeb('sheet')
+              }
+              return
+            }
+            if (
+              shouldLeaveTill(next, {
+                tillReady: tillReady.current,
+                webKind: webKindRef.current,
+              })
+            ) {
               goNative(next)
               return
             }
