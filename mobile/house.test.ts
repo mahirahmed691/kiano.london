@@ -82,12 +82,23 @@ function tillSandbox(overrides: Record<string, unknown> = {}) {
     JSON,
     Math,
     Number,
+    Date,
     Array,
     Object,
     Event,
   }
   return { store, window, sandbox }
 }
+
+test('till boot writes necessary consent so the cookie strip cannot sit on the till', () => {
+  const { store, window, sandbox } = tillSandbox()
+  runInNewContext(`${nativeMark()};`, sandbox)
+  assert.equal(window.__KIANO_NATIVE, true)
+  const consent = JSON.parse(store['kiano.consent'] ?? '{}')
+  assert.equal(consent.choice, 'necessary')
+  assert.equal(consent.version, 1)
+  assert.equal(store['kiano.letters.dismissed'], '1')
+})
 
 test('till boot writes the bag from ?add=1 before React mounts', () => {
   const { store, window, sandbox } = tillSandbox({

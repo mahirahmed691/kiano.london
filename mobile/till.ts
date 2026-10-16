@@ -91,6 +91,12 @@ function tillMark() {
       root.classList.add('shell-app');
       root.style.setProperty('--header-offset', '0px');
       root.style.setProperty('--app-tab', '0px');
+      try {
+        if (!localStorage.getItem('kiano.consent')) {
+          localStorage.setItem('kiano.consent', JSON.stringify({ choice: 'necessary', version: 1, at: Date.now() }));
+        }
+        localStorage.setItem('kiano.letters.dismissed', '1');
+      } catch (err) {}
       var params = new URLSearchParams(window.location.search);
       var add = params.get('add');
       var size = Number(params.get('size'));
