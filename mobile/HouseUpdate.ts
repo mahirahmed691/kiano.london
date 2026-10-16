@@ -1,22 +1,52 @@
 import { AppState, Platform, type AppStateStatus } from 'react-native'
 import * as Updates from 'expo-updates'
 
-let applying = false
+import {
+  houseUpdateShouldFetch,
+  houseUpdateShouldReload,
+  type HouseUpdateContext,
+} from './HouseUpdatePolicy'
+
+let reloading = false
+
+function context(native = Updates.latestContext): HouseUpdateContext {
+  return {
+    isDev: __DEV__,
+    platform: Platform.OS,
+    isEnabled: Updates.isEnabled,
+    isUpdatePending: Boolean(native?.isUpdatePending),
+    isStartupProcedureRunning: Boolean(native?.isStartupProcedureRunning),
+    isChecking: Boolean(native?.isChecking),
+    isDownloading: Boolean(native?.isDownloading),
+  }
+}
+
+async function reloadHouseUpdate() {
+  if (reloading || !houseUpdateShouldReload(context())) return
+  reloading = true
+  try {
+    await Updates.reloadAsync()
+  } catch {
+    reloading = false
+  }
+}
 
 export async function applyHouseUpdate() {
-  if (__DEV__ || Platform.OS === 'web') return
-  if (!Updates.isEnabled || applying) return
+  const now = context()
+  if (houseUpdateShouldReload(now)) {
+    await reloadHouseUpdate()
+    return
+  }
+  if (!houseUpdateShouldFetch(now)) return
 
-  applying = true
   try {
     const check = await Updates.checkForUpdateAsync()
-    if (!check.isAvailable) return
-    const fetched = await Updates.fetchUpdateAsync()
-    if (fetched.isNew) await Updates.reloadAsync()
+    if (check.isAvailable || check.isRollBackToEmbedded) {
+      await Updates.fetchUpdateAsync()
+    }
+    await reloadHouseUpdate()
   } catch {
-    // Stay on the bundle we have.
-  } finally {
-    applying = false
+    await reloadHouseUpdate()
   }
 }
 
@@ -24,7 +54,13 @@ export function listenHouseUpdate() {
   const onChange = (state: AppStateStatus) => {
     if (state === 'active') void applyHouseUpdate()
   }
-  const sub = AppState.addEventListener('change', onChange)
+  const app = AppState.addEventListener('change', onChange)
+  const updates = Updates.addUpdatesStateChangeListener((event) => {
+    if (event.context.isUpdatePending) void reloadHouseUpdate()
+  })
   void applyHouseUpdate()
-  return () => sub.remove()
+  return () => {
+    app.remove()
+    updates.remove()
+  }
 }
