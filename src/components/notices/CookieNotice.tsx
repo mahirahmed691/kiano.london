@@ -44,7 +44,9 @@ export function CookieNotice() {
     setOpen(false)
   }
 
-  if (app || !open || !plateClear) return null
+  const till =
+    pathname === '/checkout' || pathname.startsWith('/order')
+  if (app || till || !open || !plateClear) return null
 
   return (
     <div

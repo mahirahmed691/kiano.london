@@ -83,7 +83,12 @@ export function isTillPath(pathname: string) {
     path.startsWith('/checkout') ||
     path.startsWith('/order') ||
     path.startsWith('/sign-in') ||
-    path.startsWith('/sign-up')
+    path.startsWith('/sign-up') ||
+    path.startsWith('/returns') ||
+    path.startsWith('/privacy') ||
+    path.startsWith('/cookies') ||
+    path.startsWith('/reservation') ||
+    path.startsWith('/letters')
   )
 }
 

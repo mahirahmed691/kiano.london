@@ -155,10 +155,10 @@ export function OrderConfirmedPage() {
         </Display>
         <Body className="mt-8">
           If you have just paid, wait a moment and refresh. If the bag is still held, return to
-          checkout.
-        </Body>
-        <div className="mt-12 flex flex-wrap items-center gap-6">
-          <Button to="/checkout">Return to checkout</Button>
+            the till.
+          </Body>
+          <div className="mt-12 flex flex-wrap items-center gap-6">
+            <Button to="/checkout">Return to the till</Button>
           <TextLink to="/shop">The Shop</TextLink>
         </div>
       </TillFrame>
@@ -173,11 +173,11 @@ export function OrderConfirmedPage() {
           Payment was not completed.
         </Display>
         <Body className="mt-8">
-          Nothing has been taken. The bag is still held. Return to checkout when you are ready
-          to reserve the cut.
-        </Body>
-        <div className="mt-12 flex flex-wrap items-center gap-6">
-          <Button to="/checkout">Return to checkout</Button>
+            Nothing has been taken. The bag is still held. Return to the till when you are ready
+            to reserve the cut.
+          </Body>
+          <div className="mt-12 flex flex-wrap items-center gap-6">
+            <Button to="/checkout">Return to the till</Button>
           <TextLink to="/shop">Continue looking</TextLink>
         </div>
       </TillFrame>

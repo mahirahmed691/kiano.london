@@ -36,11 +36,8 @@ export function Layout() {
     pathname === '/admin/work/table' ||
     pathname === '/admin/work/box' ||
     pathname === '/admin/diary/book' ||
-    pathname === '/admin/cuts/book' ||
-    pathname === '/order/invoice' ||
-    pathname === '/order/card'
-  const quiet =
-    pathname === '/checkout' || pathname === '/order/confirmed' || invoicePrint
+    pathname === '/admin/cuts/book'
+  const quiet = pathname === '/checkout' || pathname === '/order/confirmed' || invoicePrint
 
   return (
     <>

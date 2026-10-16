@@ -5,8 +5,8 @@ import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/
 import { HouseDeviceForm } from '@/components/account/HouseDeviceForm'
 import { HouseProfileForm } from '@/components/account/HouseProfileForm'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { Button, TextLink } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
@@ -253,24 +253,22 @@ export function AccountPage() {
   usePageMeta(getShareMeta('/account'))
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container>
-        <Eyebrow>Account</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-          Your cuts.
-        </Display>
-        {clerkEnabled ? (
-          <AccountGate />
-        ) : (
-          <Body className="mt-6">Account is not configured yet. Write to the atelier.</Body>
-        )}
-        <AccountList />
-        <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
-          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
-          <TextLink to="/returns">If it must return</TextLink>
-          <TextLink to="/shop">Return to the shop</TextLink>
-        </div>
-      </Container>
-    </Section>
+    <HouseRoom kicker="The house" title="Your cuts.">
+      <Eyebrow>The house</Eyebrow>
+      <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+        Your cuts.
+      </Display>
+      {clerkEnabled ? (
+        <AccountGate />
+      ) : (
+        <Body className="mt-6">Account is not configured yet. Write to the atelier.</Body>
+      )}
+      <AccountList />
+      <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
+        <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+        <TextLink to="/returns">If it must return</TextLink>
+        <TextLink to="/shop">Return to the shop</TextLink>
+      </div>
+    </HouseRoom>
   )
 }

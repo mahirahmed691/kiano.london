@@ -32,6 +32,8 @@ test('checkout hrefs are the till, not a piece', () => {
 test('till surfaces include account, and room escapes skip the visit form', () => {
   assert.equal(isTillSurface('/checkout'), true)
   assert.equal(isTillSurface('/account'), true)
+  assert.equal(isTillSurface('/returns'), true)
+  assert.equal(isTillSurface('/privacy'), true)
   assert.equal(isTillSurface('/shop/jubbah-black'), false)
   assert.equal(isRoomEscapePath('/shop'), true)
   assert.equal(isRoomEscapePath('/collection/jubbah-black'), true)
@@ -179,6 +181,18 @@ test('Continue looking from checkout returns to the native shop', () => {
   const { messages, prevented } = tillClick('/checkout', '/shop')
   assert.equal(prevented, true)
   assert.deepEqual(JSON.parse(messages[0] ?? '{}'), { type: 'kiano-open', path: '/shop' })
+})
+
+test('The Shop from returns returns to the native shop', () => {
+  const { messages, prevented } = tillClick('/returns', '/shop')
+  assert.equal(prevented, true)
+  assert.deepEqual(JSON.parse(messages[0] ?? '{}'), { type: 'kiano-open', path: '/shop' })
+})
+
+test('opening the account assigns the house page, not a silent history push', () => {
+  const script = openTillScript('/account')
+  assert.match(script, /"\/account"/)
+  assert.match(script, /location\.assign\(path\)/)
 })
 
 test('the visit form on the order sheet is left in the till', () => {

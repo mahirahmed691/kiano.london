@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { InvoiceSheet } from '@/components/invoice/InvoiceSheet'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -62,20 +63,18 @@ export function OrderInvoicePage() {
 
   if (missing) {
     return (
-      <Section className="pt-32 md:pt-40">
-        <Container>
-          <Eyebrow>Invoice</Eyebrow>
-          <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-            This record could not be found.
-          </Display>
-          <Body className="mt-8">
-            Open it from the confirmation, with the session from payment.
-          </Body>
-          <div className="mt-12">
-            <TextLink to="/">Return to the house</TextLink>
-          </div>
-        </Container>
-      </Section>
+      <HouseRoom kicker="The till" title="This record could not be found.">
+        <Eyebrow>The till</Eyebrow>
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+          This record could not be found.
+        </Display>
+        <Body className="mt-8">
+          Open it from the confirmation, with the session from payment.
+        </Body>
+        <div className="mt-12">
+          <TextLink to="/">Return to the house</TextLink>
+        </div>
+      </HouseRoom>
     )
   }
 

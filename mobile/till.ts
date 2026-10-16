@@ -42,7 +42,12 @@ export function isTillSurface(pathname: string) {
     path.startsWith('/order') ||
     path.startsWith('/account') ||
     path.startsWith('/sign-in') ||
-    path.startsWith('/sign-up')
+    path.startsWith('/sign-up') ||
+    path.startsWith('/returns') ||
+    path.startsWith('/privacy') ||
+    path.startsWith('/cookies') ||
+    path.startsWith('/reservation') ||
+    path.startsWith('/letters')
   )
 }
 
@@ -156,7 +161,7 @@ function tillMark() {
                 return false;
               }
               var here = (window.location.pathname || '').split('?')[0];
-              var till = here.indexOf('/checkout') === 0 || here.indexOf('/order') === 0 || here.indexOf('/account') === 0 || here.indexOf('/sign-in') === 0 || here.indexOf('/sign-up') === 0;
+              var till = here.indexOf('/checkout') === 0 || here.indexOf('/order') === 0 || here.indexOf('/account') === 0 || here.indexOf('/sign-in') === 0 || here.indexOf('/sign-up') === 0 || here.indexOf('/returns') === 0 || here.indexOf('/privacy') === 0 || here.indexOf('/cookies') === 0 || here.indexOf('/reservation') === 0 || here.indexOf('/letters') === 0;
               var room = clean === '/' || clean === '/stills' || clean === '/shop' || clean === '/collection' || clean === '/scent' || clean === '/story' || clean === '/craftsmanship' || clean === '/craftsmanship-details' || clean.indexOf('/shop/') === 0 || clean.indexOf('/collection/') === 0 || clean.indexOf('/scent/') === 0;
               if (till && room && clean !== '/visit' && window.ReactNativeWebView) {
                 event.preventDefault();

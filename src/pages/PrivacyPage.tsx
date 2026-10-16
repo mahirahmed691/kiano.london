@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Container, Section } from '@/components/ui/Container'
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { site } from '@/data/site'
 import { social } from '@/data/social'
@@ -10,10 +10,9 @@ export function PrivacyPage() {
   usePageMeta(getShareMeta('/privacy'))
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container className="max-w-2xl">
+    <HouseRoom kicker="The house" title="Privacy." containerClassName="max-w-2xl">
         <Eyebrow>The house</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl">
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Privacy.
         </Display>
         <Body className="mt-6">
@@ -44,8 +43,8 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">A reservation</p>
             <Body className="mt-3">
-              Payment is Stripe. The order, the size, the delivery address, and a line written for
-              the house card are kept in our database so the cloth can be cut and sent. You can ask
+              Payment is Stripe. The reservation, the size, the delivery address, and a line written
+              for the house card are kept so the cloth can be cut and sent. You can ask
               after a reserved cut with the eight-letter reference and the email used at the till, on{' '}
               <Link to="/reservation" className="border-b border-current pb-px">
                 a reserved cut
@@ -97,7 +96,6 @@ export function PrivacyPage() {
         <Body className="mt-14">
           Questions, a correction, or a request to forget an address: {site.email}.
         </Body>
-      </Container>
-    </Section>
+    </HouseRoom>
   )
 }

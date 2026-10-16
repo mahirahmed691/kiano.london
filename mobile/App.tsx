@@ -98,7 +98,7 @@ function HouseApp() {
   const [bagOpen, setBagOpen] = useState(false)
   const [wordOpen, setWordOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [headerHeight, setHeaderHeight] = useState(120)
+  const [headerHeight, setHeaderHeight] = useState(() => insets.top + 80)
   const [chromeHeight, setChromeHeight] = useState(92)
   const [onStripe, setOnStripe] = useState(false)
   const [landed, setLanded] = useState(false)
@@ -179,8 +179,7 @@ function HouseApp() {
         accountHold.current = true
         tillHold.current = false
         tillReady.current = false
-        setUri(`${houseOrigin()}${next}`)
-        send(goScript(next), next)
+        send(openTillScript(next), next)
         return
       }
       if (kind === 'sheet' && isTillPath(next)) {

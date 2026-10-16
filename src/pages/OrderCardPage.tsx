@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { HouseCardSheet } from '@/components/packing/HouseCardSheet'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
@@ -58,21 +59,19 @@ export function OrderCardPage() {
 
   if (missing) {
     return (
-      <Section className="pt-32 md:pt-40">
-        <Container>
-          <Eyebrow>House card</Eyebrow>
-          <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-            This card could not be found.
-          </Display>
-          <Body className="mt-8">
-            Open it from the confirmation, the account, or by asking after the cut.
-          </Body>
-          <div className="mt-12 flex flex-wrap gap-6">
-            <TextLink to="/reservation">Ask after a reserved cut</TextLink>
-            <TextLink to="/account">Account</TextLink>
-          </div>
-        </Container>
-      </Section>
+      <HouseRoom kicker="The till" title="This card could not be found.">
+        <Eyebrow>The till</Eyebrow>
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+          This card could not be found.
+        </Display>
+        <Body className="mt-8">
+          Open it from the confirmation, the account, or by asking after the cut.
+        </Body>
+        <div className="mt-12 flex flex-wrap gap-6">
+          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+          <TextLink to="/account">Account</TextLink>
+        </div>
+      </HouseRoom>
     )
   }
 
