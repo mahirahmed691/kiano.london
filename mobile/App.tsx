@@ -21,7 +21,6 @@ import {
 } from './catalogue'
 import { useHouseFonts } from './fonts'
 import {
-  addToBagScript,
   goScript,
   houseOrigin,
   isStripeUrl,
@@ -104,7 +103,13 @@ function HouseApp() {
   const roomHeight = wellHeight
   const nativePath = useRef('/')
   const pendingBag = useRef('')
+  const tillHold = useRef(false)
+  const webKindRef = useRef(webKind)
   const webView = useRef<WebView>(null)
+
+  useEffect(() => {
+    webKindRef.current = webKind
+  }, [webKind])
 
   const rememberNative = useCallback((next: string) => {
     if (isNativeBrowse(next)) nativePath.current = next.split('?')[0] || '/'
@@ -120,6 +125,7 @@ function HouseApp() {
       setWordOpen(false)
       setMenuOpen(false)
       setOnStripe(false)
+      tillHold.current = false
       rememberNative(pathname || '/')
       setHeroOverlay(overlayRoom(pathname || '/'))
     },
@@ -146,6 +152,7 @@ function HouseApp() {
       setPath(next)
       setWebKind(kind)
       setOnStripe(false)
+      if (kind === 'sheet' && isTillPath(next)) tillHold.current = true
       if (kind === 'account' || kind === 'sheet') {
         setUri(`${houseOrigin()}${next}`)
       }
@@ -209,12 +216,8 @@ function HouseApp() {
       setMenuOpen(false)
       setPath(href)
       setWebKind('bag')
-      if (webReady.current) {
-        webView.current?.injectJavaScript(addToBagScript(productId, size))
-        return
-      }
       pendingBag.current = href
-      setUri(`${houseOrigin()}${href}`)
+      setUri(`${houseOrigin()}${href}&t=${Date.now()}`)
     },
     [],
   )
@@ -276,6 +279,7 @@ function HouseApp() {
     }
 
     if (payload.type === 'kiano-checkout') {
+      tillHold.current = true
       goWeb('/checkout', 'sheet')
       return
     }
@@ -289,9 +293,9 @@ function HouseApp() {
       setBagOpen(payload.bagOpen === true)
       setWordOpen(payload.wordOpen === true)
       void setHouseBadge(nextWord)
-      if (payload.bagOpen !== true && webKind === 'bag') {
-        if (isTillPath(href) || isAccountPath(href)) {
-          setPath(href)
+      if (payload.bagOpen !== true && webKindRef.current === 'bag') {
+        if (tillHold.current || isTillPath(href) || isAccountPath(href)) {
+          setPath(tillHold.current ? '/checkout' : href)
           setWebKind(isAccountPath(href) ? 'account' : 'sheet')
           return
         }
@@ -445,7 +449,10 @@ function HouseApp() {
           onLoadEnd={() => {
             webReady.current = true
             setFailed(false)
-            pendingBag.current = ''
+            if (pendingBag.current) {
+              webView.current?.injectJavaScript(openEvent('kiano-open-bag'))
+              pendingBag.current = ''
+            }
           }}
           onError={() => {
             if (webVisible) setFailed(true)

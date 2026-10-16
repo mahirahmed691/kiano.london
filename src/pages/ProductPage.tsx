@@ -43,7 +43,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage'
 export function ProductPage() {
   const { id } = useParams()
   const product = getProduct(id)
-  const { add, open } = useCart()
+  const { add, items, setOpen, open } = useCart()
   const [size, setSize] = useState<ThobeSize | ''>('')
   const [guideOpen, setGuideOpen] = useState(false)
   const [showBar, setShowBar] = useState(false)
@@ -82,7 +82,9 @@ export function ProductPage() {
     setLooking(null)
     setShowBar(false)
     if (named && params.get('add') === '1' && product) {
-      add(product.id, named)
+      const held = items.some((line) => line.productId === product.id && line.size === named)
+      if (!held) add(product.id, named)
+      else setOpen(true)
       params.delete('add')
       const query = params.toString()
       window.history.replaceState({}, '', `${productPath(product)}${query ? `?${query}` : ''}`)

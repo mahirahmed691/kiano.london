@@ -87,36 +87,15 @@ export function isTillPath(pathname: string) {
   )
 }
 
-export function nativeMark() {
-  return `
-    window.__KIANO_NATIVE = true;
-    try {
-      var root = document.documentElement;
-      root.classList.add('shell-app');
-      root.style.setProperty('--header-offset', '0px');
-      root.style.setProperty('--app-tab', '0px');
-    } catch (e) {}
-    window.dispatchEvent(new Event('kiano-native'));
-    true;
-  `
-}
-
-export function pushBridge(token: string) {
-  const encoded = JSON.stringify(token)
-  return `
-    window.__KIANO_NATIVE = true;
-    window.__KIANO_EXPO_PUSH = ${encoded};
-    try {
-      var root = document.documentElement;
-      root.classList.add('shell-app');
-      root.style.setProperty('--header-offset', '0px');
-      root.style.setProperty('--app-tab', '0px');
-    } catch (e) {}
-    window.dispatchEvent(new Event('kiano-native'));
-    window.dispatchEvent(new Event('kiano-expo-push'));
-    true;
-  `
-}
+export {
+  addToBagScript,
+  holdBagLine,
+  isCheckoutHref,
+  nativeMark,
+  pieceIdFromHref,
+  pushBridge,
+  type BagLine,
+} from './till'
 
 export function goScript(path: string) {
   const encoded = JSON.stringify(path)
@@ -140,18 +119,5 @@ export function openEvent(name: 'kiano-open-bag' | 'kiano-open-word' | 'kiano-cl
   return `
     window.dispatchEvent(new Event(${JSON.stringify(name)}));
     true;
-  `
-}
-
-export function addToBagScript(productId: string, size: number) {
-  const id = JSON.stringify(productId)
-  const value = JSON.stringify(size)
-  return `
-    (function () {
-      window.__KIANO_NATIVE = true;
-      window.dispatchEvent(new CustomEvent('kiano-add-to-bag', { detail: { productId: ${id}, size: ${value} } }));
-      window.dispatchEvent(new Event('kiano-open-bag'));
-      true;
-    })();
   `
 }
