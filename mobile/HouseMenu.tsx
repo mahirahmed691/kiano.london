@@ -33,11 +33,13 @@ function RoomLink({
   label,
   active,
   large,
+  testID,
   onPress,
 }: {
   label: string
   active: boolean
   large?: boolean
+  testID?: string
   onPress: () => void
 }) {
   return (
@@ -46,7 +48,7 @@ function RoomLink({
       accessibilityRole="link"
       accessibilityState={{ selected: active }}
       accessibilityLabel={label}
-      testID={`house-menu-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+      testID={testID ?? `house-menu-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
       hitSlop={4}
       style={({ pressed }) => pressed && styles.pressed}
     >
@@ -116,6 +118,7 @@ export function HouseMenu({
                     label={line.label}
                     large={!block.hub}
                     active={room === line.to}
+                    testID={`house-menu-${block.id}-${line.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                     onPress={() => go(line.to)}
                   />
                 ))}

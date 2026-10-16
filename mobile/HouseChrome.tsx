@@ -100,6 +100,7 @@ export function HouseChrome({
             onPress={onShop}
             accessibilityRole="tab"
             accessibilityState={{ selected: shop }}
+            testID="house-line-shop"
             hitSlop={8}
             style={({ pressed }) => pressed && styles.pressed}
           >
@@ -109,6 +110,7 @@ export function HouseChrome({
             onPress={onCollection}
             accessibilityRole="tab"
             accessibilityState={{ selected: collection }}
+            testID="house-line-collection"
             hitSlop={8}
             style={({ pressed }) => pressed && styles.pressed}
           >
@@ -118,6 +120,7 @@ export function HouseChrome({
             onPress={onScent}
             accessibilityRole="tab"
             accessibilityState={{ selected: scent }}
+            testID="house-line-scent"
             hitSlop={8}
             style={({ pressed }) => pressed && styles.pressed}
           >
