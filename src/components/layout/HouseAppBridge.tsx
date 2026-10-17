@@ -30,9 +30,10 @@ export function HouseAppBridge() {
         word: unread,
         bagOpen,
         wordOpen,
+        path: pathname,
       }),
     )
-  }, [app, bagOpen, count, unread, wordOpen])
+  }, [app, bagOpen, count, pathname, unread, wordOpen])
 
   return null
 }

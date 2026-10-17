@@ -69,6 +69,24 @@ export function shouldOpenOutside(url: string) {
   return url.startsWith('tel:') || url.startsWith('mailto:') || url.startsWith('sms:')
 }
 
+export function isStripeUrl(url: string) {
+  try {
+    return new URL(url).hostname.includes('stripe.com')
+  } catch {
+    return false
+  }
+}
+
+export function isTillPath(pathname: string) {
+  const path = pathname.split('?')[0] || '/'
+  return (
+    path.startsWith('/checkout') ||
+    path.startsWith('/order') ||
+    path.startsWith('/sign-in') ||
+    path.startsWith('/sign-up')
+  )
+}
+
 export function nativeMark() {
   return `
     window.__KIANO_NATIVE = true;
@@ -125,4 +143,15 @@ export function openEvent(name: 'kiano-open-bag' | 'kiano-open-word' | 'kiano-cl
   `
 }
 
-export const scrollTopScript = 'window.scrollTo(0, 0); true;'
+export function addToBagScript(productId: string, size: number) {
+  const id = JSON.stringify(productId)
+  const value = JSON.stringify(size)
+  return `
+    (function () {
+      window.__KIANO_NATIVE = true;
+      window.dispatchEvent(new CustomEvent('kiano-add-to-bag', { detail: { productId: ${id}, size: ${value} } }));
+      window.dispatchEvent(new Event('kiano-open-bag'));
+      true;
+    })();
+  `
+}

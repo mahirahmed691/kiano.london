@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { CookieNotice } from '@/components/notices/CookieNotice'
 import { SubscribeDialog } from '@/components/notices/SubscribeDialog'
+import { useHouseApp } from '@/lib/shell'
 import {
   countLetterPath,
   dismissLetters,
@@ -12,6 +13,7 @@ import {
 } from '@/lib/notices'
 
 export function HouseNotices() {
+  const app = useHouseApp()
   const { pathname } = useLocation()
   const [hasConsent, setHasConsent] = useState(false)
   const [lettersOpen, setLettersOpen] = useState(false)
@@ -44,13 +46,15 @@ export function HouseNotices() {
   return (
     <>
       <CookieNotice />
-      <SubscribeDialog
-        open={lettersOpen}
-        onClose={() => {
-          dismissLetters()
-          setLettersOpen(false)
-        }}
-      />
+      {app ? null : (
+        <SubscribeDialog
+          open={lettersOpen}
+          onClose={() => {
+            dismissLetters()
+            setLettersOpen(false)
+          }}
+        />
+      )}
     </>
   )
 }

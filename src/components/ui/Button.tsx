@@ -11,7 +11,7 @@ type Props = {
   to?: string
   href?: string
   type?: 'button' | 'submit'
-  onClick?: () => void
+  onClick?: (event: { preventDefault: () => void }) => void
   disabled?: boolean
 }
 

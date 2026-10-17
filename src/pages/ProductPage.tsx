@@ -69,7 +69,8 @@ export function ProductPage() {
   )
 
   useEffect(() => {
-    const fromSize = Number(new URLSearchParams(window.location.search).get('size'))
+    const params = new URLSearchParams(window.location.search)
+    const fromSize = Number(params.get('size'))
     const named = asThobeSize(fromSize)
     if (named) {
       setSize(named)
@@ -80,6 +81,14 @@ export function ProductPage() {
     setGuideOpen(false)
     setLooking(null)
     setShowBar(false)
+    if (named && params.get('add') === '1' && product) {
+      add(product.id, named)
+      params.delete('add')
+      const query = params.toString()
+      window.history.replaceState({}, '', `${productPath(product)}${query ? `?${query}` : ''}`)
+    }
+    // Native add-to-bag lands here with ?add=1; ignore later cart identity changes.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product?.id])
 
   const chooseSize = useCallback((value: ThobeSize) => {
