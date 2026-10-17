@@ -64,7 +64,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const openBag = () => setOpen(true)
+    const openBag = () => {
+      setLines(readStored())
+      setOpen(true)
+    }
     const closeBag = () => setOpen(false)
     window.addEventListener('kiano-open-bag', openBag)
     window.addEventListener('kiano-close-bag', closeBag)

@@ -1,4 +1,3 @@
-import { Monogram } from '@/components/brand/Monogram'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
 import { productLineName, productPath } from '@/data/products'
@@ -29,12 +28,9 @@ export function CartDrawer() {
         aria-label="Bag"
       >
         <div className="flex items-center justify-between border-b border-rule px-6 py-5">
-          <div className="flex items-center gap-3">
-            <Monogram decorative className="h-5 w-auto" />
-            <p className="text-[11px] uppercase tracking-[0.22em]">
-              Bag{count ? ` · ${String(count).padStart(2, '0')}` : ''}
-            </p>
-          </div>
+          <p className="text-[11px] uppercase tracking-[0.22em]">
+            Bag{count ? ` · ${String(count).padStart(2, '0')}` : ''}
+          </p>
           <button
             type="button"
             className="text-[11px] uppercase tracking-[0.22em] opacity-60 transition-opacity hover:opacity-100"
@@ -153,7 +149,7 @@ export function CartDrawer() {
                   setOpen(false)
                 }}
               >
-                Checkout
+                Reserve the cut
               </Button>
             </div>
           </>

@@ -18,8 +18,8 @@ import {
   measureStill,
   packingNote,
   packingSteps,
+  linePath,
   productLineName,
-  productPath,
   relatedProducts,
   thobeSizes,
   type ThobeSize,
@@ -29,18 +29,22 @@ import { type HouseNav } from './nav'
 
 type Props = HouseNav & {
   pieceId: string
+  collection?: boolean
 }
 
 export function PieceRoom({
   open,
   addToBag,
   pieceId,
+  collection,
   roomHeight,
   bottomInset,
   onOverlay,
 }: Props) {
   const product = getProduct(pieceId)
   const [size, setSize] = useState<ThobeSize | ''>('')
+  const hub = collection ? 'The Collection' : 'The Shop'
+  const hubPath = collection ? '/collection' : '/shop'
 
   if (!product) {
     return (
@@ -49,7 +53,7 @@ export function PieceRoom({
         <View style={styles.space} />
         <Display>This piece is not in the collection.</Display>
         <View style={styles.gap} />
-        <GhostLink label="The Shop" onPress={() => open('/shop')} />
+        <GhostLink label={hub} onPress={() => open(hubPath)} />
       </View>
     )
   }
@@ -81,7 +85,7 @@ export function PieceRoom({
       />
 
       <View style={paper()}>
-        <Eyebrow>{`${product.cut === 'Jubbah' ? 'The Shop' : 'The Collection'} · ${product.colour}`}</Eyebrow>
+        <Eyebrow>{`${hub} · ${product.colour}`}</Eyebrow>
         <View style={styles.space} />
         <Display size={36}>{productLineName(product)}</Display>
         <View style={styles.gap} />
@@ -95,7 +99,7 @@ export function PieceRoom({
               {variants.map((item) => (
                 <Pressable
                   key={item.id}
-                  onPress={() => open(productPath(item))}
+                  onPress={() => open(linePath(item, collection))}
                   accessibilityRole="button"
                   accessibilityLabel={item.colour}
                   accessibilityState={{ selected: item.id === product.id }}
@@ -234,14 +238,14 @@ export function PieceRoom({
           <Display size={32}>{product.cut === 'Jubbah' ? 'The other colours' : 'The other pieces'}</Display>
           <View style={styles.space} />
           <GhostLink
-            label={product.cut === 'Jubbah' ? 'All of the shop' : 'All of the collection'}
-            onPress={() => open(product.cut === 'Jubbah' ? '/shop' : '/collection')}
+            label={collection ? 'All of the collection' : 'All of the shop'}
+            onPress={() => open(hubPath)}
           />
           <View style={styles.space} />
           {related.map((item) => (
             <Pressable
               key={item.id}
-              onPress={() => open(productPath(item))}
+              onPress={() => open(linePath(item, collection))}
               accessibilityRole="link"
               accessibilityLabel={productLineName(item)}
               style={({ pressed }) => [styles.related, pressed && styles.pressed]}

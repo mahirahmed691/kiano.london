@@ -2,8 +2,8 @@ import { Show } from '@clerk/react'
 import { useEffect, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/HeldCuts'
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { Button, TextLink } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { clerkEnabled } from '@/lib/clerk'
 import { reservationPath } from '@/lib/checkout'
@@ -98,10 +98,9 @@ export function ReservationPage() {
   }
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container className="max-w-2xl">
+    <HouseRoom kicker="A reserved cut" title="Ask after it." containerClassName="max-w-2xl">
         <Eyebrow>A reserved cut</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl">
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Ask after it.
         </Display>
         <Body className="mt-6">
@@ -179,7 +178,6 @@ export function ReservationPage() {
           <TextLink to="/account">Account</TextLink>
           <TextLink to="/returns">If it must return</TextLink>
         </div>
-      </Container>
-    </Section>
+    </HouseRoom>
   )
 }

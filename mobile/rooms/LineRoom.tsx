@@ -12,8 +12,8 @@ import {
   creedIntent,
   jubbahColours,
   jubbahs,
+  linePath,
   productLineName,
-  productPath,
   type ProductColour,
 } from '../catalogue'
 import { color, type } from '../theme'
@@ -151,7 +151,7 @@ export function LineRoom({
             <HouseCard
               key={product.id}
               product={product}
-              onPress={() => open(productPath(product))}
+              onPress={() => open(linePath(product, collection))}
             />
           ))
         )}
@@ -162,22 +162,21 @@ export function LineRoom({
       </View>
 
       <View style={paper()}>
-        {collection ? (
-          <View style={styles.foot}>
+        <View style={styles.foot}>
+          <Body>
+            Each piece leaves unscented, in a garment bag and a rigid box. The scent is coming, as its own line.
+          </Body>
+          <View style={styles.gap} />
+          {collection ? (
             <OutlineButton label="The Shop" onPress={() => open('/shop')} />
-            <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />
-            <GhostLink label="The Scent" onPress={() => open('/scent')} />
-          </View>
-        ) : (
-          <View style={styles.foot}>
-            <Body>
-              Each piece leaves unscented, in a garment bag and a rigid box. The scent is coming, as its own line.
-            </Body>
-            <View style={styles.gap} />
+          ) : (
             <OutlineButton label="Visit by appointment" onPress={() => open('/visit')} />
-            <GhostLink label="The Scent" onPress={() => open('/scent')} />
-          </View>
-        )}
+          )}
+          {collection ? (
+            <GhostLink label="Visit by appointment" onPress={() => open('/visit')} />
+          ) : null}
+          <GhostLink label="The Scent" onPress={() => open('/scent')} />
+        </View>
       </View>
       <HouseMotto quiet />
     </RoomScroll>

@@ -148,14 +148,18 @@ const pages: Record<string, PageMeta> = {
     path: '/sign-up',
   },
   '/checkout': {
-    title: 'Checkout — Kiano London',
-    description: 'Reserve a piece. Made to order.',
+    title: 'Reserve the cut — Kiano London',
+    description: 'Reserve a piece from the house block. Made to order. Carriage included.',
     path: '/checkout',
+    image: '/images/cutting-room.jpg',
+    imageAlt: 'Paper, shears, and cloth: the work of a thobe.',
   },
   '/order/confirmed': {
-    title: 'Order — Kiano London',
-    description: 'Your piece is reserved. Made to order.',
+    title: 'The cut is reserved — Kiano London',
+    description: 'The cloth is reserved, not yet on the table. Made to order.',
     path: '/order/confirmed',
+    image: '/images/cutting-room.jpg',
+    imageAlt: 'Paper, shears, and cloth: the work of a thobe.',
   },
 }
 

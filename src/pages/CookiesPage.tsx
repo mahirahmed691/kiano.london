@@ -1,5 +1,5 @@
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { Button } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { clearConsent } from '@/lib/notices'
 import { site } from '@/data/site'
@@ -10,10 +10,9 @@ export function CookiesPage() {
   usePageMeta(getShareMeta('/cookies'))
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container className="max-w-2xl">
+    <HouseRoom kicker="The house" title="Cookies." containerClassName="max-w-2xl">
         <Eyebrow>The house</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl">
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Cookies.
         </Display>
         <Body className="mt-6">
@@ -62,7 +61,7 @@ export function CookiesPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Payment</p>
             <Body className="mt-3">
-              Stripe runs checkout on their own pages. We do not place advertising cookies for
+              Stripe takes payment on their own pages. We do not place advertising cookies for
               payment.
             </Body>
           </li>
@@ -83,7 +82,6 @@ export function CookiesPage() {
             Ask again
           </Button>
         </div>
-      </Container>
-    </Section>
+    </HouseRoom>
   )
 }

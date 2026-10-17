@@ -147,7 +147,7 @@ function WordEmptyAuth({ onClose }: { onClose: () => void }) {
       <div className="flex flex-1 flex-col justify-center px-8">
         <p className="font-display text-3xl font-light">Word follows the account.</p>
         <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-          Sign in with the email used at checkout. A reserved cut, and when it moves, will sit
+          Sign in with the email used at the till. A reserved cut, and when it moves, will sit
           here.
         </p>
         <div className="mt-8">

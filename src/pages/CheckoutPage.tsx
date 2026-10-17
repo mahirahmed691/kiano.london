@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CheckoutMember } from '@/components/checkout/CheckoutMember'
+import { TillFrame } from '@/components/checkout/TillFrame'
 import { Button, TextLink } from '@/components/ui/Button'
-import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
 import { productLineName, productPath } from '@/data/products'
@@ -144,29 +144,26 @@ export function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <Section fill className="pt-32 md:pt-40">
-        <Container>
-          <Eyebrow>Checkout</Eyebrow>
-          <Display as="h1" className="mt-4 text-5xl md:text-6xl">
-            Nothing is held.
-          </Display>
-          <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
-          <div className="mt-10 flex flex-wrap items-center gap-6">
-            <Button to="/shop">The Shop</Button>
-            <TextLink to="/collection">The Collection</TextLink>
-          </div>
-        </Container>
-      </Section>
+      <TillFrame title="Nothing is held.">
+        <Eyebrow>The till</Eyebrow>
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+          Nothing is held.
+        </Display>
+        <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
+        <div className="mt-10 flex flex-wrap items-center gap-6">
+          <Button to="/shop">The Shop</Button>
+          <TextLink to="/collection">The Collection</TextLink>
+        </div>
+      </TillFrame>
     )
   }
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container>
+    <TillFrame title="Reserve the cut." product={items[0]?.product}>
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-6">
-            <Eyebrow>Checkout</Eyebrow>
-            <Display as="h1" className="mt-4 text-5xl md:text-6xl">
+            <Eyebrow>Kiano London</Eyebrow>
+            <Display as="h1" className="mt-4 text-4xl md:text-5xl">
               Reserve the cut.
             </Display>
             <Body className="mt-6">
@@ -459,7 +456,7 @@ export function CheckoutPage() {
                 type="submit"
                 form="checkout-form"
                 disabled={busy}
-                className="mt-8 hidden w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35 lg:inline-flex"
+                className="mt-8 inline-flex w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35"
               >
                 {busy ? 'A moment' : 'Reserve the cut'}
               </button>
@@ -469,7 +466,6 @@ export function CheckoutPage() {
             </div>
           </aside>
         </div>
-      </Container>
-    </Section>
+    </TillFrame>
   )
 }

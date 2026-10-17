@@ -22,14 +22,26 @@ export const overlayPaths = [
   '/craftsmanship',
   '/craftsmanship-details',
   '/visit',
+  '/checkout',
+  '/account',
+  '/returns',
+  '/privacy',
+  '/cookies',
+  '/reservation',
+  '/letters/confirmed',
 ] as const
 
 export function headerOverlays(pathname: string) {
   const path = pathname.split('?')[0] || '/'
+  if (path.startsWith('/admin')) return false
   if ((overlayPaths as readonly string[]).includes(path)) return true
   return (
     path.startsWith('/shop/') ||
     path.startsWith('/collection/') ||
-    path.startsWith('/scent/')
+    path.startsWith('/scent/') ||
+    path.startsWith('/sign-in') ||
+    path.startsWith('/sign-up') ||
+    path.startsWith('/order') ||
+    path !== '/'
   )
 }

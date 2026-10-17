@@ -5,5 +5,5 @@ export const houseLandedCopy = {
   action: 'Restart',
 } as const
 
-export const houseLandedHoldMs = 2200
+export const houseLandedHoldMs = 4800
 export const houseUpdateRecheckMs = 10 * 60 * 1000

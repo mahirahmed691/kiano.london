@@ -14,8 +14,8 @@ import {
   houseCreed,
   jubbahs,
   plateCopy,
+  linePath,
   productLineName,
-  productPath,
   recentShopPlates,
   scentComing,
   scentPath,
@@ -106,7 +106,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
           {jubbahs.map((piece) => (
             <Pressable
               key={piece.id}
-              onPress={() => open(productPath(piece))}
+              onPress={() => open(linePath(piece))}
               accessibilityRole="link"
               accessibilityLabel={productLineName(piece)}
               style={({ pressed }) => pressed && styles.pressed}
@@ -120,7 +120,7 @@ export function HouseRoom({ open, roomHeight, bottomInset, onOverlay }: HouseNav
           {jubbahs.map((piece) => (
             <Pressable
               key={`collection-${piece.id}`}
-              onPress={() => open(productPath(piece))}
+              onPress={() => open(linePath(piece, true))}
               accessibilityRole="link"
               accessibilityLabel={productLineName(piece)}
               style={({ pressed }) => pressed && styles.pressed}

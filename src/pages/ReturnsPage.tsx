@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
+import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { ReturnForm } from '@/components/visit/ReturnForm'
-import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { site } from '@/data/site'
 import { packingNote } from '@/data/packing'
@@ -11,10 +11,16 @@ export function ReturnsPage() {
   usePageMeta(getShareMeta('/returns'))
 
   return (
-    <Section fill className="pt-32 md:pt-40">
-      <Container className="max-w-2xl">
+    <HouseRoom
+      kicker="After it leaves"
+      title="If it must return."
+      image="/images/pack-bag.jpg"
+      imageAlt="A garment bag. Protection for the column, not a logo on the poly."
+      objectPosition="center 18%"
+      containerClassName="max-w-2xl"
+    >
         <Eyebrow>After it leaves</Eyebrow>
-        <Display as="h1" className="mt-4 text-5xl md:text-6xl">
+        <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           If it must return.
         </Display>
         <Body className="mt-6">
@@ -71,7 +77,6 @@ export function ReturnsPage() {
             Account
           </Link>
         </p>
-      </Container>
-    </Section>
+    </HouseRoom>
   )
 }

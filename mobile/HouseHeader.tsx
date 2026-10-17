@@ -81,7 +81,7 @@ export function HouseHeader({
   return (
     <View
       pointerEvents="box-none"
-      style={[styles.bar, { paddingTop: topInset }]}
+      style={[styles.bar, { paddingTop: topInset, paddingBottom: 16 }]}
       onLayout={(event) => onHeight?.(event.nativeEvent.layout.height)}
     >
       <View style={styles.row} pointerEvents="box-none">
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   row: {
     minHeight: 64,
     paddingLeft: 12,
-    paddingRight: 10,
+    paddingRight: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
   sideEnd: {
     justifyContent: 'flex-end',
     gap: 8,
+    zIndex: 2,
   },
   hit: {
     width: 44,
@@ -209,6 +210,7 @@ const styles = StyleSheet.create({
   clock: {
     width: 22,
     height: 22,
+    marginLeft: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
