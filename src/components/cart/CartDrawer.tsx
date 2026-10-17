@@ -146,8 +146,8 @@ export function CartDrawer() {
                 onClick={(event) => {
                   if (window.ReactNativeWebView) {
                     event.preventDefault()
-                    setOpen(false)
                     window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'kiano-checkout' }))
+                    setOpen(false)
                     return
                   }
                   setOpen(false)
