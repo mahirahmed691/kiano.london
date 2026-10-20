@@ -152,7 +152,7 @@ export function CheckoutPage() {
         <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
         <div className="mt-10 flex flex-wrap items-center gap-6">
           <Button to="/shop">The Shop</Button>
-          <TextLink to="/collection">The Collection</TextLink>
+          <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
         </div>
       </TillFrame>
     )

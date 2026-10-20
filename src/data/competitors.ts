@@ -52,9 +52,10 @@ function channelsCopy(channels: Channel[]) {
 }
 
 function kianoReference(): CompetitorHouse {
-  const prices = products.map((piece) => piece.pricePence)
-  const jubbahs = products.filter((piece) => piece.cut === 'Jubbah')
-  const colours = new Set(products.map((piece) => piece.colour))
+  const line = products.filter((piece) => !piece.proof)
+  const prices = line.map((piece) => piece.pricePence)
+  const jubbahs = line.filter((piece) => piece.cut === 'Jubbah')
+  const colours = new Set(line.map((piece) => piece.colour))
   const low = Math.min(...prices)
   const high = Math.max(...prices)
   const jubbahPrice = jubbahs[0]?.pricePence ?? 7900

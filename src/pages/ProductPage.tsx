@@ -287,24 +287,31 @@ export function ProductPage() {
                 </Button>
               )}
 
-              <div className="mt-8 space-y-4 border-t border-rule pt-6">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between text-[11px] uppercase tracking-[0.22em]"
-                  aria-expanded={guideOpen}
-                  onClick={() => setGuideOpen((value) => !value)}
-                >
-                  Size guide
-                  <span aria-hidden="true">{guideOpen ? '−' : '+'}</span>
-                </button>
-                {guideOpen ? <SizeGuide className="pb-4" compact /> : null}
-                <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
-                  {carriageLine} Made to order. Payment is taken first.{' '}
-                  {packingNote}
+              {product.proof ? (
+                <p className="mt-8 border-t border-rule pt-6 text-[13px] font-light leading-relaxed text-stone">
+                  One pound to open the live till. Choose any size. Refund the charge from
+                  Stripe once the reservation is written.
                 </p>
-                <TextLink to={enquireTo}>Enquire to visit</TextLink>
-                <ShareLink title={share.title} text={share.description} path={share.path} />
-              </div>
+              ) : (
+                <div className="mt-8 space-y-4 border-t border-rule pt-6">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between text-[11px] uppercase tracking-[0.22em]"
+                    aria-expanded={guideOpen}
+                    onClick={() => setGuideOpen((value) => !value)}
+                  >
+                    Size guide
+                    <span aria-hidden="true">{guideOpen ? '−' : '+'}</span>
+                  </button>
+                  {guideOpen ? <SizeGuide className="pb-4" compact /> : null}
+                  <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
+                    {carriageLine} Made to order. Payment is taken first.{' '}
+                    {packingNote}
+                  </p>
+                  <TextLink to={enquireTo}>Enquire to visit</TextLink>
+                  <ShareLink title={share.title} text={share.description} path={share.path} />
+                </div>
+              )}
             </Reveal>
           </div>
 
@@ -338,44 +345,48 @@ export function ProductPage() {
         </div>
       </section>
 
-      <Section>
-        <Container>
-          <div className="grid gap-16 lg:grid-cols-12">
-            <Reveal className="lg:col-span-4">
-              <Eyebrow>The nape</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">The woven mark.</Display>
-              <WovenLabel size="lg" colour={product.colour} className="mt-10" />
-              <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
-                The square mark is sewn, not printed — the interlocking KK, in the cloth
-                of the piece — and set at the nape by hand after the last press. Size is
-                a separate tab. Care sits at the side seam.
-              </p>
-            </Reveal>
-            <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">
-              <Eyebrow>The making</Eyebrow>
-              <Display className="mt-4 text-4xl md:text-5xl">
-                How this {product.cut === 'Jubbah' ? 'garment' : 'thobe'} is held.
-              </Display>
-              <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
-                {product.composition}
-              </p>
-              <Eyebrow className="mt-14">Sizes 52–60</Eyebrow>
-              <Display className="mt-4 text-4xl">The house block.</Display>
-              <SizeGuide className="mt-8" />
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
+      {product.proof ? null : (
+        <>
+          <Section>
+            <Container>
+              <div className="grid gap-16 lg:grid-cols-12">
+                <Reveal className="lg:col-span-4">
+                  <Eyebrow>The nape</Eyebrow>
+                  <Display className="mt-4 text-4xl md:text-5xl">The woven mark.</Display>
+                  <WovenLabel size="lg" colour={product.colour} className="mt-10" />
+                  <p className="mt-8 max-w-sm text-[15px] font-light leading-relaxed text-ink-soft">
+                    The square mark is sewn, not printed — the interlocking KK, in the cloth
+                    of the piece — and set at the nape by hand after the last press. Size is
+                    a separate tab. Care sits at the side seam.
+                  </p>
+                </Reveal>
+                <Reveal delay={80} className="lg:col-span-7 lg:col-start-6">
+                  <Eyebrow>The making</Eyebrow>
+                  <Display className="mt-4 text-4xl md:text-5xl">
+                    How this {product.cut === 'Jubbah' ? 'garment' : 'thobe'} is held.
+                  </Display>
+                  <p className="mt-8 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
+                    {product.composition}
+                  </p>
+                  <Eyebrow className="mt-14">Sizes 52–60</Eyebrow>
+                  <Display className="mt-4 text-4xl">The house block.</Display>
+                  <SizeGuide className="mt-8" />
+                </Reveal>
+              </div>
+            </Container>
+          </Section>
 
-      <Section>
-        <Container>
-          <HowToMeasure />
-        </Container>
-      </Section>
+          <Section>
+            <Container>
+              <HowToMeasure />
+            </Container>
+          </Section>
 
-      <HowItArrives />
+          <HowItArrives />
 
-      <NightMotto quiet />
+          <NightMotto quiet />
+        </>
+      )}
 
       <Section>
         <Container>

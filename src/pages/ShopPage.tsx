@@ -124,6 +124,7 @@ export function ShopPage() {
             <div className="flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>
               <TextLink to="/scent">The Scent</TextLink>
+              <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
             </div>
           </div>
         </Container>
