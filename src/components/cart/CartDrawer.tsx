@@ -7,6 +7,7 @@ import { formatGbp } from '@/lib/money'
 
 export function CartDrawer() {
   const { items, count, subtotalPence, open, setOpen, setQuantity, remove } = useCart()
+  const proofOnly = items.length > 0 && items.every((item) => item.product.proof)
 
   return (
     <div className={cn('fixed inset-0 z-[60]', open ? 'visible' : 'invisible')}>
@@ -132,8 +133,9 @@ export function CartDrawer() {
                 <p className="font-display text-2xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
               <p className="mt-3 text-[12px] font-light leading-relaxed text-stone">
-                Carriage included. Cut to order. Leaves unscented,
-                in a garment bag and a rigid box.
+                {proofOnly
+                  ? 'One pound to open the live till. Not a garment. Refund the charge from Stripe once it has landed.'
+                  : 'Carriage included. Cut to order. Leaves unscented, in a garment bag and a rigid box.'}
               </p>
               <Button
                 to="/checkout"
@@ -149,7 +151,7 @@ export function CartDrawer() {
                   setOpen(false)
                 }}
               >
-                Reserve the cut
+                {proofOnly ? 'Pay one pound' : 'Reserve the cut'}
               </Button>
             </div>
           </>

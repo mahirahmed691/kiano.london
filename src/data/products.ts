@@ -223,7 +223,7 @@ export const jubbahColours: ProductColour[] = ['Stone Grey', 'Cream', 'Black']
 export const thobes = products.filter((item) => item.cut === 'Thobe')
 
 export const jubbahs = jubbahColours.flatMap((colour) =>
-  products.filter((item) => item.cut === 'Jubbah' && item.colour === colour),
+  products.filter((item) => item.cut === 'Jubbah' && item.colour === colour && !item.proof),
 )
 
 export const featuredProducts = products.filter((item) => item.featured)

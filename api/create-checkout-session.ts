@@ -91,6 +91,13 @@ async function createSession(request: Request) {
   const summary: string[] = []
   const stockLines: { productId: string; size: number; quantity: number }[] = []
 
+  const catalog = items.map((item) => ({ item, product: getProduct(item.productId) }))
+  const hasProof = catalog.some((line) => line.product?.proof)
+  const hasGarment = catalog.some((line) => line.product && !line.product.proof)
+  if (hasProof && hasGarment) {
+    return Response.json({ error: 'The proof is paid alone, at one pound.' }, { status: 400 })
+  }
+
   for (const item of items) {
     const product = getProduct(item.productId)
     const quantity = Math.min(4, Math.max(1, Number(item.quantity) || 0))
@@ -112,7 +119,9 @@ async function createSession(request: Request) {
         unit_amount: product.pricePence,
         product_data: {
           name,
-          description: `${product.colour}. ${product.cloth}. Made to order.`,
+          description: product.proof
+            ? 'One pound to open the live till. Not a garment.'
+            : `${product.colour}. ${product.cloth}. Made to order.`,
           metadata: {
             product_id: product.id,
             size: String(size),

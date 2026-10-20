@@ -800,7 +800,7 @@ function getPrices(): Response {
   return Response.json({
     vatNote: vatMethodNote,
     source: 'The shop and Stripe read prices from the catalogue. This list is the same page.',
-    prices: products.map((product) => {
+    prices: products.filter((product) => !product.proof).map((product) => {
       const split = splitVat(product.pricePence)
       return {
         productId: product.id,

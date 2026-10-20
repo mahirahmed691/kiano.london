@@ -388,6 +388,7 @@ export function ProductPage() {
         </>
       )}
 
+      {product.proof ? null : (
       <Section>
         <Container>
           <Rule className="mb-16" />
@@ -405,6 +406,7 @@ export function ProductPage() {
           <ProductGrid products={related} numbered={false} />
         </Container>
       </Section>
+      )}
 
       <div
         className={cn(

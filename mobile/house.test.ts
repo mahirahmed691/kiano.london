@@ -22,6 +22,14 @@ test('holdBagLine adds a new cut and then raises quantity', () => {
   assert.equal(second[0]?.quantity, 2)
 })
 
+test('the one-pound proof stands alone in the bag', () => {
+  const withGarment = holdBagLine([], 'jubbah-black', 54)
+  const proof = holdBagLine(withGarment, 'till-proof', 56)
+  assert.deepEqual(proof, [{ productId: 'till-proof', size: 56, quantity: 1 }])
+  const garmentAgain = holdBagLine(proof, 'jubbah-sand', 52)
+  assert.deepEqual(garmentAgain, [{ productId: 'jubbah-sand', size: 52, quantity: 1 }])
+})
+
 test('checkout hrefs are the till, not a piece', () => {
   assert.equal(isCheckoutHref('/checkout'), true)
   assert.equal(isCheckoutHref('https://www.kiano.london/checkout'), true)
