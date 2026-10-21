@@ -67,6 +67,14 @@ export {
   type HouseMenuLink,
   type HouseMenuSection,
 } from '../src/data/house-menu'
+export {
+  cookiesLetter,
+  legalLetter,
+  legalLetters,
+  privacyLetter,
+  returnsLetter,
+  type LegalLetter,
+} from '../src/data/legal'
 
 export function plateCopy(caption: string) {
   const parts = caption
@@ -128,6 +136,9 @@ export function isNativeBrowse(pathname: string) {
     path === '/story' ||
     path === '/craftsmanship' ||
     path === '/craftsmanship-details' ||
+    path === '/privacy' ||
+    path === '/cookies' ||
+    path === '/returns' ||
     path.startsWith('/shop/') ||
     path.startsWith('/collection/') ||
     path.startsWith('/scent/')

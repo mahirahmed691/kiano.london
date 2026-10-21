@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["TEAMID.london.kiano.app"],
+        "paths": ["*"],
+        "components": [{ "/": "/*" }]
+      }
+    ]
+  }
+}

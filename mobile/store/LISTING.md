@@ -52,11 +52,19 @@ Screenshot order for Connect (all RGB PNG, no alpha):
 
 2. **Screenshots.** EAS Metadata does not upload the PNGs. In App Store Connect → the 1.0.0 version → iPhone 6.9" and iPad 13", upload the files in `screenshots/` in the order above. iPhone 6.3" if Connect still asks.
 
-3. **Privacy nutrition labels** in Connect (Clerk account, Stripe till, Expo push). The privacy URL is already set.
+3. **Privacy nutrition labels** in Connect. Copy the table in `PRIVACY-LABELS.md`. The privacy URL is already set. Do not turn on tracking.
 
 4. **Submit for Review** after the production archive is in TestFlight. Auto-submit only lands the binary; it does not press Submit for Review.
 
-Android is not in this EAS profile. Add FCM to EAS before a Play build. The feature graphic and 1024 icon are ready for Play when that build exists.
+5. **Universal links.** In `public/.well-known/apple-app-site-association`, replace `TEAMID` with the Apple Team ID (ten characters, in the Apple Developer membership). Redeploy the site. Associated domains are already in the binary.
+
+6. **Android / FCM.** Before a Play build: add a Firebase Android app for `london.kiano.app`, put `google-services.json` in `mobile/`, set `expo.android.googleServicesFile` to `./google-services.json`, then `npx eas-cli credentials --platform android`. Put the upload-key SHA-256 into `public/.well-known/assetlinks.json`. Then:
+
+   ```bash
+   npx eas-cli build --platform android --profile production --auto-submit --non-interactive
+   ```
+
+The feature graphic and 1024 icon are ready for Play when that build exists.
 
 ## Icon
 

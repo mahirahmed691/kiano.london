@@ -40,7 +40,9 @@ import {
 } from './house'
 import { lastHousePath, listenHousePush, registerHousePush, setHouseBadge } from './HousePush'
 import { listenHouseUpdate, restartHouseUpdate } from './HouseUpdate'
+import { prefetchHouseStills } from './prefetch'
 import { HouseRoom } from './rooms/HouseRoom'
+import { LetterRoom } from './rooms/LetterRoom'
 import { LineRoom } from './rooms/LineRoom'
 import { MakingDetailsRoom } from './rooms/MakingDetailsRoom'
 import { MakingRoom } from './rooms/MakingRoom'
@@ -84,6 +86,11 @@ function parentRoom(pathname: string) {
 
 function HouseApp() {
   const fontsReady = useHouseFonts()
+
+  useEffect(() => {
+    if (!fontsReady) return
+    void prefetchHouseStills()
+  }, [fontsReady])
   const insets = useSafeAreaInsets()
   const { height: windowHeight } = useWindowDimensions()
   const [uri, setUri] = useState(houseOrigin)
@@ -466,6 +473,9 @@ function HouseApp() {
         {room === '/story' ? <StoryRoom {...nav} /> : null}
         {room === '/craftsmanship' ? <MakingRoom {...nav} /> : null}
         {room === '/craftsmanship-details' ? <MakingDetailsRoom {...nav} /> : null}
+        {room === '/privacy' || room === '/cookies' || room === '/returns' ? (
+          <LetterRoom {...nav} path={room as '/privacy' | '/cookies' | '/returns'} />
+        ) : null}
       </View>
       {Platform.OS === 'web' ? null : (
       <View
@@ -669,7 +679,12 @@ function HouseApp() {
           }
         />
       )}
-      {failed && webVisible ? <HouseFailed onRetry={retry} /> : null}
+      {failed && webVisible ? (
+        <HouseFailed
+          till={webKind === 'bag' || webKind === 'account' || webKind === 'sheet' || isTillPath(path)}
+          onRetry={retry}
+        />
+      ) : null}
       {landed && !onStripe ? (
         <HouseLanded
           top={insets.top}
