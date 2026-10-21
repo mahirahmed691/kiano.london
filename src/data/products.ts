@@ -51,6 +51,8 @@ export type Product = {
   composition: string
   leadTime: string
   gallery: ProductImage[]
+  /** Live till proof. Not of the three colourways. */
+  proof?: boolean
 }
 
 const napeFinish =
@@ -181,6 +183,37 @@ export const products: Product[] = [
       },
     ],
   },
+  {
+    id: 'till-proof',
+    name: 'The proof',
+    cut: 'Jubbah',
+    colour: 'Cream',
+    swatch: clothSwatch.Cream,
+    cloth: 'A one-pound reservation',
+    mill: 'Live till',
+    price: '£1',
+    pricePence: 100,
+    image: '/images/pack-box.jpg',
+    imageAlt: 'A rigid night box, sealed. The proof is a reservation, not a garment.',
+    objectPosition: 'center 55%',
+    proof: true,
+    description:
+      'One pound, to open the live till. Not a cut of Urban Emirati. Choose any size, pay, then refund the charge from Stripe once it has landed.',
+    details: [
+      'Not a garment. Used only to prove live payment.',
+      'One pound. Carriage is still named as included.',
+      'Refund it from Stripe after the reservation is written.',
+    ],
+    composition: 'Not cloth. A live reservation.',
+    leadTime: 'Refund after the charge is seen.',
+    gallery: [
+      {
+        src: '/images/pack-box.jpg',
+        alt: 'A rigid night box, sealed. The proof is a reservation, not a garment.',
+        objectPosition: 'center 55%',
+      },
+    ],
+  },
 ]
 
 export const productColours: ProductColour[] = ['Black', 'Charcoal', 'Grey', 'Beige', 'Bone']
@@ -190,7 +223,7 @@ export const jubbahColours: ProductColour[] = ['Stone Grey', 'Cream', 'Black']
 export const thobes = products.filter((item) => item.cut === 'Thobe')
 
 export const jubbahs = jubbahColours.flatMap((colour) =>
-  products.filter((item) => item.cut === 'Jubbah' && item.colour === colour),
+  products.filter((item) => item.cut === 'Jubbah' && item.colour === colour && !item.proof),
 )
 
 export const featuredProducts = products.filter((item) => item.featured)
@@ -216,6 +249,7 @@ export function colourOfPiece(id: string | undefined): ProductColour | undefined
 }
 
 export function productLineName(product: Product) {
+  if (product.proof) return product.name
   return product.cut === 'Jubbah' ? `${product.name} in ${product.colour}` : product.name
 }
 
@@ -241,5 +275,5 @@ export function colourVariants(product: Product) {
 export function relatedProducts(id: string) {
   const product = getProduct(id)
   if (!product) return []
-  return products.filter((item) => item.cut === product.cut && item.id !== id)
+  return products.filter((item) => item.cut === product.cut && item.id !== id && !item.proof)
 }

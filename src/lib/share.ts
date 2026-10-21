@@ -205,6 +205,7 @@ export function getShareMeta(pathname: string): PageMeta {
         path: productPath(product),
         image: product.image,
         imageAlt: product.imageAlt,
+        robots: product.proof ? 'noindex, nofollow' : undefined,
       }
     }
   }

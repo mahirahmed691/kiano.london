@@ -84,14 +84,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const add = useCallback(
     (productId: string, size: ThobeSize) => {
-      const current = lines.find((line) => line.productId === productId && line.size === size)
+      const product = getProduct(productId)
+      if (!product) return
+      const standing = product.proof
+        ? []
+        : lines.filter((line) => !getProduct(line.productId)?.proof)
+      const current = standing.find((line) => line.productId === productId && line.size === size)
       const next = current
-        ? lines.map((line) =>
+        ? standing.map((line) =>
             line.productId === productId && line.size === size
               ? { ...line, quantity: Math.min(4, line.quantity + 1) }
               : line,
           )
-        : [...lines, { productId, size, quantity: 1 }]
+        : [...standing, { productId, size, quantity: 1 }]
       update(next)
       setOpen(true)
     },

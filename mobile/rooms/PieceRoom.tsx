@@ -152,12 +152,23 @@ export function PieceRoom({
             {line}
           </Text>
         ))}
-        <Text style={styles.detail}>{product.composition}</Text>
-        <Text style={styles.detail}>{careLine}</Text>
-        <Text style={styles.detail}>{packingNote}</Text>
-        <Text style={styles.detail}>{carriageLine}</Text>
+        {product.proof ? (
+          <Text style={styles.detail}>
+            One pound to open the live till. Choose any size. Refund the charge from Stripe once
+            the reservation is written.
+          </Text>
+        ) : (
+          <>
+            <Text style={styles.detail}>{product.composition}</Text>
+            <Text style={styles.detail}>{careLine}</Text>
+            <Text style={styles.detail}>{packingNote}</Text>
+            <Text style={styles.detail}>{carriageLine}</Text>
+          </>
+        )}
       </View>
 
+      {product.proof ? null : (
+      <>
       <View style={section()}>
         <Eyebrow>The nape</Eyebrow>
         <View style={styles.space} />
@@ -214,6 +225,8 @@ export function PieceRoom({
           </View>
         ))}
       </View>
+      </>
+      )}
 
       {rest.map((still) => (
         <View key={still.src} style={[styles.galleryWrap, { height: roomHeight * 0.86 }]}>
@@ -231,7 +244,7 @@ export function PieceRoom({
 
       <HouseMotto quiet />
 
-      {related.length > 0 ? (
+      {related.length > 0 && !product.proof ? (
         <View style={section()}>
           <Eyebrow>The line</Eyebrow>
           <View style={styles.space} />

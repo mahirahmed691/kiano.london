@@ -5,7 +5,10 @@ export type BagLine = {
 }
 
 export function holdBagLine(lines: BagLine[], productId: string, size: number): BagLine[] {
-  const next = lines.filter(
+  const standing = productId === 'till-proof'
+    ? []
+    : lines.filter((line) => line.productId !== 'till-proof')
+  const next = standing.filter(
     (line) =>
       typeof line.productId === 'string' &&
       typeof line.size === 'number' &&
@@ -123,6 +126,8 @@ function tillMark() {
         var lines = [];
         try { lines = JSON.parse(localStorage.getItem(key) || '[]'); } catch (err) { lines = []; }
         if (!Array.isArray(lines)) lines = [];
+        if (id === 'till-proof') lines = [];
+        else lines = lines.filter(function (line) { return line && line.productId !== 'till-proof'; });
         var found = false;
         for (var i = 0; i < lines.length; i++) {
           if (lines[i] && lines[i].productId === id && Number(lines[i].size) === size) {
@@ -300,6 +305,8 @@ export function addToBagScript(productId: string, size: number) {
         var lines = [];
         try { lines = JSON.parse(localStorage.getItem(key) || '[]'); } catch (err) { lines = []; }
         if (!Array.isArray(lines)) lines = [];
+        if (${id} === 'till-proof') lines = [];
+        else lines = lines.filter(function (line) { return line && line.productId !== 'till-proof'; });
         var found = false;
         for (var i = 0; i < lines.length; i++) {
           if (lines[i] && lines[i].productId === ${id} && Number(lines[i].size) === ${value}) {

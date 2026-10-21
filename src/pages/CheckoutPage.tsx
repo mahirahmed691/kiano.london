@@ -142,6 +142,8 @@ export function CheckoutPage() {
     }
   }
 
+  const proofOnly = items.length > 0 && items.every((item) => item.product.proof)
+
   if (items.length === 0) {
     return (
       <TillFrame title="Nothing is held.">
@@ -152,23 +154,27 @@ export function CheckoutPage() {
         <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
         <div className="mt-10 flex flex-wrap items-center gap-6">
           <Button to="/shop">The Shop</Button>
-          <TextLink to="/collection">The Collection</TextLink>
+          <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
         </div>
       </TillFrame>
     )
   }
 
   return (
-    <TillFrame title="Reserve the cut." product={items[0]?.product}>
+    <TillFrame
+      title={proofOnly ? 'Open the till.' : 'Reserve the cut.'}
+      product={items[0]?.product}
+    >
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-6">
             <Eyebrow>Kiano London</Eyebrow>
             <Display as="h1" className="mt-4 text-4xl md:text-5xl">
-              Reserve the cut.
+              {proofOnly ? 'Open the till.' : 'Reserve the cut.'}
             </Display>
             <Body className="mt-6">
-              {String(count).padStart(2, '0')} {count === 1 ? 'piece' : 'pieces'}. Each piece is
-              made after payment, from the house block. Carriage is included. {packingNote}
+              {proofOnly
+                ? 'One pound. Not a garment. Carriage is still named as included. Refund the charge from Stripe once the reservation is written.'
+                : `${String(count).padStart(2, '0')} ${count === 1 ? 'piece' : 'pieces'}. Each piece is made after payment, from the house block. Carriage is included. ${packingNote}`}
             </Body>
             {clerkEnabled ? (
               <CheckoutMember
@@ -358,7 +364,7 @@ export function CheckoutPage() {
                   className="w-full justify-center"
                   disabled={busy}
                 >
-                  {busy ? 'A moment' : 'Reserve the cut'}
+                  {busy ? 'A moment' : proofOnly ? 'Pay one pound' : 'Reserve the cut'}
                 </Button>
               </div>
             </form>
@@ -444,8 +450,9 @@ export function CheckoutPage() {
                 <p className="font-display text-4xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
               <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
-                Pay with card, Apple Pay, or Google Pay. A confirmation follows when the cut is
-                reserved.
+                {proofOnly
+                  ? 'Pay with card, Apple Pay, or Google Pay. One pound only. Refund it from Stripe after it lands.'
+                  : 'Pay with card, Apple Pay, or Google Pay. A confirmation follows when the cut is reserved.'}
               </p>
               {error ? (
                 <p className="mt-5 hidden text-[14px] font-light text-ink lg:block" role="alert">
@@ -458,7 +465,7 @@ export function CheckoutPage() {
                 disabled={busy}
                 className="mt-8 inline-flex w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35"
               >
-                {busy ? 'A moment' : 'Reserve the cut'}
+                {busy ? 'A moment' : proofOnly ? 'Pay one pound' : 'Reserve the cut'}
               </button>
               <div className="mt-6">
                 <TextLink to="/shop">Continue looking</TextLink>
