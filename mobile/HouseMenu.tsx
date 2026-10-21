@@ -156,6 +156,12 @@ export function HouseMenu({
           <Text style={styles.weekName}>{week.name}</Text>
         </Pressable>
 
+        <View style={styles.notes}>
+          <RoomLink label="Privacy" active={room === '/privacy'} onPress={() => go('/privacy')} />
+          <RoomLink label="Cookies" active={room === '/cookies'} onPress={() => go('/cookies')} />
+          <RoomLink label="If it must return" active={room === '/returns'} onPress={() => go('/returns')} />
+        </View>
+
         <View style={styles.lockup} testID="house-menu-lockup">
           <HousePatch size={72} />
         </View>
@@ -251,6 +257,10 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     fontSize: 24,
     letterSpacing: -0.3,
+  },
+  notes: {
+    marginTop: 48,
+    gap: 10,
   },
   lockup: {
     marginTop: 40,

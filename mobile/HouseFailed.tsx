@@ -3,15 +3,22 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { color, type } from './theme'
 
 type Props = {
+  till?: boolean
   onRetry: () => void
 }
 
-export function HouseFailed({ onRetry }: Props) {
+export function HouseFailed({ till, onRetry }: Props) {
   return (
     <View style={styles.veil} accessibilityRole="alert">
       <Text style={styles.kicker}>Kiano London</Text>
-      <Text style={styles.display}>The house could not be reached.</Text>
-      <Text style={styles.body}>A line dropped. Try again when you have a moment.</Text>
+      <Text style={styles.display}>
+        {till ? 'The till needs a connection.' : 'The house could not be reached.'}
+      </Text>
+      <Text style={styles.body}>
+        {till
+          ? 'Bag, account, and payment live on the house site. Try again when you have a line.'
+          : 'A line dropped. Try again when you have a moment.'}
+      </Text>
       <Pressable
         onPress={onRetry}
         accessibilityRole="button"

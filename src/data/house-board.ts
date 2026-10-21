@@ -54,7 +54,7 @@ export const houseFeatures: HouseFeature[] = [
     name: 'Installable house',
     completion: 95,
     status: 'partial',
-    note: 'The hamburger is the house menu on the installed site and in Expo: the same rooms, this week’s plate, and the compact lockup. The browser keeps the mega menu from md. Word, the London clock, and Bag sit on the right in both shells. After a visit, the line can be read without a network; the till and the account need a connection. Expo rooms are native; bag, word, account, and the till remain the live house in a WebView. Tabs stay for the thumb: House, Line, Bag, Account. Android still needs FCM in EAS.',
+    note: 'The hamburger is the house menu on the installed site and in Expo: the same rooms, this week’s plate, privacy, cookies, returns, and the compact lockup. The browser keeps the mega menu from md. Word, the London clock, and Bag sit on the right in both shells. After a visit, the line can be read without a network; stills are kept on the device after the first load. The till and the account need a connection. Expo rooms are native; bag, word, account, and the till remain the live house in a WebView. Tabs stay for the thumb: House, Line, Bag, Account. iOS is store-ready (privacy manifest, associated domains, push). Android still needs FCM credentials in EAS before a Play archive.',
   },
   {
     name: 'Share and search',
@@ -273,7 +273,7 @@ export const houseVisualAudit = [
 export const houseScope = [
   'In Clerk Dashboard (production instance): add endpoint https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Put the signing secret on Vercel as CLERK_WEBHOOK_SIGNING_SECRET for Production, Preview, and Development, then redeploy.',
   'Add the Resend DNS on kiano.london (resend._domainkey TXT, send MX, send SPF) so list, visit, and reservation letters leave. RESEND_API_KEY is already on Vercel.',
-  'Cut a new iOS EAS production archive so TestFlight holds Word as a mark, and so later shell JS can arrive without another store pass. Add FCM to EAS before an Android store build.',
+  'Cut a new iOS EAS production archive so TestFlight holds Word as a mark, associated domains, and the privacy manifest, and so later shell JS can arrive without another store pass. In Connect: upload screenshots, paste privacy nutrition labels from mobile/store/PRIVACY-LABELS.md, Submit for Review. Replace TEAMID in public/.well-known/apple-app-site-association with the Apple Team ID. Add FCM (google-services.json) to EAS before an Android store build, and the upload-key SHA-256 to assetlinks.json.',
   'In Stripe Dashboard, finish Kiano London live onboarding (business, representative, bank, terms) so live charges can be taken. Then put the live restricted key on Vercel as STRIPE_SECRET_KEY, add a live webhook at https://www.kiano.london/api/stripe-webhook for checkout.session.completed, checkout.session.async_payment_succeeded, and charge.refunded, and put the live STRIPE_WEBHOOK_SECRET on Vercel.',
   'Real walks in public/films, then a player that does not invent motion from a still.',
   'When the real bag, tissue, and box exist, replace the packing stills in public/images.',

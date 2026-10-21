@@ -15,7 +15,13 @@
     },
     "production": {
       "autoIncrement": true,
-      "channel": "production"
+      "channel": "production",
+      "ios": {
+        "image": "latest"
+      },
+      "android": {
+        "image": "latest"
+      }
     }
   },
   "submit": {
@@ -23,6 +29,9 @@
       "ios": {
         "ascAppId": "6805163116",
         "metadataPath": "./store.config.js"
+      },
+      "android": {
+        "track": "internal"
       }
     }
   }

@@ -35,6 +35,7 @@ const info = {
   marketingUrl: 'https://www.kiano.london',
   supportUrl: 'https://www.kiano.london/visit',
   privacyPolicyUrl: 'https://www.kiano.london/privacy',
+  privacyChoicesUrl: 'https://www.kiano.london/privacy',
 }
 
 const apple = {
@@ -74,10 +75,12 @@ const apple = {
     phone,
     demoRequired: false,
     notes: [
-      'Native rooms (House, Line, Stills, a piece, Scent, Visit, Story, Craftsmanship) do not require an account.',
+      'Native rooms (House, Line, Stills, a piece, Scent, Visit, Story, Craftsmanship, Privacy, Cookies, Returns) do not require an account.',
       'Bag, Word, Account, and checkout open https://www.kiano.london in the shell (Clerk and Stripe). No demo account is required to review the garment rooms.',
+      'To open the till: Shop → a colour → choose a size → Add to bag → Reserve the cut. Stripe Checkout opens on the live house.',
+      'Camera permission is only for Stripe’s card scan on their page. The house does not keep photographs. Push permission is for Word from the house and this week’s still.',
       'The scent line is coming and is not of the bag.',
-      'ITSAppUsesNonExemptEncryption is false.',
+      'ITSAppUsesNonExemptEncryption is false. Privacy nutrition labels are in store/PRIVACY-LABELS.md.',
     ].join('\n'),
   },
 }
