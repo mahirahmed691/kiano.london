@@ -77,6 +77,7 @@ const apple = {
     notes: [
       'Native rooms (House, Line, Stills, a piece, Scent, Visit, Story, Craftsmanship, Privacy, Cookies, Returns) do not require an account.',
       'Bag, Word, Account, and checkout open https://www.kiano.london in the shell (Clerk and Stripe). No demo account is required to review the garment rooms.',
+      'To close an account: Account → Delete this account → confirm. The size, the notices, and the details kept with the house go with it. A paid reservation stays, unlinked, so the cloth can still be cut.',
       'To open the till: Shop → a colour → choose a size → Add to bag → Reserve the cut. Stripe Checkout opens on the live house.',
       'Camera permission is only for Stripe’s card scan on their page. The house does not keep photographs. Push permission is for Word from the house and this week’s still.',
       'The scent line is coming and is not of the bag.',

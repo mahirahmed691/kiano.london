@@ -1,6 +1,7 @@
 import { Show, SignOutButton, useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { DeleteAccount } from '@/components/account/DeleteAccount'
 import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/HeldCuts'
 import { HouseDeviceForm } from '@/components/account/HouseDeviceForm'
 import { HouseProfileForm } from '@/components/account/HouseProfileForm'
@@ -8,6 +9,7 @@ import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { HouseRoom } from '@/components/editorial/HouseRoom'
 import { Button, TextLink } from '@/components/ui/Button'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
+import { accountJustClosed, clearClosedMark } from '@/lib/account-closed'
 import { isAdminUser } from '@/lib/admin'
 import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
@@ -201,6 +203,11 @@ function AccountLedgerLink() {
 
 function AccountGate() {
   const { isLoaded } = useAuth()
+  const [closed, setClosed] = useState(() => accountJustClosed())
+
+  useEffect(() => {
+    if (closed) clearClosedMark()
+  }, [closed])
 
   if (!isLoaded) {
     return <p className="mt-8 text-[15px] font-light text-ink-soft">Reading the house.</p>
@@ -209,7 +216,8 @@ function AccountGate() {
   return (
     <>
       <Show when="signed-out">
-        <Body className="mt-6">
+        {closed ? <Body className="mt-6">This account is closed.</Body> : null}
+        <Body className={closed ? 'mt-4' : 'mt-6'}>
           The shop is public. Details written here stay on this device. Sign in to keep
           reservations and the same details with the house. If you reserved without an account,
           ask after the cut with the reference and that email.
@@ -234,15 +242,19 @@ function AccountGate() {
         <AccountWord />
         <AccountDeviceWord />
         <AccountLedgerLink />
-        <div className="mt-12">
-          <SignOutButton>
-            <button
-              type="button"
-              className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-            >
-              Sign out
-            </button>
-          </SignOutButton>
+        <div className="mt-16 border-t border-rule pt-10">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The account</p>
+          <div className="mt-6 flex flex-col items-start gap-8">
+            <SignOutButton>
+              <button
+                type="button"
+                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
+              >
+                Sign out
+              </button>
+            </SignOutButton>
+            <DeleteAccount onClosed={() => setClosed(true)} />
+          </div>
         </div>
       </Show>
     </>

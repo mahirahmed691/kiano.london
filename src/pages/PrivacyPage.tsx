@@ -37,7 +37,10 @@ export function PrivacyPage() {
               <Link to="/account" className="border-b border-current pb-px">
                 account
               </Link>
-              .
+              . Delete this account there when it should close. The size, the notices, and the
+              details kept with the house go with it. A paid reservation stays with the house, under
+              the email used at the till, so the cloth can still be cut. The list, if you joined
+              it, is separate. Leave it by writing to {site.email}.
             </Body>
           </li>
           <li>

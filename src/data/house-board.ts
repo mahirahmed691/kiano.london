@@ -119,7 +119,7 @@ export const houseIntegrations = [
     state: 'Live',
     hook: 'POST /api/clerk-webhook',
     events: 'user.created, user.updated, user.deleted',
-    note: 'verifyWebhook from @clerk/backend/webhooks. Needs CLERK_WEBHOOK_SIGNING_SECRET on Vercel and an endpoint in the Clerk Dashboard at https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Deleted accounts leave the members table; paid orders stay, unlinked.',
+    note: 'verifyWebhook from @clerk/backend/webhooks. Needs CLERK_WEBHOOK_SIGNING_SECRET on Vercel and an endpoint in the Clerk Dashboard at https://www.kiano.london/api/clerk-webhook for user.created, user.updated, user.deleted. Account → Delete this account calls DELETE /api/member, which removes the Clerk user and the same rows. Deleted accounts leave the members table; paid orders stay, unlinked.',
   },
   {
     name: 'Neon Postgres',
