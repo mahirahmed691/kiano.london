@@ -157,15 +157,25 @@ export function ProductPage() {
             '@context': 'https://schema.org',
             '@type': 'Product',
             name: productLineName(product),
-            image: `${SITE_URL}${product.image}`,
+            sku: product.id,
+            image: [product.image, ...product.gallery.map((item) => item.src)]
+              .filter((src, index, all) => all.indexOf(src) === index)
+              .map((src) => (src.startsWith('http') ? src : `${SITE_URL}${src}`)),
             description: product.description,
+            color: product.colour,
+            material: product.composition,
             brand: { '@type': 'Brand', name: site.fullName },
             offers: {
               '@type': 'Offer',
               url: `${SITE_URL}${productPath(product)}`,
               priceCurrency: 'GBP',
               price: (product.pricePence / 100).toFixed(2),
-              availability: 'https://schema.org/PreOrder',
+              // Cut to order: a size still on the line is in stock, the rest wait for the next cut.
+              availability:
+                stock && Object.values(stock).some((quantity) => quantity > 0)
+                  ? 'https://schema.org/InStock'
+                  : 'https://schema.org/PreOrder',
+              itemCondition: 'https://schema.org/NewCondition',
             },
           }),
         }}

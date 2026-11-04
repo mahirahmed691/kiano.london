@@ -2,7 +2,6 @@ import { thisWeekPlate, thisWeekShopPlate } from './instagram-plates.js'
 import { creedIntent, creedMotto, creedSpoken, creedWoven } from '../data/creed.js'
 import { getProduct, productLineName, productPath } from '../data/products.js'
 import { getScent, scentPath } from '../data/scent.js'
-import { site } from '../data/site.js'
 
 export type PageMeta = {
   title: string
@@ -18,9 +17,9 @@ const defaultAlt = 'Kiano London. Urban Emirati garments.'
 
 const pages: Record<string, PageMeta> = {
   '/': {
-    title: site.fullName,
+    title: 'Kiano London | Considered Menswear & Urban Emirati',
     description:
-      `${creedWoven} Urban Emirati in stone grey, cream and black. A London house, sizes 52 to 60.`,
+      'Kiano London creates considered menswear in London. Explore the Urban Emirati collection, limited-run pieces, and atelier visits by appointment.',
     path: '/',
     image: '/images/jubbah-black.jpg',
     imageAlt: 'Urban Emirati in black, worn at full length.',
@@ -57,7 +56,7 @@ const pages: Record<string, PageMeta> = {
     imageAlt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
   },
   '/stills': {
-    title: 'Stills — Kiano London',
+    title: 'Lookbook — Kiano London',
     description:
       `One still a week. ${creedWoven} Urban Emirati, and the rooms of the house.`,
     path: '/stills',

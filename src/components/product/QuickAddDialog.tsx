@@ -88,7 +88,7 @@ export function QuickAddDialog() {
               <div className="relative hidden bg-ivory-deep md:block">
                 <img
                   src={current.image}
-                  alt=""
+                  alt={current.imageAlt}
                   className="h-full min-h-[32rem] w-full object-cover"
                   style={current.objectPosition ? { objectPosition: current.objectPosition } : undefined}
                 />

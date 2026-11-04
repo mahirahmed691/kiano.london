@@ -51,7 +51,7 @@ export function SubscribeDialog({ open, onClose }: Props) {
             <div className="relative hidden bg-ivory-deep md:block">
               <img
                 src="/images/jubbah-black.jpg"
-                alt=""
+                alt="Urban Emirati in black, worn at full length."
                 className="h-full min-h-[28rem] w-full object-cover object-[center_18%]"
               />
               <WovenLabel size="md" colour="Black" className="absolute bottom-5 left-5" />
