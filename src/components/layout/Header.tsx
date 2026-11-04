@@ -32,7 +32,7 @@ export function Header() {
         className="fixed inset-x-0 top-0 z-50 bg-black text-ivory"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="relative flex h-16 items-center justify-between border-b border-ivory/10 px-5 md:h-[4.5rem] md:px-12 lg:px-16">
+        <div className="relative flex h-[5.25rem] items-center justify-between border-b border-ivory/10 px-5 md:h-[5.75rem] md:px-12 lg:px-16">
           <Wordmark className="pointer-events-auto absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
 
           <div className="flex min-w-0 items-center">
@@ -42,7 +42,7 @@ export function Header() {
               type="button"
               className={cn(
                 'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
-                !installed && 'xl:hidden',
+                !installed && 'min-[1360px]:hidden',
               )}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"

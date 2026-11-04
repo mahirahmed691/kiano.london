@@ -275,7 +275,7 @@ export function MegaMenu({ inverted, installed = false }: Props) {
   return (
     <div
       ref={rootRef}
-      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden xl:block')}
+      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden min-[1360px]:block')}
       onMouseLeave={scheduleClose}
       onMouseEnter={() => window.clearTimeout(closeTimer.current)}
     >
