@@ -12,6 +12,7 @@ type Props = {
   title?: string
   subtitle?: string
   captionTo?: string
+  captionLabel?: string
   align?: 'start' | 'center'
   minHeight?: 'screen' | 'tall' | 'page'
   children?: ReactNode
@@ -33,6 +34,7 @@ export function Hero({
   title,
   subtitle,
   captionTo,
+  captionLabel,
   align = 'start',
   minHeight = 'screen',
   children,
@@ -68,6 +70,7 @@ export function Hero({
           kicker={kicker ?? ''}
           title={title ?? ''}
           to={captionTo}
+          label={captionLabel}
         />
       ) : null}
       {!quiet && hasCopy ? (

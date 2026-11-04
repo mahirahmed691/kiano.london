@@ -38,7 +38,7 @@ export function StillsPage() {
         objectPosition={week.objectPosition}
         quiet
         priority
-        kicker={week.place === week.name ? 'This week' : `This week · ${week.place}`}
+        kicker="Lookbook · this week"
         title={week.name}
         captionTo={stillsHash(week)}
       />
@@ -49,7 +49,7 @@ export function StillsPage() {
             <Reveal className="lg:col-span-5">
               <Eyebrow>This week · {week.place}</Eyebrow>
               <Display as="h1" className="mt-4 text-4xl md:text-5xl lg:text-6xl">
-                The stills.
+                The lookbook.
               </Display>
               <p className="mt-5 text-[0.68rem] uppercase tracking-[0.42em] text-ink/55">
                 {site.lockup}

@@ -4,6 +4,7 @@ import { ReturnForm } from '@/components/visit/ReturnForm'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { site } from '@/data/site'
 import { packingNote } from '@/data/packing'
+import { returnsPolicy, returnsSummary } from '@/data/policies'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
@@ -12,53 +13,40 @@ export function ReturnsPage() {
 
   return (
     <HouseRoom
-      kicker="After it leaves"
-      title="If it must return."
+      kicker="Returns"
+      title="Returns."
       image="/images/pack-bag.jpg"
-      imageAlt="A garment bag. Protection for the column, not a logo on the poly."
+      imageAlt="A Kiano London garment bag, ready for a piece to be sent."
       objectPosition="center 18%"
       containerClassName="max-w-2xl"
     >
-        <Eyebrow>After it leaves</Eyebrow>
+        <Eyebrow>Returns</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
-          If it must return.
+          Returns.
         </Display>
-        <Body className="mt-6">
-          A cut is made when you ask for it. If the piece cannot be worn as reserved, write. Do
-          not drop it at a shop window. There is no shop window. The letter is held; it is not a
-          refund.
-        </Body>
+        <Body className="mt-6">{returnsSummary}</Body>
 
         <ul className="mt-14 space-y-10">
+          {returnsPolicy.map((item) => (
+            <li key={item.title}>
+              <h2 className="text-[11px] uppercase tracking-[0.22em] text-stone">{item.title}</h2>
+              <Body className="mt-3">{item.body}</Body>
+            </li>
+          ))}
           <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Fourteen days</p>
-            <Body className="mt-3">
-              From the day it arrives, fourteen days to write with the reservation and the size.
-              Unworn, with the house card, the bag, and the box.
-            </Body>
-          </li>
-          <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The packing</p>
+            <h2 className="text-[11px] uppercase tracking-[0.22em] text-stone">Packing</h2>
             <Body className="mt-3">{packingNote}</Body>
-          </li>
-          <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The refund</p>
-            <Body className="mt-3">
-              A return, if agreed, is a refund in Stripe. When Stripe has returned the payment, the
-              house book is written and the size is put back on the line. Do not open a dispute
-              before you have written.
-            </Body>
           </li>
         </ul>
 
         <div className="mt-16 border-t border-rule pt-12">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The letter</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Start a return</p>
           <Display as="h2" className="mt-4 text-4xl md:text-5xl">
-            Write first.
+            Tell us first.
           </Display>
           <Body className="mt-6">
-            The house keeps the letter in the diary. If the return can be taken, the house asks
-            it back. If you would rather write directly:{' '}
+            Use the form with your order reference and we will reply with how to send the piece
+            back. If you would rather email:{' '}
             <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
               {site.email}
             </a>

@@ -21,7 +21,7 @@ const megaItems: MegaItem[] = [
 
 const simpleNav = [
   { label: 'Scent', to: '/scent' },
-  { label: 'Stills', to: '/stills' },
+  { label: 'Lookbook', to: '/stills' },
   { label: 'Story', to: '/story' },
   { label: 'Visit', to: '/visit' },
 ] as const
@@ -83,7 +83,7 @@ function HouseLinks() {
       <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The house</p>
       <ul className="mt-5 space-y-3">
         <li>
-          <TextLink to="/stills">Stills</TextLink>
+          <TextLink to="/stills">Explore the Kiano lookbook</TextLink>
         </li>
         <li>
           <TextLink to="/scent">Scent</TextLink>
@@ -185,7 +185,7 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
             />
           </span>
           <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
-            The stitch
+            Craft &amp; process
           </span>
           <span className="mt-2 block font-display text-xl font-light tracking-[-0.02em] text-ink md:text-2xl">
             Closer.
@@ -275,12 +275,12 @@ export function MegaMenu({ inverted, installed = false }: Props) {
   return (
     <div
       ref={rootRef}
-      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden md:block')}
+      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden xl:block')}
       onMouseLeave={scheduleClose}
       onMouseEnter={() => window.clearTimeout(closeTimer.current)}
     >
       <nav aria-label="Primary">
-        <ul className="flex flex-nowrap items-center gap-x-4 lg:gap-x-6">
+        <ul className="flex flex-nowrap items-center gap-x-5 2xl:gap-x-6">
           {megaItems.map((item) => {
             const expanded = open === item.id
             return (

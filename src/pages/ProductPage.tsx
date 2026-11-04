@@ -17,6 +17,7 @@ import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { packingNote } from '@/data/packing'
 import { carriageLine } from '@/data/shipping'
+import { returnsSummary } from '@/data/policies'
 import { site } from '@/data/site'
 import {
   clothSwatch,
@@ -157,15 +158,25 @@ export function ProductPage() {
             '@context': 'https://schema.org',
             '@type': 'Product',
             name: productLineName(product),
-            image: `${SITE_URL}${product.image}`,
+            sku: product.id,
+            image: [product.image, ...product.gallery.map((item) => item.src)]
+              .filter((src, index, all) => all.indexOf(src) === index)
+              .map((src) => (src.startsWith('http') ? src : `${SITE_URL}${src}`)),
             description: product.description,
+            color: product.colour,
+            material: product.composition,
             brand: { '@type': 'Brand', name: site.fullName },
             offers: {
               '@type': 'Offer',
               url: `${SITE_URL}${productPath(product)}`,
               priceCurrency: 'GBP',
               price: (product.pricePence / 100).toFixed(2),
-              availability: 'https://schema.org/PreOrder',
+              // Cut to order: a size still on the line is in stock, the rest wait for the next cut.
+              availability:
+                stock && Object.values(stock).some((quantity) => quantity > 0)
+                  ? 'https://schema.org/InStock'
+                  : 'https://schema.org/PreOrder',
+              itemCondition: 'https://schema.org/NewCondition',
             },
           }),
         }}
@@ -307,6 +318,13 @@ export function ProductPage() {
                   <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
                     {carriageLine} Made to order. Payment is taken first.{' '}
                     {packingNote}
+                  </p>
+                  <p className="text-[13px] font-light leading-relaxed text-stone">
+                    {returnsSummary}{' '}
+                    <Link to="/returns" className="underline underline-offset-4">
+                      Read the returns policy
+                    </Link>
+                    .
                   </p>
                   <TextLink to={enquireTo}>Enquire to visit</TextLink>
                   <ShareLink title={share.title} text={share.description} path={share.path} />

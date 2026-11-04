@@ -8,7 +8,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Container, Section } from '@/components/ui/Container'
 import { Body, Display, Eyebrow, Lead } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
-import { creedIntent, creedJoin, creedSpoken, creedStandard, creedWoven } from '@/data/creed'
+import { creedJoin, creedSpoken, creedStandard } from '@/data/creed'
 import { type InstagramPlate } from '@/data/instagram-plates'
 import { jubbahs, productLineName, productPath } from '@/data/products'
 import { scentPath, scents } from '@/data/scent'
@@ -16,6 +16,7 @@ import { site } from '@/data/site'
 import { plateCopy, recentShopPlates, stillsHash, thisWeekShopPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { TrustBar } from '@/components/editorial/TrustBar'
 
 export function HomePage() {
   const week = thisWeekShopPlate()
@@ -32,10 +33,13 @@ export function HomePage() {
         objectPosition={week.objectPosition}
         quiet
         priority
-        kicker={week.place === week.name ? 'This week' : `This week · ${week.place}`}
+        kicker="Lookbook · this week"
         title={week.name}
         captionTo={stillsHash(week)}
+        captionLabel={`View ${week.name} in the lookbook`}
       />
+
+      <TrustBar />
 
       <Section>
         <Container>
@@ -51,18 +55,22 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120} className="lg:col-span-6 lg:col-start-7 lg:pt-14">
               <p className="text-[10px] uppercase tracking-[0.32em] text-stone">
-                This week · {week.place}
+                In the lookbook this week
               </p>
               <Lead className="mt-5">{weekCopy.lines[0] ?? week.name}</Lead>
               <Body className="mt-8">
-                {creedWoven} {creedIntent} Urban Emirati in stone grey, cream and
-                black. The scent is coming.
+                Kiano London is a London-based atelier creating considered menswear for
+                modern life. Each piece is designed with discipline, craftsmanship, and
+                purpose — from the Urban Emirati to refined everyday essentials.
+              </Body>
+              <Body className="mt-4">
+                Urban Emirati in stone grey, cream and black. The scent is coming.
               </Body>
               <div className="mt-10 flex flex-wrap items-center gap-8">
-                <Button to="/stills">The stills</Button>
-                <TextLink to="/shop">The Shop</TextLink>
-                <TextLink to="/collection">The Collection</TextLink>
-                <TextLink to="/scent">The Scent</TextLink>
+                <Button to="/shop">Shop the Urban Emirati</Button>
+                <TextLink to="/collection">View the collection</TextLink>
+                <TextLink to="/stills">Explore the lookbook</TextLink>
+                <TextLink to="/scent">Discover the scent</TextLink>
               </div>
             </Reveal>
           </div>
@@ -151,7 +159,7 @@ export function HomePage() {
             loading="lazy"
             decoding="async"
           />
-          <StillCaption to="/craftsmanship" kicker="The stitch" title="Closer." />
+          <StillCaption to="/craftsmanship" kicker="Craft & process" title="Closer." label="Read about the making process" />
         </figure>
       </section>
 
@@ -195,7 +203,12 @@ function BookLook({ plate, lastWeek }: { plate: InstagramPlate; lastWeek: boolea
         loading="lazy"
         decoding="async"
       />
-      <StillCaption to={href} kicker={lastWeek ? 'Last week' : plate.place} title={plate.name}>
+      <StillCaption
+        to={href}
+        kicker={lastWeek ? 'Lookbook · last week' : `Lookbook · ${plate.place}`}
+        title={plate.name}
+        label={`View ${plate.name} in the lookbook`}
+      >
         {copy.lines[0] ? (
           <p className="mt-2 max-w-md font-light text-ivory/75">{copy.lines[0]}</p>
         ) : null}

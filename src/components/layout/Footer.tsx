@@ -47,7 +47,7 @@ export function Footer() {
                   to="/stills"
                   className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                 >
-                  Stills
+                  Lookbook
                 </Link>
               </li>
               <li>
@@ -104,7 +104,31 @@ export function Footer() {
 
         <Rule className="my-14 bg-bronze/30" />
 
-        <div className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.18em] text-ivory/40 sm:flex-row sm:items-center sm:justify-between">
+        <nav aria-label="Help and policies" className="mb-10">
+          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-[13px] font-light text-ivory/80">
+            {[
+              { to: '/delivery', label: 'Delivery' },
+              { to: '/returns', label: 'Returns' },
+              { to: '/size-guide', label: 'Size guide' },
+              { to: '/privacy', label: 'Privacy Policy' },
+              { to: '/cookies', label: 'Cookie Policy' },
+              { to: '/visit', label: 'Contact and visits' },
+            ].map((item) => (
+              <li key={item.to}>
+                <Link to={item.to} className="transition-colors duration-500 hover:text-bronze">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <a href={`mailto:${site.email}`} className="transition-colors duration-500 hover:text-bronze">
+                {site.email}
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.18em] text-ivory/70 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {site.fullName}. All rights reserved.
           </p>
@@ -120,15 +144,6 @@ export function Footer() {
                 {item.label}
               </a>
             ))}
-            <Link to="/privacy" className="transition-colors duration-500 hover:text-bronze">
-              Privacy
-            </Link>
-            <Link to="/returns" className="transition-colors duration-500 hover:text-bronze">
-              Returns
-            </Link>
-            <Link to="/cookies" className="transition-colors duration-500 hover:text-bronze">
-              Cookies
-            </Link>
             <span>
               {creedMotto} · Est. {site.established} · {site.city}
             </span>

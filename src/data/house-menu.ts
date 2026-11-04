@@ -21,7 +21,7 @@ export const houseMenuHouse: HouseMenuSection = {
   id: 'house',
   section: 'The house',
   lines: [
-    { label: 'Stills', to: '/stills' },
+    { label: 'Lookbook', to: '/stills' },
     { label: 'Story', to: '/story' },
     { label: 'Craftsmanship', to: '/craftsmanship' },
     { label: 'The making', to: '/craftsmanship-details' },

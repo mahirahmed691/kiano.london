@@ -6,6 +6,8 @@ type Props = {
   kicker: string
   title: string
   to?: string
+  /** What the link does, when the kicker and title alone do not say it. */
+  label?: string
   children?: ReactNode
   className?: string
   as?: ElementType
@@ -15,6 +17,7 @@ export function StillCaption({
   kicker,
   title,
   to,
+  label,
   children,
   className,
   as: Tag = 'figcaption',
@@ -35,7 +38,11 @@ export function StillCaption({
       )}
     >
       {to ? (
-        <Link to={to} className="inline-block text-ivory transition-opacity duration-500 hover:opacity-80">
+        <Link
+          to={to}
+          aria-label={label}
+          className="inline-block text-ivory transition-opacity duration-500 hover:opacity-80"
+        >
           {copy}
         </Link>
       ) : (

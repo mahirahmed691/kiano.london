@@ -71,7 +71,7 @@ export function MobileNav({ open, onClose }: Props) {
       className={cn(
         'fixed inset-0 z-40 overflow-y-auto bg-ivory text-ink transition-opacity duration-500',
         open ? 'opacity-100' : 'pointer-events-none opacity-0',
-        !installed && 'md:hidden',
+        !installed && 'xl:hidden',
       )}
       aria-hidden={!open}
     >
@@ -149,7 +149,7 @@ export function MobileNav({ open, onClose }: Props) {
             />
           </span>
           <span className="mt-4 block text-[11px] uppercase tracking-[0.22em] text-stone">
-            {week.place === week.name ? 'This week' : `This week · ${week.place}`}
+            Lookbook · this week
           </span>
           <span className="mt-2 block font-display text-2xl font-light tracking-[-0.02em]">
             {week.name}
