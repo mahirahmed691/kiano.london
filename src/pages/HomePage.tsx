@@ -16,6 +16,7 @@ import { site } from '@/data/site'
 import { plateCopy, recentShopPlates, stillsHash, thisWeekShopPlate } from '@/lib/instagram-plates'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { TrustBar } from '@/components/editorial/TrustBar'
 
 export function HomePage() {
   const week = thisWeekShopPlate()
@@ -37,6 +38,8 @@ export function HomePage() {
         captionTo={stillsHash(week)}
         captionLabel={`View ${week.name} in the lookbook`}
       />
+
+      <TrustBar />
 
       <Section>
         <Container>

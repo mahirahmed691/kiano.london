@@ -14,6 +14,7 @@ import { jubbahColours, jubbahs, productLineName, productPath } from '@/data/pro
 import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { TrustBar } from '@/components/editorial/TrustBar'
 
 const filters = ['All', ...jubbahColours] as const
 
@@ -38,6 +39,8 @@ export function ShopPage() {
         quiet
         priority
       />
+
+      <TrustBar />
 
       <Section>
         <Container>

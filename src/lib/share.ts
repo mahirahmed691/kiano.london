@@ -98,9 +98,19 @@ const pages: Record<string, PageMeta> = {
     path: '/privacy',
   },
   '/returns': {
-    title: 'If it must return — Kiano London',
-    description: 'How to write if a reserved cut cannot be worn. Fourteen days from arrival.',
+    title: 'Returns — Kiano London',
+    description: 'Returns within 14 days of delivery. Free return postage within the UK. Unworn, unwashed, tags attached. No exchanges.',
     path: '/returns',
+  },
+  '/size-guide': {
+    title: 'Size guide — Kiano London',
+    description: 'Garment measurements for every Kiano London size: chest, length and shoulder.',
+    path: '/size-guide',
+  },
+  '/delivery': {
+    title: 'Delivery — Kiano London',
+    description: 'Free delivery on every order. Made to order, with the ready week and tracking sent by email.',
+    path: '/delivery',
   },
   '/letters/confirmed': {
     title: 'The list — Kiano London',

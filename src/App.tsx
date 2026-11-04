@@ -30,6 +30,8 @@ import { CheckoutPage } from '@/pages/CheckoutPage'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { CraftsmanshipDetailsPage } from '@/pages/CraftsmanshipDetailsPage'
 import { CraftsmanshipPage } from '@/pages/CraftsmanshipPage'
+import { DeliveryPage } from '@/pages/DeliveryPage'
+import { SizeGuidePage } from '@/pages/SizeGuidePage'
 import { CookiesPage } from '@/pages/CookiesPage'
 import { HomePage } from '@/pages/HomePage'
 import { LettersConfirmedPage } from '@/pages/LettersConfirmedPage'
@@ -102,6 +104,9 @@ export default function App() {
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/reservation" element={<ReservationPage />} />
                 <Route path="/returns" element={<ReturnsPage />} />
+                <Route path="/delivery" element={<DeliveryPage />} />
+                <Route path="/shipping" element={<DeliveryPage />} />
+                <Route path="/size-guide" element={<SizeGuidePage />} />
                 <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />
                 <Route path="/sign-in/*" element={<SignInPage />} />
                 <Route path="/sign-up/*" element={<SignUpPage />} />
