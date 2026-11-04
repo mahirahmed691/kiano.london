@@ -15,11 +15,11 @@ export function Wordmark({ to = '/', className }: Props) {
       aria-label={`${site.fullName}, home`}
     >
       <img
-        src="/images/kiano-london.png"
+        src="/images/kiano-lockup.png"
         alt=""
-        width={1351}
-        height={266}
-        className="h-7 w-auto md:h-8"
+        width={815}
+        height={496}
+        className="h-[3.25rem] w-auto md:h-[3.85rem]"
       />
     </Link>
   )

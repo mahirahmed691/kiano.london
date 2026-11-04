@@ -55,10 +55,10 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
 
   if (done) {
     return (
-      <p className={cn('text-[15px] font-light leading-relaxed', dark ? 'text-ivory/80' : 'text-ink-soft')}>
+      <p role="status" className={cn('text-[15px] font-light leading-relaxed', dark ? 'text-ivory/80' : 'text-ink-soft')}>
         {already
-          ? 'This address is already on the list.'
-          : 'Look for a short letter to confirm. If it does not arrive, write to the atelier.'}
+          ? 'You are already subscribed with this email address.'
+          : 'Thank you for subscribing. Check your inbox and confirm your email address to start receiving updates.'}
       </p>
     )
   }
@@ -73,7 +73,7 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
             dark ? 'text-bronze' : 'text-stone',
           )}
         >
-          Email
+          Email address
         </label>
         <input
           id={`${idPrefix}-email`}
@@ -83,16 +83,27 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
+          aria-describedby={`${idPrefix}-consent`}
           className={fieldClass}
         />
       </div>
-      <p className={cn('text-[13px] font-light leading-relaxed', dark ? 'text-ivory/50' : 'text-stone')}>
-        A few letters a year. Confirm by email. Read the{' '}
-        <Link to="/privacy" className="border-b border-current pb-px">
-          privacy note
-        </Link>
-        .
-      </p>
+      <div
+        id={`${idPrefix}-consent`}
+        className={cn('space-y-2 text-[13px] font-light leading-relaxed', dark ? 'text-ivory/70' : 'text-stone')}
+      >
+        <p>Subscribe for collection releases, atelier updates, and occasional product news.</p>
+        <p>
+          By subscribing, you agree to receive marketing emails from Kiano London. You can
+          unsubscribe at any time using the link in every email.
+        </p>
+        <p>
+          Read our{' '}
+          <Link to="/privacy" className="border-b border-current pb-px">
+            Privacy Policy
+          </Link>
+          .
+        </p>
+      </div>
       {error ? (
         <p className={cn('text-[14px] font-light', dark ? 'text-ivory' : 'text-ink')} role="alert">
           {error}
@@ -104,7 +115,7 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
         className="w-full justify-center sm:w-auto"
         disabled={busy}
       >
-        {busy ? 'Sending' : 'Join the list'}
+        {busy ? 'Subscribing' : 'Subscribe'}
       </Button>
     </form>
   )

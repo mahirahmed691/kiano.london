@@ -42,7 +42,7 @@ export function Header() {
               type="button"
               className={cn(
                 'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
-                !installed && 'md:hidden',
+                !installed && 'xl:hidden',
               )}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"

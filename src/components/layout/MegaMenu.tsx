@@ -275,12 +275,12 @@ export function MegaMenu({ inverted, installed = false }: Props) {
   return (
     <div
       ref={rootRef}
-      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden md:block')}
+      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden xl:block')}
       onMouseLeave={scheduleClose}
       onMouseEnter={() => window.clearTimeout(closeTimer.current)}
     >
       <nav aria-label="Primary">
-        <ul className="flex flex-nowrap items-center gap-x-4 lg:gap-x-6">
+        <ul className="flex flex-nowrap items-center gap-x-5 2xl:gap-x-6">
           {megaItems.map((item) => {
             const expanded = open === item.id
             return (
