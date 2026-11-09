@@ -190,7 +190,7 @@ export function PieceRoom({
         <View style={styles.space} />
         <Display size={32}>The house block.</Display>
         <View style={styles.gap} />
-        <HouseSizeGuide />
+        <HouseSizeGuide chosen={size} onChoose={setSize} />
       </View>
 
       <View style={section()}>

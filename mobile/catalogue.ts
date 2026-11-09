@@ -51,7 +51,20 @@ export {
   recentShopPlates,
   thisWeekShopPlate,
 } from '../src/lib/instagram-plates'
-export { measureLead, measureStill, sizeChart, sizeMeasures, sizeNote } from '../src/data/sizing'
+export {
+  formatMeasure,
+  measureLead,
+  measureStill,
+  measureToCm,
+  readCut,
+  sizeChart,
+  sizeMeasures,
+  sizeNote,
+  sizeRow,
+  type CutReading,
+  type MeasureKey,
+  type MeasureUnit,
+} from '../src/data/sizing'
 export { carriageLine } from '../src/data/shipping'
 export {
   careLine,

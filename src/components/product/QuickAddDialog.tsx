@@ -194,7 +194,9 @@ export function QuickAddDialog() {
                     Size guide
                     <span aria-hidden="true">{guideOpen ? '−' : '+'}</span>
                   </button>
-                  {guideOpen ? <SizeGuide className="pb-2" compact /> : null}
+                  {guideOpen ? (
+                    <SizeGuide className="pb-2" compact chosen={size} onChoose={chooseSize} />
+                  ) : null}
                   <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
                     Carriage included. Made to order. {packingNote}
                   </p>
