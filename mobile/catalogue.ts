@@ -62,7 +62,9 @@ export {
   sizeMeasures,
   sizeNote,
   sizeRow,
+  sketchOf,
   type CutReading,
+  type Sketch,
   type MeasureKey,
   type MeasureUnit,
 } from '../src/data/sizing'

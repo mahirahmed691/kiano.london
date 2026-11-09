@@ -8,6 +8,7 @@ import {
   sizeMeasures,
   sizeNote,
   sizeRow,
+  sketchOf,
   type MeasureKey,
   type MeasureUnit,
 } from '@/data/sizing'
@@ -19,14 +20,6 @@ type Props = {
   compact?: boolean
   chosen?: ThobeSize | ''
   onChoose?: (size: ThobeSize) => void
-}
-
-const plate = {
-  width: 160,
-  height: 320,
-  shoulder: { x1: 58, x2: 102, y: 46 },
-  chest: { x1: 46, x2: 114, y: 118 },
-  length: { x: 80, y1: 62, y2: 300 },
 }
 
 function tapeSpan(key: MeasureKey, unit: MeasureUnit) {
@@ -112,10 +105,11 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
       >
         <CutPlate
           active={active}
+          measures={tapeCm}
           marks={{
-            chest: formatMeasure(row.chest, unit),
-            length: formatMeasure(row.length, unit),
-            shoulder: formatMeasure(row.shoulder, unit),
+            chest: formatMeasure(tapeCm.chest, unit),
+            length: formatMeasure(tapeCm.length, unit),
+            shoulder: formatMeasure(tapeCm.shoulder, unit),
           }}
           onPick={setActive}
         />
@@ -139,7 +133,8 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
               ))}
             </div>
           </div>
-          <p className="mt-4 text-[13px] font-light leading-relaxed text-ink-soft">
+          <p className="mt-4 text-[11px] uppercase tracking-[0.22em] text-stone">The cut</p>
+          <p className="mt-2 text-[13px] font-light leading-relaxed text-ink-soft">
             {formatMeasure(row.chest, unit)} chest
             <span className="mx-2 text-rule" aria-hidden="true">
               /
@@ -222,14 +217,31 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
                 {sizeChart.map((entry) => {
                   const mark = unit === 'cm' ? entry[item.key] : entry[item.key] / 2.54
                   const left = ((mark - span.min) / (span.max - span.min)) * 100
+                  const nearest = sizeChart.reduce((best, candidate) =>
+                    Math.abs(candidate[item.key] - tapeCm[item.key]) <
+                    Math.abs(best[item.key] - tapeCm[item.key])
+                      ? candidate
+                      : best,
+                  )
                   return (
-                    <span
+                    <button
                       key={entry.size}
-                      className="absolute -translate-x-1/2 text-[10px] tracking-[0.08em] text-stone"
+                      type="button"
+                      className={cn(
+                        'absolute -translate-x-1/2 text-[10px] tracking-[0.08em]',
+                        nearest.size === entry.size ? 'text-ink' : 'text-stone',
+                      )}
                       style={{ left: `${left}%` }}
+                      aria-label={`Set ${item.title.toLowerCase()} to size ${entry.size}, ${formatMeasure(entry[item.key], unit)}`}
+                      onClick={() => {
+                        const display =
+                          unit === 'cm' ? entry[item.key] : Number((entry[item.key] / 2.54).toFixed(1))
+                        onSlide(item.key, display)
+                        give()
+                      }}
                     >
                       {entry.size}
-                    </span>
+                    </button>
                   )
                 })}
               </div>
@@ -315,58 +327,27 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
 
 function CutPlate({
   active,
+  measures,
   marks,
   onPick,
 }: {
   active: MeasureKey
+  measures: { chest: number; length: number; shoulder: number }
   marks: Record<MeasureKey, string>
   onPick: (key: MeasureKey) => void
 }) {
-  const lines: {
-    key: MeasureKey
-    x1: number
-    y1: number
-    x2: number
-    y2: number
-  }[] = [
-    {
-      key: 'length',
-      x1: plate.length.x,
-      y1: plate.length.y1,
-      x2: plate.length.x,
-      y2: plate.length.y2,
-    },
-    {
-      key: 'chest',
-      x1: plate.chest.x1,
-      y1: plate.chest.y,
-      x2: plate.chest.x2,
-      y2: plate.chest.y,
-    },
-    {
-      key: 'shoulder',
-      x1: plate.shoulder.x1,
-      y1: plate.shoulder.y,
-      x2: plate.shoulder.x2,
-      y2: plate.shoulder.y,
-    },
-  ]
+  const sketch = sketchOf(measures)
+  const lines = sketch.lines
 
   return (
     <div className="relative mx-auto w-full max-w-[13.5rem]">
       <svg
-        viewBox={`0 0 ${plate.width} ${plate.height}`}
+        viewBox={`0 0 ${sketch.width} ${sketch.height}`}
         className="h-auto w-full text-ink"
         aria-hidden="true"
       >
-        <path
-          d="M58 58 L28 70 L18 152 L38 146 L48 92 L46 304 L114 304 L112 92 L122 146 L142 152 L132 70 L102 58 L94 70 L80 76 L66 70 Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1"
-          strokeLinejoin="miter"
-        />
-        <path d="M68 60 Q80 74 92 60" fill="none" stroke="currentColor" strokeWidth="1" />
+        <path d={sketch.body} fill="none" stroke="currentColor" strokeWidth="1" strokeLinejoin="miter" />
+        <path d={sketch.collar} fill="none" stroke="currentColor" strokeWidth="1" />
         {lines
           .slice()
           .sort((a, b) => Number(a.key === active) - Number(b.key === active))
@@ -443,12 +424,8 @@ function CutPlate({
           })}
       </svg>
       {(Object.keys(marks) as MeasureKey[]).map((key) => {
-        const spot =
-          key === 'shoulder'
-            ? { x: (plate.shoulder.x1 + plate.shoulder.x2) / 2, y: plate.shoulder.y }
-            : key === 'chest'
-              ? { x: (plate.chest.x1 + plate.chest.x2) / 2, y: plate.chest.y }
-              : { x: plate.length.x, y: (plate.length.y1 + plate.length.y2) / 2 }
+        const line = lines.find((item) => item.key === key) ?? lines[0]
+        const spot = { x: (line.x1 + line.x2) / 2, y: (line.y1 + line.y2) / 2 }
         return (
           <span
             key={key}
@@ -457,8 +434,8 @@ function CutPlate({
               active === key ? 'text-ink' : 'text-stone',
             )}
             style={{
-              left: `${(spot.x / plate.width) * 100}%`,
-              top: `${(spot.y / plate.height) * 100}%`,
+              left: `${(spot.x / sketch.width) * 100}%`,
+              top: `${(spot.y / sketch.height) * 100}%`,
             }}
           >
             {marks[key]}
