@@ -20,7 +20,7 @@ const envKeys = [
   'CRON_SECRET',
 ] as const
 
-type Method = 'GET' | 'POST' | 'PATCH' | 'PUT'
+type Method = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
 
 type Route = {
   method: Method
@@ -123,6 +123,11 @@ const routes: Route[] = [
     method: 'PUT',
     path: '/api/member',
     load: async () => (await import('./api/member.ts')).PUT,
+  },
+  {
+    method: 'DELETE',
+    path: '/api/member',
+    load: async () => (await import('./api/member.ts')).DELETE,
   },
   {
     method: 'POST',

@@ -314,7 +314,9 @@ export function ProductPage() {
                     Size guide
                     <span aria-hidden="true">{guideOpen ? '−' : '+'}</span>
                   </button>
-                  {guideOpen ? <SizeGuide className="pb-4" compact /> : null}
+                  {guideOpen ? (
+                    <SizeGuide className="pb-4" compact chosen={size} onChoose={chooseSize} />
+                  ) : null}
                   <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
                     {carriageLine} Made to order. Payment is taken first.{' '}
                     {packingNote}
@@ -388,7 +390,7 @@ export function ProductPage() {
                   </p>
                   <Eyebrow className="mt-14">Sizes 52–60</Eyebrow>
                   <Display className="mt-4 text-4xl">The house block.</Display>
-                  <SizeGuide className="mt-8" />
+                  <SizeGuide className="mt-8" chosen={size} onChoose={chooseSize} />
                 </Reveal>
               </div>
             </Container>

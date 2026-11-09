@@ -1,7 +1,9 @@
+import { createClerkClient } from '@clerk/backend'
 import { clerkUserIdFrom } from './_lib/clerk.js'
 import { withDb } from './_lib/db.js'
 import {
   asThobeSize,
+  forgetMember,
   parseHouseProfile,
   profileFromBody,
   readMemberProfile,
@@ -109,5 +111,52 @@ export async function PUT(request: Request) {
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The atelier could not keep the details.' }, { status: 503 })
+  }
+}
+
+function alreadyGone(caught: unknown) {
+  if (!caught || typeof caught !== 'object') return false
+  if ('status' in caught && caught.status === 404) return true
+  if (!('errors' in caught) || !Array.isArray(caught.errors)) return false
+  return caught.errors.some(
+    (error) =>
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      error.code === 'resource_not_found',
+  )
+}
+
+export async function DELETE(request: Request) {
+  const clerkUserId = await clerkUserIdFrom(request)
+  if (!clerkUserId) {
+    return Response.json({ error: 'Sign in to close this account.' }, { status: 401 })
+  }
+
+  const secret = process.env.CLERK_SECRET_KEY
+  if (!secret) {
+    return Response.json({ error: 'The account could not be closed.' }, { status: 503 })
+  }
+
+  try {
+    const clerk = createClerkClient({ secretKey: secret })
+    try {
+      await clerk.users.deleteUser(clerkUserId)
+    } catch (caught) {
+      if (!alreadyGone(caught)) throw caught
+    }
+    try {
+      const sql = await withDb()
+      await forgetMember(sql, clerkUserId)
+    } catch (caught) {
+      console.error(caught)
+    }
+    return Response.json({ ok: true })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json(
+      { error: 'The account could not be closed. Write to the atelier.' },
+      { status: 503 },
+    )
   }
 }

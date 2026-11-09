@@ -144,4 +144,24 @@ export async function keepPaidProfile(
   }
 }
 
+export async function forgetMember(sql: Sql, clerkUserId: string) {
+  await sql`
+    UPDATE orders
+    SET clerk_user_id = NULL
+    WHERE clerk_user_id = ${clerkUserId}
+  `
+  await sql`
+    DELETE FROM members WHERE clerk_user_id = ${clerkUserId}
+  `
+  await sql`
+    DELETE FROM push_tokens WHERE clerk_user_id = ${clerkUserId}
+  `
+  await sql`
+    DELETE FROM notice_reads WHERE clerk_user_id = ${clerkUserId}
+  `
+  await sql`
+    DELETE FROM notices WHERE audience = 'member' AND clerk_user_id = ${clerkUserId}
+  `
+}
+
 export { asThobeSize, parseHouseProfile }

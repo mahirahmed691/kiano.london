@@ -1,5 +1,6 @@
 import { verifyWebhook } from '@clerk/backend/webhooks'
 import { withDb } from './_lib/db.js'
+import { forgetMember } from './_lib/profile.js'
 import { recordNotice } from './_lib/notices.js'
 
 function memberName(first?: string | null, last?: string | null) {
@@ -71,25 +72,7 @@ export async function POST(request: Request) {
 
     if (evt.type === 'user.deleted') {
       const clerkUserId = evt.data.id
-      if (clerkUserId) {
-        await sql`
-          UPDATE orders
-          SET clerk_user_id = NULL
-          WHERE clerk_user_id = ${clerkUserId}
-        `
-        await sql`
-          DELETE FROM members WHERE clerk_user_id = ${clerkUserId}
-        `
-        await sql`
-          DELETE FROM push_tokens WHERE clerk_user_id = ${clerkUserId}
-        `
-        await sql`
-          DELETE FROM notice_reads WHERE clerk_user_id = ${clerkUserId}
-        `
-        await sql`
-          DELETE FROM notices WHERE audience = 'member' AND clerk_user_id = ${clerkUserId}
-        `
-      }
+      if (clerkUserId) await forgetMember(sql, clerkUserId)
     }
 
     if (svixId) {
