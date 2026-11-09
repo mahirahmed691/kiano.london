@@ -18,6 +18,13 @@ export const sizeChart: SizeRow[] = [
   { size: 60, chest: 128, length: 156, shoulder: 50 },
 ]
 
+/** Slider ends sit just outside the block, so a tape can fall short or run past it. */
+export const measureSpan: Record<MeasureKey, { min: number; max: number }> = {
+  chest: { min: 96, max: 140 },
+  length: { min: 120, max: 168 },
+  shoulder: { min: 38, max: 56 },
+}
+
 export const sizeMeasures: { key: MeasureKey; title: string; copy: string }[] = [
   {
     key: 'chest',

@@ -1,6 +1,7 @@
-import { useId, useMemo, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import {
   formatMeasure,
+  measureSpan,
   measureToCm,
   readCut,
   sizeChart,
@@ -20,9 +21,6 @@ type Props = {
   onChoose?: (size: ThobeSize) => void
 }
 
-const fieldClass =
-  'w-full border-0 border-b border-rule bg-transparent py-2 font-display text-2xl font-light text-ink outline-none transition-colors duration-300 focus:border-ink'
-
 const plate = {
   width: 160,
   height: 320,
@@ -31,32 +29,32 @@ const plate = {
   length: { x: 80, y1: 62, y2: 300 },
 }
 
-function displayNumber(cm: number, unit: MeasureUnit): string {
-  if (unit === 'in') return (cm / 2.54).toFixed(1)
-  const rounded = Math.round(cm * 10) / 10
-  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1)
-}
-
-function parseDraft(raw: string, unit: MeasureUnit): number | null {
-  const trimmed = raw.trim().replace(',', '.')
-  if (!trimmed) return null
-  const value = Number(trimmed)
-  if (!Number.isFinite(value) || value <= 0) return null
-  const cm = measureToCm(value, unit)
-  return cm >= 20 ? cm : null
+function tapeSpan(key: MeasureKey, unit: MeasureUnit) {
+  const span = measureSpan[key]
+  if (unit === 'cm') return { min: span.min, max: span.max, step: 1 }
+  return {
+    min: Math.round((span.min / 2.54) * 10) / 10,
+    max: Math.round((span.max / 2.54) * 10) / 10,
+    step: 0.1,
+  }
 }
 
 export function SizeGuide({ className, compact = false, chosen, onChoose }: Props) {
   const uid = useId()
   const [unit, setUnit] = useState<MeasureUnit>('cm')
   const [active, setActive] = useState<MeasureKey>('chest')
-  const [cm, setCm] = useState<Partial<Record<MeasureKey, number>>>({})
-  const [draft, setDraft] = useState<Record<MeasureKey, string>>({
-    chest: '',
-    length: '',
-    shoulder: '',
-  })
-  const reading = useMemo(() => readCut(cm), [cm])
+  const [anchor, setAnchor] = useState(() => sizeRow(chosen || 56))
+  const [moved, setMoved] = useState<Partial<Record<MeasureKey, number>>>({})
+  const touched = moved.chest != null || moved.length != null || moved.shoulder != null
+  if (!touched && anchor.size !== (chosen || 56)) setAnchor(sizeRow(chosen || 56))
+  const tapeCm = {
+    chest: moved.chest ?? anchor.chest,
+    length: moved.length ?? anchor.length,
+    shoulder: moved.shoulder ?? anchor.shoulder,
+  }
+  const tapeRef = useRef(tapeCm)
+  const movedRef = useRef(moved)
+  const reading = touched ? readCut(tapeCm) : null
   const tape = reading?.size ?? null
   const [view, setView] = useState<{
     held: ThobeSize
@@ -80,29 +78,28 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
     onChoose?.(size)
   }
 
-  function switchUnit(next: MeasureUnit) {
-    setUnit(next)
-    setDraft({
-      chest: cm.chest == null ? '' : displayNumber(cm.chest, next),
-      length: cm.length == null ? '' : displayNumber(cm.length, next),
-      shoulder: cm.shoulder == null ? '' : displayNumber(cm.shoulder, next),
-    })
+  function onSlide(key: MeasureKey, displayValue: number) {
+    const asCm = measureToCm(displayValue, unit)
+    const next = { ...moved, [key]: asCm }
+    const nextTape = {
+      chest: next.chest ?? anchor.chest,
+      length: next.length ?? anchor.length,
+      shoulder: next.shoulder ?? anchor.shoulder,
+    }
+    tapeRef.current = nextTape
+    movedRef.current = next
+    setMoved(next)
+    setActive(key)
   }
 
-  function onDraft(key: MeasureKey, raw: string) {
-    setActive(key)
-    setDraft((current) => ({ ...current, [key]: raw }))
-    const next = parseDraft(raw, unit)
-    setCm((current) => {
-      if (next == null) {
-        if (current[key] == null) return current
-        const cleared = { ...current }
-        delete cleared[key]
-        return cleared
-      }
-      if (current[key] === next) return current
-      return { ...current, [key]: next }
-    })
+  function give() {
+    const hasTape =
+      movedRef.current.chest != null ||
+      movedRef.current.length != null ||
+      movedRef.current.shoulder != null
+    if (!hasTape) return
+    const named = readCut(tapeRef.current)?.size
+    if (named && onChoose && named !== chosen) onChoose(named)
   }
 
   return (
@@ -131,7 +128,7 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
                   key={value}
                   type="button"
                   aria-pressed={unit === value}
-                  onClick={() => switchUnit(value)}
+                  onClick={() => setUnit(value)}
                   className={cn(
                     'border-b pb-1 transition-colors duration-300',
                     unit === value ? 'border-ink text-ink' : 'border-transparent text-stone',
@@ -174,7 +171,7 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
             {activeMeasure.copy}
           </p>
           <p aria-live="polite" className="mt-4 max-w-md text-[13px] font-light leading-relaxed text-stone">
-            {reading?.copy ?? 'Measure a thobe you own, or choose a size to read the cut.'}
+            {reading?.copy ?? 'Move the tape to a thobe you own.'}
           </p>
           {onChoose && reading?.size && reading.size !== chosen ? (
             <button
@@ -188,26 +185,57 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
         </div>
       </div>
 
-      <fieldset className="mt-10">
+      <fieldset className="mt-10 space-y-8">
         <legend className="text-[11px] uppercase tracking-[0.22em] text-stone">From a thobe you own</legend>
-        <div className="mt-4 grid grid-cols-3 gap-x-6 gap-y-6">
-          {sizeMeasures.map((item) => (
+        {sizeMeasures.map((item) => {
+          const span = tapeSpan(item.key, unit)
+          const shown = unit === 'cm' ? tapeCm[item.key] : Number((tapeCm[item.key] / 2.54).toFixed(1))
+          const fill = ((shown - span.min) / (span.max - span.min)) * 100
+          return (
             <div key={item.key}>
-              <label htmlFor={`${uid}-${item.key}`} className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                {item.title}
-              </label>
+              <div className="flex items-baseline justify-between gap-4">
+                <label htmlFor={`${uid}-${item.key}`} className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                  {item.title}
+                </label>
+                <span className="font-display text-3xl font-light leading-none">
+                  {formatMeasure(tapeCm[item.key], unit)}
+                </span>
+              </div>
               <input
                 id={`${uid}-${item.key}`}
-                inputMode="decimal"
-                autoComplete="off"
-                value={draft[item.key]}
+                className="house-tape mt-3"
+                type="range"
+                min={span.min}
+                max={span.max}
+                step={span.step}
+                value={shown}
+                aria-valuetext={formatMeasure(tapeCm[item.key], unit)}
                 onFocus={() => setActive(item.key)}
-                onChange={(event) => onDraft(item.key, event.target.value)}
-                className={fieldClass}
+                onChange={(event) => onSlide(item.key, Number(event.target.value))}
+                onPointerUp={give}
+                onKeyUp={give}
+                style={{
+                  ['--tape-fill' as string]: `linear-gradient(to right, var(--color-ink) ${fill}%, var(--color-rule) ${fill}%)`,
+                }}
               />
+              <div className="relative mt-2 h-4">
+                {sizeChart.map((entry) => {
+                  const mark = unit === 'cm' ? entry[item.key] : entry[item.key] / 2.54
+                  const left = ((mark - span.min) / (span.max - span.min)) * 100
+                  return (
+                    <span
+                      key={entry.size}
+                      className="absolute -translate-x-1/2 text-[10px] tracking-[0.08em] text-stone"
+                      style={{ left: `${left}%` }}
+                    >
+                      {entry.size}
+                    </span>
+                  )
+                })}
+              </div>
             </div>
-          ))}
-        </div>
+          )
+        })}
       </fieldset>
 
       <div className="mt-10 overflow-x-auto">

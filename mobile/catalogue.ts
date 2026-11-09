@@ -54,6 +54,7 @@ export {
 export {
   formatMeasure,
   measureLead,
+  measureSpan,
   measureStill,
   measureToCm,
   readCut,
