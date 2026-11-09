@@ -248,4 +248,78 @@ export function sizeRow(size: ThobeSize): SizeRow {
   return sizeChart.find((row) => row.size === size) ?? sizeChart[2]
 }
 
+/** The flat is drawn on size 56. Other readings scale out from the neck. */
+const sketchBase = { chest: 120, length: 148, shoulder: 48 }
+const sketchNeck = 58
+const sketchCenter = 80
+
+const sketchBody: [number, number][] = [
+  [58, 58],
+  [28, 70],
+  [18, 152],
+  [38, 146],
+  [48, 92],
+  [46, 304],
+  [114, 304],
+  [112, 92],
+  [122, 146],
+  [142, 152],
+  [132, 70],
+  [102, 58],
+  [94, 70],
+  [80, 76],
+  [66, 70],
+]
+
+export type SketchLine = {
+  key: MeasureKey
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+}
+
+export type Sketch = {
+  width: number
+  height: number
+  body: string
+  collar: string
+  lines: SketchLine[]
+}
+
+function sketchPoint(x: number, y: number, chest: number, length: number, shoulder: number) {
+  const drop = Math.min(1, Math.max(0, (y - sketchNeck) / 70))
+  const width = shoulder / sketchBase.shoulder * (1 - drop) + chest / sketchBase.chest * drop
+  return {
+    x: Math.round((sketchCenter + (x - sketchCenter) * width) * 10) / 10,
+    y: Math.round((sketchNeck + (y - sketchNeck) * (length / sketchBase.length)) * 10) / 10,
+  }
+}
+
+function sketchPath(points: { x: number; y: number }[], close = false) {
+  const drawn = points
+    .map((point, index) => `${index === 0 ? 'M' : 'L'}${point.x} ${point.y}`)
+    .join(' ')
+  return close ? `${drawn} Z` : drawn
+}
+
+export function sketchOf(cm: { chest: number; length: number; shoulder: number }): Sketch {
+  const place = (x: number, y: number) => sketchPoint(x, y, cm.chest, cm.length, cm.shoulder)
+  const shoulder = [place(58, 46), place(102, 46)]
+  const chest = [place(46, 118), place(114, 118)]
+  const length = [place(80, 62), place(80, 300)]
+  const collar = [place(68, 60), place(80, 74), place(92, 60)]
+  return {
+    width: 160,
+    height: 348,
+    body: sketchPath(sketchBody.map(([x, y]) => place(x, y)), true),
+    collar: `M${collar[0].x} ${collar[0].y} Q${collar[1].x} ${collar[1].y} ${collar[2].x} ${collar[2].y}`,
+    lines: [
+      { key: 'length', x1: length[0].x, y1: length[0].y, x2: length[1].x, y2: length[1].y },
+      { key: 'chest', x1: chest[0].x, y1: chest[0].y, x2: chest[1].x, y2: chest[1].y },
+      { key: 'shoulder', x1: shoulder[0].x, y1: shoulder[0].y, x2: shoulder[1].x, y2: shoulder[1].y },
+    ],
+  }
+}
+
 export { thobeSizes }

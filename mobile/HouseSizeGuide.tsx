@@ -12,18 +12,11 @@ import {
   sizeMeasures,
   sizeNote,
   sizeRow,
+  sketchOf,
   type MeasureKey,
   type MeasureUnit,
 } from './catalogue'
 import { color, type } from './theme'
-
-const plate = {
-  width: 160,
-  height: 320,
-  shoulder: { x1: 58, x2: 102, y: 46 },
-  chest: { x1: 46, x2: 114, y: 118 },
-  length: { x: 80, y1: 62, y2: 300 },
-}
 
 function tapeSpan(key: MeasureKey, unit: MeasureUnit) {
   const span = measureSpan[key]
@@ -152,42 +145,16 @@ export function HouseSizeGuide({
     if (named && onChoose && named !== chosen) onChoose(named)
   }
 
-  const lines = [
-    {
-      key: 'length' as const,
-      x1: plate.length.x,
-      y1: plate.length.y1,
-      x2: plate.length.x,
-      y2: plate.length.y2,
-    },
-    {
-      key: 'chest' as const,
-      x1: plate.chest.x1,
-      y1: plate.chest.y,
-      x2: plate.chest.x2,
-      y2: plate.chest.y,
-    },
-    {
-      key: 'shoulder' as const,
-      x1: plate.shoulder.x1,
-      y1: plate.shoulder.y,
-      x2: plate.shoulder.x2,
-      y2: plate.shoulder.y,
-    },
-  ]
+  const sketch = sketchOf(tapeCm)
+  const lines = sketch.lines
 
   return (
     <View>
       <View style={compact ? styles.compactPlate : styles.plateRow}>
         <View style={compact ? styles.plateCompact : styles.plate}>
-          <Svg viewBox={`0 0 ${plate.width} ${plate.height}`} width="100%" height="100%">
-            <Path
-              d="M58 58 L28 70 L18 152 L38 146 L48 92 L46 304 L114 304 L112 92 L122 146 L142 152 L132 70 L102 58 L94 70 L80 76 L66 70 Z"
-              fill="none"
-              stroke={color.ink}
-              strokeWidth={1}
-            />
-            <Path d="M68 60 Q80 74 92 60" fill="none" stroke={color.ink} strokeWidth={1} />
+          <Svg viewBox={`0 0 ${sketch.width} ${sketch.height}`} width="100%" height="100%">
+            <Path d={sketch.body} fill="none" stroke={color.ink} strokeWidth={1} />
+            <Path d={sketch.collar} fill="none" stroke={color.ink} strokeWidth={1} />
             {lines.map((line) => {
               const on = line.key === active
               const stroke = on ? color.ink : 'rgba(111, 103, 92, 0.45)'
@@ -267,26 +234,18 @@ export function HouseSizeGuide({
             })}
           </Svg>
           {(Object.keys({ chest: 1, length: 1, shoulder: 1 }) as MeasureKey[]).map((key) => {
-            const spot =
-              key === 'shoulder'
-                ? { x: (plate.shoulder.x1 + plate.shoulder.x2) / 2, y: plate.shoulder.y }
-                : key === 'chest'
-                  ? { x: (plate.chest.x1 + plate.chest.x2) / 2, y: plate.chest.y }
-                  : { x: plate.length.x, y: (plate.length.y1 + plate.length.y2) / 2 }
+            const line = lines.find((item) => item.key === key) ?? lines[0]
+            const spot = { x: (line.x1 + line.x2) / 2, y: (line.y1 + line.y2) / 2 }
             return (
               <Text
                 key={key}
                 style={[
                   styles.mark,
-                  { left: `${(spot.x / plate.width) * 100}%`, top: `${(spot.y / plate.height) * 100}%` },
+                  { left: `${(spot.x / sketch.width) * 100}%`, top: `${(spot.y / sketch.height) * 100}%` },
                   active === key ? styles.markOn : null,
                 ]}
               >
-                {key === 'chest'
-                  ? formatMeasure(row.chest, unit)
-                  : key === 'length'
-                    ? formatMeasure(row.length, unit)
-                    : formatMeasure(row.shoulder, unit)}
+                {formatMeasure(tapeCm[key], unit)}
               </Text>
             )
           })}
@@ -302,6 +261,7 @@ export function HouseSizeGuide({
               ))}
             </View>
           </View>
+          <Text style={styles.cut}>The cut</Text>
           <Text style={styles.figures}>
             {`${formatMeasure(row.chest, unit)} chest  /  ${formatMeasure(row.length, unit)} length  /  ${formatMeasure(row.shoulder, unit)} shoulder`}
           </Text>
@@ -353,10 +313,29 @@ export function HouseSizeGuide({
                 {sizeChart.map((entry) => {
                   const mark = unit === 'cm' ? entry[item.key] : entry[item.key] / 2.54
                   const left = ((mark - span.min) / (span.max - span.min)) * 100
+                  const nearest = sizeChart.reduce((best, candidate) =>
+                    Math.abs(candidate[item.key] - tapeCm[item.key]) <
+                    Math.abs(best[item.key] - tapeCm[item.key])
+                      ? candidate
+                      : best,
+                  )
+                  const display =
+                    unit === 'cm' ? entry[item.key] : Number((entry[item.key] / 2.54).toFixed(1))
                   return (
-                    <Text key={entry.size} style={[styles.tick, { left: `${left}%` }]}>
-                      {entry.size}
-                    </Text>
+                    <Pressable
+                      key={entry.size}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Set ${item.title.toLowerCase()} to size ${entry.size}, ${formatMeasure(entry[item.key], unit)}`}
+                      onPress={() => {
+                        onSlide(item.key, display)
+                        give()
+                      }}
+                      style={[styles.tick, { left: `${left}%` }]}
+                    >
+                      <Text style={[styles.tickText, nearest.size === entry.size && styles.tickOn]}>
+                        {entry.size}
+                      </Text>
+                    </Pressable>
                   )
                 })}
               </View>
@@ -407,11 +386,11 @@ const styles = StyleSheet.create({
   },
   plate: {
     width: 168,
-    height: 336,
+    aspectRatio: 160 / 348,
   },
   plateCompact: {
     width: 132,
-    height: 264,
+    aspectRatio: 160 / 348,
   },
   mark: {
     position: 'absolute',
@@ -454,7 +433,16 @@ const styles = StyleSheet.create({
   unitOn: {
     color: color.ink,
   },
+  cut: {
+    marginTop: 14,
+    color: color.stone,
+    fontFamily: type.sansRegular,
+    fontSize: 11,
+    letterSpacing: 2.4,
+    textTransform: 'uppercase',
+  },
   figures: {
+    marginTop: 6,
     color: color.inkSoft,
     fontFamily: type.sans,
     fontSize: 13,
@@ -534,11 +522,16 @@ const styles = StyleSheet.create({
   },
   tick: {
     position: 'absolute',
+    transform: [{ translateX: -10 }],
+  },
+  tickText: {
     color: color.stone,
     fontFamily: type.sans,
     fontSize: 10,
     fontWeight: '300',
-    transform: [{ translateX: -8 }],
+  },
+  tickOn: {
+    color: color.ink,
   },
   fields: {
     flexDirection: 'row',
