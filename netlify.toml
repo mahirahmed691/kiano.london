@@ -1,0 +1,45 @@
+# Netlify standby host for kiano.london. Inactive until DNS points here.
+# Runbook: docs/BACKUP-HOSTING.md. Keep in step with vercel.json.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/.well-known/apple-app-site-association"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/.well-known/assetlinks.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Bare domain to www (as in vercel.json).
+[[redirects]]
+  from = "https://kiano.london/*"
+  to = "https://www.kiano.london/:splat"
+  status = 301
+  force = true
+
+# SPA fallback. /api/* is served by netlify/functions/api.mts (path routes run first).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
