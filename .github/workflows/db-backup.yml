@@ -1,0 +1,74 @@
+# Nightly encrypted backup of the Kiano Neon database (kiano-stock).
+# The database is Vercel-managed and can't be transferred out of Vercel, so this
+# keeps a restorable copy that survives a paused or closed Vercel account.
+# Restore steps: docs/BACKUP-HOSTING.md → "Database backups".
+#
+# Needs two repository secrets (Settings → Secrets and variables → Actions):
+#   NEON_DATABASE_URL   direct (unpooled) connection string, from Vercel env DATABASE_URL_UNPOOLED or Neon
+#   BACKUP_PASSPHRASE   long random passphrase; keep a copy in your password manager
+#
+# The repo is public, so the dump is encrypted (AES-256, gpg symmetric) before upload.
+name: Database backup
+
+on:
+  schedule:
+    - cron: '17 2 * * *' # 02:17 UTC nightly
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check secrets
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          missing=0
+          [ -n "$NEON_DATABASE_URL" ] || { echo "::error::NEON_DATABASE_URL secret is not set"; missing=1; }
+          [ -n "$BACKUP_PASSPHRASE" ] || { echo "::error::BACKUP_PASSPHRASE secret is not set"; missing=1; }
+          exit $missing
+
+      - name: Dump (pg_dump 18 handles older servers)
+        env:
+          NEON_DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          stamp=$(date -u +%Y%m%dT%H%MZ)
+          echo "STAMP=$stamp" >> "$GITHUB_ENV"
+          docker run --rm -e NEON_DATABASE_URL -v "$PWD:/out" postgres:18 \
+            sh -c 'pg_dump "$NEON_DATABASE_URL" --format=custom --no-owner --no-acl --file=/out/kiano.dump'
+          docker run --rm -v "$PWD:/out" postgres:18 pg_restore --list /out/kiano.dump > toc.txt
+          tables=$(grep -c ' TABLE DATA ' toc.txt || true)
+          echo "Tables with data: $tables"
+          [ "$tables" -gt 0 ] || { echo "::error::Dump contains no table data"; exit 1; }
+          ls -lh kiano.dump
+
+      - name: Encrypt
+        env:
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 \
+            --symmetric --cipher-algo AES256 \
+            --output "kiano-$STAMP.dump.gpg" kiano.dump <<< "$BACKUP_PASSPHRASE"
+          shred -u kiano.dump
+          sha256sum "kiano-$STAMP.dump.gpg" | tee "kiano-$STAMP.sha256"
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: kiano-db-${{ env.STAMP }}
+          path: |
+            kiano-${{ env.STAMP }}.dump.gpg
+            kiano-${{ env.STAMP }}.sha256
+          retention-days: 30
+          if-no-files-found: error

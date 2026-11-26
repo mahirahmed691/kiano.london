@@ -68,3 +68,33 @@ Leave the Clerk records (`clerk`, `accounts`, `clkmail`, `clk*._domainkey`) alon
 - Vercel Web Analytics (`/_vercel/insights/script.js` in `index.html`) does nothing there. It's harmless.
 - Function timeout on the free plan is 10 s. Checkout and webhooks finish well within that.
 - Preview deploys go to Netlify deploy previews; production deploys come from `main`.
+
+## Database backups
+
+The database (`kiano-stock`) was created through Vercel's Neon integration.
+Neon can't transfer a Vercel-managed project out to your own account, so if the
+Vercel account closes, the way back is a dump and restore.
+
+`.github/workflows/db-backup.yml` takes an encrypted `pg_dump` every night at
+02:17 UTC and keeps 30 days of copies as workflow artifacts. GitHub emails you
+if a run fails.
+
+**One-time setup:** in GitHub, go to Settings → Secrets and variables → Actions
+and add:
+- `NEON_DATABASE_URL`: the direct (unpooled) connection string. Copy it from
+  Vercel → cavendish-house → Environment Variables → `DATABASE_URL_UNPOOLED`.
+- `BACKUP_PASSPHRASE`: a long random passphrase. Keep a copy in your password
+  manager; without it the backups can't be opened.
+
+Then go to Actions → Database backup → Run workflow, and check the run is green.
+
+**Restore into a new Neon project (your own account):**
+1. Sign up at neon.tech directly (not through Vercel) and create a project in the same region.
+2. Download the newest `kiano-db-*` artifact from Actions and unzip it.
+3. Decrypt it: `gpg --decrypt kiano-<stamp>.dump.gpg > kiano.dump` (enter the passphrase).
+4. Restore it: `pg_restore --no-owner --no-acl --dbname "<new direct connection string>" kiano.dump`
+5. Set `DATABASE_URL` (and `POSTGRES_URL`) to the new database wherever the site runs (Vercel or Netlify), then redeploy.
+6. Spot-check: recent orders in /admin, stock on a product page, a test checkout.
+
+Orders written after the last backup and before the switch are only in Stripe.
+Reconcile them from the Stripe dashboard (Payments, filtered by date).
