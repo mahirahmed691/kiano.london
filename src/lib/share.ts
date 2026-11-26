@@ -141,7 +141,7 @@ const pages: Record<string, PageMeta> = {
   },
   '/order/invoice': {
     title: 'A record of the cut — Kiano London',
-    description: 'A simple tax invoice for a Kiano London reservation.',
+    description: 'An invoice for a Kiano London reservation.',
     path: '/order/invoice',
     robots: 'noindex, nofollow',
   },

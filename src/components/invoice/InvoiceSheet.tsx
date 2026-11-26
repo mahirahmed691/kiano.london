@@ -4,7 +4,7 @@ import type { LedgerInvoice } from '@/lib/ledger'
 import { formatLedgerDate } from '@/lib/ledger'
 import { formatGbpExact } from '@/lib/money'
 import { isFullyReturned, isPartReturned } from '@/lib/work'
-import { vatMethodNote } from '@/lib/vat'
+import { VAT_RATE, VAT_REGISTERED, vatMethodNote } from '@/lib/vat'
 
 type Props = {
   invoice: LedgerInvoice
@@ -28,7 +28,7 @@ export function InvoiceSheet({ invoice, reference }: Props) {
       `}</style>
       <div className="flex flex-wrap items-baseline justify-between gap-6 border-b border-ink pb-8">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.28em] text-stone">Tax invoice</p>
+          <p className="text-[11px] uppercase tracking-[0.28em] text-stone">{VAT_REGISTERED ? 'Tax invoice' : 'Invoice'}</p>
           <h1 className="mt-3 font-display text-4xl font-light md:text-5xl">{site.fullName}</h1>
           <p className="mt-4 text-[15px] font-light leading-relaxed text-ink-soft">
             {site.city}
@@ -94,16 +94,20 @@ export function InvoiceSheet({ invoice, reference }: Props) {
       </ul>
 
       <dl className="mt-8 space-y-3">
-        <div className="flex items-baseline justify-between gap-6">
-          <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">Net</dt>
-          <dd className="text-[15px] font-light">{formatGbpExact(invoice.netPence)}</dd>
-        </div>
-        <div className="flex items-baseline justify-between gap-6">
-          <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">VAT 20%</dt>
-          <dd className="text-[15px] font-light">{formatGbpExact(invoice.vatPence)}</dd>
-        </div>
+        {VAT_REGISTERED ? (
+          <>
+            <div className="flex items-baseline justify-between gap-6">
+              <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">Net</dt>
+              <dd className="text-[15px] font-light">{formatGbpExact(invoice.netPence)}</dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-6">
+              <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">VAT {VAT_RATE}%</dt>
+              <dd className="text-[15px] font-light">{formatGbpExact(invoice.vatPence)}</dd>
+            </div>
+          </>
+        ) : null}
         <div className="flex items-baseline justify-between gap-6 border-t border-ink pt-4">
-          <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">Gross</dt>
+          <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">{VAT_REGISTERED ? 'Gross' : 'Total'}</dt>
           <dd className="font-display text-3xl font-light">{formatGbpExact(invoice.grossPence)}</dd>
         </div>
         {returned > 0 ? (

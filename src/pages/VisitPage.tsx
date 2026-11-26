@@ -142,7 +142,7 @@ export function VisitPage() {
           <div className="mt-16 max-w-2xl">
             <SizeGuide />
             <p className="mt-6 max-w-md text-[13px] font-light leading-relaxed text-stone">
-              Prices include VAT. Each piece is made to order. A visit is not required.
+              Prices are in pounds sterling. Each piece is made to order. A visit is not required.
             </p>
           </div>
         </Container>
