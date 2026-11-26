@@ -59,6 +59,13 @@ export function CookiesPage() {
             </Body>
           </li>
           <li>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Counting visits</p>
+            <Body className="mt-3">
+              Visits are counted by Vercel Web Analytics, without cookies and without following
+              you elsewhere. No one visitor is identified.
+            </Body>
+          </li>
+          <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Payment</p>
             <Body className="mt-3">
               Stripe takes payment on their own pages. We do not place advertising cookies for

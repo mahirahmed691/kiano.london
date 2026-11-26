@@ -50,6 +50,7 @@ import { SignInPage } from '@/pages/SignInPage'
 import { SignUpPage } from '@/pages/SignUpPage'
 import { StillsPage } from '@/pages/StillsPage'
 import { StoryPage } from '@/pages/StoryPage'
+import { TermsPage } from '@/pages/TermsPage'
 import { VisitPage } from '@/pages/VisitPage'
 
 export default function App() {
@@ -102,6 +103,7 @@ export default function App() {
                 </Route>
                 <Route path="/cookies" element={<CookiesPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<TermsPage />} />
                 <Route path="/reservation" element={<ReservationPage />} />
                 <Route path="/returns" element={<ReturnsPage />} />
                 <Route path="/delivery" element={<DeliveryPage />} />

@@ -94,6 +94,9 @@ async function createSession(request: Request) {
   const catalog = items.map((item) => ({ item, product: getProduct(item.productId) }))
   const hasProof = catalog.some((line) => line.product?.proof)
   const hasGarment = catalog.some((line) => line.product && !line.product.proof)
+  if (hasProof && process.env.TILL_PROOF_OPEN !== '1') {
+    return Response.json({ error: 'A line in the bag is not valid.' }, { status: 400 })
+  }
   if (hasProof && hasGarment) {
     return Response.json({ error: 'The proof is paid alone, at one pound.' }, { status: 400 })
   }

@@ -7,6 +7,7 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
 import { productLineName, productPath } from '@/data/products'
 import { shippingCountries } from '@/data/shipping'
+import { returnWindowDays } from '@/data/policies'
 import { useCart } from '@/lib/cart'
 import {
   parseCheckoutDetails,
@@ -20,6 +21,7 @@ import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
+import { tillProofOpen } from '@/lib/till-proof'
 
 const fieldClass =
   'w-full border-0 border-b border-rule bg-transparent py-3 text-[15px] font-light text-ink outline-none transition-colors duration-300 placeholder:text-stone/70 focus:border-ink'
@@ -154,7 +156,9 @@ export function CheckoutPage() {
         <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
         <div className="mt-10 flex flex-wrap items-center gap-6">
           <Button to="/shop">The Shop</Button>
-          <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
+          {tillProofOpen ? (
+            <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
+          ) : null}
         </div>
       </TillFrame>
     )
@@ -453,6 +457,13 @@ export function CheckoutPage() {
                 {proofOnly
                   ? 'Pay with card, Apple Pay, or Google Pay. One pound only. Refund it from Stripe after it lands.'
                   : 'Pay with card, Apple Pay, or Google Pay. A confirmation follows when the cut is reserved.'}
+              </p>
+              <p className="mt-3 text-[13px] font-light leading-relaxed text-stone">
+                By paying you accept the{' '}
+                <Link to="/terms" className="border-b border-current pb-px">terms of sale</Link>
+                , including the{' '}
+                <Link to="/returns" className="border-b border-current pb-px">{returnWindowDays}-day right to cancel</Link>
+                .
               </p>
               {error ? (
                 <p className="mt-5 hidden text-[14px] font-light text-ink lg:block" role="alert">

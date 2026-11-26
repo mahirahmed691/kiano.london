@@ -15,6 +15,7 @@ import { useColourFilter } from '@/lib/colour-param'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { TrustBar } from '@/components/editorial/TrustBar'
+import { tillProofOpen } from '@/lib/till-proof'
 
 const filters = ['All', ...jubbahColours] as const
 
@@ -127,7 +128,9 @@ export function ShopPage() {
             <div className="flex flex-wrap items-center gap-6">
               <Button to="/visit">Visit by appointment</Button>
               <TextLink to="/scent">The Scent</TextLink>
-              <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
+              {tillProofOpen ? (
+                <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
+              ) : null}
             </div>
           </div>
         </Container>

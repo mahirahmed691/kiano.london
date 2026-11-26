@@ -110,6 +110,7 @@ export function Footer() {
               { to: '/delivery', label: 'Delivery' },
               { to: '/returns', label: 'Returns' },
               { to: '/size-guide', label: 'Size guide' },
+              { to: '/terms', label: 'Terms of sale' },
               { to: '/privacy', label: 'Privacy Policy' },
               { to: '/cookies', label: 'Cookie Policy' },
               { to: '/visit', label: 'Contact and visits' },

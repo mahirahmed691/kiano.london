@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_SITE_URL?: string
   readonly VITE_CLERK_PUBLISHABLE_KEY?: string
   readonly VITE_ADMIN_EMAILS?: string
+  readonly VITE_TILL_PROOF_OPEN?: string
   readonly NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?: string
 }
 
