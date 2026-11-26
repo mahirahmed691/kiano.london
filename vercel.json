@@ -3,35 +3,97 @@
     {
       "source": "/.well-known/apple-app-site-association",
       "headers": [
-        { "key": "Content-Type", "value": "application/json" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
       ]
     },
     {
       "source": "/.well-known/assetlinks.json",
       "headers": [
-        { "key": "Content-Type", "value": "application/json" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        }
       ]
     }
   ],
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "kiano.london" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "kiano.london"
+        }
+      ],
       "destination": "https://www.kiano.london/$1",
       "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/api/admin-summary", "destination": "/api/admin?section=summary" },
-    { "source": "/api/admin-inventory", "destination": "/api/admin?section=inventory" },
-    { "source": "/api/admin-competitors", "destination": "/api/admin?section=competitors" },
-    { "source": "/api/return", "destination": "/api/appointment?kind=return" },
-    { "source": "/api/wait", "destination": "/api/appointment?kind=wait" },
-    { "source": "/api/subscribe-confirm", "destination": "/api/subscribe" },
-    { "source": "/api/stills-week", "destination": "/api/subscribe?section=week" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/api/admin-summary",
+      "destination": "/api/admin?section=summary"
+    },
+    {
+      "source": "/api/admin-inventory",
+      "destination": "/api/admin?section=inventory"
+    },
+    {
+      "source": "/api/admin-competitors",
+      "destination": "/api/admin?section=competitors"
+    },
+    {
+      "source": "/api/return",
+      "destination": "/api/appointment?kind=return"
+    },
+    {
+      "source": "/api/wait",
+      "destination": "/api/appointment?kind=wait"
+    },
+    {
+      "source": "/api/subscribe-confirm",
+      "destination": "/api/subscribe"
+    },
+    {
+      "source": "/api/stills-week",
+      "destination": "/api/subscribe?section=week"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ],
   "crons": [
     {

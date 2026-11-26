@@ -40,10 +40,12 @@ import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { remainingCopy, useProductStock } from '@/lib/useProductStock'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+import { tillProofOpen } from '@/lib/till-proof'
 
 export function ProductPage() {
   const { id } = useParams()
-  const product = getProduct(id)
+  const found = getProduct(id)
+  const product = found?.proof && !tillProofOpen ? undefined : found
   const { add, items, setOpen, open } = useCart()
   const [size, setSize] = useState<ThobeSize | ''>('')
   const [guideOpen, setGuideOpen] = useState(false)

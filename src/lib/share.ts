@@ -97,6 +97,11 @@ const pages: Record<string, PageMeta> = {
     description: 'How Kiano London holds a name, an email, and a reservation.',
     path: '/privacy',
   },
+  '/terms': {
+    title: 'Terms — Kiano London',
+    description: 'The terms on which a Kiano London piece is sold: price, delivery, cancellation, and your rights.',
+    path: '/terms',
+  },
   '/returns': {
     title: 'Returns — Kiano London',
     description: 'Returns within 14 days of delivery. Free return postage within the UK. Unworn, unwashed, tags attached. No exchanges.',

@@ -26,6 +26,7 @@ export const overlayPaths = [
   '/account',
   '/returns',
   '/privacy',
+  '/terms',
   '/cookies',
   '/reservation',
   '/letters/confirmed',
