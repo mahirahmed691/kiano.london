@@ -265,6 +265,10 @@ export default defineConfig(({ mode }) => {
         includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png'],
         manifest: false,
         workbox: {
+          // Take over as soon as a new version is installed, so returning visitors get each deploy.
+          skipWaiting: true,
+          clientsClaim: true,
+          cleanupOutdatedCaches: true,
           navigateFallback: '/index.html',
           navigateFallbackDenylist: [/^\/api\//],
           globPatterns: ['**/*.{js,css,html,svg,png,jpg,jpeg,webp,woff2}'],
