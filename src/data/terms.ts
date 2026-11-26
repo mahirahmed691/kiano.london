@@ -27,7 +27,7 @@ export const termsBlocks = [
   },
   {
     title: 'Price and payment',
-    body: 'Prices are in pounds sterling and include UK VAT at 20%. Payment is taken by Stripe, by card, Apple Pay or Google Pay, when the order is placed.',
+    body: 'Prices are in pounds sterling. The seller is not registered for VAT, so no VAT is charged. Payment is taken by Stripe, by card, Apple Pay or Google Pay, when the order is placed.',
   },
   {
     title: 'Delivery',

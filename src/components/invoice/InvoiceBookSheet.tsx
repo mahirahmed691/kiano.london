@@ -1,6 +1,7 @@
 import { site } from '@/data/site'
 import { formatLedgerDate } from '@/lib/ledger'
 import { formatGbpExact } from '@/lib/money'
+import { VAT_REGISTERED } from '@/lib/vat'
 import { asWorkStage, isFullyReturned, workCopy } from '@/lib/work'
 
 export type InvoiceBookRow = {
@@ -35,7 +36,7 @@ export function InvoiceBookSheet({ invoices }: { invoices: InvoiceBookRow[] }) {
       <p className="mt-4 text-[15px] font-light text-ink-soft">
         {invoices.length === 0
           ? 'No records yet.'
-          : `${String(invoices.length).padStart(2, '0')} tax invoices`}
+          : `${String(invoices.length).padStart(2, '0')} ${VAT_REGISTERED ? 'tax invoices' : 'invoices'}`}
       </p>
 
       {invoices.length > 0 ? (
@@ -62,9 +63,11 @@ export function InvoiceBookSheet({ invoices }: { invoices: InvoiceBookRow[] }) {
                 </div>
                 <p className="text-[15px] font-light sm:col-span-3 sm:text-right">
                   {formatGbpExact(row.grossPence)}
-                  <span className="mt-1 block text-[13px] text-ink-soft">
-                    VAT {formatGbpExact(row.vatPence)}
-                  </span>
+                  {VAT_REGISTERED ? (
+                    <span className="mt-1 block text-[13px] text-ink-soft">
+                      VAT {formatGbpExact(row.vatPence)}
+                    </span>
+                  ) : null}
                   {givenBack > 0 ? (
                     <span className="mt-1 block text-[13px] text-ink-soft">
                       Returned {formatGbpExact(givenBack)}
@@ -79,10 +82,12 @@ export function InvoiceBookSheet({ invoices }: { invoices: InvoiceBookRow[] }) {
 
       {invoices.length > 0 ? (
         <dl className="mt-10 space-y-3">
-          <div className="flex items-baseline justify-between gap-6">
-            <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">VAT</dt>
-            <dd className="text-[15px] font-light">{formatGbpExact(vat)}</dd>
-          </div>
+          {VAT_REGISTERED ? (
+            <div className="flex items-baseline justify-between gap-6">
+              <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">VAT</dt>
+              <dd className="text-[15px] font-light">{formatGbpExact(vat)}</dd>
+            </div>
+          ) : null}
           {returned > 0 ? (
             <div className="flex items-baseline justify-between gap-6">
               <dt className="text-[11px] uppercase tracking-[0.22em] text-stone">Returned</dt>
