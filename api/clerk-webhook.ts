@@ -17,13 +17,18 @@ function primaryEmail(
 }
 
 export async function POST(request: Request) {
-  if (!process.env.CLERK_WEBHOOK_SIGNING_SECRET) {
+  // Tolerate whitespace or quotes pasted around the secret in the dashboard.
+  const signingSecret = process.env.CLERK_WEBHOOK_SIGNING_SECRET?.trim().replace(/^['"]|['"]$/g, '')
+  if (!signingSecret) {
     return Response.json({ error: 'The account hook is not configured.' }, { status: 503 })
+  }
+  if (!signingSecret.startsWith('whsec_')) {
+    console.error('CLERK_WEBHOOK_SIGNING_SECRET does not look like a Clerk signing secret (expected whsec_…).')
   }
 
   let evt
   try {
-    evt = await verifyWebhook(request)
+    evt = await verifyWebhook(request, { signingSecret })
   } catch (caught) {
     console.error(caught)
     return Response.json({ error: 'The account hook could not be verified.' }, { status: 400 })
