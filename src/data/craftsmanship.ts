@@ -69,7 +69,7 @@ export const materials: Material[] = [
   {
     name: 'Cotton viscose mix',
     origin: 'The line',
-    copy: 'Urban Emirati. Light GSM. The cloth of the three colourways: stone grey, cream, and black.',
+    copy: 'Urban Emirati. Lightweight. The cloth of the three colourways: stone grey, cream, and black.',
   },
   {
     name: 'The square mark',

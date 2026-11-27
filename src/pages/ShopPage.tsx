@@ -106,7 +106,7 @@ export function ShopPage() {
               alt: 'Cotton viscose mix for the garment, still in the piece.',
               objectPosition: 'center 40%',
               kicker: 'The cloth',
-              name: 'Light GSM',
+              name: 'Lightweight',
               colour: 'Stone Grey',
             },
             {

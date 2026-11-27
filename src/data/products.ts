@@ -82,7 +82,7 @@ export const products: Product[] = [
       'Band collar. Concealed placket. Hem to the ankle.',
       napeFinish,
     ],
-    composition: 'Cotton viscose mix. Light GSM.',
+    composition: 'Cotton viscose mix. Lightweight.',
     leadTime,
     gallery: [
       {
@@ -124,7 +124,7 @@ export const products: Product[] = [
       'Band collar. Concealed placket. Hem to the ankle.',
       napeFinish,
     ],
-    composition: 'Cotton viscose mix. Light GSM.',
+    composition: 'Cotton viscose mix. Lightweight.',
     leadTime,
     gallery: [
       {
@@ -165,7 +165,7 @@ export const products: Product[] = [
       'Band collar. Concealed placket. Hem to the ankle.',
       napeFinish,
     ],
-    composition: 'Cotton viscose mix. Light GSM.',
+    composition: 'Cotton viscose mix. Lightweight.',
     leadTime,
     gallery: [
       {
