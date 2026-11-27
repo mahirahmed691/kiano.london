@@ -1,4 +1,5 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
+import { LocalPrice } from '@/components/product/LocalPrice'
 import { Link } from 'react-router-dom'
 import { Reveal } from '@/components/ui/Reveal'
 import { type Product } from '@/data/products'
@@ -58,7 +59,10 @@ function CardMeta({ product, index }: Pick<Props, 'product' | 'index'>) {
         </h3>
         <p className="mt-1.5 text-[11px] font-light tracking-[0.16em] text-stone">{product.colour}</p>
       </div>
-      <p className="shrink-0 text-[11px] tracking-[0.16em] text-ink-soft">{product.price}</p>
+      <p className="shrink-0 text-right text-[11px] tracking-[0.16em] text-ink-soft">
+        {product.price}
+        <LocalPrice pence={product.pricePence} className="mt-1 block text-[10px] tracking-[0.12em]" />
+      </p>
     </div>
   )
 }

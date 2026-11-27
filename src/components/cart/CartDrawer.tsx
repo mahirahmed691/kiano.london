@@ -4,6 +4,7 @@ import { productLineName, productPath } from '@/data/products'
 import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
+import { LocalPrice } from '@/components/product/LocalPrice'
 
 export function CartDrawer() {
   const { items, count, subtotalPence, open, setOpen, setQuantity, remove } = useCart()
@@ -132,6 +133,9 @@ export function CartDrawer() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Subtotal</p>
                 <p className="font-display text-2xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
+              <p className="mt-1 text-right">
+                <LocalPrice pence={subtotalPence} className="text-[12px] font-light" />
+              </p>
               <p className="mt-3 text-[12px] font-light leading-relaxed text-stone">
                 {proofOnly
                   ? 'One pound to open the live till. Not a garment. Refund the charge from Stripe once it has landed.'

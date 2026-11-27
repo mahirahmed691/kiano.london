@@ -19,6 +19,7 @@ import { clerkEnabled } from '@/lib/clerk'
 import { asThobeSize, fillEmptyDetails, profileFromDetails, readStoredSize, type HouseProfile } from '@/lib/house-profile'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
+import { LocalPrice } from '@/components/product/LocalPrice'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { tillProofOpen } from '@/lib/till-proof'
@@ -453,6 +454,9 @@ export function CheckoutPage() {
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">To pay</p>
                 <p className="font-display text-4xl font-light">{formatGbp(subtotalPence)}</p>
               </div>
+              <p className="mt-1 text-right">
+                <LocalPrice pence={subtotalPence} className="text-[12px] font-light" note />
+              </p>
               <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
                 {proofOnly
                   ? 'Pay with card, Apple Pay, or Google Pay. One pound only. Refund it from Stripe after it lands.'
