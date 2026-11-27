@@ -47,7 +47,7 @@ export function PieceHero({
             className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-linear-to-t from-night/55 via-night/15 to-transparent"
             aria-hidden="true"
           />
-          <div className="copy-in pointer-events-none absolute right-5 bottom-6 z-10 text-right text-ivory md:right-8 md:bottom-9">
+          <div className="copy-in pointer-events-none absolute bottom-[6.75rem] left-5 z-10 text-left text-ivory md:right-8 md:bottom-9 md:left-auto md:text-right">
             <p className="font-display text-3xl font-light leading-tight tracking-[-0.01em] md:text-4xl">
               {name}
             </p>
