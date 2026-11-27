@@ -36,11 +36,32 @@ export function HouseNotices() {
       return
     }
 
+    // Never on the first page of a visit. From the second, ask only once the visitor is
+    // reading: 15 seconds on the page, or two thirds of the way down it. Never over the
+    // bag, the sign-in panel or the menu.
     const pages = countLetterPath(pathname)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const delay = reduce ? 400 : pages >= 2 ? 2500 : 8000
-    const timer = window.setTimeout(() => setLettersOpen(true), delay)
-    return () => window.clearTimeout(timer)
+    if (pages < 2) return
+
+    let done = false
+    const busy = () =>
+      document.body.style.overflow === 'hidden' ||
+      Boolean(document.querySelector('[role="dialog"][aria-hidden="false"]'))
+    const ask = () => {
+      if (done || busy()) return
+      done = true
+      setLettersOpen(true)
+    }
+    const timer = window.setTimeout(ask, 15000)
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      if (max > 0 && window.scrollY / max >= 0.66) ask()
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      done = true
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [hasConsent, pathname])
 
   return (
