@@ -22,6 +22,7 @@ export const houseMenuHouse: HouseMenuSection = {
   section: 'The house',
   lines: [
     { label: 'Lookbook', to: '/stills' },
+    { label: 'Collection', to: '/collection' },
     { label: 'Story', to: '/story' },
     { label: 'Craftsmanship', to: '/craftsmanship' },
     { label: 'The making', to: '/craftsmanship-details' },
@@ -38,15 +39,6 @@ export function houseMenuTree(): HouseMenuSection[] {
       lines: jubbahs.map((piece) => ({
         label: productLineName(piece),
         to: productPath(piece),
-      })),
-    },
-    {
-      id: 'collection',
-      section: 'The Collection',
-      hub: { label: 'Collection', to: '/collection' },
-      lines: jubbahs.map((piece) => ({
-        label: productLineName(piece),
-        to: `/collection/${piece.id}`,
       })),
     },
     {
