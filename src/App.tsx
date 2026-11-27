@@ -35,6 +35,7 @@ import { SizeGuidePage } from '@/pages/SizeGuidePage'
 import { CookiesPage } from '@/pages/CookiesPage'
 import { HomePage } from '@/pages/HomePage'
 import { LettersConfirmedPage } from '@/pages/LettersConfirmedPage'
+import { LettersUnsubscribedPage } from '@/pages/LettersUnsubscribedPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { OrderCardPage } from '@/pages/OrderCardPage'
 import { OrderConfirmedPage } from '@/pages/OrderConfirmedPage'
@@ -110,6 +111,7 @@ export default function App() {
                 <Route path="/shipping" element={<DeliveryPage />} />
                 <Route path="/size-guide" element={<SizeGuidePage />} />
                 <Route path="/letters/confirmed" element={<LettersConfirmedPage />} />
+                <Route path="/letters/unsubscribed" element={<LettersUnsubscribedPage />} />
                 <Route path="/sign-in/*" element={<SignInPage />} />
                 <Route path="/sign-up/*" element={<SignUpPage />} />
                 <Route path="*" element={<NotFoundPage />} />

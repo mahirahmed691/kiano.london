@@ -176,6 +176,7 @@ export type LedgerMember = {
 export type LedgerSubscriber = {
   email: string
   confirmed: boolean
+  unsubscribed?: boolean
   source: string
   createdAt: string
   confirmedAt: string

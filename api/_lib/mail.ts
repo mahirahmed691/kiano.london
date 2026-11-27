@@ -11,7 +11,7 @@ import { site } from '../../src/data/site.js'
  */
 const defaultFrom = 'Kiano London <orders@prolificdigitaltech.co.uk>'
 
-function fromAddress() {
+export function fromAddress() {
   return process.env.MAIL_FROM?.trim() || defaultFrom
 }
 
@@ -21,6 +21,8 @@ export async function sendMail(input: {
   text: string
   html: string
   idempotencyKey: string
+  /** Extra headers, e.g. List-Unsubscribe on letters to the list. */
+  headers?: Record<string, string>
 }) {
   const key = process.env.RESEND_API_KEY
   if (!key) return { sent: false as const }
@@ -35,6 +37,7 @@ export async function sendMail(input: {
       subject: input.subject,
       text: input.text,
       html: input.html,
+      headers: input.headers,
     },
     { idempotencyKey: input.idempotencyKey },
   )
@@ -521,6 +524,7 @@ export function weekPlateLetterHtml(input: {
   line: string
   image: string
   href: string
+  unsubscribe?: string
 }) {
   const name = escapeHtml(input.name)
   const place = escapeHtml(input.place)
@@ -530,7 +534,7 @@ export function weekPlateLetterHtml(input: {
   return letterFrame(
     name,
     `<p style="margin:0;">This week · ${place}.</p><p style="margin:16px 0 0;">${line}</p><p style="margin:16px 0 0;"><img src="${image}" alt="" width="480" style="display:block;width:100%;height:auto;"/></p><p style="margin:16px 0 0;"><a href="${href}" style="color:#1B1714;">The stills</a></p>`,
-    `A still a week. Questions: ${site.email}.`,
+    `A still a week. Questions: ${site.email}.${input.unsubscribe ? ` <a href="${escapeHtml(input.unsubscribe)}" style="color:#6F675C;">Unsubscribe</a>.` : ''}`,
   )
 }
 
@@ -539,6 +543,7 @@ export function weekPlateLetterText(input: {
   place: string
   line: string
   href: string
+  unsubscribe?: string
 }) {
   return [
     `This week · ${input.place}.`,
@@ -546,7 +551,10 @@ export function weekPlateLetterText(input: {
     input.line,
     input.href,
     `A still a week. Questions: ${site.email}.`,
-  ].join('\n\n')
+    input.unsubscribe ? `Unsubscribe: ${input.unsubscribe}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
 }
 
 export function housePath(path: string) {

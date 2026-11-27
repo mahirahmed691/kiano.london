@@ -4,6 +4,7 @@ import { vatMethodNote, splitVat } from '../src/lib/vat.js'
 import { requireAdmin } from './_lib/admin.js'
 import { withDb } from './_lib/db.js'
 import { recordNotice } from './_lib/notices.js'
+import { activeList, sendCampaign } from './_lib/list.js'
 import {
   returnAgreedLetterHtml,
   returnAgreedLetterText,
@@ -48,6 +49,7 @@ type Section =
   | 'work'
   | 'figures'
   | 'plates'
+  | 'campaigns'
 
 const sections = new Set<Section>([
   'summary',
@@ -63,6 +65,7 @@ const sections = new Set<Section>([
   'work',
   'figures',
   'plates',
+  'campaigns',
 ])
 
 const allowedSizes = new Set<number>(thobeSizes)
@@ -1198,16 +1201,113 @@ async function getMembers(): Promise<Response> {
   }
 }
 
+async function getCampaigns(): Promise<Response> {
+  try {
+    const sql = await withDb()
+    const active = (await sql`
+      SELECT COUNT(*)::int AS n FROM subscribers WHERE confirmed = true AND unsubscribed_at IS NULL
+    `) as { n: number }[]
+    const rows = (await sql`
+      SELECT id, subject, recipients, failed, sent_by, sent_at
+      FROM campaigns ORDER BY sent_at DESC LIMIT 50
+    `) as {
+      id: number
+      subject: string
+      recipients: number
+      failed: number
+      sent_by: string
+      sent_at: string | Date
+    }[]
+    return Response.json({
+      active: active[0]?.n ?? 0,
+      campaigns: rows.map((row) => ({
+        id: row.id,
+        subject: row.subject,
+        recipients: row.recipients,
+        failed: row.failed,
+        sentBy: row.sent_by,
+        sentAt: asIso(row.sent_at),
+      })),
+    })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The letters could not be read.' }, { status: 503 })
+  }
+}
+
+async function postCampaign(request: Request, adminEmail: string): Promise<Response> {
+  let body: Record<string, unknown>
+  try {
+    body = (await request.json()) as Record<string, unknown>
+  } catch {
+    return Response.json({ error: 'The letter could not be read.' }, { status: 400 })
+  }
+  const text = (key: string, max: number) =>
+    typeof body[key] === 'string' ? (body[key] as string).trim().slice(0, max) : ''
+  const draft = {
+    subject: text('subject', 140),
+    heading: text('heading', 140),
+    body: text('body', 8000),
+    ctaLabel: text('ctaLabel', 40),
+    ctaHref: text('ctaHref', 500),
+    image: text('image', 500),
+  }
+  if (!draft.subject || !draft.body) {
+    return Response.json({ error: 'A subject and a letter are needed.' }, { status: 400 })
+  }
+  for (const link of [draft.ctaHref, draft.image]) {
+    if (link && !/^https:\/\//.test(link)) {
+      return Response.json({ error: 'Links and images must start with https://' }, { status: 400 })
+    }
+  }
+
+  try {
+    const sql = await withDb()
+    if (body.test === true) {
+      const result = await sendCampaign(
+        { ...draft, subject: `[Test] ${draft.subject}` },
+        [{ email: adminEmail, token: '' }],
+        `campaign-test/${adminEmail}/${Date.now()}`,
+      )
+      if (result.sent === 0) {
+        return Response.json({ error: 'The test could not be sent.' }, { status: 502 })
+      }
+      return Response.json({ ok: true, test: true, to: adminEmail })
+    }
+
+    if (body.confirm !== 'SEND') {
+      return Response.json({ error: 'Confirm before sending to the list.' }, { status: 400 })
+    }
+    const members = await activeList(sql)
+    if (members.length === 0) {
+      return Response.json({ error: 'No one is on the list yet.' }, { status: 400 })
+    }
+    const inserted = (await sql`
+      INSERT INTO campaigns (subject, heading, body, cta_label, cta_href, image, sent_by)
+      VALUES (${draft.subject}, ${draft.heading}, ${draft.body}, ${draft.ctaLabel}, ${draft.ctaHref}, ${draft.image}, ${adminEmail})
+      RETURNING id
+    `) as { id: number }[]
+    const id = inserted[0].id
+    const result = await sendCampaign(draft, members, `campaign/${id}`)
+    await sql`UPDATE campaigns SET recipients = ${result.sent}, failed = ${result.failed} WHERE id = ${id}`
+    return Response.json({ ok: true, id, sent: result.sent, failed: result.failed })
+  } catch (caught) {
+    console.error(caught)
+    return Response.json({ error: 'The letter could not be sent.' }, { status: 503 })
+  }
+}
+
 async function getList(): Promise<Response> {
   try {
     const sql = await withDb()
     const rows = (await sql`
-      SELECT email, confirmed, source, created_at, confirmed_at
+      SELECT email, confirmed, source, created_at, confirmed_at, unsubscribed_at
       FROM subscribers
       ORDER BY confirmed DESC, created_at DESC
       LIMIT 400
     `) as {
       email: string
+      unsubscribed_at: string | Date | null
       confirmed: boolean
       source: string
       created_at: string | Date
@@ -1218,6 +1318,7 @@ async function getList(): Promise<Response> {
       subscribers: rows.map((row) => ({
         email: row.email,
         confirmed: Boolean(row.confirmed),
+        unsubscribed: Boolean(row.unsubscribed_at),
         source: row.source,
         createdAt: asIso(row.created_at),
         confirmedAt: row.confirmed_at ? asIso(row.confirmed_at) : '',
@@ -1748,6 +1849,7 @@ async function handle(request: Request, method: Method): Promise<Response> {
     if (section === 'invoices') return getInvoices(request)
     if (section === 'members') return getMembers()
     if (section === 'list') return getList()
+    if (section === 'campaigns') return getCampaigns()
     if (section === 'work') return getOrders(request)
     if (section === 'diary') return getDiary()
     if (section === 'figures') return getFigures()
@@ -1760,6 +1862,7 @@ async function handle(request: Request, method: Method): Promise<Response> {
   if (section === 'diary') return postDiary(request)
   if (section === 'work') return postWork(request)
   if (section === 'plates') return postPlates(request, gate.email)
+  if (section === 'campaigns') return postCampaign(request, gate.email)
   return Response.json({ error: 'This page of the ledger is read only.' }, { status: 405 })
 }
 

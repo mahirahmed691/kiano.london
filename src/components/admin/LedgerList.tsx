@@ -1,5 +1,6 @@
 import { useAuth, useUser } from '@clerk/react'
 import { useEffect, useState } from 'react'
+import { LedgerCampaign } from '@/components/admin/LedgerCampaign'
 import { LedgerFold } from '@/components/admin/LedgerFold'
 import { Button } from '@/components/ui/Button'
 import { isAdminUser } from '@/lib/admin'
@@ -42,7 +43,8 @@ export function LedgerList() {
     }
   }, [getToken, isSignedIn, user])
 
-  const confirmed = subscribers.filter((row) => row.confirmed)
+  const confirmed = subscribers.filter((row) => row.confirmed && !row.unsubscribed)
+  const left = subscribers.filter((row) => row.unsubscribed)
   const held = subscribers.filter((row) => !row.confirmed)
 
   async function copyConfirmed() {
@@ -69,6 +71,9 @@ export function LedgerList() {
           {error}
         </p>
       ) : null}
+      <div className="no-print mb-6">
+        <LedgerCampaign />
+      </div>
       <LedgerFold title="Confirmed">
         <div className="no-print">
           <Button type="button" onClick={() => void copyConfirmed()} disabled={confirmed.length === 0}>
@@ -94,6 +99,19 @@ export function LedgerList() {
                     {row.email}
                   </a>
                 </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </LedgerFold>
+      <LedgerFold title="Unsubscribed" defaultOpen={false}>
+        {left.length === 0 ? (
+          <p className="text-[15px] font-light text-ink-soft">No one has left.</p>
+        ) : (
+          <ul className="divide-y divide-rule border-y border-ink">
+            {left.map((row) => (
+              <li key={row.email} className="py-4 text-[15px] font-light text-ink-soft">
+                {row.email}
               </li>
             ))}
           </ul>

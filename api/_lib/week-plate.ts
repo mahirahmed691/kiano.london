@@ -1,6 +1,7 @@
 import { plateCopy, plateHref, plateWeekIndex, stillsHash, thisWeekPlate } from '../../src/lib/instagram-plates.js'
 import { withDb } from './db.js'
 import { housePath, sendMail, weekPlateLetterHtml, weekPlateLetterText } from './mail.js'
+import { activeList, unsubscribeHeaders, unsubscribeUrl } from './list.js'
 import { pushPlateToDevices } from './notices.js'
 
 export function cronAuthorized(request: Request) {
@@ -40,9 +41,7 @@ export async function sendWeekPlate() {
     return Response.json({ ok: true, already: true, plate: week.id })
   }
 
-  const names = (await sql`
-    SELECT email FROM subscribers WHERE confirmed = true
-  `) as { email: string }[]
+  const names = await activeList(sql)
 
   let emailed = 0
   for (const row of names) {
@@ -54,6 +53,7 @@ export async function sendWeekPlate() {
         place: week.place,
         line,
         href,
+        unsubscribe: unsubscribeUrl(row.token),
       }),
       html: weekPlateLetterHtml({
         name: week.name,
@@ -61,8 +61,10 @@ export async function sendWeekPlate() {
         line,
         image,
         href,
+        unsubscribe: unsubscribeUrl(row.token),
       }),
       idempotencyKey: `plate-week/${weekKey}/${row.email}`,
+      headers: unsubscribeHeaders(row.token),
     })
     if (mail.sent) emailed += 1
   }

@@ -87,6 +87,10 @@
       "destination": "/api/subscribe"
     },
     {
+      "source": "/api/unsubscribe",
+      "destination": "/api/subscribe?section=unsubscribe"
+    },
+    {
       "source": "/api/stills-week",
       "destination": "/api/subscribe?section=week"
     },
