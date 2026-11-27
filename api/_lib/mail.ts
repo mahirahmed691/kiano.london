@@ -275,6 +275,28 @@ function cutsMarkup(cuts: string) {
   return `<p style="margin:16px 0 0;">${lines.map((line) => escapeHtml(line)).join('<br/>')}</p>`
 }
 
+export function cuttingLetterHtml(input: { cuts: string; accountUrl?: string }) {
+  const account = input.accountUrl
+    ? `<p style="margin:16px 0 0;"><a href="${escapeHtml(input.accountUrl)}" style="color:#1B1714;">Follow it in your account</a></p>`
+    : ''
+  return letterFrame(
+    'The piece is on the table.',
+    `<p style="margin:0;">The cloth you reserved is being cut from the house block. Next it is sewn, pressed and boxed; we write again when it is packed.</p>${cutsMarkup(input.cuts)}${account}`,
+    `Questions: ${site.email}.`,
+  )
+}
+
+export function cuttingLetterText(input: { cuts: string; accountUrl?: string }) {
+  return [
+    'The cloth you reserved is being cut from the house block. Next it is sewn, pressed and boxed; we write again when it is packed.',
+    input.cuts.trim() || null,
+    input.accountUrl ? `Follow it in your account: ${input.accountUrl}` : null,
+    `Questions: ${site.email}.`,
+  ]
+    .filter(Boolean)
+    .join('\n\n')
+}
+
 export function packedLetterHtml(input: { cuts: string; note?: string; cardUrl?: string }) {
   const line = input.note?.trim()
   const written = line

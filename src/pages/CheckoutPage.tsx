@@ -20,6 +20,8 @@ import { asThobeSize, fillEmptyDetails, profileFromDetails, readStoredSize, type
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
 import { LocalPrice } from '@/components/product/LocalPrice'
+import { EidLine } from '@/components/product/EidLine'
+import { regionForCountry } from '@/lib/eid'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 import { tillProofOpen } from '@/lib/till-proof'
@@ -491,6 +493,9 @@ export function CheckoutPage() {
               <p className="mt-1 text-right">
                 <LocalPrice pence={subtotalPence} className="text-[12px] font-light" note />
               </p>
+              {proofOnly ? null : (
+                <EidLine className="mt-5" region={regionForCountry(details.country)} />
+              )}
               <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
                 {proofOnly
                   ? 'Pay with card, Apple Pay, or Google Pay. One pound only. Refund it from Stripe after it lands.'

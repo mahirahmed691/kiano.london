@@ -5,6 +5,7 @@ import { useCart } from '@/lib/cart'
 import { cn } from '@/lib/cn'
 import { formatGbp } from '@/lib/money'
 import { LocalPrice } from '@/components/product/LocalPrice'
+import { EidLine } from '@/components/product/EidLine'
 
 export function CartDrawer() {
   const { items, count, subtotalPence, open, setOpen, setQuantity, remove, lastAdded } = useCart()
@@ -145,6 +146,7 @@ export function CartDrawer() {
               <p className="mt-1 text-right">
                 <LocalPrice pence={subtotalPence} className="text-[12px] font-light" />
               </p>
+              {proofOnly ? null : <EidLine className="mt-3" />}
               <p className="mt-3 text-[12px] font-light leading-relaxed text-stone">
                 {proofOnly
                   ? 'One pound to open the live till. Not a garment. Refund the charge from Stripe once it has landed.'
