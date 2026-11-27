@@ -20,6 +20,8 @@ export async function sendMail(input: {
   const { error } = await resend.emails.send(
     {
       from: fromAddress(),
+      // Sent through Prolific's verified Resend domain; replies go to the atelier inbox.
+      replyTo: site.email,
       to: [input.to],
       subject: input.subject,
       text: input.text,
