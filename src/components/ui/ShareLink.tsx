@@ -35,7 +35,7 @@ export function ShareLink({ title, text, path, className }: Props) {
     <button
       type="button"
       className={cn(
-        'group inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70',
+        'group inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] transition-opacity duration-500 hover:opacity-70',
         className,
       )}
       onClick={() => void share()}

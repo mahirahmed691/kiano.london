@@ -26,7 +26,8 @@ function WordLinkInner({ className, onClick }: Props) {
     >
       <span className="inline-flex items-center gap-2">
         <span>
-          Word{unread ? ` ${String(unread).padStart(2, '0')}` : ''}
+          <span className="max-sm:hidden">Word</span>
+          {unread ? <span className="sm:ml-[0.5em]">{String(unread).padStart(2, '0')}</span> : null}
         </span>
         <WordBell className="h-3.5 w-3.5" />
       </span>
