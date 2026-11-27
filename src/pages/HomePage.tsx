@@ -22,6 +22,7 @@ export function HomePage() {
   const week = thisWeekShopPlate()
   const previous = recentShopPlates(4)
   const weekCopy = plateCopy(week.caption)
+  const weekPiece = jubbahs.find((piece) => week.id === piece.id || week.id.startsWith(`${piece.id}-`))
 
   usePageMeta(getShareMeta('/'))
 
@@ -35,8 +36,9 @@ export function HomePage() {
         priority
         kicker="Lookbook · this week"
         title={week.name}
-        captionTo={stillsHash(week)}
-        captionLabel={`View ${week.name} in the lookbook`}
+        captionTo={weekPiece ? productPath(weekPiece) : stillsHash(week)}
+        captionLabel={weekPiece ? `Shop ${week.name}, ${weekPiece.price}` : `View ${week.name} in the lookbook`}
+        captionCta={weekPiece ? `Shop · ${weekPiece.price}` : undefined}
       />
 
       <TrustBar />

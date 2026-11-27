@@ -35,7 +35,7 @@ export const processSteps: ProcessStep[] = [
     number: '01',
     title: 'Cloth',
     summary:
-      'Cotton viscose mix, light GSM. Weight and handle are chosen in the piece. An Emirati column lives or dies by the drape.',
+      'Cotton viscose mix, lightweight. Weight and handle are chosen in the piece. An Emirati column lives or dies by the drape.',
     image: '/images/cloth-giza.jpg',
     imageAlt: 'Cloth unrolled, before it is chalked.',
   },

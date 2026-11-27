@@ -26,7 +26,7 @@ const pages: Record<string, PageMeta> = {
   },
   '/shop': {
     title: 'Shop — Kiano London',
-    description: `Urban Emirati in stone grey, cream and black. Cotton viscose mix, light GSM. ${creedIntent} Sizes 52 to 60, from the house block.`,
+    description: `Urban Emirati in stone grey, cream and black. Cotton viscose mix, lightweight. ${creedIntent} Sizes 52 to 60, from the house block.`,
     path: '/shop',
     image: '/images/jubbah-sand-02.jpg',
     imageAlt: 'Urban Emirati in cream, hem to the ankle.',
@@ -34,7 +34,7 @@ const pages: Record<string, PageMeta> = {
   '/collection': {
     title: 'The Collection — Kiano London',
     description:
-      `Urban Emirati in stone grey, cream and black. Cotton viscose mix, light GSM. ${creedMotto}`,
+      `Urban Emirati in stone grey, cream and black. Cotton viscose mix, lightweight. ${creedMotto}`,
     path: '/collection',
     image: '/images/jubbah-sand.jpg',
     imageAlt: 'Urban Emirati in cream, a modest column.',
@@ -66,7 +66,7 @@ const pages: Record<string, PageMeta> = {
   '/craftsmanship': {
     title: 'Craftsmanship — Kiano London',
     description:
-      `${creedSpoken} Cloth, pattern, stitch and finish. Cotton viscose mix, light GSM. How the column is built.`,
+      `${creedSpoken} Cloth, pattern, stitch and finish. Cotton viscose mix, lightweight. How the column is built.`,
     path: '/craftsmanship',
     image: '/images/worsted-wool.jpg',
     imageAlt: 'A needle on charcoal cloth: the stitch that holds the column.',

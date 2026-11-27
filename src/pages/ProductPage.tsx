@@ -17,8 +17,8 @@ import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { Reveal } from '@/components/ui/Reveal'
 import { Rule } from '@/components/ui/Rule'
 import { packingNote } from '@/data/packing'
-import { carriageLine } from '@/data/shipping'
-import { returnsSummary } from '@/data/policies'
+import { deliveryLine, madeToOrderLine } from '@/data/shipping'
+import { returnsShort } from '@/data/policies'
 import { site } from '@/data/site'
 import {
   clothSwatch,
@@ -321,12 +321,13 @@ export function ProductPage() {
                   {guideOpen ? (
                     <SizeGuide className="pb-4" compact chosen={size} onChoose={chooseSize} />
                   ) : null}
-                  <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
-                    {carriageLine} Made to order. Payment is taken first.{' '}
-                    {packingNote}
-                  </p>
+                  <ul className="space-y-2 border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
+                    <li>{deliveryLine}</li>
+                    <li>{madeToOrderLine}</li>
+                    <li>{packingNote}</li>
+                  </ul>
                   <p className="text-[13px] font-light leading-relaxed text-stone">
-                    {returnsSummary}{' '}
+                    {returnsShort}{' '}
                     <Link to="/returns" className="underline underline-offset-4">
                       Read the returns policy
                     </Link>
