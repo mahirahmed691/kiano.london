@@ -15,11 +15,16 @@ export function PieceHero({
   colour,
   onLook,
   ref,
+  name,
+  price,
 }: {
   image: ProductImage
   colour?: ProductColour
   onLook: () => void
   ref?: Ref<HTMLElement>
+  /** Shown over the foot of the still, so the first screen says what and how much. */
+  name?: string
+  price?: string
 }) {
   return (
     <section
@@ -36,6 +41,22 @@ export function PieceHero({
         decoding="async"
       />
       <div className="scrim-night-top absolute inset-x-0 top-0 h-40" aria-hidden="true" />
+      {name ? (
+        <>
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-linear-to-t from-night/55 via-night/15 to-transparent"
+            aria-hidden="true"
+          />
+          <div className="copy-in pointer-events-none absolute bottom-[6.75rem] left-5 z-10 text-left text-ivory md:right-8 md:bottom-9 md:left-auto md:text-right">
+            <p className="font-display text-3xl font-light leading-tight tracking-[-0.01em] md:text-4xl">
+              {name}
+            </p>
+            {price ? (
+              <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-ivory/85">{price}</p>
+            ) : null}
+          </div>
+        </>
+      ) : null}
       <WovenLabel
         size="md"
         colour={colour}

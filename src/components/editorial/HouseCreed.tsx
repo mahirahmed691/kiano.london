@@ -9,9 +9,14 @@ type Props = {
 
 export function HouseCreed({ className }: Props) {
   return (
-    <div className={cn('grid gap-16 sm:grid-cols-3 sm:gap-10 lg:gap-16', className)}>
+    <div
+      className={cn(
+        'max-sm:-mx-6 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-px-6 max-sm:gap-5 max-sm:overflow-x-auto max-sm:px-6 max-sm:pb-2 max-sm:[scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-10 lg:gap-16',
+        className,
+      )}
+    >
       {houseCreed.map((item, index) => (
-        <Reveal key={item.word} delay={index * 90}>
+        <Reveal key={item.word} delay={index * 90} className="max-sm:w-[78%] max-sm:shrink-0 max-sm:snap-start">
           <article>
             <ImageFrame
               src={item.image}

@@ -208,6 +208,8 @@ export function ProductPage() {
           }
         }
         onLook={() => setLooking(0)}
+        name={product.proof ? undefined : productLineName(product)}
+        price={product.proof ? undefined : product.price}
       />
       <section className="bg-ivory text-ink">
         <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)] lg:items-start xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)]">
