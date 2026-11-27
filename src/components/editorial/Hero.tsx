@@ -16,7 +16,7 @@ type Props = {
   /** A short action line under the caption title, inside the same link. */
   captionCta?: string
   align?: 'start' | 'center'
-  minHeight?: 'screen' | 'tall' | 'page'
+  minHeight?: 'screen' | 'tall' | 'page' | 'band'
   children?: ReactNode
   priority?: boolean
   quiet?: boolean
@@ -26,6 +26,7 @@ const heightClass = {
   screen: 'min-h-[100svh]',
   tall: 'min-h-[85svh] md:min-h-[90svh]',
   page: 'min-h-[58svh] md:min-h-[68svh]',
+  band: 'min-h-[32svh] md:min-h-[40svh]',
 }
 
 export function Hero({

@@ -27,6 +27,8 @@ type BagContextValue = {
   open: boolean
   setOpen: (open: boolean) => void
   add: (productId: string, size: ThobeSize) => void
+  /** `${productId}-${size}` of the line just added, for a brief highlight in the bag. */
+  lastAdded: string | null
   setQuantity: (productId: string, size: ThobeSize, quantity: number) => void
   remove: (productId: string, size: ThobeSize) => void
   clear: () => void
@@ -62,6 +64,13 @@ function persist(lines: BagLine[]) {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<BagLine[]>(readStored)
   const [open, setOpen] = useState(false)
+  const [lastAdded, setLastAdded] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!lastAdded) return
+    const timer = window.setTimeout(() => setLastAdded(null), 2400)
+    return () => window.clearTimeout(timer)
+  }, [lastAdded])
 
   useEffect(() => {
     const openBag = () => {
@@ -98,6 +107,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           )
         : [...standing, { productId, size, quantity: 1 }]
       update(next)
+      setLastAdded(`${productId}-${size}`)
       setOpen(true)
     },
     [lines, update],
@@ -165,11 +175,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       open,
       setOpen,
       add,
+      lastAdded,
       setQuantity,
       remove,
       clear,
     }),
-    [lines, items, count, subtotalPence, open, add, setQuantity, remove, clear],
+    [lines, items, count, subtotalPence, open, add, lastAdded, setQuantity, remove, clear],
   )
 
   return <BagContext.Provider value={value}>{children}</BagContext.Provider>
