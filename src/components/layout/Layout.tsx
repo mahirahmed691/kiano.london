@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { CartDrawer } from '@/components/cart/CartDrawer'
+import { SignInDrawer } from '@/components/auth/SignInDrawer'
 import { QuickAddDialog } from '@/components/product/QuickAddDialog'
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
@@ -68,6 +69,7 @@ export function Layout() {
       )}
       <QuickAddDialog />
       <CartDrawer />
+      <SignInDrawer />
       <WordDrawer />
       <HouseNotices />
     </>
