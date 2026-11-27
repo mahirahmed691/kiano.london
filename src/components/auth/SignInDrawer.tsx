@@ -103,6 +103,12 @@ function SignInDrawerInner() {
     setSignInOpen(false)
   }, [pathname])
 
+  // Clerk steps the form through the hash (#/factor-one…); drop it once the panel shuts.
+  useEffect(() => {
+    if (open || !window.location.hash.startsWith('#/')) return
+    window.history.replaceState(window.history.state, '', `${pathname}${search}`)
+  }, [open, pathname, search])
+
   useEffect(() => {
     if (!open) return
     const onKey = (event: KeyboardEvent) => {
@@ -159,7 +165,7 @@ function SignInDrawerInner() {
           <div className="mt-12">
             {open ? (
               <SignIn
-                routing="virtual"
+                routing="hash"
                 withSignUp
                 fallbackRedirectUrl={back}
                 signUpFallbackRedirectUrl={back}
