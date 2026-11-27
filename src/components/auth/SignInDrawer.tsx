@@ -47,7 +47,9 @@ const drawerAppearance = {
       borderRadius: '0',
       boxShadow: 'none',
       backgroundColor: 'transparent',
+      backgroundImage: 'none',
       color: ink,
+      '&:hover': { backgroundColor: 'rgba(27, 23, 20, 0.04)' },
     },
     socialButtonsBlockButtonText: { ...label },
     dividerLine: { backgroundColor: rule },
@@ -63,7 +65,10 @@ const drawerAppearance = {
       backgroundColor: 'transparent',
       fontSize: '16px',
       fontWeight: '300',
+      outline: 'none',
+      '&:focus, &:hover': { boxShadow: 'none', borderBottomColor: ink },
     },
+    formFieldInputGroup: { boxShadow: 'none', border: 'none' },
     formButtonPrimary: {
       ...label,
       height: '3.25rem',
@@ -72,7 +77,11 @@ const drawerAppearance = {
       backgroundColor: ink,
       color: '#F2EBDC',
       WebkitTextFillColor: '#F2EBDC',
+      backgroundImage: 'none',
+      '&:hover, &:focus': { backgroundColor: '#2A2420', boxShadow: 'none' },
+      '&::after': { display: 'none' },
     },
+    buttonArrowIcon: { display: 'none' },
     footer: {
       background: 'transparent',
       border: 'none',
@@ -160,7 +169,8 @@ function SignInDrawerInner() {
             Sign in.
           </h2>
           <p className="mt-5 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-            Your size, your address and your reserved cuts, kept against your name.
+            Your size, your address and your reserved cuts, kept against your name. New to
+            the house? Enter your email and we will set you up.
           </p>
           <div className="mt-12">
             {open ? (
