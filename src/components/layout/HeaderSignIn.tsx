@@ -1,7 +1,8 @@
-import { useClerk, useUser } from '@clerk/react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useUser } from '@clerk/react'
+import { NavLink } from 'react-router-dom'
 import { clerkEnabled } from '@/lib/clerk'
 import { cn } from '@/lib/cn'
+import { setSignInOpen } from '@/lib/signin-drawer'
 
 type Props = {
   className?: string
@@ -25,8 +26,6 @@ function PersonMark({ className }: { className?: string }) {
 
 function HeaderSignInInner({ className }: Props) {
   const { isLoaded, isSignedIn, user } = useUser()
-  const clerk = useClerk()
-  const { pathname, search } = useLocation()
   const base = cn(
     'inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 max-sm:-m-3 max-sm:p-3',
     className,
@@ -59,21 +58,13 @@ function HeaderSignInInner({ className }: Props) {
     )
   }
 
-  const back = `${pathname}${search}`
-  const onAuthPage = pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up')
-  const returnTo = onAuthPage ? '/account' : back
-
   return (
     <button
       type="button"
       className={base}
       aria-label="Sign in"
-      onClick={() =>
-        clerk.openSignIn({
-          fallbackRedirectUrl: returnTo,
-          signUpFallbackRedirectUrl: returnTo,
-        })
-      }
+      aria-haspopup="dialog"
+      onClick={() => setSignInOpen(true)}
     >
       <PersonMark className="sm:hidden" />
       <span className="max-sm:hidden">Sign in</span>
