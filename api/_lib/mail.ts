@@ -2,8 +2,17 @@ import { Resend } from 'resend'
 import { careLine } from '../../src/data/packing.js'
 import { site } from '../../src/data/site.js'
 
+/**
+ * Resend's free plan has no domain slot for kiano.london, so order mail sends
+ * from Prolific Digital Tech Ltd's verified domain (the seller on /terms).
+ * When kiano.london is verified in Resend, set MAIL_FROM to an @kiano.london
+ * address; no code change needed. RESEND_FROM is no longer read: it pointed
+ * at the unverified kiano.london domain.
+ */
+const defaultFrom = 'Kiano London <orders@prolificdigitaltech.co.uk>'
+
 function fromAddress() {
-  return process.env.RESEND_FROM || 'Kiano London <atelier@kiano.london>'
+  return process.env.MAIL_FROM?.trim() || defaultFrom
 }
 
 export async function sendMail(input: {
@@ -20,6 +29,8 @@ export async function sendMail(input: {
   const { error } = await resend.emails.send(
     {
       from: fromAddress(),
+      // Sent through Prolific's verified Resend domain; replies go to the atelier inbox.
+      replyTo: site.email,
       to: [input.to],
       subject: input.subject,
       text: input.text,
