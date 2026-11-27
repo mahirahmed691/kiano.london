@@ -19,6 +19,12 @@ export const shippingCountryCodes = shippingCountries.map((country) => country.c
 export const carriageLine =
   'Carriage is included to Britain, the United Arab Emirates, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the United States, France, Germany and Italy. A visit is not required.'
 
+/** Short form for the product page. */
+export const deliveryLine =
+  'Free delivery to Britain, the UAE, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the US, France, Germany and Italy.'
+
+export const madeToOrderLine = 'Made to order: payment is taken first, and we email the week it will be ready.'
+
 export function shippingCountryName(code: string | null | undefined) {
   if (!code) return ''
   return shippingCountries.find((country) => country.code === code)?.name ?? code

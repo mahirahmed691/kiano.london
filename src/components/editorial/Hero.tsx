@@ -13,6 +13,8 @@ type Props = {
   subtitle?: string
   captionTo?: string
   captionLabel?: string
+  /** A short action line under the caption title, inside the same link. */
+  captionCta?: string
   align?: 'start' | 'center'
   minHeight?: 'screen' | 'tall' | 'page'
   children?: ReactNode
@@ -35,6 +37,7 @@ export function Hero({
   subtitle,
   captionTo,
   captionLabel,
+  captionCta,
   align = 'start',
   minHeight = 'screen',
   children,
@@ -71,7 +74,13 @@ export function Hero({
           title={title ?? ''}
           to={captionTo}
           label={captionLabel}
-        />
+        >
+          {captionCta ? (
+            <p className="mt-4 text-[10px] uppercase tracking-[0.28em] text-ivory/90">
+              <span className="border-b border-current pb-0.5">{captionCta}</span> <span aria-hidden="true">→</span>
+            </p>
+          ) : null}
+        </StillCaption>
       ) : null}
       {!quiet && hasCopy ? (
         <Container

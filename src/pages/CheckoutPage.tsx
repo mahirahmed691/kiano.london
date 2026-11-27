@@ -369,7 +369,7 @@ export function CheckoutPage() {
                   className="w-full justify-center"
                   disabled={busy}
                 >
-                  {busy ? 'A moment' : proofOnly ? 'Pay one pound' : 'Reserve the cut'}
+                  {busy ? 'A moment' : proofOnly ? 'Pay one pound' : `Pay ${formatGbp(subtotalPence)} · Reserve the cut`}
                 </Button>
               </div>
             </form>
@@ -480,7 +480,7 @@ export function CheckoutPage() {
                 disabled={busy}
                 className="mt-8 inline-flex w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35"
               >
-                {busy ? 'A moment' : proofOnly ? 'Pay one pound' : 'Reserve the cut'}
+                {busy ? 'A moment' : proofOnly ? 'Pay one pound' : `Pay ${formatGbp(subtotalPence)} · Reserve the cut`}
               </button>
               <div className="mt-6">
                 <TextLink to="/shop">Continue looking</TextLink>

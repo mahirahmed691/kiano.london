@@ -17,6 +17,10 @@ export const trustPoints = [
 export const returnsSummary =
   'Free delivery. Returns within 14 days of delivery: unworn, unwashed, with tags attached. Return postage is free within the UK. We do not offer exchanges.'
 
+/** Product page: the delivery line already says delivery is free. */
+export const returnsShort =
+  'Returns within 14 days of delivery: unworn, unwashed, with tags attached. Free return postage in the UK; no exchanges.'
+
 export const returnsPolicy = [
   {
     title: 'Return window',

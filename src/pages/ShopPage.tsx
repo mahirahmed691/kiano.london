@@ -54,7 +54,7 @@ export function ShopPage() {
               ))}
             </Display>
             <p className="mt-6 text-[15px] font-light leading-[1.85] text-ink-soft">
-              Cotton viscose mix, light GSM. Five sizes, 52 to 60. {creedIntent}
+              Cotton viscose mix, lightweight. Five sizes, 52 to 60. {creedIntent}
             </p>
           </Reveal>
           <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
@@ -106,7 +106,7 @@ export function ShopPage() {
               alt: 'Cotton viscose mix for the garment, still in the piece.',
               objectPosition: 'center 40%',
               kicker: 'The cloth',
-              name: 'Light GSM',
+              name: 'Lightweight',
               colour: 'Stone Grey',
             },
             {
