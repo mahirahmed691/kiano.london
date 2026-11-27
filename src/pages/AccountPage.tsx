@@ -1,5 +1,5 @@
 import { Show, SignOutButton, useAuth, useUser } from '@clerk/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { DeleteAccount } from '@/components/account/DeleteAccount'
 import { HeldCuts, type HeldLetter, type HeldOrder } from '@/components/account/HeldCuts'
@@ -19,6 +19,7 @@ import { WordPlates } from '@/components/notices/WordPlates'
 import { formatNoticeWhen } from '@/lib/word'
 import { useHouseApp } from '@/lib/shell'
 import { useWord } from '@/lib/word-state'
+import { setSignInOpen } from '@/lib/signin-drawer'
 
 function AccountOrders() {
   const { getToken, isSignedIn } = useAuth()
@@ -82,12 +83,12 @@ function AccountOrders() {
   }, [getToken, isSignedIn, user])
 
   if (orders === null) {
-    return <p className="mt-10 text-[15px] font-light text-ink-soft">Fetching your reservations.</p>
+    return <p className="text-[15px] font-light text-ink-soft">Fetching your reservations.</p>
   }
 
   if (error) {
     return (
-      <p className="mt-10 text-[15px] font-light text-ink" role="alert">
+      <p className="text-[15px] font-light text-ink" role="alert">
         {error}
       </p>
     )
@@ -101,11 +102,8 @@ function AccountWord() {
   if (notices.length === 0) return null
 
   return (
-    <div className="mt-16">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
-        Word{unread ? ` · ${String(unread).padStart(2, '0')}` : ''}
-      </p>
-      <ul className="mt-6 divide-y divide-rule border-t border-ink">
+    <AccountSection id="word" title={`Word${unread ? ` · ${String(unread).padStart(2, '0')}` : ''}`}>
+      <ul className="divide-y divide-rule border-t border-ink">
         {notices.slice(0, 8).map((notice) => (
           <li key={notice.id} className="py-6">
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
@@ -134,7 +132,7 @@ function AccountWord() {
           </li>
         ))}
       </ul>
-    </div>
+    </AccountSection>
   )
 }
 
@@ -201,6 +199,106 @@ function AccountLedgerLink() {
   )
 }
 
+const sections = [
+  { id: 'cuts', label: 'Your cuts' },
+  { id: 'details', label: 'Your details' },
+  { id: 'word', label: 'Word' },
+  { id: 'settings', label: 'Account' },
+] as const
+
+function AccountSection({
+  id,
+  title,
+  children,
+}: {
+  id: string
+  title: string
+  children: ReactNode
+}) {
+  return (
+    <section id={id} className="scroll-mt-32 border-t border-ink pt-8 first:border-t-0 first:pt-0 [&+&]:mt-20">
+      <h2 className="text-[11px] uppercase tracking-[0.24em] text-stone">{title}</h2>
+      <div className="mt-6">{children}</div>
+    </section>
+  )
+}
+
+function greeting() {
+  const hour = Number(
+    new Intl.DateTimeFormat('en-GB', { hour: 'numeric', hour12: false, timeZone: 'Europe/London' }).format(
+      new Date(),
+    ),
+  )
+  if (hour < 12) return 'Good morning'
+  if (hour < 18) return 'Good afternoon'
+  return 'Good evening'
+}
+
+function SignedInAccount({ onClosed }: { onClosed: () => void }) {
+  const { user } = useUser()
+  const { notices } = useWord()
+  const first = user?.firstName?.trim()
+  const email = user?.primaryEmailAddress?.emailAddress ?? ''
+  const shown = sections.filter((section) => section.id !== 'word' || notices.length > 0)
+
+  return (
+    <>
+      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6 border-b border-rule pb-10">
+        <div>
+          <Eyebrow>The house</Eyebrow>
+          <Display as="h1" className="mt-4 text-4xl md:text-6xl">
+            {greeting()}
+            {first ? `, ${first}` : ''}.
+          </Display>
+          {email ? <p className="mt-4 text-[14px] font-light text-stone">{email}</p> : null}
+        </div>
+        <SignOutButton>
+          <button
+            type="button"
+            className="text-[11px] uppercase tracking-[0.22em] text-stone transition-opacity hover:opacity-70"
+          >
+            Sign out
+          </button>
+        </SignOutButton>
+      </div>
+
+      <div className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <nav aria-label="Account" className="lg:col-span-3">
+          <ul className="flex gap-x-6 gap-y-3 overflow-x-auto max-lg:-mx-6 max-lg:px-6 max-lg:pb-2 lg:sticky lg:top-32 lg:flex-col">
+            {shown.map((section) => (
+              <li key={section.id} className="shrink-0">
+                <a
+                  href={`#${section.id}`}
+                  className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-60"
+                >
+                  {section.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="min-w-0 lg:col-span-9">
+          <AccountSection id="cuts" title="Your cuts">
+            <AccountOrders />
+          </AccountSection>
+          <AccountSection id="details" title="Your details">
+            <HouseProfileForm />
+          </AccountSection>
+          <AccountWord />
+          <AccountSection id="settings" title="Account">
+            <AccountDeviceWord />
+            <AccountLedgerLink />
+            <div className="mt-6 flex flex-col items-start gap-8">
+              <DeleteAccount onClosed={onClosed} />
+            </div>
+          </AccountSection>
+        </div>
+      </div>
+    </>
+  )
+}
+
 function AccountGate() {
   const { isLoaded } = useAuth()
   const [closed, setClosed] = useState(() => accountJustClosed())
@@ -218,46 +316,41 @@ function AccountGate() {
       <Show when="signed-out">
         {closed ? <Body className="mt-6">This account is closed.</Body> : null}
         <Body className={closed ? 'mt-4' : 'mt-6'}>
-          The shop is public. Details written here stay on this device. Sign in to keep
-          reservations and the same details with the house. If you reserved without an account,
-          ask after the cut with the reference and that email.
+          The shop is open to everyone. Sign in to keep your size, your address and your
+          reserved cuts against your name, on any device.
         </Body>
-        <div className="mt-10 flex flex-wrap gap-4">
-          <Button to="/sign-in" variant="solid">
-            Sign in
+        <div className="mt-10">
+          <Button variant="solid" onClick={() => setSignInOpen(true)}>
+            Sign in or join
           </Button>
-          <Button to="/sign-up">Open an account</Button>
         </div>
         <HouseDeviceForm />
         <div className="mt-8">
-          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+          <TextLink to="/reservation">Reserved without an account? Ask after the cut</TextLink>
         </div>
       </Show>
       <Show when="signed-in">
-        <Body className="mt-6">
-          Payment still reserves the cloth. These are the cuts held against this email.
-        </Body>
-        <HouseProfileForm />
-        <AccountOrders />
-        <AccountWord />
-        <AccountDeviceWord />
-        <AccountLedgerLink />
-        <div className="mt-16 border-t border-rule pt-10">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The account</p>
-          <div className="mt-6 flex flex-col items-start gap-8">
-            <SignOutButton>
-              <button
-                type="button"
-                className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
-              >
-                Sign out
-              </button>
-            </SignOutButton>
-            <DeleteAccount onClosed={() => setClosed(true)} />
-          </div>
-        </div>
+        <SignedInAccount onClosed={() => setClosed(true)} />
       </Show>
     </>
+  )
+}
+
+function SignedOutTitle() {
+  if (!clerkEnabled) {
+    return (
+      <Display as="h1" className="text-4xl md:text-5xl">
+        Your account.
+      </Display>
+    )
+  }
+  return (
+    <Show when="signed-out">
+      <Eyebrow>The house</Eyebrow>
+      <Display as="h1" className="mt-4 text-4xl md:text-5xl">
+        Your account.
+      </Display>
+    </Show>
   )
 }
 
@@ -265,11 +358,8 @@ export function AccountPage() {
   usePageMeta(getShareMeta('/account'))
 
   return (
-    <HouseRoom kicker="The house" title="Your cuts.">
-      <Eyebrow>The house</Eyebrow>
-      <Display as="h1" className="mt-4 text-4xl md:text-5xl">
-        Your cuts.
-      </Display>
+    <HouseRoom kicker="The house" title="Your account.">
+      <SignedOutTitle />
       {clerkEnabled ? (
         <AccountGate />
       ) : (

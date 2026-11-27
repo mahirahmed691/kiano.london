@@ -141,14 +141,11 @@ export function HouseProfileForm() {
   }
 
   return (
-    <form onSubmit={(event) => void onSubmit(event)} className="mt-10 space-y-8" autoComplete="on">
-      <div>
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Your details</p>
-        <Body className="mt-4">
-          Kept once, then filled at the till, a visit, a wait, and a return. The size you wear
-          starts the line. The house card is still written each time.
-        </Body>
-      </div>
+    <form onSubmit={(event) => void onSubmit(event)} className="mt-6 space-y-8" autoComplete="on">
+      <Body>
+        Written once, then filled in for you at checkout, visits and returns. Your size is
+        chosen first on every piece.
+      </Body>
 
       <div className="grid gap-8 sm:grid-cols-2">
         <Field id="profile-name" label="Name">
