@@ -50,7 +50,7 @@ export function HomePage() {
             </div>
             <TextLink to="/shop">View the shop</TextLink>
           </Reveal>
-          <div className="max-sm:-mx-6 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:gap-5 max-sm:overflow-x-auto max-sm:px-6 max-sm:pb-2 max-sm:[scrollbar-width:none] sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 lg:grid-cols-3 lg:gap-x-12">
+          <div className="max-sm:-mx-6 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-px-6 max-sm:gap-5 max-sm:overflow-x-auto max-sm:px-6 max-sm:pb-2 max-sm:[scrollbar-width:none] sm:grid sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 lg:grid-cols-3 lg:gap-x-12">
             {jubbahs.map((product, index) => (
               <ProductCard
                 className="max-sm:w-[78%] max-sm:shrink-0 max-sm:snap-start"

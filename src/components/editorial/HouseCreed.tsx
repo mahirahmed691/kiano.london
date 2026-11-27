@@ -11,7 +11,7 @@ export function HouseCreed({ className }: Props) {
   return (
     <div
       className={cn(
-        'max-sm:-mx-6 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:gap-5 max-sm:overflow-x-auto max-sm:px-6 max-sm:pb-2 max-sm:[scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-10 lg:gap-16',
+        'max-sm:-mx-6 max-sm:flex max-sm:snap-x max-sm:snap-mandatory max-sm:scroll-px-6 max-sm:gap-5 max-sm:overflow-x-auto max-sm:px-6 max-sm:pb-2 max-sm:[scrollbar-width:none] sm:grid sm:grid-cols-3 sm:gap-10 lg:gap-16',
         className,
       )}
     >
