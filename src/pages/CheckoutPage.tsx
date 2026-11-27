@@ -389,7 +389,7 @@ export function CheckoutPage() {
                     >
                       <img
                         src={item.product.image}
-                        alt=""
+                        alt={productLineName(item.product)}
                         className="size-full object-cover"
                         style={
                           item.product.objectPosition

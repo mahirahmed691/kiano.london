@@ -68,7 +68,7 @@ export function CartDrawer() {
                   >
                     <img
                       src={item.product.image}
-                      alt=""
+                      alt={productLineName(item.product)}
                       className="size-full object-cover"
                       style={
                         item.product.objectPosition
