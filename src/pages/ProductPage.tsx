@@ -332,8 +332,10 @@ export function ProductPage() {
                     </Link>
                     .
                   </p>
-                  <TextLink to={enquireTo}>Enquire to visit</TextLink>
-                  <ShareLink title={share.title} text={share.description} path={share.path} />
+                  <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+                    <TextLink to={enquireTo}>Enquire to visit</TextLink>
+                    <ShareLink title={share.title} text={share.description} path={share.path} />
+                  </div>
                 </div>
               )}
             </Reveal>

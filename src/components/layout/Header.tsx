@@ -67,7 +67,7 @@ export function Header() {
             </button>
           </div>
 
-          <div className="relative z-20 flex items-center justify-end gap-6 lg:gap-9">
+          <div className="relative z-20 flex items-center justify-end gap-4 sm:gap-6 lg:gap-9">
             <AdminNavLink
               className={cn(
                 'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
@@ -84,17 +84,20 @@ export function Header() {
               Account
             </NavLink>
             <span className="flex items-center gap-3 md:gap-3.5">
-              <HouseClock />
+              {/* Decorative; dropped on phones so the right side never runs into the centred mark. */}
+              <span className="hidden sm:inline-flex">
+                <HouseClock />
+              </span>
               <button
                 type="button"
-                className="text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70"
+                className="text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 max-sm:-my-3 max-sm:py-3"
                 aria-label={count ? `Open bag, ${count} pieces` : 'Open bag'}
                 onClick={() => setOpen(true)}
               >
                 Bag{count ? ` ${String(count).padStart(2, '0')}` : ''}
               </button>
             </span>
-            <WordLink className="text-[10px] uppercase tracking-[0.28em]" />
+            <WordLink className="text-[10px] uppercase tracking-[0.28em] max-sm:-m-3 max-sm:p-3" />
           </div>
         </div>
       </header>
