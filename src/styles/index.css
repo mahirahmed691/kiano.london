@@ -228,9 +228,12 @@ select {
   transition: transform 2.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.group:hover .img-zoom img,
-.img-zoom:hover img {
-  transform: scale(1.045);
+/* Mouse and trackpad only: on touch, :hover sticks after a tap and leaves the photo zoomed. */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .img-zoom img,
+  .img-zoom:hover img {
+    transform: scale(1.045);
+  }
 }
 
 @keyframes page-enter {
@@ -405,4 +408,20 @@ html.snap-product {
   background: var(--color-ink);
   border: 0;
   border-radius: 0;
+}
+
+/* Print: nothing waits on a scroll or an animation to appear. */
+@media print {
+  .page-enter,
+  .still-in,
+  .copy-in,
+  .reveal,
+  .rule-draw,
+  .stagger-in > *,
+  .img-zoom img {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }
