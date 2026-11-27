@@ -162,14 +162,14 @@ export function FitFinder({ onChoose, onClose, className }: Props) {
       <div className="mt-8 min-h-[5.5rem] border-t border-rule pt-6" aria-live="polite">
         {answer && row ? (
           <div key={answer.size} className="fade-in">
-            <div className="flex items-end justify-between gap-4">
+            <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-stone">We suggest</p>
+                <p className="whitespace-nowrap text-[10px] uppercase tracking-[0.24em] text-stone">We suggest</p>
                 <p className="mt-1 font-display text-5xl font-light leading-none">{answer.size}</p>
               </div>
               <button
                 type="button"
-                className="bg-ink px-6 py-3 text-[11px] uppercase tracking-[0.22em] text-ivory transition-colors hover:bg-ink/85"
+                className="whitespace-nowrap bg-ink px-5 py-3 text-[11px] uppercase tracking-[0.22em] text-ivory transition-colors hover:bg-ink/85"
                 onClick={() => {
                   writeStoredSize(answer.size)
                   onChoose(answer.size)

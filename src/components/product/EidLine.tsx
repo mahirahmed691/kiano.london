@@ -25,7 +25,7 @@ export function EidLine({ className, region }: Props) {
   const soon = notice.daysLeft <= 7
   return (
     <p className={cn('text-[13px] font-light leading-relaxed text-ink', className)}>
-      <span className="mr-2 text-[10px] uppercase tracking-[0.24em] text-bronze">{notice.eid}</span>
+      <span className="mb-1 block text-[10px] uppercase tracking-[0.24em] text-ink-soft">{notice.eid}</span>
       Order by {formatOrderBy(notice.orderBy)} for delivery before {notice.eid}
       {where === 'uk' ? ' in the UK' : ''}.
       {soon ? (
