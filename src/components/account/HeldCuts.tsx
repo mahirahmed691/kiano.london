@@ -15,7 +15,6 @@ import {
   isFullyReturned,
   isPartReturned,
   workCopy,
-  workStages,
 } from '@/lib/work'
 
 export type HeldOrder = {
@@ -118,23 +117,9 @@ export function HeldCuts({
                 ? 'The reservation has been returned.'
                 : `${workCopy[asWorkStage(order.stage)].memberTitle}.`}
             </p>
-            <ol className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-              {workStages.map((step) => {
-                const current = asWorkStage(order.stage)
-                const reached = workStages.indexOf(step) <= workStages.indexOf(current)
-                return (
-                  <li
-                    key={step}
-                    className={cn(
-                      'text-[11px] uppercase tracking-[0.22em]',
-                      reached ? 'text-ink' : 'text-stone',
-                    )}
-                  >
-                    {workCopy[step].label}
-                  </li>
-                )
-              })}
-            </ol>
+            {isFullyReturned(order.amountPence, order.refundedPence ?? 0) ? null : (
+              <OrderProgress stage={asWorkStage(order.stage)} />
+            )}
             <p className="mt-3 text-[14px] font-light text-ink-soft">
               {isFullyReturned(order.amountPence, order.refundedPence ?? 0)
                 ? 'The reservation has been returned.'
@@ -260,6 +245,65 @@ function HeldLetters({ letters }: { letters: HeldLetter[] }) {
           )
         })}
       </ul>
+    </div>
+  )
+}
+
+/** Reserved → On the table → Packed → Left the house. "Held for cloth" is a pause inside the first step. */
+const progressSteps = ['reserved', 'cutting', 'packed', 'sent'] as const
+
+function OrderProgress({ stage }: { stage: ReturnType<typeof asWorkStage> }) {
+  const at = stage === 'cloth' ? 0 : progressSteps.indexOf(stage as (typeof progressSteps)[number])
+  const index = Math.max(0, at)
+  const fill = (index / (progressSteps.length - 1)) * 100
+
+  return (
+    <div className="mt-8 max-w-xl" aria-label={`Progress: ${workCopy[stage].label}`}>
+      <div className="relative mx-[5px] h-px bg-rule">
+        <div
+          className="absolute inset-y-0 left-0 bg-ink transition-[width] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{ width: `${fill}%` }}
+        />
+      </div>
+      <ol className="-mt-[6px] grid grid-cols-4">
+        {progressSteps.map((step, i) => {
+          const reached = i <= index
+          const current = i === index
+          return (
+            <li
+              key={step}
+              className={cn(
+                'flex flex-col',
+                i === 0 && 'items-start',
+                i > 0 && i < progressSteps.length - 1 && 'items-center text-center',
+                i === progressSteps.length - 1 && 'items-end text-right',
+              )}
+              aria-current={current ? 'step' : undefined}
+            >
+              <span
+                className={cn(
+                  'block size-[11px] rounded-full border',
+                  reached ? 'border-ink bg-ink' : 'border-rule bg-ivory',
+                  current && 'ring-4 ring-ink/10',
+                )}
+              />
+              <span
+                className={cn(
+                  'mt-3 text-[10px] uppercase leading-snug tracking-[0.2em]',
+                  reached ? 'text-ink' : 'text-stone',
+                )}
+              >
+                {workCopy[step].label}
+              </span>
+              {current && stage === 'cloth' ? (
+                <span className="mt-1 text-[10px] uppercase tracking-[0.2em] text-bronze">
+                  Waiting on cloth
+                </span>
+              ) : null}
+            </li>
+          )
+        })}
+      </ol>
     </div>
   )
 }

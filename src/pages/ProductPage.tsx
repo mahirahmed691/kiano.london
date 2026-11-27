@@ -2,6 +2,8 @@ import { WovenLabel } from '@/components/brand/WovenLabel'
 import { LocalPrice } from '@/components/product/LocalPrice'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { sizeChart } from '@/data/sizing'
+import { EidLine } from '@/components/product/EidLine'
+import { FitFinder } from '@/components/product/FitFinder'
 import { HouseSizePrefill } from '@/components/account/HouseSizePrefill'
 import { WaitForm } from '@/components/visit/WaitForm'
 import { Link, useParams } from 'react-router-dom'
@@ -54,6 +56,7 @@ export function ProductPage() {
   const [showBar, setShowBar] = useState(false)
   const [looking, setLooking] = useState<number | null>(null)
   const [justAdded, setJustAdded] = useState(false)
+  const [finding, setFinding] = useState(false)
   const measure = size ? sizeChart.find((row) => row.size === size) : undefined
 
   useEffect(() => {
@@ -266,7 +269,26 @@ export function ProductPage() {
                     <p className="mt-3 text-[13px] font-light text-stone">{product.colour}</p>
                   </div>
                 ) : null}
-                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
+                <div className="flex items-baseline justify-between gap-4 max-w-[20rem]">
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Size</p>
+                  {product.proof ? null : (
+                    <button
+                      type="button"
+                      className="text-[11px] uppercase tracking-[0.22em] underline underline-offset-4 transition-opacity hover:opacity-70"
+                      aria-expanded={finding}
+                      onClick={() => setFinding((value) => !value)}
+                    >
+                      Find my size
+                    </button>
+                  )}
+                </div>
+                {finding ? (
+                  <FitFinder
+                    className="mt-4 max-w-[24rem]"
+                    onChoose={chooseSize}
+                    onClose={() => setFinding(false)}
+                  />
+                ) : null}
                 <div className="mt-4 grid max-w-[20rem] grid-cols-5 gap-px bg-rule">
                   {thobeSizes.map((value) => {
                     const sizeHeld = stock?.[value] === 0
@@ -345,6 +367,7 @@ export function ProductPage() {
                   {guideOpen ? (
                     <SizeGuide className="pb-4" compact chosen={size} onChoose={chooseSize} />
                   ) : null}
+                  <EidLine className="border-t border-rule pt-4" />
                   <ul className="space-y-2 border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
                     <li>{deliveryLine}</li>
                     <li>{madeToOrderLine}</li>

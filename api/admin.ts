@@ -22,6 +22,8 @@ import {
   sentLetterHtml,
   sentLetterText,
   workBackLetterHtml,
+  cuttingLetterHtml,
+  cuttingLetterText,
   workBackLetterText,
   workWeekLetterHtml,
   workWeekLetterText,
@@ -1608,6 +1610,15 @@ async function postWork(request: Request): Promise<Response> {
             text: workWeekLetterText({ week }),
             html: workWeekLetterHtml({ week }),
             idempotencyKey: `work-week/${row.id}/${namedWeek}`,
+          })
+        }
+        if (before !== stage && stage === 'cutting') {
+          await sendMail({
+            to: row.email,
+            subject: 'The piece is on the table — Kiano London',
+            text: cuttingLetterText({ cuts: cutsText, accountUrl: housePath('/account') }),
+            html: cuttingLetterHtml({ cuts: cutsText, accountUrl: housePath('/account') }),
+            idempotencyKey: `work-cutting/${row.id}`,
           })
         }
         if (before !== stage && stage === 'packed') {
