@@ -3,7 +3,7 @@ import { WovenLabel } from '@/components/brand/WovenLabel'
 import { SubscribeForm } from '@/components/notices/SubscribeForm'
 import { Container } from '@/components/ui/Container'
 import { Rule } from '@/components/ui/Rule'
-import { creedJoin, creedMotto } from '@/data/creed'
+import { creedMotto } from '@/data/creed'
 import { primaryNav } from '@/data/navigation'
 import { social } from '@/data/social'
 import { site } from '@/data/site'
@@ -20,9 +20,6 @@ export function Footer() {
           </Link>
           <p className="mt-6 max-w-xs text-[14px] font-light leading-[1.85] text-ivory/65">
             {site.tagline}
-          </p>
-          <p className="mt-4 text-[10px] uppercase tracking-[0.32em] text-bronze">
-            {creedJoin}
           </p>
         </div>
 

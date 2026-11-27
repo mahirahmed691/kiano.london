@@ -31,7 +31,7 @@ html {
   color-scheme: light;
 }
 
-@media (display-mode: standalone), (display-mode: fullscreen) {
+@media (display-mode: standalone) {
   html {
     min-height: 100svh;
     min-height: -webkit-fill-available;

@@ -7,11 +7,15 @@ import { creedJoin, creedMotto } from '@/data/creed'
 type Props = {
   attribution?: string
   quiet?: boolean
+  compact?: boolean
 }
 
-export function NightMotto({ attribution = creedJoin, quiet = false }: Props) {
+export function NightMotto({ attribution = creedJoin, quiet = false, compact = false }: Props) {
   return (
-    <Section paper={false} className="bg-night py-32 md:py-44 lg:py-56">
+    <Section
+      paper={false}
+      className={compact ? 'bg-night py-20 md:py-28 lg:py-32' : 'bg-night py-32 md:py-44 lg:py-56'}
+    >
       <Container>
         {quiet ? (
           <Reveal className="flex flex-col items-center text-center">
