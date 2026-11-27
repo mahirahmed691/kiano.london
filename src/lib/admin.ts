@@ -28,6 +28,14 @@ export function clerkEmails(user: EmailBearer | null | undefined) {
   ]
 }
 
-export function isAdminUser(user: EmailBearer | null | undefined) {
-  return clerkEmails(user).some((email) => isAdminEmail(email))
+/** Only verified addresses count, matching the server check in api/_lib/admin.ts. */
+export function isAdminUser(user: VerifiedEmailBearer | null | undefined) {
+  if (!user) return false
+  return (user.emailAddresses ?? []).some(
+    (entry) => entry.verification?.status === 'verified' && isAdminEmail(entry.emailAddress),
+  )
+}
+
+type VerifiedEmailBearer = {
+  emailAddresses?: { emailAddress?: string | null; verification?: { status?: string | null } | null }[]
 }

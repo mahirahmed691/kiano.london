@@ -1,7 +1,6 @@
 import { createClerkClient } from '@clerk/backend'
 import { resolveAdminEmails } from '../../src/lib/admin-allowlist.js'
 import { clerkUserIdFrom } from './clerk.js'
-import { withDb } from './db.js'
 
 export function adminAllowlist() {
   return resolveAdminEmails(process.env.ADMIN_EMAILS || process.env.VITE_ADMIN_EMAILS)
@@ -10,18 +9,18 @@ export function adminAllowlist() {
 type AdminDenied = { ok: false; error: Response }
 type AdminOk = { ok: true; clerkUserId: string; email: string }
 
-function clerkUserEmails(user: {
-  primaryEmailAddress?: { emailAddress?: string | null } | null
-  emailAddresses?: { emailAddress?: string | null }[]
-}) {
-  const emails = [
-    user.primaryEmailAddress?.emailAddress,
-    ...(user.emailAddresses ?? []).map((entry) => entry.emailAddress),
-  ]
+type ClerkEmail = {
+  emailAddress?: string | null
+  verification?: { status?: string | null } | null
+}
+
+/** Only verified addresses count. An unverified address can be added to any account by its holder. */
+function clerkUserEmails(user: { emailAddresses?: ClerkEmail[] }) {
   return [
     ...new Set(
-      emails
-        .map((email) => email?.trim().toLowerCase())
+      (user.emailAddresses ?? [])
+        .filter((entry) => entry.verification?.status === 'verified')
+        .map((entry) => entry.emailAddress?.trim().toLowerCase())
         .filter((email): email is string => Boolean(email)),
     ),
   ]
@@ -38,19 +37,6 @@ export async function adminEmailFor(clerkUserId: string): Promise<string> {
       const clerk = createClerkClient({ secretKey: secret })
       const user = await clerk.users.getUser(clerkUserId)
       for (const email of clerkUserEmails(user)) matched.add(email)
-    } catch (caught) {
-      console.error(caught)
-    }
-  }
-
-  if (matched.size === 0) {
-    try {
-      const sql = await withDb()
-      const rows = (await sql`
-        SELECT email FROM members WHERE clerk_user_id = ${clerkUserId}
-      `) as { email: string }[]
-      const email = rows[0]?.email?.trim().toLowerCase() ?? ''
-      if (email) matched.add(email)
     } catch (caught) {
       console.error(caught)
     }
