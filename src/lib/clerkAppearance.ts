@@ -53,8 +53,20 @@ export const clerkAppearance = {
     formFieldInput: {
       borderRadius: '0',
     },
+    // Card and footer share one cream box, so the modal never shows the footer on the dark backdrop.
+    cardBox: {
+      borderRadius: '0',
+      boxShadow: 'none',
+      backgroundColor: '#F2EBDC',
+    },
     footer: {
-      background: 'transparent',
+      background: '#F2EBDC',
+      borderLeft: '1px solid #D4CBB8',
+      borderRight: '1px solid #D4CBB8',
+      borderBottom: '1px solid #D4CBB8',
+    },
+    modalBackdrop: {
+      backgroundColor: 'rgba(27, 23, 20, 0.55)',
     },
   },
 } as NonNullable<ClerkProviderProps['appearance']>
