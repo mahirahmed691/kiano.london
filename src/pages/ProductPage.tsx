@@ -1,4 +1,5 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
+import { LocalPrice } from '@/components/product/LocalPrice'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { HouseSizePrefill } from '@/components/account/HouseSizePrefill'
 import { WaitForm } from '@/components/visit/WaitForm'
@@ -222,6 +223,7 @@ export function ProductPage() {
                 <PieceHeading product={product} />
               </div>
               <p className="font-display text-4xl font-light">{product.price}</p>
+              <LocalPrice pence={product.pricePence} className="mt-1 block text-[13px] font-light" />
               <p className="mt-3 text-[14px] font-light text-ink-soft">
                 {product.colour} · {product.cloth}
               </p>

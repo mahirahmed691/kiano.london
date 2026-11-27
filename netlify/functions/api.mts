@@ -9,6 +9,7 @@ import * as checkoutSession from '../../api/checkout-session.ts'
 import * as clerkWebhook from '../../api/clerk-webhook.ts'
 import * as createCheckoutSession from '../../api/create-checkout-session.ts'
 import * as inventory from '../../api/inventory.ts'
+import * as locale from '../../api/locale.ts'
 import * as member from '../../api/member.ts'
 import * as notices from '../../api/notices.ts'
 import * as orders from '../../api/orders.ts'
@@ -25,6 +26,7 @@ const routes: Record<string, Module> = {
   'clerk-webhook': clerkWebhook,
   'create-checkout-session': createCheckoutSession,
   inventory,
+  locale,
   member,
   notices,
   orders,
