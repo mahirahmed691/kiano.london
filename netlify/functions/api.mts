@@ -43,6 +43,7 @@ const aliases: Record<string, { to: string; params?: Record<string, string> }> =
   wait: { to: 'appointment', params: { kind: 'wait' } },
   'subscribe-confirm': { to: 'subscribe' },
   'stills-week': { to: 'subscribe', params: { section: 'week' } },
+  unsubscribe: { to: 'subscribe', params: { section: 'unsubscribe' } },
 }
 
 export default async (request: Request): Promise<Response> => {

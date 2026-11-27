@@ -9,8 +9,8 @@ export function AdminListPage() {
           The list.
         </Display>
         <Body className="mt-6">
-          Confirmed addresses may be written to. Held rows are waiting on the confirm letter.
-          Domain must be verified for letters to leave.
+          Write to everyone who confirmed. Held rows are still waiting on the confirm letter;
+          unsubscribed addresses are never written to.
         </Body>
         <p className="mt-8">
           <button

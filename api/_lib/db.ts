@@ -96,6 +96,23 @@ async function migrate(db: Sql) {
       confirmed_at TIMESTAMPTZ
     )
   `
+  await db`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS unsub_token TEXT UNIQUE`
+  await db`ALTER TABLE subscribers ADD COLUMN IF NOT EXISTS unsubscribed_at TIMESTAMPTZ`
+  await db`
+    CREATE TABLE IF NOT EXISTS campaigns (
+      id SERIAL PRIMARY KEY,
+      subject TEXT NOT NULL,
+      heading TEXT NOT NULL DEFAULT '',
+      body TEXT NOT NULL,
+      cta_label TEXT NOT NULL DEFAULT '',
+      cta_href TEXT NOT NULL DEFAULT '',
+      image TEXT NOT NULL DEFAULT '',
+      recipients INTEGER NOT NULL DEFAULT 0,
+      failed INTEGER NOT NULL DEFAULT 0,
+      sent_by TEXT NOT NULL DEFAULT '',
+      sent_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    )
+  `
   await db`
     CREATE TABLE IF NOT EXISTS webhook_events (
       svix_id TEXT PRIMARY KEY,
