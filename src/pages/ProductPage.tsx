@@ -197,8 +197,8 @@ export function ProductPage() {
         onLook={() => setLooking(0)}
       />
       <section className="bg-ivory text-ink">
-        <div className="grid xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)] xl:items-start">
-          <div className="order-3 border-t border-rule px-6 py-12 md:px-12 xl:order-1 xl:col-start-1 xl:border-t-0 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(22rem,27rem)] lg:items-start xl:grid-cols-[minmax(16rem,1fr)_minmax(0,38rem)_minmax(16rem,1fr)]">
+          <div className="order-3 border-t border-rule px-6 py-12 md:px-12 lg:col-span-2 lg:row-start-2 xl:order-1 xl:col-span-1 xl:col-start-1 xl:row-start-1 xl:border-t-0 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-10 xl:pl-16">
             <Reveal>
               <div className="hidden xl:block">
                 <PieceHeading product={product} />
@@ -217,7 +217,7 @@ export function ProductPage() {
             </Reveal>
           </div>
 
-          <div className="order-1 px-6 py-12 max-xl:pt-10 md:px-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-16 xl:pl-10">
+          <div className="order-1 px-6 py-12 max-lg:pt-10 md:px-12 lg:order-2 lg:col-start-2 lg:row-start-1 lg:sticky lg:top-28 lg:max-h-[calc(100svh-7rem)] lg:overflow-y-auto lg:py-16 lg:pl-10 lg:pr-12 xl:order-3 xl:col-start-3 xl:sticky xl:top-28 xl:max-h-[calc(100svh-7rem)] xl:overflow-y-auto xl:py-16 xl:pr-16 xl:pl-10">
             <Reveal>
               <div className="mb-10 xl:hidden">
                 <PieceHeading product={product} />
@@ -343,7 +343,7 @@ export function ProductPage() {
           </div>
 
           {product.gallery.length > 1 ? (
-            <div className="order-2 xl:order-2 xl:col-start-2">
+            <div className="order-2 lg:order-1 lg:col-start-1 lg:row-start-1 xl:order-2 xl:col-start-2">
               {product.gallery.slice(1).map((image, index) => (
                 <ProductPlate
                   key={`${image.src}-${index + 1}`}
@@ -354,7 +354,7 @@ export function ProductPage() {
               ))}
             </div>
           ) : (
-            <div className="order-2 hidden xl:block xl:order-2 xl:col-start-2">
+            <div className="order-2 hidden lg:order-1 lg:col-start-1 lg:row-start-1 lg:block xl:order-2 xl:col-start-2">
               <ProductPlate
                 image={
                   product.gallery[0] ?? {
@@ -437,7 +437,7 @@ export function ProductPage() {
 
       <div
         className={cn(
-          'shell-lift fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 text-ink backdrop-blur-[2px] transition-transform duration-500 xl:hidden',
+          'shell-lift fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-ivory/95 px-5 py-3 text-ink backdrop-blur-[2px] transition-transform duration-500 lg:hidden',
           showBar && !open && looking === null ? 'translate-y-0' : 'translate-y-full',
         )}
         aria-hidden={!showBar}

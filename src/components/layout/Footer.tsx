@@ -146,7 +146,7 @@ export function Footer() {
               </a>
             ))}
             <span>
-              {creedMotto} · Est. {site.established} · {site.city}
+              {creedMotto.replace(/\.$/, '')} · Est. {site.established} · {site.city}
             </span>
           </p>
         </div>
