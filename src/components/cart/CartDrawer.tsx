@@ -7,7 +7,7 @@ import { formatGbp } from '@/lib/money'
 import { LocalPrice } from '@/components/product/LocalPrice'
 
 export function CartDrawer() {
-  const { items, count, subtotalPence, open, setOpen, setQuantity, remove } = useCart()
+  const { items, count, subtotalPence, open, setOpen, setQuantity, remove, lastAdded } = useCart()
   const proofOnly = items.length > 0 && items.every((item) => item.product.proof)
 
   return (
@@ -60,8 +60,12 @@ export function CartDrawer() {
               {items.map((item) => (
                 <li
                   key={`${item.productId}-${item.size}`}
-                  className="grid grid-cols-[5rem_1fr] gap-4 border-b border-rule py-5 first:pt-0"
+                  className={cn(
+                    'relative grid grid-cols-[5rem_1fr] gap-4 border-b border-rule py-5 first:pt-0',
+                    lastAdded === `${item.productId}-${item.size}` && 'bag-just-added',
+                  )}
                 >
+
                   <Link
                     to={productPath(item.product)}
                     className="img-zoom aspect-[3/4] overflow-hidden bg-ivory-deep"
@@ -91,6 +95,11 @@ export function CartDrawer() {
                         <p className="mt-1 text-[12px] font-light text-stone">
                           Size {item.size} · {item.product.colour}
                         </p>
+                        {lastAdded === `${item.productId}-${item.size}` ? (
+                          <p className="mt-1 text-[10px] uppercase tracking-[0.24em] text-bronze" role="status">
+                            Just added
+                          </p>
+                        ) : null}
                       </div>
                       <p className="shrink-0 text-[12px] tracking-[0.06em]">
                         {formatGbp(item.product.pricePence * item.quantity)}

@@ -9,6 +9,9 @@ import { colourOfPiece } from '@/data/products'
 import { thisWeekShopPlate } from '@/lib/instagram-plates'
 import { useInstalledHouse } from '@/lib/shell'
 import { cn } from '@/lib/cn'
+import { useUser } from '@clerk/react'
+import { clerkEnabled } from '@/lib/clerk'
+import { setSignInOpen } from '@/lib/signin-drawer'
 
 type Props = {
   open: boolean
@@ -45,6 +48,43 @@ function RoomLink({
       {children}
     </NavLink>
   )
+}
+
+const barClass =
+  'py-5 text-center text-[11px] uppercase tracking-[0.24em] transition-colors hover:bg-ivory-deep'
+
+function MenuAccountSignedIn({ onClose }: { onClose: () => void }) {
+  const { isLoaded, isSignedIn } = useUser()
+  if (isLoaded && isSignedIn) {
+    return (
+      <NavLink to={houseMenuAccount.to} onClick={onClose} className={barClass}>
+        Account
+      </NavLink>
+    )
+  }
+  return (
+    <button
+      type="button"
+      className={barClass}
+      onClick={() => {
+        onClose()
+        setSignInOpen(true)
+      }}
+    >
+      Sign in
+    </button>
+  )
+}
+
+function MenuAccount({ onClose }: { onClose: () => void }) {
+  if (!clerkEnabled) {
+    return (
+      <NavLink to={houseMenuAccount.to} onClick={onClose} className={barClass}>
+        {houseMenuAccount.label}
+      </NavLink>
+    )
+  }
+  return <MenuAccountSignedIn onClose={onClose} />
 }
 
 export function MobileNav({ open, onClose }: Props) {
@@ -105,11 +145,6 @@ export function MobileNav({ open, onClose }: Props) {
             </li>
           ))}
           <li>
-            <RoomLink to={houseMenuAccount.to} onClose={onClose} large>
-              {houseMenuAccount.label}
-            </RoomLink>
-          </li>
-          <li>
             <AdminNavLink
               onClick={onClose}
               className="block font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"
@@ -120,18 +155,6 @@ export function MobileNav({ open, onClose }: Props) {
               onClick={onClose}
               className="block font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"
             />
-          </li>
-          <li>
-            <button
-              type="button"
-              className="font-display text-4xl font-light tracking-[-0.02em] opacity-55 transition-opacity hover:opacity-100"
-              onClick={() => {
-                onClose()
-                setOpen(true)
-              }}
-            >
-              Bag{count ? ` ${String(count).padStart(2, '0')}` : ''}
-            </button>
           </li>
         </ul>
         <NavLink to="/stills" onClick={onClose} className="mt-16 block max-w-[14rem]">
@@ -159,6 +182,20 @@ export function MobileNav({ open, onClose }: Props) {
           <WovenLabel size="md" />
         </div>
       </nav>
+      {/* Within reach of the thumb: the two things a phone visitor wants from the menu. */}
+      <div className="sticky bottom-0 z-10 grid grid-cols-2 border-t border-rule bg-ivory/95 pb-[env(safe-area-inset-bottom,0px)] backdrop-blur-[2px]">
+        <MenuAccount onClose={onClose} />
+        <button
+          type="button"
+          className="border-l border-rule py-5 text-[11px] uppercase tracking-[0.24em] transition-colors hover:bg-ivory-deep"
+          onClick={() => {
+            onClose()
+            setOpen(true)
+          }}
+        >
+          Bag{count ? ` · ${String(count).padStart(2, '0')}` : ''}
+        </button>
+      </div>
     </div>
   )
 }

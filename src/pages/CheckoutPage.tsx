@@ -6,7 +6,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
 import { productLineName, productPath } from '@/data/products'
-import { shippingCountries } from '@/data/shipping'
+import { shippingCountries, shippingCountryName } from '@/data/shipping'
 import { returnWindowDays } from '@/data/policies'
 import { useCart } from '@/lib/cart'
 import {
@@ -61,6 +61,9 @@ export function CheckoutPage() {
   const [details, setDetails] = useState<CheckoutDetails>(readStoredCheckout)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  // Saved details fold into one line; typing or 'Change' opens the full form.
+  const [touched, setTouched] = useState(false)
+  const [editing, setEditing] = useState(false)
   const getTokenRef = useRef<() => Promise<string | null>>(async () => null)
 
   usePageMeta(getShareMeta('/checkout'))
@@ -74,8 +77,12 @@ export function CheckoutPage() {
   }, [])
 
   function setField<K extends keyof CheckoutDetails>(key: K, value: CheckoutDetails[K]) {
+    setTouched(true)
     setDetails((current) => ({ ...current, [key]: value }))
   }
+
+  const ready = !('error' in parseCheckoutDetails(details))
+  const folded = ready && !touched && !editing
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -203,7 +210,34 @@ export function CheckoutPage() {
               onSubmit={(event) => void onSubmit(event)}
               className="mt-14 space-y-14"
             >
-              <fieldset>
+              {folded ? (
+                <div className="fade-in border-y border-rule py-6">
+                  <div className="flex items-start justify-between gap-6">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-stone">
+                      01 · Contact and delivery
+                    </p>
+                    <button
+                      type="button"
+                      className="text-[11px] uppercase tracking-[0.22em] underline underline-offset-4 transition-opacity hover:opacity-70"
+                      onClick={() => setEditing(true)}
+                    >
+                      Change
+                    </button>
+                  </div>
+                  <p className="mt-4 font-display text-2xl font-light">{details.name}</p>
+                  <p className="mt-2 text-[14px] font-light leading-relaxed text-ink-soft">
+                    {details.email} · {details.telephone}
+                    <br />
+                    {[details.line1, details.line2, details.city, details.postalCode, details.region]
+                      .filter(Boolean)
+                      .join(', ')}
+                    <br />
+                    {shippingCountryName(details.country)}
+                  </p>
+                </div>
+              ) : null}
+
+              <fieldset className={cn(folded && 'hidden')}>
                 <legend className="text-[11px] uppercase tracking-[0.22em] text-stone">
                   01 · Contact
                 </legend>
@@ -249,7 +283,7 @@ export function CheckoutPage() {
                 </div>
               </fieldset>
 
-              <fieldset>
+              <fieldset className={cn(folded && 'hidden')}>
                 <legend className="text-[11px] uppercase tracking-[0.22em] text-stone">
                   02 · Delivery
                 </legend>
@@ -335,7 +369,7 @@ export function CheckoutPage() {
 
               <fieldset>
                 <legend className="text-[11px] uppercase tracking-[0.22em] text-stone">
-                  03 · A card
+                  {folded ? '02' : '03'} · A card
                 </legend>
                 <div className="mt-6">
                   <Field

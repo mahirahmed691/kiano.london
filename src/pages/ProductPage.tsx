@@ -1,6 +1,7 @@
 import { WovenLabel } from '@/components/brand/WovenLabel'
 import { LocalPrice } from '@/components/product/LocalPrice'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { sizeChart } from '@/data/sizing'
 import { HouseSizePrefill } from '@/components/account/HouseSizePrefill'
 import { WaitForm } from '@/components/visit/WaitForm'
 import { Link, useParams } from 'react-router-dom'
@@ -52,6 +53,14 @@ export function ProductPage() {
   const [guideOpen, setGuideOpen] = useState(false)
   const [showBar, setShowBar] = useState(false)
   const [looking, setLooking] = useState<number | null>(null)
+  const [justAdded, setJustAdded] = useState(false)
+  const measure = size ? sizeChart.find((row) => row.size === size) : undefined
+
+  useEffect(() => {
+    if (!justAdded) return
+    const timer = window.setTimeout(() => setJustAdded(false), 1800)
+    return () => window.clearTimeout(timer)
+  }, [justAdded])
   const stock = useProductStock(product?.id ?? '')
   const heroRef = useRef<HTMLElement>(null)
   const buyRef = useRef<HTMLDivElement>(null)
@@ -150,6 +159,7 @@ export function ProductPage() {
   function addToBag() {
     if (!product || !size || held) return
     add(product.id, size)
+    setJustAdded(true)
   }
 
   return (
@@ -280,6 +290,20 @@ export function ProductPage() {
                 <p className="mt-3 text-[13px] font-light text-stone">
                   {size && remaining !== undefined ? remainingCopy(remaining) : product.leadTime}
                 </p>
+                {measure ? (
+                  <dl
+                    key={measure.size}
+                    className="fade-in mt-4 grid max-w-[20rem] grid-cols-3 border-t border-rule pt-3 text-[12px] font-light"
+                    aria-live="polite"
+                  >
+                    {(['chest', 'length', 'shoulder'] as const).map((key) => (
+                      <div key={key}>
+                        <dt className="text-[10px] uppercase tracking-[0.22em] text-stone">{key}</dt>
+                        <dd className="mt-1 tabular-nums text-ink">{measure[key]} cm</dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
               </div>
 
               {held && size ? (
@@ -298,7 +322,7 @@ export function ProductPage() {
                   disabled={!size}
                   onClick={addToBag}
                 >
-                  {size ? 'Add to bag' : 'Choose a size'}
+                  {justAdded ? 'Added ✓' : size ? 'Add to bag' : 'Choose a size'}
                 </Button>
               )}
 
@@ -462,7 +486,7 @@ export function ProductPage() {
                 else buyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
               }}
             >
-              {size ? 'Add to bag' : 'Choose a size'}
+              {justAdded ? 'Added ✓' : size ? 'Add to bag' : 'Choose a size'}
             </Button>
           )}
         </div>

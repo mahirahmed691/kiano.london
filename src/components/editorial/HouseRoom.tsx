@@ -12,6 +12,7 @@ export const houseStill = {
 } as const
 
 type Props = {
+  /** Kept for callers; the page's own h1 carries the title, so the still stays silent. */
   kicker: string
   title: string
   image?: string
@@ -24,8 +25,6 @@ type Props = {
 }
 
 export function HouseRoom({
-  kicker,
-  title,
   image = houseStill.image,
   imageAlt = houseStill.imageAlt,
   objectPosition = houseStill.objectPosition,
@@ -40,14 +39,12 @@ export function HouseRoom({
           image={image}
           imageAlt={imageAlt}
           objectPosition={objectPosition}
-          kicker={kicker}
-          title={title}
-          minHeight="page"
+          minHeight="band"
           quiet
           priority
         />
       </div>
-      <Section>
+      <Section className="pt-14 md:pt-20 lg:pt-24">
         <Container className={containerClassName}>{children}</Container>
       </Section>
       <div className="print:hidden">
