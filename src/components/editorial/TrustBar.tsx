@@ -7,9 +7,12 @@ export function TrustBar({ className }: { className?: string }) {
   return (
     <section aria-label="Delivery, returns and checkout" className={cn('border-y border-rule bg-ivory', className)}>
       <Container>
-        <ul className="grid gap-x-8 gap-y-6 py-8 sm:grid-cols-2 lg:grid-cols-5">
-          {trustPoints.map((point) => (
-            <li key={point.title}>
+        <ul className="grid grid-cols-2 gap-x-6 gap-y-6 py-8 lg:grid-cols-5 lg:gap-x-8">
+          {trustPoints.map((point, index) => (
+            <li
+              key={point.title}
+              className={cn(index === trustPoints.length - 1 && trustPoints.length % 2 === 1 && 'max-lg:col-span-2')}
+            >
               <p className="text-[11px] uppercase tracking-[0.22em] text-ink">{point.title}</p>
               <p className="mt-1.5 text-[13px] font-light leading-relaxed text-ink-soft">{point.detail}</p>
             </li>

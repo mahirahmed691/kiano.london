@@ -24,7 +24,7 @@ export function StillCaption({
 }: Props) {
   const copy = (
     <>
-      <p className="text-[11px] uppercase tracking-[0.28em] text-bronze">{kicker}</p>
+      <p className="text-[11px] uppercase tracking-[0.28em] text-ivory/85">{kicker}</p>
       <p className="mt-2 font-display text-3xl font-light md:text-4xl">{title}</p>
       {children}
     </>
@@ -41,12 +41,12 @@ export function StillCaption({
         <Link
           to={to}
           aria-label={label}
-          className="inline-block text-ivory transition-opacity duration-500 hover:opacity-80"
+          className="inline-block text-ivory transition-opacity duration-500 [text-shadow:0_1px_14px_rgba(27,23,20,0.35)] hover:opacity-80"
         >
           {copy}
         </Link>
       ) : (
-        <div className="text-ivory">{copy}</div>
+        <div className="text-ivory [text-shadow:0_1px_14px_rgba(27,23,20,0.35)]">{copy}</div>
       )}
     </Tag>
   )
