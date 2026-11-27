@@ -80,5 +80,9 @@ export const quietLetterPaths = [
   '/privacy',
   '/terms',
   '/returns',
+  '/delivery',
+  '/size-guide',
+  '/visit',
+  '/admin',
   '/letters/confirmed',
 ]
