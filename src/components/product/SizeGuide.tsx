@@ -124,7 +124,7 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
                   aria-pressed={unit === value}
                   onClick={() => setUnit(value)}
                   className={cn(
-                    'relative border-b pb-1 transition-colors duration-300 before:absolute before:-inset-x-2 before:-inset-y-3 before:content-['']',
+                    'relative border-b pb-1 transition-colors duration-300 before:absolute before:-inset-x-2 before:-inset-y-3 before:content-[""]',
                     unit === value ? 'border-ink text-ink' : 'border-transparent text-stone',
                   )}
                 >
@@ -228,7 +228,7 @@ export function SizeGuide({ className, compact = false, chosen, onChoose }: Prop
                       key={entry.size}
                       type="button"
                       className={cn(
-                        'absolute -translate-x-1/2 text-[10px] tracking-[0.08em] before:absolute before:-inset-x-2 before:-inset-y-3 before:content-['']',
+                        'absolute -translate-x-1/2 text-[10px] tracking-[0.08em] before:absolute before:-inset-x-2 before:-inset-y-3 before:content-[""]',
                         nearest.size === entry.size ? 'text-ink' : 'text-stone',
                       )}
                       style={{ left: `${left}%` }}
