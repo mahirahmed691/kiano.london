@@ -7,9 +7,9 @@ export function houseAppNow() {
 export function installedHouseNow() {
   if (typeof window === 'undefined') return false
   const standalone = window.matchMedia('(display-mode: standalone)').matches
-  const fullscreen = window.matchMedia('(display-mode: fullscreen)').matches
   const ios = Boolean((window.navigator as Navigator & { standalone?: boolean }).standalone)
-  return standalone || fullscreen || ios
+  // Browser F11 also reports display-mode: fullscreen, so only standalone counts as installed.
+  return standalone || ios
 }
 
 export function useHouseApp() {
@@ -31,7 +31,6 @@ export function useInstalledHouse() {
 
   useEffect(() => {
     const standalone = window.matchMedia('(display-mode: standalone)')
-    const fullscreen = window.matchMedia('(display-mode: fullscreen)')
     const sync = () => {
       const next = installedHouseNow()
       document.documentElement.classList.toggle('shell-installed', next)
@@ -39,10 +38,8 @@ export function useInstalledHouse() {
     }
     sync()
     standalone.addEventListener('change', sync)
-    fullscreen.addEventListener('change', sync)
     return () => {
       standalone.removeEventListener('change', sync)
-      fullscreen.removeEventListener('change', sync)
       document.documentElement.classList.remove('shell-installed')
     }
   }, [])
