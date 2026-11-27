@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { HouseClock } from '@/components/brand/HouseClock'
 import { Wordmark } from '@/components/brand/Wordmark'
 import { AdminNavLink } from '@/components/layout/AdminNavLink'
+import { HeaderSignIn } from '@/components/layout/HeaderSignIn'
 import { MegaMenu } from '@/components/layout/MegaMenu'
 import { MobileNav } from '@/components/layout/MobileNav'
 import { WordLink } from '@/components/notices/WordLink'
@@ -74,15 +75,7 @@ export function Header() {
                 installed && '!hidden',
               )}
             />
-            <NavLink
-              to="/account"
-              className={cn(
-                'house-installed-hide hidden text-[10px] uppercase tracking-[0.28em] transition-opacity hover:opacity-70 md:inline',
-                installed && '!hidden',
-              )}
-            >
-              Account
-            </NavLink>
+            <HeaderSignIn className={cn('house-installed-hide', installed && '!hidden')} />
             <span className="flex items-center gap-3 md:gap-3.5">
               {/* Decorative; dropped on phones so the right side never runs into the centred mark. */}
               <span className="hidden sm:inline-flex">
