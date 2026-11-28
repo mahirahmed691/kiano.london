@@ -29,12 +29,13 @@ export function PieceHero({
   return (
     <section
       ref={ref}
+      data-still
       className="relative min-h-[100svh] snap-start overflow-hidden bg-night"
     >
       <img
         src={image.src}
         alt={image.alt}
-        className="still-in absolute inset-0 size-full object-cover"
+        className="still-in still-drift absolute inset-0 size-full object-cover"
         style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
         fetchPriority="high"
         loading="eager"

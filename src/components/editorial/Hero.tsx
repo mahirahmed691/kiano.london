@@ -49,11 +49,11 @@ export function Hero({
   const plateCaption = quiet && Boolean(kicker || title)
 
   return (
-    <section className={cn('relative flex items-end overflow-hidden', heightClass[minHeight])}>
+    <section data-still className={cn('relative flex items-end overflow-hidden', heightClass[minHeight])}>
       <img
         src={image}
         alt={imageAlt}
-        className="still-in absolute inset-0 h-full w-full object-cover"
+        className="still-in still-drift absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition }}
         fetchPriority={priority ? 'high' : undefined}
         loading={priority ? 'eager' : 'lazy'}
