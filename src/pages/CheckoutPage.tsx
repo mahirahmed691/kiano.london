@@ -168,9 +168,9 @@ export function CheckoutPage() {
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Your bag is empty.
         </Display>
-        <Body className="mt-6">The bag is empty. Choose a piece first.</Body>
+        <Body className="mt-6">Choose a colour and size to get started.</Body>
         <div className="mt-10 flex flex-wrap items-center gap-6">
-          <Button to="/shop">The Shop</Button>
+          <Button to="/shop">Shop now</Button>
           {tillProofOpen ? (
             <TextLink to="/shop/till-proof">The proof, one pound</TextLink>
           ) : null}
