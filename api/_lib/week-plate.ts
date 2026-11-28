@@ -71,7 +71,7 @@ export async function sendWeekPlate() {
 
   const pushed = await pushPlateToDevices(
     week.name,
-    `This week · ${week.place}. ${line}`,
+    `This week${week.place ? ` · ${week.place}` : ''}. ${line}`,
     stillsHash(week),
   )
 
