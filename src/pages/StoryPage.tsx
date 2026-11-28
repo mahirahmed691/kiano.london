@@ -56,19 +56,18 @@ export function StoryPage() {
         <Container>
           <EditorialSplit
             image="/images/look-lanesborough.jpg"
-            imageAlt="A white Emirati thobe at The Lanesborough, Hyde Park Corner."
+            imageAlt="A white thobe worn outside a stone building."
             objectPosition="center 22%"
             imageOn="left"
           >
-            <Eyebrow>Hyde Park Corner</Eyebrow>
+            <Eyebrow>The lookbook</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">The white column.</Display>
             <Body className="mt-6">
-              The stills are the line as it is worn: London stone, a quiet column, a
-              caption that ends with the name of the house. Not a second look for a feed.
+              The stills are the line as it is worn: stone, a quiet column, a caption
+              that ends with the name of the house. Not a second look for a feed.
             </Body>
             <Body className="mt-4">
-              This plate sits in the book as Hyde Park Corner. When it is the week, it
-              opens the house.
+              When it is the week, this still opens the house.
             </Body>
             <div className="mt-8">
               <TextLink to="/stills#lanesborough-white">The stills</TextLink>

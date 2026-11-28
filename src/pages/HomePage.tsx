@@ -164,7 +164,7 @@ function BookLook({ plate, lastWeek }: { plate: InstagramPlate; lastWeek: boolea
       />
       <StillCaption
         to={href}
-        kicker={lastWeek ? 'Lookbook · last week' : `Lookbook · ${plate.place}`}
+        kicker={lastWeek ? 'Lookbook · last week' : plate.place ? `Lookbook · ${plate.place}` : 'Lookbook'}
         title={plate.name}
         label={`View ${plate.name} in the lookbook`}
       >

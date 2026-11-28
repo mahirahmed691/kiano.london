@@ -47,7 +47,7 @@ export function StillsPage() {
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
-              <Eyebrow>This week · {week.place}</Eyebrow>
+              <Eyebrow>This week{week.place ? ` · ${week.place}` : ''}</Eyebrow>
               <Display as="h1" className="mt-4 text-4xl md:text-5xl lg:text-6xl">
                 The lookbook.
               </Display>
@@ -57,7 +57,7 @@ export function StillsPage() {
             </Reveal>
             <Reveal delay={100} className="lg:col-span-6 lg:pt-10">
               <Body>
-                One still a week, in this order. London stone, the column, a quiet line.
+                One still a week, in this order. Stone, the column, a quiet line.
                 {` ${creedWoven}`} The house does not invent a second look for a feed.
               </Body>
               <Body className="mt-6">
@@ -145,9 +145,11 @@ export function StillsPage() {
                         {current ? ' · This week' : ''}
                       </p>
                       <Display className="mt-4 text-3xl md:text-4xl">{plate.name}</Display>
-                      <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">
-                        {plate.place}
-                      </p>
+                      {plate.place ? (
+                        <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-stone">
+                          {plate.place}
+                        </p>
+                      ) : null}
                       {copy.lines.map((line) => (
                         <Body key={line} className="mt-4 max-w-sm">
                           {line}

@@ -53,7 +53,7 @@ const pages: Record<string, PageMeta> = {
       `A London house of the garment. ${creedSpoken} ${creedMotto}`,
     path: '/story',
     image: '/images/look-lanesborough.jpg',
-    imageAlt: 'A white Emirati thobe at The Lanesborough, Hyde Park Corner.',
+    imageAlt: 'A white thobe worn outside a stone building.',
   },
   '/stills': {
     title: 'Lookbook — Kiano London',
