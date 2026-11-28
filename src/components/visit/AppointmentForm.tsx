@@ -199,7 +199,7 @@ export function AppointmentForm() {
             onChange={(event) => setPiece(event.target.value)}
             className={cn(fieldClass, 'appearance-none')}
           >
-            <option value="">To be discussed</option>
+            <option value="">Not sure yet</option>
             {products.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.cut === 'Jubbah' ? productLineName(item) : item.name}
@@ -220,7 +220,7 @@ export function AppointmentForm() {
             }}
             className={cn(fieldClass, 'appearance-none')}
           >
-            <option value="">To be fitted</option>
+            <option value="">Not sure</option>
             {thobeSizes.map((value) => (
               <option key={value} value={String(value)}>
                 {value}
