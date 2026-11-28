@@ -61,7 +61,7 @@ export function Header() {
               type="button"
               className={cn(
                 'house-app-menu relative z-50 flex h-11 w-11 items-center justify-center',
-                !installed && 'min-[1360px]:hidden',
+                !installed && 'lg:hidden',
               )}
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
@@ -96,7 +96,7 @@ export function Header() {
             <HeaderSignIn className={cn('house-installed-hide', installed && '!hidden')} />
             <span className="flex items-center gap-3 md:gap-3.5">
               {/* Decorative; dropped on phones so the right side never runs into the centred mark. */}
-              <span className="hidden sm:inline-flex">
+              <span className="hidden sm:inline-flex lg:hidden">
                 <HouseClock />
               </span>
               <button

@@ -111,7 +111,7 @@ export function MobileNav({ open, onClose }: Props) {
       className={cn(
         'fixed inset-0 z-40 overflow-y-auto bg-ivory text-ink transition-opacity duration-500',
         open ? 'opacity-100' : 'pointer-events-none opacity-0',
-        !installed && 'min-[1360px]:hidden',
+        !installed && 'lg:hidden',
       )}
       aria-hidden={!open}
     >
