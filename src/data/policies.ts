@@ -7,7 +7,7 @@ export const returnWindowDays = 14
 export const deliveryCountries = shippingCountries.map((country) => country.name)
 
 export const trustPoints = [
-  { title: 'Free delivery', detail: 'On every order, to every country we send to.' },
+  { title: 'Tracked delivery', detail: 'From £3.95 in the UK. Shown before you pay.' },
   { title: '14-day returns', detail: 'Free return postage within the UK.' },
   { title: 'Secure checkout', detail: 'Card payments are handled by Stripe.' },
   { title: 'Made to order', detail: 'Each piece is cut for you, in small runs.' },
@@ -15,9 +15,9 @@ export const trustPoints = [
 ] as const
 
 export const returnsSummary =
-  'Free delivery. Returns within 14 days of delivery: unworn, unwashed, with tags attached. Return postage is free within the UK. We do not offer exchanges.'
+  'Tracked delivery, charged at checkout. Returns within 14 days of delivery: unworn, unwashed, with tags attached. Return postage is free within the UK. We do not offer exchanges.'
 
-/** Product page: the delivery line already says delivery is free. */
+/** Product page: the delivery line above gives the charges. */
 export const returnsShort =
   'Returns within 14 days of delivery: unworn, unwashed, with tags attached. Free return postage in the UK; no exchanges.'
 
@@ -51,7 +51,7 @@ export const returnsPolicy = [
 export const deliveryPolicy = [
   {
     title: 'Cost',
-    body: 'Delivery is free on every order.',
+    body: 'Delivery is tracked and charged per order, shown before you pay. UK £3.95 (2–3 working days once sent) or £5.95 for the next working day. France, Germany and Italy £12. The UAE, Saudi Arabia, Kuwait, Qatar, Bahrain and Oman £15. The United States £25, with US duties paid by us.',
   },
   {
     title: 'Where we deliver',

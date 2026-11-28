@@ -114,7 +114,7 @@ const pages: Record<string, PageMeta> = {
   },
   '/delivery': {
     title: 'Delivery — Kiano London',
-    description: 'Free delivery on every order. Made to order, with the ready week and tracking sent by email.',
+    description: 'Tracked delivery from £3.95 in the UK, £12 to Europe, £15 to the Gulf, £25 to the US. Made to order, with the ready week and tracking sent by email.',
     path: '/delivery',
   },
   '/letters/confirmed': {
@@ -163,7 +163,7 @@ const pages: Record<string, PageMeta> = {
   },
   '/checkout': {
     title: 'Reserve the cut — Kiano London',
-    description: 'Reserve a piece from the house block. Made to order. Carriage included.',
+    description: 'Reserve a piece from the house block. Made to order. Tracked delivery from £3.95.',
     path: '/checkout',
     image: '/images/cutting-room.jpg',
     imageAlt: 'Paper, shears, and cloth: the work of a thobe.',

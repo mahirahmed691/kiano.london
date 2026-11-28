@@ -2,7 +2,7 @@ import Stripe from 'stripe'
 import { getProduct, productLineName, thobeSizes } from '../src/data/products.js'
 import {
   parseCheckoutDetails,
-  shippingCountryCodes,
+  deliveryFor,
   asE164,
   type CheckoutDetails,
 } from '../src/data/shipping.js'
@@ -67,9 +67,9 @@ export async function POST(request: Request) {
 }
 
 async function createSession(request: Request) {
-  let body: { items?: BasketItem[]; details?: unknown }
+  let body: { items?: BasketItem[]; details?: unknown; delivery?: unknown }
   try {
-    body = (await request.json()) as { items?: BasketItem[]; details?: unknown }
+    body = (await request.json()) as { items?: BasketItem[]; details?: unknown; delivery?: unknown }
   } catch {
     return Response.json({ error: 'The bag could not be read.' }, { status: 400 })
   }
@@ -79,6 +79,12 @@ async function createSession(request: Request) {
     return Response.json({ error: parsed.error }, { status: 400 })
   }
   const details = parsed.details
+
+  // Delivery is priced here, from the country, never from the browser's figure.
+  const delivery = deliveryFor(details.country, typeof body.delivery === 'string' ? body.delivery : null)
+  if (!delivery) {
+    return Response.json({ error: 'We do not deliver to that country yet.' }, { status: 400 })
+  }
 
   const items = body.items ?? []
   if (items.length === 0) {
@@ -174,14 +180,16 @@ async function createSession(request: Request) {
       billing_address_collection: 'required',
       phone_number_collection: { enabled: true },
       shipping_address_collection: {
-        allowed_countries: [...shippingCountryCodes],
+        // The address and price were settled on our checkout page; keep Stripe to that country.
+        allowed_countries: [details.country as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry],
       },
       shipping_options: [
         {
           shipping_rate_data: {
-            display_name: 'Carriage, made to order',
+            display_name: hasProof ? 'Proof, not sent' : `${delivery.label} (${delivery.days})`,
             type: 'fixed_amount',
-            fixed_amount: { amount: 0, currency: 'gbp' },
+            fixed_amount: { amount: hasProof ? 0 : delivery.pence, currency: 'gbp' },
+            metadata: { delivery: delivery.id },
           },
         },
       ],

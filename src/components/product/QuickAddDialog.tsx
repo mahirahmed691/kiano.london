@@ -198,7 +198,7 @@ export function QuickAddDialog() {
                     <SizeGuide className="pb-2" compact chosen={size} onChoose={chooseSize} />
                   ) : null}
                   <p className="border-t border-rule pt-4 text-[13px] font-light leading-relaxed text-stone">
-                    Carriage included. Made to order. {packingNote}
+                    Delivery from £3.95. Made to order. {packingNote}
                   </p>
                   <TextLink to={productPath(current)}>The piece</TextLink>
                 </div>

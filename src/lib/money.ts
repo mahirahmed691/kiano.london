@@ -14,3 +14,8 @@ export function formatGbpExact(pence: number) {
     maximumFractionDigits: 2,
   }).format(pence / 100)
 }
+
+/** £79 for whole pounds, £82.95 when there are pence. */
+export function formatGbpSmart(pence: number) {
+  return pence % 100 === 0 ? formatGbp(pence) : formatGbpExact(pence)
+}

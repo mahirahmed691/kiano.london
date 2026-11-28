@@ -1,7 +1,7 @@
 /**
  * The seller (Prolific Digital Tech Ltd) is not VAT-registered, so no VAT is charged or shown.
  * When it registers, set VAT_REGISTERED to true and add site.trader.vatNumber.
- * Registered: UK VAT 20% inclusive, VAT = round(gross × 20/120). Carriage is included and £0.
+ * Registered: UK VAT 20% inclusive, VAT = round(gross × 20/120), delivery included.
  */
 export const VAT_REGISTERED: boolean = false
 export const VAT_RATE = VAT_REGISTERED ? 20 : 0
@@ -20,5 +20,5 @@ export function splitVat(grossPence: number) {
 }
 
 export const vatMethodNote = VAT_REGISTERED
-  ? 'UK VAT 20% inclusive. For each paid line, VAT is round(gross × 20/120) and net is the remainder. Carriage is included and £0. This is a simple tax invoice, not a Making Tax Digital return.'
-  : 'The seller is not registered for VAT. No VAT is charged. Carriage is included and £0.'
+  ? 'UK VAT 20% inclusive. For each paid line, VAT is round(gross × 20/120) and net is the remainder. Delivery is charged per order and shown as its own line. This is a simple tax invoice, not a Making Tax Digital return.'
+  : 'The seller is not registered for VAT. No VAT is charged. Delivery is charged per order and shown as its own line.'
