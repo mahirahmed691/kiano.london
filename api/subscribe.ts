@@ -150,6 +150,7 @@ export async function GET(request: Request) {
     if (unsubToken) {
       const welcome = {
         subject: 'Welcome to the house — Kiano London',
+        preheader: 'One cut, three colours, made to order in London.',
         heading: 'Welcome to the house.',
         body: [
           'Thank you for joining the list. We write a few times a year: a new cloth, a week in the lookbook, and when a piece can be reserved before it is gone.',
@@ -157,6 +158,7 @@ export async function GET(request: Request) {
         ].join('\n\n'),
         ctaLabel: 'The Shop',
         ctaHref: `${origin}/shop`,
+        products: true,
       }
       const url = unsubscribeUrl(unsubToken)
       await sendMail({
