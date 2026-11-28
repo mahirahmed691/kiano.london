@@ -170,7 +170,7 @@
         }
         function lift() {
           root.style.overflow = ''
-          if (!canWindow || !pre.complete) return curtain()
+          if (!canWindow || !(pre.complete || pre.naturalWidth > 0)) return curtain()
           // Where the KK sits on screen (its box inside the 807 x 351 lockup).
           var mk = el.querySelector('.kl-mark').getBoundingClientRect()
           var s = mk.width / 807
