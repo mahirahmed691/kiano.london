@@ -41,7 +41,7 @@ const legal = [
   { label: 'Cookies', to: '/cookies' },
 ] as const
 
-const heading = 'text-[10px] uppercase tracking-[0.32em] text-ivory/50'
+const heading = 'text-[10px] uppercase tracking-[0.32em] text-ivory/65'
 const link = 'text-[14px] font-light text-ivory/80 transition-colors duration-300 hover:text-ivory'
 
 export function Footer() {
@@ -99,7 +99,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-ivory/12 pt-7 text-[11px] tracking-[0.06em] text-ivory/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-4 border-t border-ivory/12 pt-7 text-[11px] tracking-[0.06em] text-ivory/65 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {site.fullName}. Est. {site.established}.
           </p>
