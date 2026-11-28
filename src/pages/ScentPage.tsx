@@ -129,7 +129,7 @@ export function ScentPage() {
                 not yet reserved.
               </Body>
               <div className="mt-8 flex flex-wrap items-center gap-6">
-                <TextLink to="/visit">Visit by appointment</TextLink>
+                <TextLink to="/contact">Contact us</TextLink>
                 <TextLink to="/shop">The Shop</TextLink>
                 <TextLink to="/collection">The Collection</TextLink>
               </div>

@@ -143,7 +143,7 @@ export function HouseProfileForm() {
   return (
     <form onSubmit={(event) => void onSubmit(event)} className="mt-6 space-y-8" autoComplete="on">
       <Body>
-        Written once, then filled in for you at checkout, visits and returns. Your size is
+        Written once, then filled in for you at checkout and for returns. Your size is
         chosen first on every piece.
       </Body>
 

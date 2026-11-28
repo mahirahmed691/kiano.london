@@ -44,7 +44,7 @@ export const sizeMeasures: { key: MeasureKey; title: string; copy: string }[] = 
 ]
 
 export const sizeNote =
-  'Chest, length and shoulder as cut. A fitting will move a centimetre where it matters. If you are between sizes, write; we cut from the larger and take in.'
+  'Chest, length and shoulder as cut. If you are between sizes, write to us and we will help you choose.'
 
 export const measureStill = {
   src: '/images/look-lanesborough.jpg',
@@ -182,7 +182,7 @@ function phrase(fit: FitCall[]): CutReading {
     const words = list(close.map((call) => call.key))
     return {
       size,
-      copy: `${size}. ${capital(words)} ${close.length === 1 ? 'is' : 'are'} a centimetre past the cut. A fitting can move it.${ease}`,
+      copy: `${size}. ${capital(words)} ${close.length === 1 ? 'is' : 'are'} a centimetre past the cut. Write to us if unsure.${ease}`,
     }
   }
 

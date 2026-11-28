@@ -46,7 +46,7 @@ export function CookiesPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The line on this device</p>
             <Body className="mt-3">
-              After a visit, the house, the shop, and the collection can be read without a network.
+              After your first visit to the site, the shop and the collection can be read without a network.
               Remaining cuts are kept from the last time they were fetched. The bag stays in this
               browser. Checkout, your account and emails need a connection.
             </Body>

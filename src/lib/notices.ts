@@ -83,6 +83,7 @@ export const quietLetterPaths = [
   '/delivery',
   '/size-guide',
   '/visit',
+  '/contact',
   '/admin',
   '/letters/confirmed',
   '/letters/unsubscribed',

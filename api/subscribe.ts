@@ -150,11 +150,11 @@ export async function GET(request: Request) {
     if (unsubToken) {
       const welcome = {
         subject: 'Welcome to the house — Kiano London',
-        preheader: 'One cut, three colours, made to order in London.',
+        preheader: 'One cut, three colours, handmade in the UAE.',
         heading: 'Welcome to the house.',
         body: [
           'Thank you for joining the list. We write a few times a year: a new cloth, a week in the lookbook, and when a piece can be reserved before it is gone.',
-          'Every Urban Emirati is cut from one house block, finished by hand and made to order in five sizes.',
+          'Every Urban Emirati is cut and sewn by hand in the UAE, made to order in five sizes.',
         ].join('\n\n'),
         ctaLabel: 'The Shop',
         ctaHref: `${origin}/shop`,

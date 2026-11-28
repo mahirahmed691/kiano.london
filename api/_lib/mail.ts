@@ -108,16 +108,16 @@ export function visitLetterHtml(input: { name: string; piece: string; size: stri
   const size = escapeHtml(input.size)
   const named = `<p style="margin:16px 0 0;">You named ${piece}, ${size}.</p>`
   return letterFrame(
-    'The letter is held.',
-    `<p style="margin:0;">${name}, the request is with the house. This is not a booking. We write when a morning can be kept.</p>${named}`,
+    'We have your message.',
+    `<p style="margin:0;">${name}, thank you for writing. We will reply within two working days.</p>${named}`,
     `Questions: ${site.email}.`,
   )
 }
 
 export function visitLetterText(input: { name: string; piece: string; size: string }) {
   return [
-    `${input.name}, the request is with the house.`,
-    'This is not a booking. We write when a morning can be kept.',
+    `${input.name}, thank you for writing.`,
+    'We will reply within two working days.',
     `You named ${input.piece}, ${input.size}.`,
     `Questions: ${site.email}.`,
   ].join('\n\n')

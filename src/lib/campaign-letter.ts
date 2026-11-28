@@ -132,14 +132,14 @@ export function campaignHtml(
             ${cta}
             ${draft.products ? productRow(origin) : ''}
             <tr>
-              <td style="padding-top:40px;font-family:${serif};font-size:18px;font-style:italic;color:${ink};">The atelier, London</td>
+              <td style="padding-top:40px;font-family:${serif};font-size:18px;font-style:italic;color:${ink};">Kiano London</td>
             </tr>
             <tr>
               <td style="padding-top:44px;">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${rule};">
                   <tr>
                     <td align="center" style="padding-top:22px;font-family:${sans};font-size:10px;letter-spacing:0.24em;text-transform:uppercase;line-height:2;">
-                      ${link('Shop', '/shop')} &nbsp;·&nbsp; ${link('Lookbook', '/stills')} &nbsp;·&nbsp; ${link('Size guide', '/size-guide')} &nbsp;·&nbsp; ${link('Visit', '/visit')}
+                      ${link('Shop', '/shop')} &nbsp;·&nbsp; ${link('Lookbook', '/stills')} &nbsp;·&nbsp; ${link('Size guide', '/size-guide')} &nbsp;·&nbsp; ${link('Contact', '/contact')}
                     </td>
                   </tr>
                   <tr>
@@ -173,7 +173,7 @@ export function campaignText(
     draft.products
       ? jubbahs.map((piece) => `${productLineName(piece)}, ${piece.price}: ${absolute(productPath(piece), origin)}`).join('\n')
       : null,
-    'The atelier, London',
+    'Kiano London',
     `You are receiving this because you joined the Kiano London list.\nUnsubscribe: ${unsubscribeUrl}\nQuestions: ${siteEmail}`,
   ]
     .filter(Boolean)

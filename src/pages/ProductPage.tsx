@@ -154,8 +154,8 @@ export function ProductPage() {
   }
 
   const enquireTo = size
-    ? `/visit?piece=${product.id}&size=${size}`
-    : `/visit?piece=${product.id}`
+    ? `/contact?piece=${product.id}&size=${size}`
+    : `/contact?piece=${product.id}`
   const remaining = size && stock ? stock[size] : undefined
   const held = remaining === 0
 
@@ -383,7 +383,7 @@ export function ProductPage() {
                     .
                   </p>
                   <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-                    <TextLink to={enquireTo}>Enquire to visit</TextLink>
+                    <TextLink to={enquireTo}>Ask a question</TextLink>
                     <ShareLink title={share.title} text={share.description} path={share.path} />
                   </div>
                 </div>

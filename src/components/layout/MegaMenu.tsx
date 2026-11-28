@@ -13,7 +13,7 @@ type MegaItem = {
   to: string
 }
 
-/** Four places, in reading order. The house gathers story, making, scent and visits. */
+/** Four places, in reading order. The house gathers story, making, scent and contact. */
 const navItems: (MegaItem | { id?: undefined; label: string; to: string })[] = [
   { id: 'shop', label: 'Shop', to: '/shop' },
   { id: 'collection', label: 'Collection', to: '/collection' },
@@ -90,7 +90,7 @@ function HouseLinks() {
           <TextLink to="/craftsmanship">Craftsmanship</TextLink>
         </li>
         <li>
-          <TextLink to="/visit">Visit</TextLink>
+          <TextLink to="/contact">Contact</TextLink>
         </li>
       </ul>
     </div>
@@ -159,7 +159,7 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
       <div className="lg:col-span-5">
         <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The House</p>
         <p className="mt-6 max-w-xl font-display text-3xl font-light leading-snug tracking-[-0.02em] text-ink md:text-4xl">
-          A London atelier, how the column is cut, and the rooms where it is finished.
+          Handmade in the UAE and made to order: how the Urban Emirati is cut and sewn.
         </p>
         <ul className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-4">
           <li>
@@ -175,7 +175,7 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
             <TextLink to="/scent">Scent</TextLink>
           </li>
           <li>
-            <TextLink to="/visit">Visit the atelier</TextLink>
+            <TextLink to="/contact">Contact</TextLink>
           </li>
           <li>
             <TextLink to="/size-guide">Size guide</TextLink>
@@ -201,12 +201,12 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
       </div>
       <div className="flex flex-col justify-between gap-10 lg:col-span-3 lg:border-l lg:border-rule lg:pl-10">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">By appointment</p>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Questions</p>
           <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
-            Fittings in London. Feel the cloth, try the sizes, leave with the right one.
+            Not sure of your size or have a question about an order? Write to us.
           </p>
           <div className="mt-6">
-            <TextLink to="/visit">Book a visit</TextLink>
+            <TextLink to="/contact">Contact us</TextLink>
           </div>
         </div>
       </div>

@@ -26,7 +26,7 @@ export const houseMenuHouse: HouseMenuSection = {
     { label: 'Story', to: '/story' },
     { label: 'Craftsmanship', to: '/craftsmanship' },
     { label: 'The making', to: '/craftsmanship-details' },
-    { label: 'Visit', to: '/visit' },
+    { label: 'Contact', to: '/contact' },
   ],
 }
 

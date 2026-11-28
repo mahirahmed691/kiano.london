@@ -9,7 +9,7 @@ export const creedSpoken = 'Discipline. Craftsmanship. Purpose.'
 export const creedWoven =
   'Discipline, craftsmanship, and purpose woven into every garment.'
 
-export const creedIntent = 'Hand-finished by artisans, made to be worn with intent.'
+export const creedIntent = 'Handmade in the UAE, made to be worn with intent.'
 
 export const creedMotto = 'Built to last. Worn with purpose.'
 

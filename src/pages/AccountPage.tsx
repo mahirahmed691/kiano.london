@@ -363,7 +363,7 @@ export function AccountPage() {
       {clerkEnabled ? (
         <AccountGate />
       ) : (
-        <Body className="mt-6">Account is not configured yet. Write to the atelier.</Body>
+        <Body className="mt-6">Account is not configured yet. Please contact us at atelier@kiano.london.</Body>
       )}
       <AccountList />
       <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">

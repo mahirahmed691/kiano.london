@@ -21,10 +21,11 @@ export function SizeGuidePage() {
           Size guide.
         </Display>
         <Body className="mt-6">
-          Garment measurements for each size. If you are between sizes, or would like a fitting,{' '}
-          <Link to="/visit" className="underline underline-offset-4">
-            book an atelier visit
-          </Link>
+          Garment measurements for each size. If you are between sizes,{' '}
+          <Link to="/contact" className="underline underline-offset-4">
+            write to us
+          </Link>{' '}
+          and we will help you choose
           .
         </Body>
         <div className="mt-10">

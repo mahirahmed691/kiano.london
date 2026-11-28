@@ -169,7 +169,7 @@ export async function POST(request: Request) {
     kind === 'return'
       ? await sendMail({
           to: email,
-          subject: 'The letter is held — Kiano London',
+          subject: 'We have your message — Kiano London',
           text: returnAskLetterText({ name, piece, size: sizeLine, reference }),
           html: returnAskLetterHtml({ name, piece, size: sizeLine, reference }),
           idempotencyKey: `return-ask/${email}/${reference}`,
@@ -177,14 +177,14 @@ export async function POST(request: Request) {
       : kind === 'wait'
         ? await sendMail({
             to: email,
-            subject: 'The letter is held — Kiano London',
+            subject: 'We have your message — Kiano London',
             text: waitAskLetterText({ name, piece, size: sizeLine }),
             html: waitAskLetterHtml({ name, piece, size: sizeLine }),
             idempotencyKey: `wait-ask/${email}/${productId}/${size}`,
           })
         : await sendMail({
             to: email,
-            subject: 'The letter is held — Kiano London',
+            subject: 'We have your message — Kiano London',
             text: visitLetterText({ name, piece, size: sizeLine }),
             html: visitLetterHtml({ name, piece, size: sizeLine }),
             idempotencyKey: `visit-confirm/${email}/${day}`,

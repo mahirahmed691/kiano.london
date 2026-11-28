@@ -17,12 +17,12 @@ export const privacyLetter: LegalLetter = {
   lead: 'We hold what is needed to cut a garment, keep an account, or write when you asked us to. We do not sell a list.',
   blocks: [
     {
-      kicker: 'A visit or a note',
-      copy: 'The appointment form opens mail to the atelier. That letter lives in the atelier inbox.',
+      kicker: 'A question',
+      copy: 'The contact form sends your message to our inbox. It is kept there to reply to you.',
     },
     {
       kicker: 'Account',
-      copy: 'Member sign-in is Clerk. Name and email sit there. The size you wear, delivery name, telephone, and address are kept with the house so checkout, a visit, a size alert, and a return need not be written again.',
+      copy: 'Member sign-in is Clerk. Name and email sit there. The size you wear, delivery name, telephone, and address are kept with the house so checkout, a question, a size alert, and a return need not be written again.',
     },
     {
       kicker: 'A reservation',
@@ -64,7 +64,7 @@ export const cookiesLetter: LegalLetter = {
     },
     {
       kicker: 'The line on this device',
-      copy: 'After a visit, the house, the shop, and the collection can be read without a network. Checkout, your account and emails need a connection.',
+      copy: 'After your first visit to the site, the shop and the collection can be read without a network. Checkout, your account and emails need a connection.',
     },
     {
       kicker: 'Payment',

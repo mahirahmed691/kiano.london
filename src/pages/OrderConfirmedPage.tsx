@@ -39,7 +39,7 @@ function visitHrefFor(order: CheckoutOrder) {
   if (order.customerEmail) query.set('email', order.customerEmail)
   if (order.customerPhone) query.set('tel', order.customerPhone)
   const qs = query.toString()
-  return qs ? `/visit?${qs}` : '/visit'
+  return qs ? `/contact?${qs}` : '/contact'
 }
 
 function ReservedName({ line }: { line: CheckoutOrder['lines'][number] }) {
@@ -265,9 +265,9 @@ export function OrderConfirmedPage() {
                 </TextLink>
               ) : null}
               {order ? (
-                <TextLink to={visitHrefFor(order)}>Enquire to visit</TextLink>
+                <TextLink to={visitHrefFor(order)}>Ask a question</TextLink>
               ) : (
-                <TextLink to="/visit">Visit by appointment</TextLink>
+                <TextLink to="/contact">Contact us</TextLink>
               )}
             </div>
           </div>
