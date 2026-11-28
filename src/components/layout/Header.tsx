@@ -21,6 +21,16 @@ export function Header() {
     setMenuOpen(false)
   }, [pathname])
 
+  // After the first screenful the header slims to the mark alone.
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [pathname])
+  const compact = scrolled && !menuOpen
+
   return (
     <>
       <a
@@ -30,11 +40,19 @@ export function Header() {
         Skip to content
       </a>
       <header
-        className="fixed inset-x-0 top-0 z-50 bg-black text-ivory"
+        className="fixed inset-x-0 top-0 z-50 bg-[rgb(8_7_6/0.88)] text-ivory backdrop-blur-md backdrop-saturate-150"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="relative flex h-[5.25rem] items-center justify-between border-b border-ivory/10 px-5 md:h-[5.75rem] md:px-12 lg:px-16">
-          <Wordmark className="pointer-events-auto absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
+        <div
+          className={cn(
+            'relative flex items-center justify-between border-b border-ivory/10 px-5 transition-[height] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:px-12 lg:px-16',
+            compact ? 'h-[3.75rem] md:h-[4.25rem]' : 'h-[5.25rem] md:h-[5.75rem]',
+          )}
+        >
+          <Wordmark
+            compact={compact}
+            className="pointer-events-auto absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+          />
 
           <div className="flex min-w-0 items-center">
             <MegaMenu key={pathname} inverted installed={installed} />
