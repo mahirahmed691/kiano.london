@@ -100,7 +100,11 @@
       @keyframes kl-settle { to { opacity: 0.7; letter-spacing: 0.5em; padding-left: 0.5em; } }
       @keyframes kl-fade { to { opacity: 1; } }
       /* The first photograph waits behind the curtain, then fades and settles as it lifts. */
-      html.kl-hold .still-drift, html.kl-hold .still-in { animation-play-state: paused !important; }
+      html.kl-hold .still-drift, html.kl-hold .still-in { animation: none !important; opacity: 1; transform: scale(1.14); }
+      /* The window: everything but the mark falls away, then the camera goes through the KK. */
+      #kl-intro.kl-open .kl-word, #kl-intro.kl-open .kl-line, #kl-intro.kl-open .kl-foot,
+      #kl-intro.kl-open .kl-sheen, #kl-intro.kl-open .kl-mark img { opacity: 0 !important; transition: opacity 0.35s ease; }
+      #kl-intro.kl-open { transition: none; }
       @media (max-width: 640px) { #kl-intro .kl-foot { padding: 0 20px; bottom: 22px; } #kl-intro .kl-made { display: none; } }
       @media (prefers-reduced-motion: reduce) { #kl-intro { display: none; } }
     </style>
@@ -137,7 +141,7 @@
         function tick() {
           if (done) return
           var t = Date.now() - start
-          var target = ready && t > 1700 ? 100 : Math.min(90, 90 * (1 - Math.pow(1 - Math.min(t / 1800, 1), 3)))
+          var target = ready && t > 1500 ? 100 : Math.min(90, 90 * (1 - Math.pow(1 - Math.min(t / 1600, 1), 3)))
           shown += (target - shown) * (ready ? 0.22 : 0.12)
           if (target - shown < 0.6) shown = target
           var n = Math.round(shown)
@@ -147,13 +151,61 @@
           requestAnimationFrame(tick)
         }
         requestAnimationFrame(tick)
-        function lift() {
+        var MASK = '/images/kiano-kk-mask.svg'
+        var canWindow = window.CSS && CSS.supports && (CSS.supports('mask-composite', 'exclude') || CSS.supports('-webkit-mask-composite', 'xor'))
+        if (canWindow) { var pre = new Image(); pre.src = MASK }
+        function curtain() {
           el.classList.add('kl-lift')
+          root.classList.remove('kl-hold')
+          setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el) }, 1300)
+        }
+        function setMask(x, y, w, h) {
+          var st = el.style
+          st.webkitMaskImage = st.maskImage = 'url(' + MASK + '), linear-gradient(#000, #000)'
+          st.webkitMaskRepeat = st.maskRepeat = 'no-repeat, no-repeat'
+          st.webkitMaskSize = st.maskSize = w + 'px ' + h + 'px, 100% 100%'
+          st.webkitMaskPosition = st.maskPosition = x + 'px ' + y + 'px, 0 0'
+          if (CSS.supports('mask-composite', 'exclude')) st.maskComposite = 'exclude'
+          else st.webkitMaskComposite = 'xor'
+        }
+        function lift() {
           root.style.overflow = ''
+          if (!canWindow || !(pre.complete || pre.naturalWidth > 0)) return curtain()
+          // Where the KK sits on screen (its box inside the 807 x 351 lockup).
+          var mk = el.querySelector('.kl-mark').getBoundingClientRect()
+          var s = mk.width / 807
+          var kx = mk.left + 297 * s, ky = mk.top + 4 * s
+          var ax = 104 * s, ay = 93 * s // the centre of the upright, inside the letter
+          var vw = window.innerWidth, vh = window.innerHeight
+          var need = (Math.hypot(vw, vh) / (15 * s)) * 1.15
+          // Hold the first photograph large; it settles as we pass through.
+          var stills = document.querySelectorAll('.still-drift, .still-in')
+          for (var i = 0; i < stills.length; i++) {
+            var p = stills[i].style
+            p.animation = 'none'; p.opacity = '1'; p.transform = 'scale(1.14)'
+          }
+          el.classList.add('kl-open')
+          setMask(kx, ky, 207 * s, 189 * s)
           root.classList.remove('kl-hold')
           setTimeout(function () {
-            if (el.parentNode) el.parentNode.removeChild(el)
-          }, 1300)
+            for (var i = 0; i < stills.length; i++) {
+              stills[i].style.transition = 'transform 2.6s cubic-bezier(0.22, 1, 0.36, 1)'
+              stills[i].style.transform = 'scale(1)'
+            }
+            var t0 = performance.now(), D = 1500
+            var sx = kx + ax, sy = ky + ay, cx = vw / 2, cy = vh / 2
+            function frame(now) {
+              var t = Math.min(1, (now - t0) / D)
+              var e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+              var k = Math.exp(Math.log(need) * e)
+              var px = sx + (cx - sx) * e, py = sy + (cy - sy) * e
+              setMask(px - ax * k, py - ay * k, 207 * s * k, 189 * s * k)
+              el.style.opacity = t > 0.72 ? String(1 - (t - 0.72) / 0.28) : '1'
+              if (t < 1) requestAnimationFrame(frame)
+              else if (el.parentNode) el.parentNode.removeChild(el)
+            }
+            requestAnimationFrame(frame)
+          }, 420)
         }
         window.__klIntroReady = function () { ready = true }
         setTimeout(function () { ready = true }, 4000)
