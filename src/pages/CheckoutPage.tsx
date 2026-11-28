@@ -193,7 +193,7 @@ export function CheckoutPage() {
             <Body className="mt-6">
               {proofOnly
                 ? 'One pound. Not a garment. No delivery is charged. Refund the charge from Stripe once the reservation is written.'
-                : `${count} ${count === 1 ? 'piece' : 'pieces'}, made to order after you pay. Delivery is added below. ${packingNote}`}
+                : `${count} ${count === 1 ? 'piece' : 'pieces'}, sent from the UK within 3–5 working days. Delivery is added below. ${packingNote}`}
             </Body>
             {clerkEnabled ? (
               <CheckoutMember

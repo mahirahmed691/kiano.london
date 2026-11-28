@@ -196,8 +196,8 @@ export function OrderConfirmedPage() {
               Thank you, your order is confirmed.
             </Display>
             <Body className="mt-8">
-              We have your payment and your piece is now being made to order. Your account shows each
-              step, and we email you when it is made, packed and sent.{' '}
+              We have your payment. Your order will be sent from the UK within 3–5 working days, and
+              we will email you tracking when it leaves. Your account shows each step.{' '}
               {packingNote}
             </Body>
             {order?.customerEmail ? (
@@ -324,7 +324,7 @@ export function OrderConfirmedPage() {
                   </div>
                 ) : null}
                 <p className="mt-8 text-[12px] font-light leading-relaxed text-stone">
-                  Cloth is held. Not yet on the table. Leaves unscented, tracked.
+                  Being prepared to send. Leaves unscented, tracked.
                 </p>
               </div>
             </aside>

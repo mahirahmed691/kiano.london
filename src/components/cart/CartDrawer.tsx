@@ -150,7 +150,7 @@ export function CartDrawer() {
               <p className="mt-3 text-[12px] font-light leading-relaxed text-stone">
                 {proofOnly
                   ? 'One pound to open the live till. Not a garment. Refund the charge from Stripe once it has landed.'
-                  : 'Delivery from £3.95, added at checkout. Made to order and sent in a garment bag and gift box.'}
+                  : 'Delivery from £3.95, added at checkout. Sent within 3–5 working days in a garment bag and gift box.'}
               </p>
               <Button
                 to="/checkout"

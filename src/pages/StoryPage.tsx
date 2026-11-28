@@ -102,8 +102,8 @@ export function StoryPage() {
               <Reveal delay={140} className="pt-10">
                 <h3 className="font-display text-3xl font-light md:text-4xl">Purpose</h3>
                 <Body className="mt-5">
-                  There is no window dressing. Cloth is shown on the table. A thobe is
-                  tried in natural light, then worn with intent. {creedMotto}
+                  There is no window dressing. One garment, made well in set sizes, to be
+                  worn every day with intent. {creedMotto}
                 </Body>
               </Reveal>
             </div>
@@ -121,11 +121,11 @@ export function StoryPage() {
             objectPosition="center 40%"
             imageOn="right"
           >
-            <Eyebrow>Made to order</Eyebrow>
+            <Eyebrow>How it is made</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">Handmade in the UAE</Display>
             <Body className="mt-6">
-              Each piece is cut and sewn by hand in our workshop in the UAE once you order it,
-              then sent to you. Questions about sizing or an order? Write to us. {creedIntent}
+              Each piece is cut and sewn by hand in our workshop in the UAE, in small runs, and
+              sent to you from the UK. Questions about sizing or an order? Write to us. {creedIntent}
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/contact">Contact us</Button>

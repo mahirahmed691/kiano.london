@@ -8,7 +8,7 @@ import { site } from '@/data/site'
 import { getShareMeta } from '@/lib/share'
 import { usePageMeta } from '@/lib/usePageMeta'
 
-/** Contact. There is no shop or fitting room: every piece is made to order and sent. */
+/** Contact. There is no shop or fitting room: every piece is sent to you. */
 export function VisitPage() {
   usePageMeta(getShareMeta('/contact'))
 
@@ -29,7 +29,7 @@ export function VisitPage() {
           </Display>
           <Body className="mt-6">
             Questions about sizing, an order or delivery? Write to us and we will reply within two
-            working days. Every piece is made to order and sent to you; there is no shop to visit.
+            working days. Every piece is sent to you from the UK; there is no shop to visit.
           </Body>
           <p className="mt-8 text-[15px] font-light">
             <a className="underline underline-offset-4" href={`mailto:${site.email}`}>

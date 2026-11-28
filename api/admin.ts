@@ -1718,7 +1718,7 @@ async function postWork(request: Request): Promise<Response> {
         if (before !== stage && stage === 'cutting') {
           await sendMail({
             to: row.email,
-            subject: 'Your piece is being made — Kiano London',
+            subject: 'We are preparing your order — Kiano London',
             text: cuttingLetterText({ cuts: cutsText, accountUrl: housePath('/account') }),
             html: cuttingLetterHtml({ cuts: cutsText, accountUrl: housePath('/account') }),
             idempotencyKey: `work-cutting/${row.id}`,

@@ -187,11 +187,11 @@ export function ProductPage() {
               url: `${SITE_URL}${productPath(product)}`,
               priceCurrency: 'GBP',
               price: (product.pricePence / 100).toFixed(2),
-              // Cut to order: a size still on the line is in stock, the rest wait for the next cut.
+              // In stock while any size has units; otherwise out of stock until the next run.
               availability:
                 stock && Object.values(stock).some((quantity) => quantity > 0)
                   ? 'https://schema.org/InStock'
-                  : 'https://schema.org/PreOrder',
+                  : 'https://schema.org/OutOfStock',
               itemCondition: 'https://schema.org/NewCondition',
             },
           }),

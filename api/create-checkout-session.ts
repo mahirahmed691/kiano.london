@@ -130,7 +130,7 @@ async function createSession(request: Request) {
           name,
           description: product.proof
             ? 'One pound to open the live till. Not a garment.'
-            : `${product.colour}. ${product.cloth}. Made to order.`,
+            : `${product.colour}. ${product.cloth}. Sent within 3–5 working days.`,
           metadata: {
             product_id: product.id,
             size: String(size),
@@ -198,7 +198,7 @@ async function createSession(request: Request) {
       integration_identifier: 'kiano_bag_xhwpqelm',
       custom_text: {
         submit: {
-          message: 'Payment reserves the cut. Made to order.',
+          message: 'Sent from the UK within 3–5 working days, with tracking.',
         },
         shipping_address: {
           message: 'Confirm where the finished piece should be sent.',

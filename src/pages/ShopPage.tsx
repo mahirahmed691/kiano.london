@@ -62,7 +62,7 @@ export function ShopPage() {
               {String(shown.length).padStart(2, '0')} {shown.length === 1 ? 'colour' : 'colours'}
             </p>
             <p className="text-[13px] font-light text-stone">
-              Sizes 52–60. Three colourways. Made to order.
+              Sizes 52–60. Three colourways. In stock.
             </p>
           </div>
 

@@ -154,7 +154,7 @@ export async function GET(request: Request) {
         heading: 'Welcome to the house.',
         body: [
           'Thank you for joining the list. We write a few times a year: a new cloth, a week in the lookbook, and when a piece can be reserved before it is gone.',
-          'Every Urban Emirati is cut and sewn by hand in the UAE, made to order in five sizes.',
+          'Every Urban Emirati is cut and sewn by hand in the UAE in small runs, in sizes 52 to 60, and sent from the UK.',
         ].join('\n\n'),
         ctaLabel: 'The Shop',
         ctaHref: `${origin}/shop`,

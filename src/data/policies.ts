@@ -10,7 +10,7 @@ export const trustPoints = [
   { title: 'Tracked delivery', detail: 'From £3.95 in the UK. Shown before you pay.' },
   { title: '14-day returns', detail: 'Free return postage within the UK.' },
   { title: 'Secure checkout', detail: 'Card payments are handled by Stripe.' },
-  { title: 'Made to order', detail: 'Each piece is cut for you, in small runs.' },
+  { title: 'Ready to send', detail: 'In stock, sent within 3–5 working days.' },
   { title: 'Handmade', detail: 'Cut and sewn by hand in the UAE.' },
 ] as const
 
@@ -58,7 +58,7 @@ export const deliveryPolicy = [
     body: `${deliveryCountries.slice(0, -1).join(', ')} and ${deliveryCountries[deliveryCountries.length - 1]}.`,
   },
   {
-    title: 'Made to order',
-    body: 'Each piece is cut after you order it. We email you the week it will be ready, and again with tracking when it is sent.',
+    title: 'Dispatch',
+    body: 'Pieces are in stock and sent from the UK within 3–5 working days of your order. We email you tracking when it is sent.',
   },
 ] as const

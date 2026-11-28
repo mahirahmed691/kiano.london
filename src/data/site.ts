@@ -6,7 +6,7 @@ export const site = {
   established: 'MMXXIV',
   city: 'London',
   email: 'atelier@kiano.london',
-  hours: 'Handmade in the UAE, made to order',
+  hours: 'Handmade in the UAE, sent from the UK',
   tagline: 'Urban Emirati garments. Worn with purpose.',
   note: 'Kiano London',
   /** The trader, as UK consumer law requires it named. Registered office per Companies House. */

@@ -75,8 +75,8 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120} className="lg:col-span-6 lg:col-start-7 lg:pt-14">
               <Lead>
-                One garment, made properly. Cut and sewn by hand in the UAE, and made
-                to order when you buy.
+                One garment, made properly. Cut and sewn by hand in the UAE in small runs,
+                and sent from the UK within days.
               </Lead>
               <Body className="mt-8">
                 More air through the chest than the thobe, a band collar, a concealed
@@ -133,8 +133,8 @@ export function HomePage() {
             <Eyebrow>How it is made</Eyebrow>
             <Display className="mt-4 text-4xl md:text-5xl">Handmade in the UAE</Display>
             <Body className="mt-6">
-              Every Urban Emirati is cut and sewn by hand in our workshop in the UAE. Nothing is
-              made in advance: your piece is made when you order it, then sent to you.
+              Every Urban Emirati is cut and sewn by hand in our workshop in the UAE, in small runs
+              and set sizes. Pieces are held in the UK and sent within 3–5 working days.
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/craftsmanship">How it is made</Button>
