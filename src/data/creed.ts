@@ -32,7 +32,7 @@ export const houseCreed = [
     word: 'Purpose',
     line: 'A modest column, worn with intent. Cloth chosen to last. The stills are the line as it is worn.',
     image: '/images/look-lanesborough.jpg',
-    imageAlt: 'A white Emirati thobe worn at The Lanesborough, Hyde Park Corner.',
+    imageAlt: 'A white thobe worn outside a stone building.',
     objectPosition: 'center 12%',
   },
 ] as const

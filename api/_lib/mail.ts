@@ -533,7 +533,7 @@ export function weekPlateLetterHtml(input: {
   const href = escapeHtml(input.href)
   return letterFrame(
     name,
-    `<p style="margin:0;">This week · ${place}.</p><p style="margin:16px 0 0;">${line}</p><p style="margin:16px 0 0;"><img src="${image}" alt="" width="480" style="display:block;width:100%;height:auto;"/></p><p style="margin:16px 0 0;"><a href="${href}" style="color:#1B1714;">The stills</a></p>`,
+    `<p style="margin:0;">This week${place ? ` · ${place}` : ''}.</p><p style="margin:16px 0 0;">${line}</p><p style="margin:16px 0 0;"><img src="${image}" alt="" width="480" style="display:block;width:100%;height:auto;"/></p><p style="margin:16px 0 0;"><a href="${href}" style="color:#1B1714;">The stills</a></p>`,
     `A still a week. Questions: ${site.email}.${input.unsubscribe ? ` <a href="${escapeHtml(input.unsubscribe)}" style="color:#6F675C;">Unsubscribe</a>.` : ''}`,
   )
 }
@@ -546,7 +546,7 @@ export function weekPlateLetterText(input: {
   unsubscribe?: string
 }) {
   return [
-    `This week · ${input.place}.`,
+    `This week${input.place ? ` · ${input.place}` : ''}.`,
     input.name,
     input.line,
     input.href,
