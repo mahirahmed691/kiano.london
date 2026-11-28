@@ -1699,7 +1699,7 @@ async function postWork(request: Request): Promise<Response> {
       if (backwards) {
         await sendMail({
           to: row.email,
-          subject: 'The cut has been held back — Kiano London',
+          subject: 'An update on your order — Kiano London',
           text: workBackLetterText({ stage: workCopy[stage].line, reason }),
           html: workBackLetterHtml({ stage: workCopy[stage].line, reason }),
           idempotencyKey: `work-back/${row.id}/${before}/${stage}`,
@@ -1709,7 +1709,7 @@ async function postWork(request: Request): Promise<Response> {
           const week = formatNamedWeek(namedWeek)
           await sendMail({
             to: row.email,
-            subject: 'A week is named — Kiano London',
+            subject: 'Your order will be ready soon — Kiano London',
             text: workWeekLetterText({ week }),
             html: workWeekLetterHtml({ week }),
             idempotencyKey: `work-week/${row.id}/${namedWeek}`,
@@ -1718,7 +1718,7 @@ async function postWork(request: Request): Promise<Response> {
         if (before !== stage && stage === 'cutting') {
           await sendMail({
             to: row.email,
-            subject: 'The piece is on the table — Kiano London',
+            subject: 'Your piece is being made — Kiano London',
             text: cuttingLetterText({ cuts: cutsText, accountUrl: housePath('/account') }),
             html: cuttingLetterHtml({ cuts: cutsText, accountUrl: housePath('/account') }),
             idempotencyKey: `work-cutting/${row.id}`,
@@ -1728,7 +1728,7 @@ async function postWork(request: Request): Promise<Response> {
           const cardUrl = housePath(`/order/card?session_id=${encodeURIComponent(row.id)}`)
           await sendMail({
             to: row.email,
-            subject: 'It is in the house box — Kiano London',
+            subject: 'Your order is packed — Kiano London',
             text: packedLetterText({ cuts: cutsText, note: row.note ?? '', cardUrl }),
             html: packedLetterHtml({ cuts: cutsText, note: row.note ?? '', cardUrl }),
             idempotencyKey: `work-packed/${row.id}/${before}`,
@@ -1739,7 +1739,7 @@ async function postWork(request: Request): Promise<Response> {
           const cardUrl = housePath(`/order/card?session_id=${encodeURIComponent(row.id)}`)
           await sendMail({
             to: row.email,
-            subject: 'It has left the house — Kiano London',
+            subject: 'Your order has been sent — Kiano London',
             text: sentLetterText({ how, cuts: cutsText, cardUrl }),
             html: sentLetterHtml({ how, cuts: cutsText, cardUrl }),
             idempotencyKey: `work-sent/${row.id}/${carrier}/${tracking}`,

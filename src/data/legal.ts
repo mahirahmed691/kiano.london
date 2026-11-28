@@ -22,23 +22,23 @@ export const privacyLetter: LegalLetter = {
     },
     {
       kicker: 'Account',
-      copy: 'Member sign-in is Clerk. Name and email sit there. The size you wear, delivery name, telephone, and address are kept with the house so the till, a visit, a wait, and a return need not be written again.',
+      copy: 'Member sign-in is Clerk. Name and email sit there. The size you wear, delivery name, telephone, and address are kept with the house so checkout, a visit, a size alert, and a return need not be written again.',
     },
     {
       kicker: 'A reservation',
-      copy: 'Payment is Stripe. The reservation, the size, the delivery address, and a line written for the house card are kept so the cloth can be cut and sent. You can ask after a reserved cut with the eight-letter reference and the email used at the till.',
+      copy: 'Payment is Stripe. The reservation, the size, the delivery address, and a line written for the house card are kept so the cloth can be cut and sent. You can ask after an order with the eight-letter reference and the email you used at checkout.',
     },
     {
       kicker: 'The list',
       copy: 'If you join the list, we store the email and wait for you to confirm it. Letters are about cloth and when a piece can be reserved.',
     },
     {
-      kicker: 'Word from the house',
-      copy: 'If you keep an account, notices of a reserved cut sit against it. On the installable app, that word can also arrive as a device notice, if you allow it.',
+      kicker: 'Updates',
+      copy: 'If you keep an account, notices of an order sit against it. On the installable app, that word can also arrive as a device notice, if you allow it.',
     },
     {
       kicker: 'Cookies',
-      copy: 'The bag, the till details, this notice, and the line on this device stay on the device. Nothing is sold to advertisers.',
+      copy: 'Your bag, checkout details, this notice and your saved size stay on the device. Nothing is sold to advertisers.',
     },
   ],
   close: 'Questions, a correction, or a request to forget an address: atelier@kiano.london.',
@@ -55,7 +55,7 @@ export const cookiesLetter: LegalLetter = {
       copy: 'Pieces you hold stay on this device so the bag is still there if you return. That is not a tracking cookie.',
     },
     {
-      kicker: 'The till',
+      kicker: 'Checkout',
       copy: 'Name, telephone, the delivery address, and the size you wear stay on this device after they are written, so they need not be entered again. An account keeps the same details with the house.',
     },
     {
@@ -64,7 +64,7 @@ export const cookiesLetter: LegalLetter = {
     },
     {
       kicker: 'The line on this device',
-      copy: 'After a visit, the house, the shop, and the collection can be read without a network. The till, the account, and letters need a connection.',
+      copy: 'After a visit, the house, the shop, and the collection can be read without a network. Checkout, your account and emails need a connection.',
     },
     {
       kicker: 'Payment',

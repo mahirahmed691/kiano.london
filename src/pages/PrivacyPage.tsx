@@ -32,14 +32,14 @@ export function PrivacyPage() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Account</p>
             <Body className="mt-3">
               Member sign-in is Clerk. Name and email sit there. The size you wear, delivery
-              name, telephone, and address are kept with the house so the till, a visit, a wait,
+              name, telephone, and address are kept with the house so checkout, a visit, a size alert,
               and a return need not be written again. Change them on{' '}
               <Link to="/account" className="border-b border-current pb-px">
                 account
               </Link>
               . Delete this account there when it should close. The size, the notices, and the
               details kept with the house go with it. A paid reservation stays with the house, under
-              the email used at the till, so the cloth can still be cut. The list, if you joined
+              the email you used at checkout, so the cloth can still be cut. The list, if you joined
               it, is separate. Leave it by writing to {site.email}.
             </Body>
           </li>
@@ -48,11 +48,11 @@ export function PrivacyPage() {
             <Body className="mt-3">
               Payment is Stripe. The reservation, the size, the delivery address, and a line written
               for the house card are kept so the cloth can be cut and sent. You can ask
-              after a reserved cut with the eight-letter reference and the email used at the till, on{' '}
+              after an order with the eight-letter reference and the email you used at checkout, on{' '}
               <Link to="/reservation" className="border-b border-current pb-px">
-                a reserved cut
+                an order
               </Link>
-              . If a reserved cut cannot be worn, write as set out on{' '}
+              . If an order cannot be worn, write as set out on{' '}
               <Link to="/returns" className="border-b border-current pb-px">
                 if it must return
               </Link>
@@ -67,9 +67,9 @@ export function PrivacyPage() {
             </Body>
           </li>
           <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Word from the house</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Updates</p>
             <Body className="mt-3">
-              If you keep an account, notices of a reserved cut sit against it. The ledger receives
+              If you keep an account, notices of an order sit against it. The ledger receives
               word of visits, the list, and remaining cuts. On the installable app, that word can
               also arrive as a device notice, if you allow it.
             </Body>
@@ -86,7 +86,7 @@ export function PrivacyPage() {
           <li>
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Cookies</p>
             <Body className="mt-3">
-              The bag, the till details, this notice, and the line on this device stay in the
+              Your bag, checkout details, this notice and your saved size stay in the
               browser. Detail sits on the{' '}
               <Link to="/cookies" className="border-b border-current pb-px">
                 cookies

@@ -51,7 +51,7 @@ export function CheckoutMember({ onPrefill, onToken }: Props) {
   if (isSignedIn) {
     return (
       <p className="mt-6 text-[14px] font-light text-ink-soft">
-        Signed in. Kept details will fill the till.{' '}
+        Signed in. Your saved details are filled in for you.{' '}
         <Link to="/account" className="border-b border-current pb-px">
           Change them
         </Link>

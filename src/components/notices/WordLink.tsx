@@ -18,7 +18,7 @@ function WordLinkInner({ className, onClick }: Props) {
     <button
       type="button"
       className={className}
-      aria-label={unread ? `Word from the house, ${unread} unread` : 'Word from the house'}
+      aria-label={unread ? `Updates, ${unread} unread` : 'Updates from Kiano London'}
       onClick={() => {
         onClick?.()
         setOpen(true)
@@ -26,7 +26,7 @@ function WordLinkInner({ className, onClick }: Props) {
     >
       <span className="inline-flex items-center gap-2">
         <span>
-          <span className="max-sm:hidden">Word</span>
+          <span className="max-sm:hidden">Updates</span>
           {unread ? <span className="sm:ml-[0.5em]">{String(unread).padStart(2, '0')}</span> : null}
         </span>
         <WordBell className="h-3.5 w-3.5" />

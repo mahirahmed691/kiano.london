@@ -29,7 +29,7 @@ export function CookiesPage() {
             </Body>
           </li>
           <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The till</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Checkout</p>
             <Body className="mt-3">
               Name, telephone, the delivery address, and the size you wear stay in this browser
               after they are written, so they need not be entered again. An account keeps the
@@ -48,7 +48,7 @@ export function CookiesPage() {
             <Body className="mt-3">
               After a visit, the house, the shop, and the collection can be read without a network.
               Remaining cuts are kept from the last time they were fetched. The bag stays in this
-              browser. The till, the account, and letters need a connection.
+              browser. Checkout, your account and emails need a connection.
             </Body>
           </li>
           <li>

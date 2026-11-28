@@ -16,9 +16,9 @@ function parseSizes(raw: unknown): ProductStock {
 }
 
 export function remainingCopy(remaining: number) {
-  if (remaining <= 0) return 'This size is held. Write if it returns.'
-  if (remaining === 1) return 'One cut remains in this size.'
-  return `${remaining} cuts remain in this size.`
+  if (remaining <= 0) return 'Sold out in this size. We can let you know if it comes back.'
+  if (remaining === 1) return 'Only 1 left in this size.'
+  return `${remaining} left in this size.`
 }
 
 export function useProductStock(productId: string) {

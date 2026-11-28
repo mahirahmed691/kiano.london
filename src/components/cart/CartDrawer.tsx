@@ -150,7 +150,7 @@ export function CartDrawer() {
               <p className="mt-3 text-[12px] font-light leading-relaxed text-stone">
                 {proofOnly
                   ? 'One pound to open the live till. Not a garment. Refund the charge from Stripe once it has landed.'
-                  : 'Delivery from £3.95, added at checkout. Cut to order. Leaves unscented, in a garment bag and a rigid box.'}
+                  : 'Delivery from £3.95, added at checkout. Made to order and sent in a garment bag and gift box.'}
               </p>
               <Button
                 to="/checkout"
@@ -166,7 +166,7 @@ export function CartDrawer() {
                   setOpen(false)
                 }}
               >
-                {proofOnly ? 'Pay one pound' : 'Reserve the cut'}
+                {proofOnly ? 'Pay one pound' : 'Checkout'}
               </Button>
             </div>
           </>

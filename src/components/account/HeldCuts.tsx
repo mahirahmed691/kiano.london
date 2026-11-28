@@ -76,7 +76,7 @@ export function HeldCuts({
   if (orders.length === 0) {
     return (
       <div className="mt-10">
-        <Body>{empty ?? 'No cuts are reserved against this account yet.'}</Body>
+        <Body>{empty ?? 'No orders yet.'}</Body>
         <HeldLetters letters={letters} />
         <div className="mt-8">
           <Button to="/shop">The Shop</Button>
@@ -202,7 +202,7 @@ function HeldLetters({ letters }: { letters: HeldLetter[] }) {
 
   return (
     <div className="mt-16">
-      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Letters held</p>
+      <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Messages</p>
       <ul className="mt-6 divide-y divide-rule border-t border-ink">
         {letters.map((letter) => {
           const product = letter.productId ? getProduct(letter.productId) : undefined
@@ -211,7 +211,7 @@ function HeldLetters({ letters }: { letters: HeldLetter[] }) {
             : letter.kind === 'wait'
               ? 'A size'
               : letter.kind === 'return'
-              ? 'A cut'
+              ? 'An order'
               : 'A visit'
           const kind = asLetterKind(letter.kind)
           const status = asLetterStatus(letter.status)

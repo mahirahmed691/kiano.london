@@ -65,7 +65,7 @@ export function OrderConfirmedPage() {
     ...getShareMeta('/order/confirmed'),
     title:
       view === 'paid'
-        ? 'The cut is reserved — Kiano London'
+        ? 'Order confirmed — Kiano London'
         : 'Order — Kiano London',
   })
 
@@ -137,7 +137,7 @@ export function OrderConfirmedPage() {
   if (view === 'loading') {
     return (
       <TillFrame title="Reading the reservation.">
-        <Eyebrow>The till</Eyebrow>
+        <Eyebrow>Checkout</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Reading the reservation.
         </Display>
@@ -148,17 +148,17 @@ export function OrderConfirmedPage() {
 
   if (view === 'missing') {
     return (
-      <TillFrame title="Nothing is held.">
-        <Eyebrow>The till</Eyebrow>
+      <TillFrame title="Order not found.">
+        <Eyebrow>Checkout</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           This confirmation could not be found.
         </Display>
         <Body className="mt-8">
-          If you have just paid, wait a moment and refresh. If the bag is still held, return to
-            the till.
+          If you have just paid, wait a moment and refresh. If your bag is still full, go back to
+            checkout.
           </Body>
           <div className="mt-12 flex flex-wrap items-center gap-6">
-            <Button to="/checkout">Return to the till</Button>
+            <Button to="/checkout">Back to checkout</Button>
           <TextLink to="/shop">The Shop</TextLink>
         </div>
       </TillFrame>
@@ -168,16 +168,16 @@ export function OrderConfirmedPage() {
   if (view === 'unpaid') {
     return (
       <TillFrame title="Payment was not completed.">
-        <Eyebrow>The till</Eyebrow>
+        <Eyebrow>Checkout</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Payment was not completed.
         </Display>
         <Body className="mt-8">
-            Nothing has been taken. The bag is still held. Return to the till when you are ready
+            No payment was taken. Your bag is saved. Go back to checkout when you are ready
             to reserve the cut.
           </Body>
           <div className="mt-12 flex flex-wrap items-center gap-6">
-            <Button to="/checkout">Return to the till</Button>
+            <Button to="/checkout">Back to checkout</Button>
           <TextLink to="/shop">Continue looking</TextLink>
         </div>
       </TillFrame>
@@ -188,16 +188,16 @@ export function OrderConfirmedPage() {
   const reserved = order?.lines[0] ? getProduct(order.lines[0].productId) : undefined
 
   return (
-    <TillFrame title="The cut is reserved." product={reserved}>
+    <TillFrame title="Thank you, your order is confirmed." product={reserved}>
         <div className="no-print grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Eyebrow>Kiano London</Eyebrow>
             <Display as="h1" className="mt-4 max-w-3xl text-4xl md:text-5xl lg:text-6xl">
-              The cut is reserved.
+              Thank you, your order is confirmed.
             </Display>
             <Body className="mt-8">
-              Payment is held. Cloth is reserved, not yet on the table. The account will show when
-              it is being cut, when it is packed, and when it has left. Made to order.{' '}
+              We have your payment and your piece is now being made to order. Your account shows each
+              step, and we email you when it is made, packed and sent.{' '}
               {packingNote}
             </Body>
             {order?.customerEmail ? (
@@ -207,7 +207,7 @@ export function OrderConfirmedPage() {
             ) : null}
             {order && order.lines.length > 0 ? (
               <div className="mt-10 max-w-prose lg:hidden">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Reserved</p>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Ordered</p>
                 <ul className="mt-4 border-t border-rule">
                   {order.lines.map((line, index) => (
                     <li

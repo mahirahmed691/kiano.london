@@ -169,7 +169,7 @@ function SignInDrawerInner() {
             Sign in.
           </h2>
           <p className="mt-5 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-            Your size, your address and your reserved cuts, kept against your name. New to
+            Your size, address and orders, saved to your account. New to
             the house? Enter your email and we will set you up.
           </p>
           <div className="mt-12">

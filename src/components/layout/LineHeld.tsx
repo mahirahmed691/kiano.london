@@ -15,7 +15,7 @@ export function LineHeld() {
         top: app ? 0 : 'var(--header-offset)',
       }}
     >
-      The line is held on this device. The till needs a connection.
+      You are offline. Your bag is saved on this device; checkout needs a connection.
     </p>
   )
 }

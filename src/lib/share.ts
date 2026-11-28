@@ -128,8 +128,8 @@ const pages: Record<string, PageMeta> = {
     path: '/account',
   },
   '/reservation': {
-    title: 'A reserved cut — Kiano London',
-    description: 'Ask after a reserved cut with the reference and the email used at the till.',
+    title: 'An order — Kiano London',
+    description: 'Find an order with its reference and the email you used at checkout.',
     path: '/reservation',
     robots: 'noindex, nofollow',
   },
@@ -162,7 +162,7 @@ const pages: Record<string, PageMeta> = {
     path: '/sign-up',
   },
   '/checkout': {
-    title: 'Reserve the cut — Kiano London',
+    title: 'Checkout — Kiano London',
     description: 'Reserve a piece from the house block. Made to order. Tracked delivery from £3.95.',
     path: '/checkout',
     image: '/images/cutting-room.jpg',

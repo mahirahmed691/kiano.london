@@ -235,7 +235,7 @@ export async function fulfillPaidSession(session: Stripe.Checkout.Session) {
   try {
     await sendMail({
       to: email,
-      subject: 'The cut is reserved — Kiano London',
+      subject: 'Order confirmed — Kiano London',
       text: reservationLetterText({
         name: guestName,
         lines: reserved,

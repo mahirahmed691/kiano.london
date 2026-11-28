@@ -189,7 +189,7 @@ export function HouseProfileForm() {
       <Field
         id="profile-size"
         label="Size"
-        hint="The line will start here. You can still choose another cut."
+        hint="We will pre-select this size for you. You can always pick another."
       >
         <select
           id="profile-size"

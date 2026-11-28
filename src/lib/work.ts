@@ -13,34 +13,34 @@ export const workCopy: Record<
   { label: string; line: string; memberTitle: string; memberBody: string }
 > = {
   reserved: {
-    label: 'Reserved',
-    line: 'Cloth is held. Not yet on the table.',
-    memberTitle: 'The cut is reserved',
-    memberBody: 'Cloth is held against the account.',
+    label: 'Ordered',
+    line: 'Order received. Making starts soon.',
+    memberTitle: 'Order confirmed',
+    memberBody: 'We have your order and will start making it soon.',
   },
   cloth: {
-    label: 'Held for cloth',
-    line: 'The mill has not yet sent the cloth.',
-    memberTitle: 'Cloth is waited on',
-    memberBody: 'The house is waiting on the mill for this cut.',
+    label: 'Waiting for cloth',
+    line: 'We are waiting for the cloth to arrive.',
+    memberTitle: 'Waiting for cloth',
+    memberBody: 'We are waiting for the cloth for your order to arrive from the mill.',
   },
   cutting: {
-    label: 'On the table',
-    line: 'The piece is being cut.',
-    memberTitle: 'The piece is on the table',
-    memberBody: 'The house is cutting the cloth you reserved.',
+    label: 'Being made',
+    line: 'Your piece is being cut and sewn.',
+    memberTitle: 'Your piece is being made',
+    memberBody: 'Your piece is being cut and sewn.',
   },
   packed: {
     label: 'Packed',
     line: 'Bag, unscented tissue, a rigid box. A house card sits with it.',
-    memberTitle: 'It is in the house box',
+    memberTitle: 'Your order is packed',
     memberBody: 'Garment bag, unscented tissue, a rigid box. A house card sits with the piece. No scent.',
   },
   sent: {
-    label: 'Left the house',
-    line: 'Sent from the atelier.',
-    memberTitle: 'It has left the house',
-    memberBody: 'The cut is on its way.',
+    label: 'Sent',
+    line: 'On its way to you.',
+    memberTitle: 'Your order has been sent',
+    memberBody: 'Your order is on its way.',
   },
 }
 

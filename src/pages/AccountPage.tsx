@@ -200,9 +200,9 @@ function AccountLedgerLink() {
 }
 
 const sections = [
-  { id: 'cuts', label: 'Your cuts' },
+  { id: 'cuts', label: 'Your orders' },
   { id: 'details', label: 'Your details' },
-  { id: 'word', label: 'Word' },
+  { id: 'word', label: 'Updates' },
   { id: 'settings', label: 'Account' },
 ] as const
 
@@ -279,7 +279,7 @@ function SignedInAccount({ onClosed }: { onClosed: () => void }) {
         </nav>
 
         <div className="min-w-0 lg:col-span-9">
-          <AccountSection id="cuts" title="Your cuts">
+          <AccountSection id="cuts" title="Your orders">
             <AccountOrders />
           </AccountSection>
           <AccountSection id="details" title="Your details">
@@ -317,7 +317,7 @@ function AccountGate() {
         {closed ? <Body className="mt-6">This account is closed.</Body> : null}
         <Body className={closed ? 'mt-4' : 'mt-6'}>
           The shop is open to everyone. Sign in to keep your size, your address and your
-          reserved cuts against your name, on any device.
+          orders saved to your account, on any device.
         </Body>
         <div className="mt-10">
           <Button variant="solid" onClick={() => setSignInOpen(true)}>
@@ -326,7 +326,7 @@ function AccountGate() {
         </div>
         <HouseDeviceForm />
         <div className="mt-8">
-          <TextLink to="/reservation">Reserved without an account? Ask after the cut</TextLink>
+          <TextLink to="/reservation">Ordered without an account? Find your order</TextLink>
         </div>
       </Show>
       <Show when="signed-in">
@@ -367,7 +367,7 @@ export function AccountPage() {
       )}
       <AccountList />
       <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
-        <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+        <TextLink to="/reservation">Ask about an order</TextLink>
         <TextLink to="/returns">If it must return</TextLink>
         <TextLink to="/shop">Return to the shop</TextLink>
       </div>

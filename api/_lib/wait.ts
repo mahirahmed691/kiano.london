@@ -36,7 +36,7 @@ export async function writeWhenSizeReturns(
   for (const row of rows) {
     await sendMail({
       to: row.email,
-      subject: 'This size is on the line — Kiano London',
+      subject: 'Your size is back — Kiano London',
       text: waitReturnedLetterText({ name: row.name, piece, size: sizeLine, href }),
       html: waitReturnedLetterHtml({ name: row.name, piece, size: sizeLine, href }),
       idempotencyKey: `wait-returned/${row.id}`,

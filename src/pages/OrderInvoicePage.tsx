@@ -63,8 +63,8 @@ export function OrderInvoicePage() {
 
   if (missing) {
     return (
-      <HouseRoom kicker="The till" title="This record could not be found.">
-        <Eyebrow>The till</Eyebrow>
+      <HouseRoom kicker="Your order" title="This record could not be found.">
+        <Eyebrow>Your order</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           This record could not be found.
         </Display>

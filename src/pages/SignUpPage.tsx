@@ -22,7 +22,7 @@ export function SignUpPage() {
         Open an account.
       </Display>
       <Body className="mt-6">
-        Use the same email you give at the till so earlier cuts sit on this page.
+        Use the same email you use at checkout so your earlier orders show here.
       </Body>
       <div className="mt-12">
         {clerkEnabled ? (

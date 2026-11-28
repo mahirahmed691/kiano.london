@@ -41,14 +41,14 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
       })
       const data = (await response.json()) as { error?: string; already?: boolean }
       if (!response.ok) {
-        throw new Error(data.error || 'The list could not be joined.')
+        throw new Error(data.error || 'Something went wrong. Please try again.')
       }
       markLettersJoined()
       setAlready(Boolean(data.already))
       setDone(true)
       onJoined?.()
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'The list could not be joined.')
+      setError(caught instanceof Error ? caught.message : 'Something went wrong. Please try again.')
       setBusy(false)
     }
   }
