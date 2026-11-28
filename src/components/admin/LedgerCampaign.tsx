@@ -17,6 +17,8 @@ type SentLetter = {
 
 const empty: CampaignDraft = {
   subject: '',
+  preheader: '',
+  products: false,
   heading: '',
   body: '',
   ctaLabel: 'The Shop',
@@ -162,6 +164,19 @@ export function LedgerCampaign() {
             />
           </div>
           <div>
+            <label htmlFor="c-preheader" className={label}>
+              Preview text (shown beside the subject in the inbox)
+            </label>
+            <input
+              id="c-preheader"
+              className={field}
+              value={draft.preheader ?? ''}
+              maxLength={150}
+              placeholder="Made to order, ready before Eid."
+              onChange={(event) => set('preheader', event.target.value)}
+            />
+          </div>
+          <div>
             <label htmlFor="c-heading" className={label}>
               Heading (optional)
             </label>
@@ -225,6 +240,16 @@ export function LedgerCampaign() {
               onChange={(event) => set('image', event.target.value)}
             />
           </div>
+
+          <label className="flex cursor-pointer items-center gap-3 text-[14px] font-light">
+            <input
+              type="checkbox"
+              checked={Boolean(draft.products)}
+              onChange={(event) => set('products', event.target.checked)}
+              className="size-4 accent-ink"
+            />
+            Show the three colours with prices under the letter
+          </label>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button

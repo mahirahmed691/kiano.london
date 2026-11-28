@@ -1251,6 +1251,8 @@ async function postCampaign(request: Request, adminEmail: string): Promise<Respo
     ctaLabel: text('ctaLabel', 40),
     ctaHref: text('ctaHref', 500),
     image: text('image', 500),
+    preheader: text('preheader', 150),
+    products: body.products === true,
   }
   if (!draft.subject || !draft.body) {
     return Response.json({ error: 'A subject and a letter are needed.' }, { status: 400 })
