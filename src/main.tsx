@@ -11,3 +11,8 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+// Lift the house intro once the first screen has painted.
+requestAnimationFrame(() =>
+  requestAnimationFrame(() => (window as { __klIntroReady?: () => void }).__klIntroReady?.()),
+)
