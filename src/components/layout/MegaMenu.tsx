@@ -13,18 +13,13 @@ type MegaItem = {
   to: string
 }
 
-const megaItems: MegaItem[] = [
+/** Four places, in reading order. The house gathers story, making, scent and visits. */
+const navItems: (MegaItem | { id?: undefined; label: string; to: string })[] = [
   { id: 'shop', label: 'Shop', to: '/shop' },
   { id: 'collection', label: 'Collection', to: '/collection' },
-  { id: 'craft', label: 'Craftsmanship', to: '/craftsmanship' },
-]
-
-const simpleNav = [
-  { label: 'Scent', to: '/scent' },
   { label: 'Lookbook', to: '/stills' },
-  { label: 'Story', to: '/story' },
-  { label: 'Visit', to: '/visit' },
-] as const
+  { id: 'craft', label: 'The House', to: '/story' },
+]
 
 const OPEN_MS = 140
 const CLOSE_MS = 240
@@ -162,16 +157,28 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="grid gap-12 lg:grid-cols-12" onClick={onNavigate}>
       <div className="lg:col-span-5">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The making</p>
+        <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The House</p>
         <p className="mt-6 max-w-xl font-display text-3xl font-light leading-snug tracking-[-0.02em] text-ink md:text-4xl">
-          How the column is cut, and the rooms where it is finished.
+          A London atelier, how the column is cut, and the rooms where it is finished.
         </p>
-        <ul className="mt-10 space-y-4">
+        <ul className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-4">
+          <li>
+            <TextLink to="/story">Story</TextLink>
+          </li>
           <li>
             <TextLink to="/craftsmanship">Craftsmanship</TextLink>
           </li>
           <li>
-            <TextLink to="/craftsmanship-details">The making, in detail</TextLink>
+            <TextLink to="/craftsmanship-details">The making</TextLink>
+          </li>
+          <li>
+            <TextLink to="/scent">Scent</TextLink>
+          </li>
+          <li>
+            <TextLink to="/visit">Visit the atelier</TextLink>
+          </li>
+          <li>
+            <TextLink to="/size-guide">Size guide</TextLink>
           </li>
         </ul>
       </div>
@@ -193,7 +200,15 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
         </NavLink>
       </div>
       <div className="flex flex-col justify-between gap-10 lg:col-span-3 lg:border-l lg:border-rule lg:pl-10">
-        <HouseLinks />
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.22em] text-stone">By appointment</p>
+          <p className="mt-5 text-[14px] font-light leading-relaxed text-ink-soft">
+            Fittings in London. Feel the cloth, try the sizes, leave with the right one.
+          </p>
+          <div className="mt-6">
+            <TextLink to="/visit">Book a visit</TextLink>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -275,14 +290,29 @@ export function MegaMenu({ inverted, installed = false }: Props) {
   return (
     <div
       ref={rootRef}
-      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden min-[1360px]:block')}
+      className={cn('house-browser-nav', installed ? 'hidden' : 'hidden lg:block')}
       onMouseLeave={scheduleClose}
       onMouseEnter={() => window.clearTimeout(closeTimer.current)}
     >
       <nav aria-label="Primary">
-        <ul className="flex flex-nowrap items-center gap-x-5 2xl:gap-x-6">
-          {megaItems.map((item) => {
-            const expanded = open === item.id
+        <ul className="flex flex-nowrap items-center gap-x-6 xl:gap-x-9">
+          {navItems.map((item) => {
+            if (!item.id) {
+              return (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    className={({ isActive }) => triggerClass(isActive)}
+                    onMouseEnter={scheduleClose}
+                    onFocus={scheduleClose}
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              )
+            }
+            const id = item.id
+            const expanded = open === id
             return (
               <li key={item.to}>
                 <NavLink
@@ -291,12 +321,12 @@ export function MegaMenu({ inverted, installed = false }: Props) {
                   aria-controls={panelId}
                   aria-haspopup="true"
                   className={({ isActive }) => triggerClass(isActive || expanded)}
-                  onMouseEnter={() => scheduleOpen(item.id)}
-                  onFocus={() => openNow(item.id)}
+                  onMouseEnter={() => scheduleOpen(id)}
+                  onFocus={() => openNow(id)}
                   onKeyDown={(event) => {
                     if (event.key === 'ArrowDown') {
                       event.preventDefault()
-                      openNow(item.id)
+                      openNow(id)
                       window.requestAnimationFrame(() => {
                         panelRef.current
                           ?.querySelector<HTMLAnchorElement>('a[href]')
@@ -311,18 +341,6 @@ export function MegaMenu({ inverted, installed = false }: Props) {
               </li>
             )
           })}
-          {simpleNav.map((item) => (
-            <li key={item.to}>
-              <NavLink
-                to={item.to}
-                className={({ isActive }) => triggerClass(isActive)}
-                onMouseEnter={scheduleClose}
-                onFocus={scheduleClose}
-              >
-                {item.label}
-              </NavLink>
-            </li>
-          ))}
         </ul>
       </nav>
 
