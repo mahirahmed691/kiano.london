@@ -5,7 +5,7 @@ import { markLettersJoined } from '@/lib/notices'
 import { useKeptEmail } from '@/lib/kept-email'
 import { cn } from '@/lib/cn'
 
-type Variant = 'light' | 'dark' | 'panel'
+type Variant = 'light' | 'dark' | 'panel' | 'inline'
 
 type Props = {
   idPrefix: string
@@ -21,7 +21,7 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
   const [done, setDone] = useState(false)
   const [already, setAlready] = useState(false)
 
-  const dark = variant === 'dark'
+  const dark = variant === 'dark' || variant === 'inline'
   const fieldClass = cn(
     'w-full border-0 border-b bg-transparent py-3 text-[15px] font-light outline-none transition-colors duration-300',
     dark
@@ -60,6 +60,48 @@ export function SubscribeForm({ idPrefix, source, variant = 'light', onJoined }:
           ? 'You are already subscribed with this email address.'
           : 'Thank you for subscribing. Check your inbox and confirm your email address to start receiving updates.'}
       </p>
+    )
+  }
+
+  if (variant === 'inline') {
+    return (
+      <form onSubmit={(event) => void onSubmit(event)}>
+        <div className="flex items-end gap-4 border-b border-ivory/30 transition-colors focus-within:border-ivory">
+          <label htmlFor={`${idPrefix}-email`} className="sr-only">
+            Email address
+          </label>
+          <input
+            id={`${idPrefix}-email`}
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            placeholder="Email address"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            aria-describedby={`${idPrefix}-consent`}
+            className="min-w-0 flex-1 border-0 bg-transparent py-3 text-[15px] font-light text-ivory outline-none placeholder:text-ivory/45"
+          />
+          <button
+            type="submit"
+            disabled={busy}
+            className="shrink-0 pb-3 text-[11px] uppercase tracking-[0.26em] text-ivory transition-opacity hover:opacity-70 disabled:opacity-40"
+          >
+            {busy ? 'Sending' : 'Subscribe'}
+          </button>
+        </div>
+        <p id={`${idPrefix}-consent`} className="mt-3 text-[12px] font-light leading-relaxed text-ivory/60">
+          Marketing emails from Kiano London. Unsubscribe any time.{' '}
+          <Link to="/privacy" className="underline underline-offset-2 hover:text-ivory">
+            Privacy
+          </Link>
+        </p>
+        {error ? (
+          <p className="mt-3 text-[13px] font-light text-ivory" role="alert">
+            {error}
+          </p>
+        ) : null}
+      </form>
     )
   }
 
