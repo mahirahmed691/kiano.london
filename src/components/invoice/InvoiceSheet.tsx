@@ -16,6 +16,11 @@ export function InvoiceSheet({ invoice, reference }: Props) {
   const lines = shipping ? formatOrderAddress(shipping) : []
   const returned = invoice.refundedPence ?? 0
   const remaining = Math.max(0, invoice.grossPence - returned)
+  // Delivery is the part of the total that no garment line accounts for.
+  const deliveryPence = Math.max(
+    0,
+    invoice.grossPence - invoice.lines.reduce((sum, line) => sum + line.grossPence, 0),
+  )
 
   return (
     <article className="invoice-sheet mx-auto max-w-3xl">
@@ -91,6 +96,14 @@ export function InvoiceSheet({ invoice, reference }: Props) {
             </p>
           </li>
         ))}
+        {deliveryPence > 0 ? (
+          <li className="grid gap-2 py-5 sm:grid-cols-12">
+            <p className="text-[15px] font-light sm:col-span-7">Delivery</p>
+            <p className="text-[15px] font-light sm:col-span-5 sm:text-right">
+              {formatGbpExact(deliveryPence)}
+            </p>
+          </li>
+        ) : null}
       </ul>
 
       <dl className="mt-8 space-y-3">

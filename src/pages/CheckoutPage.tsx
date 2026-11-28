@@ -6,7 +6,7 @@ import { Button, TextLink } from '@/components/ui/Button'
 import { Body, Display, Eyebrow } from '@/components/ui/Heading'
 import { packingNote } from '@/data/packing'
 import { productLineName, productPath } from '@/data/products'
-import { shippingCountries, shippingCountryName } from '@/data/shipping'
+import { deliveryFor, deliveryOptions, shippingCountries, shippingCountryName } from '@/data/shipping'
 import { returnWindowDays } from '@/data/policies'
 import { useCart } from '@/lib/cart'
 import {
@@ -18,7 +18,7 @@ import {
 import { clerkEnabled } from '@/lib/clerk'
 import { asThobeSize, fillEmptyDetails, profileFromDetails, readStoredSize, type HouseProfile } from '@/lib/house-profile'
 import { cn } from '@/lib/cn'
-import { formatGbp } from '@/lib/money'
+import { formatGbp, formatGbpSmart } from '@/lib/money'
 import { LocalPrice } from '@/components/product/LocalPrice'
 import { EidLine } from '@/components/product/EidLine'
 import { regionForCountry } from '@/lib/eid'
@@ -66,6 +66,7 @@ export function CheckoutPage() {
   // Saved details fold into one line; typing or 'Change' opens the full form.
   const [touched, setTouched] = useState(false)
   const [editing, setEditing] = useState(false)
+  const [deliveryChoice, setDeliveryChoice] = useState<string | null>(null)
   const getTokenRef = useRef<() => Promise<string | null>>(async () => null)
 
   usePageMeta(getShareMeta('/checkout'))
@@ -130,6 +131,7 @@ export function CheckoutPage() {
         },
         body: JSON.stringify({
           details: parsed.details,
+          delivery: deliveryChoice,
           items: items.map((item) => ({
             productId: item.productId,
             size: item.size,
@@ -155,6 +157,9 @@ export function CheckoutPage() {
   }
 
   const proofOnly = items.length > 0 && items.every((item) => item.product.proof)
+  const options = deliveryOptions(details.country)
+  const delivery = proofOnly ? null : deliveryFor(details.country, deliveryChoice)
+  const totalPence = subtotalPence + (delivery?.pence ?? 0)
 
   if (items.length === 0) {
     return (
@@ -187,8 +192,8 @@ export function CheckoutPage() {
             </Display>
             <Body className="mt-6">
               {proofOnly
-                ? 'One pound. Not a garment. Carriage is still named as included. Refund the charge from Stripe once the reservation is written.'
-                : `${String(count).padStart(2, '0')} ${count === 1 ? 'piece' : 'pieces'}. Each piece is made after payment, from the house block. Carriage is included. ${packingNote}`}
+                ? 'One pound. Not a garment. No delivery is charged. Refund the charge from Stripe once the reservation is written.'
+                : `${String(count).padStart(2, '0')} ${count === 1 ? 'piece' : 'pieces'}. Each piece is made after payment, from the house block. Tracked delivery is added below. ${packingNote}`}
             </Body>
             {clerkEnabled ? (
               <CheckoutMember
@@ -405,7 +410,7 @@ export function CheckoutPage() {
                   className="w-full justify-center"
                   disabled={busy}
                 >
-                  {busy ? 'A moment' : proofOnly ? 'Pay one pound' : `Pay ${formatGbp(subtotalPence)} · Reserve the cut`}
+                  {busy ? 'A moment' : proofOnly ? 'Pay one pound' : `Pay ${formatGbpSmart(totalPence)} · Reserve the cut`}
                 </Button>
               </div>
             </form>
@@ -486,12 +491,61 @@ export function CheckoutPage() {
                 ))}
               </ul>
 
+              {proofOnly ? null : (
+                <div className="mt-6 border-t border-rule pt-5">
+                  <div className="flex items-baseline justify-between text-[14px] font-light">
+                    <span className="text-ink-soft">Pieces</span>
+                    <span className="tabular-nums">{formatGbpSmart(subtotalPence)}</span>
+                  </div>
+                  {options.length > 1 ? (
+                    <fieldset className="mt-4">
+                      <legend className="text-[14px] font-light text-ink-soft">Delivery</legend>
+                      <div className="mt-2 space-y-2">
+                        {options.map((option) => (
+                          <label
+                            key={option.id}
+                            className={cn(
+                              'flex cursor-pointer items-center justify-between gap-4 border px-4 py-3 text-[14px] font-light transition-colors',
+                              delivery?.id === option.id ? 'border-ink' : 'border-rule hover:border-stone',
+                            )}
+                          >
+                            <span className="flex items-center gap-3">
+                              <input
+                                type="radio"
+                                name="delivery"
+                                className="accent-ink"
+                                checked={delivery?.id === option.id}
+                                onChange={() => setDeliveryChoice(option.id)}
+                              />
+                              <span>
+                                {option.label}
+                                <span className="block text-[12px] text-stone">{option.days}</span>
+                              </span>
+                            </span>
+                            <span className="tabular-nums">{formatGbpSmart(option.pence)}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  ) : (
+                    <div className="mt-2 flex items-baseline justify-between text-[14px] font-light">
+                      <span className="text-ink-soft">
+                        {delivery ? `${delivery.label}, ${shippingCountryName(details.country)}` : 'Delivery'}
+                        {delivery ? <span className="block text-[12px] text-stone">{delivery.days}</span> : null}
+                      </span>
+                      <span className="tabular-nums">
+                        {delivery ? formatGbpSmart(delivery.pence) : 'Choose a country'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="mt-6 flex items-baseline justify-between border-t border-ink pt-6">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-stone">To pay</p>
-                <p className="font-display text-4xl font-light">{formatGbp(subtotalPence)}</p>
+                <p className="font-display text-4xl font-light">{formatGbpSmart(totalPence)}</p>
               </div>
               <p className="mt-1 text-right">
-                <LocalPrice pence={subtotalPence} className="text-[12px] font-light" note />
+                <LocalPrice pence={totalPence} className="text-[12px] font-light" note />
               </p>
               {proofOnly ? null : (
                 <EidLine className="mt-5" region={regionForCountry(details.country)} />
@@ -519,7 +573,7 @@ export function CheckoutPage() {
                 disabled={busy}
                 className="mt-8 inline-flex w-full appearance-none items-center justify-center border border-ink bg-ink px-7 py-2.5 text-[11px] font-normal uppercase tracking-[0.22em] text-ivory [-webkit-text-fill-color:#F2EBDC] transition-colors duration-300 hover:bg-transparent hover:text-ink hover:[-webkit-text-fill-color:#1B1714] disabled:pointer-events-none disabled:opacity-35"
               >
-                {busy ? 'A moment' : proofOnly ? 'Pay one pound' : `Pay ${formatGbp(subtotalPence)} · Reserve the cut`}
+                {busy ? 'A moment' : proofOnly ? 'Pay one pound' : `Pay ${formatGbpSmart(totalPence)} · Reserve the cut`}
               </button>
               <div className="mt-6">
                 <TextLink to="/shop">Continue looking</TextLink>

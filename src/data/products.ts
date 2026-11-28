@@ -201,7 +201,7 @@ export const products: Product[] = [
       'One pound, to open the live till. Not a cut of Urban Emirati. Choose any size, pay, then refund the charge from Stripe once it has landed.',
     details: [
       'Not a garment. Used only to prove live payment.',
-      'One pound. Carriage is still named as included.',
+      'One pound. No delivery is charged.',
       'Refund it from Stripe after the reservation is written.',
     ],
     composition: 'Not cloth. A live reservation.',

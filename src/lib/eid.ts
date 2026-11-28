@@ -13,7 +13,7 @@ export const eidDates = [
 export const makeDays = 14
 const marginDays = 2
 /** Courier days once it leaves the atelier. */
-const shipDays = { uk: 3, abroad: 7 } as const
+const shipDays = { uk: 3, abroad: 8 } as const
 /** Start telling people this many days before the order-by date. */
 const leadInDays = 100
 

@@ -324,7 +324,7 @@ export function OrderConfirmedPage() {
                   </div>
                 ) : null}
                 <p className="mt-8 text-[12px] font-light leading-relaxed text-stone">
-                  Cloth is held. Not yet on the table. Carriage included. Leaves unscented.
+                  Cloth is held. Not yet on the table. Leaves unscented, tracked.
                 </p>
               </div>
             </aside>

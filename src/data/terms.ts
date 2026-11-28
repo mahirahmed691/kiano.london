@@ -31,7 +31,7 @@ export const termsBlocks = [
   },
   {
     title: 'Delivery',
-    body: `Delivery is free, to ${deliveryCountries.slice(0, -1).join(', ')} and ${deliveryCountries[deliveryCountries.length - 1]}. Outside the UK, the destination country may charge import duties or taxes on arrival.`,
+    body: `We deliver to ${deliveryCountries.slice(0, -1).join(', ')} and ${deliveryCountries[deliveryCountries.length - 1]}. Delivery is tracked and charged per order, and the charge is shown before you pay: UK £3.95, or £5.95 for the next working day; France, Germany and Italy £12; the UAE, Saudi Arabia, Kuwait, Qatar, Bahrain and Oman £15; the United States £25, with US duties paid by us. If you cancel within 14 days we refund the standard delivery charge with the piece. Outside the UK and the US, the destination country may charge import duties or taxes on arrival.`,
   },
   {
     title: 'Made to order',

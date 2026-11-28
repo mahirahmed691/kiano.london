@@ -16,12 +16,66 @@ export type ShippingCountryCode = (typeof shippingCountries)[number]['code']
 
 export const shippingCountryCodes = shippingCountries.map((country) => country.code)
 
+/** Delivery is charged per order, by destination. Prices in pence. */
+export type DeliveryOption = {
+  id: 'uk-tracked' | 'uk-next-day' | 'europe' | 'gulf' | 'us'
+  label: string
+  pence: number
+  days: string
+}
+
+const ukTracked: DeliveryOption = {
+  id: 'uk-tracked',
+  label: 'Tracked delivery',
+  pence: 395,
+  days: '2–3 working days once sent',
+}
+const ukNextDay: DeliveryOption = {
+  id: 'uk-next-day',
+  label: 'Next working day',
+  pence: 595,
+  days: 'next working day once sent',
+}
+const europe: DeliveryOption = { id: 'europe', label: 'Tracked delivery', pence: 1200, days: '3–5 working days once sent' }
+const gulf: DeliveryOption = { id: 'gulf', label: 'Tracked delivery', pence: 1500, days: '4–8 working days once sent' }
+const us: DeliveryOption = { id: 'us', label: 'Tracked delivery, duties paid', pence: 2500, days: '5–8 working days once sent' }
+
+export function deliveryOptions(country: string | null | undefined): DeliveryOption[] {
+  switch (country) {
+    case 'GB':
+      return [ukTracked, ukNextDay]
+    case 'FR':
+    case 'DE':
+    case 'IT':
+      return [europe]
+    case 'AE':
+    case 'SA':
+    case 'KW':
+    case 'QA':
+    case 'BH':
+    case 'OM':
+      return [gulf]
+    case 'US':
+      return [us]
+    default:
+      return []
+  }
+}
+
+/** The option the customer chose, or the first for their country. */
+export function deliveryFor(country: string | null | undefined, id?: string | null): DeliveryOption | null {
+  const options = deliveryOptions(country)
+  return options.find((option) => option.id === id) ?? options[0] ?? null
+}
+
+export const deliveryFromPence = ukTracked.pence
+
 export const carriageLine =
-  'Carriage is included to Britain, the United Arab Emirates, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the United States, France, Germany and Italy. A visit is not required.'
+  'We deliver to Britain, the United Arab Emirates, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the United States, France, Germany and Italy. Delivery is tracked and charged per order: UK £3.95 (next working day £5.95), France, Germany and Italy £12, the Gulf £15, the United States £25 with duties paid. A visit is not required.'
 
 /** Short form for the product page. */
 export const deliveryLine =
-  'Free delivery to Britain, the UAE, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the US, France, Germany and Italy.'
+  'Tracked delivery from £3.95 in the UK; £12 to Europe, £15 to the Gulf, £25 to the US. Shown before you pay.'
 
 export const madeToOrderLine = 'Made to order: payment is taken first, and we email the week it will be ready.'
 
