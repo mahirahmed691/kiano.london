@@ -18,7 +18,7 @@ type Props = {
   children: ReactNode
 }
 
-export function TillFrame({ kicker = 'The till', title, product, children }: Props) {
+export function TillFrame({ kicker = 'Checkout', title, product, children }: Props) {
   const still = tillStill(product)
 
   return (

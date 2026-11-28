@@ -98,13 +98,13 @@ export function ReservationPage() {
   }
 
   return (
-    <HouseRoom kicker="A reserved cut" title="Ask after it." containerClassName="max-w-2xl">
-        <Eyebrow>A reserved cut</Eyebrow>
+    <HouseRoom kicker="An order" title="Ask after it." containerClassName="max-w-2xl">
+        <Eyebrow>An order</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           Ask after it.
         </Display>
         <Body className="mt-6">
-          The eight-letter reference on the confirmation, and the email used at the till. An
+          The eight-letter reference on the confirmation, and the email you used at checkout. An
           account is not needed.
         </Body>
 

@@ -38,7 +38,7 @@ export function WordDrawer() {
           open ? 'translate-x-0' : 'translate-x-full',
         )}
         aria-hidden={!open}
-        aria-label="Word from the house"
+        aria-label="Updates from Kiano London"
       >
         <div className="flex items-center justify-between border-b border-rule px-6 py-5">
           <div className="flex items-center gap-3">
@@ -145,10 +145,9 @@ function WordEmptyAuth({ onClose }: { onClose: () => void }) {
   if (!isSignedIn) {
     return (
       <div className="flex flex-1 flex-col justify-center px-8">
-        <p className="font-display text-3xl font-light">Word follows the account.</p>
+        <p className="font-display text-3xl font-light">Sign in to see updates about your orders.</p>
         <p className="mt-4 max-w-xs text-[14px] font-light leading-relaxed text-ink-soft">
-          Sign in with the email used at the till. A reserved cut, and when it moves, will sit
-          here.
+          Sign in with the email you used at checkout to follow your orders here.
         </p>
         <div className="mt-8">
           <Button to="/sign-in" onClick={onClose}>

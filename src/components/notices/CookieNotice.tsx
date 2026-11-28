@@ -57,9 +57,9 @@ export function CookieNotice() {
       <div className="mx-auto flex max-w-6xl flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <p className="min-w-0 text-[13px] font-light leading-snug text-ink-soft md:text-[15px] md:leading-relaxed">
           <span className="mr-3 text-[11px] uppercase tracking-[0.22em] text-stone">Cookies</span>
-          The bag, your account, and this notice. Nothing is sold to advertisers.{' '}
+          We only use essential cookies for your bag and account. No advertising tracking.{' '}
           <Link to="/cookies" className="border-b border-current pb-px">
-            What we keep
+            Cookie policy
           </Link>
           .
         </p>
@@ -68,7 +68,7 @@ export function CookieNotice() {
             Accept
           </Button>
           <Button className="min-h-9 px-4 py-1.5" onClick={() => choose('necessary')}>
-            Necessary
+            Essential only
           </Button>
         </div>
       </div>

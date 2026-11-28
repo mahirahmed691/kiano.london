@@ -59,8 +59,8 @@ export function OrderCardPage() {
 
   if (missing) {
     return (
-      <HouseRoom kicker="The till" title="This card could not be found.">
-        <Eyebrow>The till</Eyebrow>
+      <HouseRoom kicker="Your order" title="This card could not be found.">
+        <Eyebrow>Your order</Eyebrow>
         <Display as="h1" className="mt-4 text-4xl md:text-5xl">
           This card could not be found.
         </Display>
@@ -68,7 +68,7 @@ export function OrderCardPage() {
           Open it from the confirmation, the account, or by asking after the cut.
         </Body>
         <div className="mt-12 flex flex-wrap gap-6">
-          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+          <TextLink to="/reservation">Ask after an order</TextLink>
           <TextLink to="/account">Account</TextLink>
         </div>
       </HouseRoom>
@@ -101,7 +101,7 @@ export function OrderCardPage() {
               Account
             </Button>
           )}
-          <TextLink to="/reservation">Ask after a reserved cut</TextLink>
+          <TextLink to="/reservation">Ask after an order</TextLink>
           <button
             type="button"
             onClick={() => window.print()}

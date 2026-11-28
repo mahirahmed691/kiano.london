@@ -162,8 +162,8 @@ export async function applyChargeRefund(stripe: Stripe, charge: Stripe.Charge, e
     await sendMail({
       to: next.email,
       subject: full
-        ? 'The reservation has been returned — Kiano London'
-        : 'Part of the reservation has been returned — Kiano London',
+        ? 'Your refund is on its way — Kiano London'
+        : 'Your partial refund is on its way — Kiano London',
       text: returnLetterText({ cut: cutName, full }),
       html: returnLetterHtml({ cut: cutName, full }),
       idempotencyKey: `return/${next.id}/${next.refunded_pence}`,

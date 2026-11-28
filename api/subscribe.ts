@@ -85,7 +85,7 @@ export async function POST(request: Request) {
     const confirmUrl = `${origin}/api/subscribe-confirm?token=${token}`
     await sendMail({
       to: email,
-      subject: 'Confirm the Kiano London list',
+      subject: 'Please confirm your email — Kiano London',
       text: `Confirm this address to join the list.\n\n${confirmUrl}\n\nIf you did not ask for this, ignore the letter. ${site.email}`,
       html: confirmLetterHtml(confirmUrl),
       idempotencyKey: `list-confirm/${email}/${token.slice(0, 12)}`,

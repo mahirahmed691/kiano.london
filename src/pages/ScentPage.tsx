@@ -55,7 +55,7 @@ export function ScentPage() {
               {String(scents.length).padStart(2, '0')} names
             </p>
             <p className="text-[13px] font-light text-stone">
-              Arabian Oud, and eau de parfum. The same three. Not on the till.
+              Arabian Oud, and eau de parfum. The same three. Not yet for sale.
             </p>
           </div>
           <div className="grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">

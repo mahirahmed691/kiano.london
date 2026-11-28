@@ -60,7 +60,7 @@ export function Footer() {
                   to="/reservation"
                   className="text-[14px] font-light text-ivory/80 transition-colors duration-500 hover:text-bronze"
                 >
-                  A reserved cut
+                  Find an order
                 </Link>
               </li>
               <li>

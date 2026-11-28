@@ -83,7 +83,7 @@ export function HouseDeviceForm() {
       <div>
         <p className="text-[11px] uppercase tracking-[0.22em] text-stone">On this device</p>
         <Body className="mt-4">
-          The size you wear, and the details for the till, stay here. Sign in to keep the same
+          Your size and delivery details are saved on this device. Sign in to keep the same
           with the house.
         </Body>
       </div>
@@ -91,7 +91,7 @@ export function HouseDeviceForm() {
       <Field
         id="device-size"
         label="Size"
-        hint="The line will start here. You can still choose another cut."
+        hint="We will pre-select this size for you. You can always pick another."
       >
         <select
           id="device-size"
