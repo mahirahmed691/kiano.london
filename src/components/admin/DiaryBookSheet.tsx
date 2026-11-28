@@ -21,7 +21,7 @@ function pieceLine(row: AppointmentRow) {
   if (product) return productLineName(product)
   if (row.kind === 'return') return 'A cut'
   if (row.kind === 'wait') return 'A size'
-  return 'To be discussed'
+  return 'Not sure yet'
 }
 
 function statusLine(row: AppointmentRow) {

@@ -75,8 +75,8 @@ export function HomePage() {
             </Reveal>
             <Reveal delay={120} className="lg:col-span-6 lg:col-start-7 lg:pt-14">
               <Lead>
-                A London atelier making one garment, properly. Cut from a single house
-                block, finished by hand, made to order.
+                One garment, made properly. Cut and sewn by hand in the UAE, and made
+                to order when you buy.
               </Lead>
               <Body className="mt-8">
                 More air through the chest than the thobe, a band collar, a concealed
@@ -130,14 +130,14 @@ export function HomePage() {
             objectPosition="center 40%"
             imageOn="right"
           >
-            <Eyebrow>The house</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
+            <Eyebrow>How it is made</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">Handmade in the UAE</Display>
             <Body className="mt-6">
-              Fittings are by appointment in London. We keep no shop window: come and
-              feel the cloth, try the sizes, and leave with the right one.
+              Every Urban Emirati is cut and sewn by hand in our workshop in the UAE. Nothing is
+              made in advance: your piece is made when you order it, then sent to you.
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
-              <Button to="/visit">Visit by appointment</Button>
+              <Button to="/craftsmanship">How it is made</Button>
               <TextLink to="/stills">The stills</TextLink>
               <TextLink to="/story">The story</TextLink>
             </div>

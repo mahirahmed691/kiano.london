@@ -75,10 +75,8 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">Visit</p>
+            <p className="text-[10px] uppercase tracking-[0.32em] text-bronze">Contact</p>
             <address className="mt-5 not-italic text-[14px] font-light leading-[1.85] text-ivory/80">
-              {site.city}
-              <br />
               {site.hours}
               <br />
               <a className="mt-2 inline-block" href={`mailto:${site.email}`}>
@@ -110,7 +108,7 @@ export function Footer() {
               { to: '/terms', label: 'Terms of sale' },
               { to: '/privacy', label: 'Privacy Policy' },
               { to: '/cookies', label: 'Cookie Policy' },
-              { to: '/visit', label: 'Contact and visits' },
+              { to: '/contact', label: 'Contact' },
             ].map((item) => (
               <li key={item.to}>
                 <Link to={item.to} className="transition-colors duration-500 hover:text-bronze">

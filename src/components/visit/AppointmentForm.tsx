@@ -100,8 +100,8 @@ export function AppointmentForm() {
 
     if (!kept) {
       const subject = selectedName
-        ? `Appointment: ${selectedName}`
-        : 'Appointment at Kiano London'
+        ? `Question: ${selectedName}`
+        : 'Question for Kiano London'
       const body = [
         `Name: ${name}`,
         `Email: ${email}`,
@@ -126,16 +126,16 @@ export function AppointmentForm() {
     return (
       <div className="border-t border-rule pt-8">
         <p className="font-display text-3xl font-light">
-          {kept ? 'The letter is held.' : 'The letter is ready.'}
+          {kept ? 'Message sent.' : 'Your message is ready.'}
         </p>
         <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-ink-soft">
           {kept
             ? written
-              ? 'A confirmation has been sent to you. It is not a booking. We write when a morning can be kept.'
-              : 'The house has the letter. A confirmation will follow when it can be sent. It is not a booking.'
+              ? 'Thank you. We have emailed you a copy and will reply within two working days.'
+              : 'Thank you. We have your message and will reply within two working days.'
             : (
               <>
-                Your mail application should open with the appointment written in. If it does
+                Your email app should open with the message written in. If it does
                 not, write to us at{' '}
                 <a className="underline underline-offset-4" href={`mailto:${site.email}`}>
                   {site.email}
@@ -191,7 +191,7 @@ export function AppointmentForm() {
       </Field>
 
       <div className="grid gap-8 sm:grid-cols-2">
-        <Field id="visit-piece" label="Piece">
+        <Field id="visit-piece" label="Piece (optional)">
           <select
             id="visit-piece"
             name="piece"
@@ -199,7 +199,7 @@ export function AppointmentForm() {
             onChange={(event) => setPiece(event.target.value)}
             className={cn(fieldClass, 'appearance-none')}
           >
-            <option value="">To be discussed</option>
+            <option value="">Not sure yet</option>
             {products.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.cut === 'Jubbah' ? productLineName(item) : item.name}
@@ -207,7 +207,7 @@ export function AppointmentForm() {
             ))}
           </select>
         </Field>
-        <Field id="visit-size" label="Size">
+        <Field id="visit-size" label="Size (optional)">
           <select
             id="visit-size"
             name="size"
@@ -220,7 +220,7 @@ export function AppointmentForm() {
             }}
             className={cn(fieldClass, 'appearance-none')}
           >
-            <option value="">To be fitted</option>
+            <option value="">Not sure</option>
             {thobeSizes.map((value) => (
               <option key={value} value={String(value)}>
                 {value}
@@ -230,7 +230,7 @@ export function AppointmentForm() {
         </Field>
       </div>
 
-      <Field id="visit-note" label="A note">
+      <Field id="visit-note" label="Your question">
         <textarea
           id="visit-note"
           name="note"
@@ -242,7 +242,7 @@ export function AppointmentForm() {
       </Field>
 
       <Button type="submit" disabled={keeping}>
-        Request an appointment
+        Send
       </Button>
     </form>
   )

@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     return Response.json({ profile })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'The atelier could not read the account.' }, { status: 503 })
+    return Response.json({ error: 'Something went wrong. Please try again.' }, { status: 503 })
   }
 }
 
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     return Response.json({ ok: true, profile })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'The atelier could not open the account.' }, { status: 503 })
+    return Response.json({ error: 'Something went wrong. Please try again.' }, { status: 503 })
   }
 }
 
@@ -110,7 +110,7 @@ export async function PUT(request: Request) {
     return Response.json({ ok: true, profile })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'The atelier could not keep the details.' }, { status: 503 })
+    return Response.json({ error: 'Your details could not be saved. Please try again.' }, { status: 503 })
   }
 }
 
@@ -155,7 +155,7 @@ export async function DELETE(request: Request) {
   } catch (caught) {
     console.error(caught)
     return Response.json(
-      { error: 'The account could not be closed. Write to the atelier.' },
+      { error: 'The account could not be closed. Please contact us at atelier@kiano.london.' },
       { status: 503 },
     )
   }

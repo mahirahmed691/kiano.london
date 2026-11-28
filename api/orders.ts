@@ -151,7 +151,7 @@ export async function GET(request: Request) {
     })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'The atelier could not read your reservations.' }, { status: 503 })
+    return Response.json({ error: 'Your orders could not be loaded. Please try again.' }, { status: 503 })
   }
 }
 
@@ -216,6 +216,6 @@ export async function POST(request: Request) {
     })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'The atelier could not read the reservation.' }, { status: 503 })
+    return Response.json({ error: 'That order could not be loaded. Please try again.' }, { status: 503 })
   }
 }

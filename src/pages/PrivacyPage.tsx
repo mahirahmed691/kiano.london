@@ -22,9 +22,9 @@ export function PrivacyPage() {
 
         <ul className="mt-14 space-y-10">
           <li>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">A visit or a note</p>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-stone">A question</p>
             <Body className="mt-3">
-              The appointment form opens mail to {site.email}. That letter lives in the atelier
+              The contact form sends your message to {site.email}. It is kept in our
               inbox.
             </Body>
           </li>
@@ -32,7 +32,7 @@ export function PrivacyPage() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Account</p>
             <Body className="mt-3">
               Member sign-in is Clerk. Name and email sit there. The size you wear, delivery
-              name, telephone, and address are kept with the house so checkout, a visit, a size alert,
+              name, telephone, and address are kept with the house so checkout, a question, a size alert,
               and a return need not be written again. Change them on{' '}
               <Link to="/account" className="border-b border-current pb-px">
                 account
@@ -70,7 +70,7 @@ export function PrivacyPage() {
             <p className="text-[11px] uppercase tracking-[0.22em] text-stone">Updates</p>
             <Body className="mt-3">
               If you keep an account, notices of an order sit against it. The ledger receives
-              word of visits, the list, and remaining cuts. On the installable app, that word can
+              updates about orders, the newsletter, and sizes back in stock. On the installable app, that word can
               also arrive as a device notice, if you allow it.
             </Body>
           </li>

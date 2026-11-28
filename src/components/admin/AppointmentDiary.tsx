@@ -13,7 +13,7 @@ const fieldClass =
 function appointmentPiece(row: AppointmentRow) {
   const product = getProduct(row.productId)
   if (product) return productLineName(product)
-  return row.kind === 'return' ? 'A cut' : row.kind === 'wait' ? 'A size' : 'To be discussed'
+  return row.kind === 'return' ? 'A cut' : row.kind === 'wait' ? 'A size' : 'Not sure yet'
 }
 
 function formatDiaryDate(value: string) {

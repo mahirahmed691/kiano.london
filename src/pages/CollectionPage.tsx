@@ -128,7 +128,7 @@ export function CollectionPage() {
         <Container>
           <div className="flex flex-wrap items-center gap-6">
             <Button to="/shop">The Shop</Button>
-            <TextLink to="/visit">Visit by appointment</TextLink>
+            <TextLink to="/contact">Contact us</TextLink>
             <TextLink to="/scent">The Scent</TextLink>
           </div>
         </Container>

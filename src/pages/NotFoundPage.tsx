@@ -27,7 +27,7 @@ export function NotFoundPage() {
         <Button to="/shop">The Shop</Button>
         <TextLink to="/collection">The Collection</TextLink>
         <TextLink to="/scent">The Scent</TextLink>
-        <TextLink to="/visit">Visit</TextLink>
+        <TextLink to="/contact">Contact</TextLink>
       </div>
     </HouseRoom>
   )

@@ -27,8 +27,8 @@ export function TrustBar({ className }: { className?: string }) {
             Returns
           </Link>
           <span aria-hidden="true"> · </span>
-          <Link to="/visit" className="underline underline-offset-4 hover:opacity-70">
-            Book an atelier visit
+          <Link to="/contact" className="underline underline-offset-4 hover:opacity-70">
+            Contact us
           </Link>
         </p>
       </Container>

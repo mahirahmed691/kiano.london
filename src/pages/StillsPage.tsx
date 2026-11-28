@@ -185,13 +185,13 @@ export function StillsPage() {
         <Container>
           <Reveal className="max-w-2xl">
             <Eyebrow>The house</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
+            <Display className="mt-4 text-4xl md:text-5xl">Made to order</Display>
             <Body className="mt-6">
-              The stills are the line as it is worn. Cloth is shown on the table. A visit
-              is the next still. {creedSpoken}
+              The stills are the line as it is worn. Each piece is handmade in the UAE when you
+              order it. {creedSpoken}
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
-              <Button to="/visit">Visit by appointment</Button>
+              <Button to="/contact">Contact us</Button>
               <TextLink to="/collection">The Collection</TextLink>
             </div>
           </Reveal>

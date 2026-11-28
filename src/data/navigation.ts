@@ -9,7 +9,7 @@ export const primaryNav: NavItem[] = [
   { label: 'Scent', to: '/scent' },
   { label: 'Story', to: '/story' },
   { label: 'Craftsmanship', to: '/craftsmanship' },
-  { label: 'Visit', to: '/visit' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 export const overlayPaths = [
@@ -22,6 +22,7 @@ export const overlayPaths = [
   '/craftsmanship',
   '/craftsmanship-details',
   '/visit',
+  '/contact',
   '/checkout',
   '/account',
   '/returns',

@@ -19,7 +19,7 @@ const pages: Record<string, PageMeta> = {
   '/': {
     title: 'Kiano London | Considered Menswear & Urban Emirati',
     description:
-      'Kiano London creates considered menswear in London. Explore the Urban Emirati collection, limited-run pieces, and atelier visits by appointment.',
+      'Kiano London makes considered menswear, handmade in the UAE and made to order. Explore the Urban Emirati in stone grey, cream and black.',
     path: '/',
     image: '/images/jubbah-black.jpg',
     imageAlt: 'Urban Emirati in black, worn at full length.',
@@ -79,11 +79,11 @@ const pages: Record<string, PageMeta> = {
     image: '/images/stitch-felled.jpg',
     imageAlt: 'A felled seam at close range.',
   },
-  '/visit': {
-    title: 'Visit — Kiano London',
+  '/contact': {
+    title: 'Contact — Kiano London',
     description:
-      `Appointments with Kiano London. See cloth, sit for a fitting, or write first. ${creedIntent}`,
-    path: '/visit',
+      `Questions about sizing, an order or delivery. ${creedIntent}`,
+    path: '/contact',
     image: '/images/cutting-room.jpg',
     imageAlt: 'Paper, shears, and cloth: the work of a thobe.',
   },

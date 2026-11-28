@@ -54,11 +54,11 @@ export function HouseRoom({
         <Section className="print:hidden">
           <Container>
             <div className="mx-auto max-w-xl text-center">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-stone">The house</p>
-              <p className="mt-4 font-display text-3xl font-light">By appointment. London.</p>
+              <p className="text-[11px] uppercase tracking-[0.28em] text-stone">Kiano London</p>
+              <p className="mt-4 font-display text-3xl font-light">Handmade in the UAE. Made to order.</p>
               <p className="mt-4 text-[14px] font-light text-ink-soft">{site.email}</p>
               <div className="mt-8">
-                <TextLink to="/visit">A visit</TextLink>
+                <TextLink to="/contact">Contact</TextLink>
               </div>
             </div>
           </Container>

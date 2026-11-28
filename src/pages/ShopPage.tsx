@@ -126,7 +126,7 @@ export function ShopPage() {
               is coming, as its own line.
             </p>
             <div className="flex flex-wrap items-center gap-6">
-              <Button to="/visit">Visit by appointment</Button>
+              <Button to="/contact">Contact us</Button>
               <TextLink to="/scent">The Scent</TextLink>
               {tillProofOpen ? (
                 <TextLink to="/shop/till-proof">The proof, one pound</TextLink>

@@ -22,6 +22,6 @@ export async function GET(request: Request) {
     return Response.json({ productId, sizes })
   } catch (caught) {
     console.error(caught)
-    return Response.json({ error: 'The atelier could not read remaining cuts.' }, { status: 503 })
+    return Response.json({ error: 'Stock could not be loaded. Please try again.' }, { status: 503 })
   }
 }

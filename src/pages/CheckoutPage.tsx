@@ -31,7 +31,7 @@ const fieldClass =
 
 function asPaymentError(message?: string) {
   if (message && !/till/i.test(message)) return message
-  return 'Payment could not be opened. Write to the atelier.'
+  return 'Payment could not be opened. Please contact us at atelier@kiano.london.'
 }
 
 function Field({

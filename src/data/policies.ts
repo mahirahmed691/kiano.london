@@ -11,7 +11,7 @@ export const trustPoints = [
   { title: '14-day returns', detail: 'Free return postage within the UK.' },
   { title: 'Secure checkout', detail: 'Card payments are handled by Stripe.' },
   { title: 'Made to order', detail: 'Each piece is cut for you, in small runs.' },
-  { title: 'Atelier visits', detail: 'In London, by appointment.' },
+  { title: 'Handmade', detail: 'Cut and sewn by hand in the UAE.' },
 ] as const
 
 export const returnsSummary =

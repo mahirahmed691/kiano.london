@@ -48,7 +48,7 @@ export function DeleteAccount({ onClosed }: Props) {
       })
       const data = (await response.json().catch(() => ({}))) as { error?: string }
       if (!response.ok) {
-        setError(data.error || 'The account could not be closed. Write to the atelier.')
+        setError(data.error || 'The account could not be closed. Please contact us at atelier@kiano.london.')
         return
       }
       clearStoredCheckout()
@@ -62,7 +62,7 @@ export function DeleteAccount({ onClosed }: Props) {
       }
       onClosed()
     } catch {
-      setError('The account could not be closed. Write to the atelier.')
+      setError('The account could not be closed. Please contact us at atelier@kiano.london.')
     } finally {
       setBusy(false)
     }

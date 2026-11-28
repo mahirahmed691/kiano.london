@@ -29,7 +29,7 @@ export async function assertStock(items: StockLine[]) {
     const product = getProduct(item.productId)
     const name = product?.name ?? 'This piece'
     if (remaining <= 0) {
-      throw new StockError(`${name} in ${item.size} is held. Write to the atelier.`)
+      throw new StockError(`${name} in ${item.size} is sold out. Please choose another size.`)
     }
     throw new StockError(
       remaining === 1

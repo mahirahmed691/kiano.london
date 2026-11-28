@@ -154,7 +154,7 @@ async function createSession(request: Request) {
   const secret = process.env.STRIPE_SECRET_KEY
   if (!secret || secret === 'undefined') {
     return Response.json(
-      { error: 'Payment could not be opened. Write to the atelier.' },
+      { error: 'Payment could not be opened. Please contact us at atelier@kiano.london.' },
       { status: 503 },
     )
   }

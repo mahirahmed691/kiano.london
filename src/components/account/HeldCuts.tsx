@@ -162,12 +162,12 @@ export function HeldCuts({
                 <Link
                   to={
                     order.lines[0].size
-                      ? `/visit?piece=${encodeURIComponent(order.lines[0].productId)}&size=${order.lines[0].size}`
-                      : `/visit?piece=${encodeURIComponent(order.lines[0].productId)}`
+                      ? `/contact?piece=${encodeURIComponent(order.lines[0].productId)}&size=${order.lines[0].size}`
+                      : `/contact?piece=${encodeURIComponent(order.lines[0].productId)}`
                   }
                   className="text-[11px] uppercase tracking-[0.22em] transition-opacity hover:opacity-70"
                 >
-                  Enquire to visit
+                  Ask a question
                 </Link>
               ) : null}
               <Link

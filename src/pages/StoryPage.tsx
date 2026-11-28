@@ -121,14 +121,14 @@ export function StoryPage() {
             objectPosition="center 40%"
             imageOn="right"
           >
-            <Eyebrow>Visit</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">By appointment</Display>
+            <Eyebrow>Made to order</Eyebrow>
+            <Display className="mt-4 text-4xl md:text-5xl">Handmade in the UAE</Display>
             <Body className="mt-6">
-              Write to the atelier if you wish to see cloth, sit for a fitting, or
-              simply come. We keep the diary small on purpose. {creedIntent}
+              Each piece is cut and sewn by hand in our workshop in the UAE once you order it,
+              then sent to you. Questions about sizing or an order? Write to us. {creedIntent}
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
-              <Button to="/visit">Visit by appointment</Button>
+              <Button to="/contact">Contact us</Button>
               <TextLink to="/stills">The stills</TextLink>
               <TextLink to="/craftsmanship">How it is made</TextLink>
             </div>

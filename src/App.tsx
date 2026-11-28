@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AppProviders } from '@/components/auth/AppProviders'
 import { Layout } from '@/components/layout/Layout'
 import { CartProvider } from '@/lib/cart'
@@ -74,7 +74,8 @@ export default function App() {
                 <Route path="/story" element={<StoryPage />} />
                 <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
                 <Route path="/craftsmanship-details" element={<CraftsmanshipDetailsPage />} />
-                <Route path="/visit" element={<VisitPage />} />
+                <Route path="/contact" element={<VisitPage />} />
+                <Route path="/visit" element={<Navigate to="/contact" replace />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
                 <Route path="/order/invoice" element={<OrderInvoicePage />} />

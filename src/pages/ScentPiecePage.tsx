@@ -74,7 +74,7 @@ export function ScentPiecePage() {
               </div>
               <div className="mt-10 flex flex-wrap items-center gap-6">
                 <Button to="/scent">The Scent</Button>
-                <TextLink to="/visit">Visit by appointment</TextLink>
+                <TextLink to="/contact">Contact us</TextLink>
               </div>
             </Reveal>
             {rest[0] ? (
