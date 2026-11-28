@@ -34,8 +34,8 @@ export const termsBlocks = [
     body: `We deliver to ${deliveryCountries.slice(0, -1).join(', ')} and ${deliveryCountries[deliveryCountries.length - 1]}. Delivery is tracked and charged per order, and the charge is shown before you pay: UK £3.95, or £5.95 for the next working day; France, Germany and Italy £12; the UAE, Saudi Arabia, Kuwait, Qatar, Bahrain and Oman £15; the United States £25, with US duties paid by us. If you cancel within 14 days we refund the standard delivery charge with the piece. Outside the UK and the US, the destination country may charge import duties or taxes on arrival.`,
   },
   {
-    title: 'Made to order',
-    body: 'Each piece is cut after you order it, in the standard sizes. We email the week it will be ready, and again with tracking when it is sent. A piece is yours, and at your risk, once it is delivered.',
+    title: 'Dispatch',
+    body: 'Pieces are held in stock in sizes 52 to 60 and sent from the UK within 3 to 5 working days of payment. We email you with tracking when your order is sent. A piece is yours, and at your risk, once it is delivered.',
   },
   {
     title: 'Changing your mind',

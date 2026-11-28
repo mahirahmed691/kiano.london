@@ -77,7 +77,7 @@ export const carriageLine =
 export const deliveryLine =
   'Tracked delivery from £3.95 in the UK; £12 to Europe, £15 to the Gulf, £25 to the US. Shown before you pay.'
 
-export const madeToOrderLine = 'Made to order: payment is taken first, and we email the week it will be ready.'
+export const madeToOrderLine = 'In stock in sizes 52–60. Sent from the UK within 3–5 working days, with tracking.'
 
 export function shippingCountryName(code: string | null | undefined) {
   if (!code) return ''

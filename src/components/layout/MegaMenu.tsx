@@ -159,7 +159,7 @@ function CraftPanel({ onNavigate }: { onNavigate: () => void }) {
       <div className="lg:col-span-5">
         <p className="text-[11px] uppercase tracking-[0.22em] text-stone">The House</p>
         <p className="mt-6 max-w-xl font-display text-3xl font-light leading-snug tracking-[-0.02em] text-ink md:text-4xl">
-          Handmade in the UAE and made to order: how the Urban Emirati is cut and sewn.
+          Handmade in the UAE in small runs: how the Urban Emirati is cut and sewn.
         </p>
         <ul className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-4">
           <li>

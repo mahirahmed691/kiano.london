@@ -283,15 +283,15 @@ export function cuttingLetterHtml(input: { cuts: string; accountUrl?: string }) 
     ? `<p style="margin:16px 0 0;"><a href="${escapeHtml(input.accountUrl)}" style="color:#1B1714;">Follow it in your account</a></p>`
     : ''
   return letterFrame(
-    'The piece is on the table.',
-    `<p style="margin:0;">The cloth you reserved is being cut from the house block. Next it is sewn, pressed and boxed; we write again when it is packed.</p>${cutsMarkup(input.cuts)}${account}`,
+    'We are preparing your order.',
+    `<p style="margin:0;">Your piece is being pressed and packed. We will email you tracking when it is sent.</p>${cutsMarkup(input.cuts)}${account}`,
     `Questions: ${site.email}.`,
   )
 }
 
 export function cuttingLetterText(input: { cuts: string; accountUrl?: string }) {
   return [
-    'The cloth you reserved is being cut from the house block. Next it is sewn, pressed and boxed; we write again when it is packed.',
+    'Your piece is being pressed and packed. We will email you tracking when it is sent.',
     input.cuts.trim() || null,
     input.accountUrl ? `Follow it in your account: ${input.accountUrl}` : null,
     `Questions: ${site.email}.`,
@@ -306,7 +306,7 @@ export function packedLetterHtml(input: { cuts: string; note?: string; cardUrl?:
     ? `<p style="margin:16px 0 0;">A line you wrote is on the card.</p><p style="margin:16px 0 0;">${escapeHtml(line)}</p>`
     : ''
   const card = input.cardUrl
-    ? `<p style="margin:16px 0 0;"><a href="${escapeHtml(input.cardUrl)}" style="color:#1B1714;">The house card</a></p>`
+    ? `<p style="margin:16px 0 0;"><a href="${escapeHtml(input.cardUrl)}" style="color:#1B1714;">Gift card</a></p>`
     : ''
   return letterFrame(
     'It is in the house box.',
@@ -322,7 +322,7 @@ export function packedLetterText(input: { cuts: string; note?: string; cardUrl?:
     input.cuts.trim() || null,
     line ? `A line you wrote is on the card.\n\n${line}` : null,
     careLine,
-    input.cardUrl ? `The house card: ${input.cardUrl}` : null,
+    input.cardUrl ? `Gift card: ${input.cardUrl}` : null,
     `Questions: ${site.email}.`,
   ]
     .filter(Boolean)
@@ -331,7 +331,7 @@ export function packedLetterText(input: { cuts: string; note?: string; cardUrl?:
 
 export function sentLetterHtml(input: { how: string; cuts: string; cardUrl?: string }) {
   const card = input.cardUrl
-    ? `<p style="margin:16px 0 0;"><a href="${escapeHtml(input.cardUrl)}" style="color:#1B1714;">The house card</a></p>`
+    ? `<p style="margin:16px 0 0;"><a href="${escapeHtml(input.cardUrl)}" style="color:#1B1714;">Gift card</a></p>`
     : ''
   return letterFrame(
     'It has left the house.',
@@ -345,7 +345,7 @@ export function sentLetterText(input: { how: string; cuts: string; cardUrl?: str
     input.how,
     input.cuts.trim() || null,
     `Hang it. ${careLine}`,
-    input.cardUrl ? `The house card: ${input.cardUrl}` : null,
+    input.cardUrl ? `Gift card: ${input.cardUrl}` : null,
     `Questions: ${site.email}.`,
   ]
     .filter(Boolean)
@@ -374,13 +374,13 @@ export function reservationLetterHtml(input: {
   const invoiceUrl = escapeHtml(input.invoiceUrl)
   const cardUrl = escapeHtml(input.cardUrl)
   const accountUrl = escapeHtml(input.accountUrl)
-  const open = name ? `${escapeHtml(name)}, payment holds the cloth.` : 'Payment holds the cloth.'
+  const open = name ? `${escapeHtml(name)}, thank you for your order.` : 'Thank you for your order.'
   const list = cuts
     .map((line) => `<li style="margin:0 0 8px;">${line}.</li>`)
     .join('')
   return letterFrame(
-    'The cut is reserved.',
-    `<p style="margin:0;">${open}</p><ul style="margin:16px 0 0;padding:0;list-style:none;">${list}</ul><p style="margin:16px 0 0;">Reference ${reference}.</p><p style="margin:16px 0 0;">Cloth is cut from the house block. Made to order.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">A record of the cut</a> · <a href="${cardUrl}" style="color:#1B1714;">The house card</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
+    'Order confirmed.',
+    `<p style="margin:0;">${open}</p><ul style="margin:16px 0 0;padding:0;list-style:none;">${list}</ul><p style="margin:16px 0 0;">Reference ${reference}.</p><p style="margin:16px 0 0;">Your order will be sent from the UK within 3–5 working days. We will email you tracking when it leaves.</p><p style="margin:16px 0 0;"><a href="${invoiceUrl}" style="color:#1B1714;">Invoice</a> · <a href="${cardUrl}" style="color:#1B1714;">Gift card</a> · <a href="${accountUrl}" style="color:#1B1714;">Account</a></p>`,
     `Questions: ${site.email}.`,
   )
 }
@@ -395,12 +395,12 @@ export function reservationLetterText(input: {
 }) {
   const cuts = input.lines.length ? input.lines : ['A cut']
   return [
-    input.name.trim() ? `${input.name.trim()}, payment holds the cloth.` : 'Payment holds the cloth.',
+    input.name.trim() ? `${input.name.trim()}, thank you for your order.` : 'Thank you for your order.',
     cuts.map((line) => `${line}.`).join('\n'),
     `Reference ${input.reference}.`,
-    'Cloth is cut from the house block. Made to order.',
-    `A record of the cut: ${input.invoiceUrl}`,
-    `The house card: ${input.cardUrl}`,
+    'Your order will be sent from the UK within 3–5 working days. We will email you tracking when it leaves.',
+    `Invoice: ${input.invoiceUrl}`,
+    `Gift card: ${input.cardUrl}`,
     `Account: ${input.accountUrl}`,
     `Questions: ${site.email}.`,
   ].join('\n\n')

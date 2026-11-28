@@ -19,7 +19,7 @@ const pages: Record<string, PageMeta> = {
   '/': {
     title: 'Kiano London | Considered Menswear & Urban Emirati',
     description:
-      'Kiano London makes considered menswear, handmade in the UAE and made to order. Explore the Urban Emirati in stone grey, cream and black.',
+      'Kiano London makes considered menswear, handmade in the UAE and sent from the UK. Explore the Urban Emirati in stone grey, cream and black.',
     path: '/',
     image: '/images/jubbah-black.jpg',
     imageAlt: 'Urban Emirati in black, worn at full length.',
@@ -114,7 +114,7 @@ const pages: Record<string, PageMeta> = {
   },
   '/delivery': {
     title: 'Delivery — Kiano London',
-    description: 'Tracked delivery from £3.95 in the UK, £12 to Europe, £15 to the Gulf, £25 to the US. Made to order, with the ready week and tracking sent by email.',
+    description: 'Tracked delivery from £3.95 in the UK, £12 to Europe, £15 to the Gulf, £25 to the US. Sent from the UK within 3–5 working days, with tracking by email.',
     path: '/delivery',
   },
   '/letters/confirmed': {
@@ -163,14 +163,14 @@ const pages: Record<string, PageMeta> = {
   },
   '/checkout': {
     title: 'Checkout — Kiano London',
-    description: 'Reserve a piece from the house block. Made to order. Tracked delivery from £3.95.',
+    description: 'Checkout. Sent within 3–5 working days. Tracked delivery from £3.95.',
     path: '/checkout',
     image: '/images/cutting-room.jpg',
     imageAlt: 'Paper, shears, and cloth: the work of a thobe.',
   },
   '/order/confirmed': {
     title: 'The cut is reserved — Kiano London',
-    description: 'The cloth is reserved, not yet on the table. Made to order.',
+    description: 'Your order is confirmed. Sent within 3–5 working days.',
     path: '/order/confirmed',
     image: '/images/cutting-room.jpg',
     imageAlt: 'Paper, shears, and cloth: the work of a thobe.',

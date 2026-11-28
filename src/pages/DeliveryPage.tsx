@@ -23,7 +23,7 @@ export function DeliveryPage() {
       <Display as="h1" className="mt-4 text-4xl md:text-5xl">
         Delivery.
       </Display>
-      <Body className="mt-6">Tracked delivery from £3.95 in the UK, charged at checkout. Each piece is made to order.</Body>
+      <Body className="mt-6">Tracked delivery from £3.95 in the UK, charged at checkout. Orders leave the UK within 3–5 working days.</Body>
 
       <ul className="mt-14 space-y-10">
         {deliveryPolicy.map((item) => (

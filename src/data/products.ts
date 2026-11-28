@@ -19,7 +19,7 @@ export const clothSwatch: Record<ProductColour, string> = {
 
 export const clothThread = '#F2EBDC'
 
-export const leadTime = 'Made to order.'
+export const leadTime = 'In stock. Sent within 3–5 working days.'
 
 export function swatchOf(colour: ProductColour) {
   return clothSwatch[colour]

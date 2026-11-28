@@ -185,10 +185,10 @@ export function StillsPage() {
         <Container>
           <Reveal className="max-w-2xl">
             <Eyebrow>The house</Eyebrow>
-            <Display className="mt-4 text-4xl md:text-5xl">Made to order</Display>
+            <Display className="mt-4 text-4xl md:text-5xl">Handmade in the UAE</Display>
             <Body className="mt-6">
-              The stills are the line as it is worn. Each piece is handmade in the UAE when you
-              order it. {creedSpoken}
+              The stills are the line as it is worn. Each piece is handmade in the UAE in small runs
+              and sent from the UK. {creedSpoken}
             </Body>
             <div className="mt-8 flex flex-wrap items-center gap-6">
               <Button to="/contact">Contact us</Button>

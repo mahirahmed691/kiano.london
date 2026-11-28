@@ -9,8 +9,8 @@ export const eidDates = [
   { name: 'Eid al-Adha', date: '2027-05-16' },
 ] as const
 
-/** Cut, sewn, pressed and packed, from payment. */
-export const makeDays = 14
+/** From payment to leaving the UK: 3–5 working days, about a calendar week. */
+export const makeDays = 7
 const marginDays = 2
 /** Courier days once it leaves the atelier. */
 const shipDays = { uk: 3, abroad: 8 } as const

@@ -14,21 +14,21 @@ export const workCopy: Record<
 > = {
   reserved: {
     label: 'Ordered',
-    line: 'Order received. Making starts soon.',
+    line: 'Order received.',
     memberTitle: 'Order confirmed',
-    memberBody: 'We have your order and will start making it soon.',
+    memberBody: 'We have your order and will send it within 3–5 working days.',
   },
   cloth: {
-    label: 'Waiting for cloth',
-    line: 'We are waiting for the cloth to arrive.',
-    memberTitle: 'Waiting for cloth',
-    memberBody: 'We are waiting for the cloth for your order to arrive from the mill.',
+    label: 'Restocking',
+    line: 'We are waiting for new stock in your size.',
+    memberTitle: 'Waiting for stock',
+    memberBody: 'We are waiting for new stock in your size and will update you.',
   },
   cutting: {
-    label: 'Being made',
-    line: 'Your piece is being cut and sewn.',
-    memberTitle: 'Your piece is being made',
-    memberBody: 'Your piece is being cut and sewn.',
+    label: 'Preparing',
+    line: 'Your order is being pressed and prepared.',
+    memberTitle: 'We are preparing your order',
+    memberBody: 'Your piece is being pressed and prepared to send.',
   },
   packed: {
     label: 'Packed',

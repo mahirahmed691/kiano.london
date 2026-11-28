@@ -78,7 +78,7 @@ export const returnsLetter: LegalLetter = {
   path: '/returns',
   kicker: 'After it leaves',
   title: 'If it must return.',
-  lead: 'A cut is made when you ask for it. If the piece cannot be worn as reserved, write. Do not drop it at a shop window. There is no shop window. The letter is held; it is not a refund.',
+  lead: 'If a piece is not right, write to us before sending it back. There is no shop to return it to. The letter is held; it is not a refund.',
   blocks: [
     {
       kicker: 'Fourteen days',
