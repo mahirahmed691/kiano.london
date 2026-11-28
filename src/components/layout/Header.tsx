@@ -21,31 +21,6 @@ export function Header() {
     setMenuOpen(false)
   }, [pathname])
 
-  // Over an opening photograph the header is clear; it takes its black once you scroll.
-  const [overStill, setOverStill] = useState(false)
-  useEffect(() => {
-    let frame = 0
-    const measure = () => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        const still = document.querySelector<HTMLElement>('#main-content [data-still]')
-        const opensWithStill = Boolean(still && still.getBoundingClientRect().top + window.scrollY <= 1)
-        setOverStill(opensWithStill && window.scrollY < 48)
-      })
-    }
-    measure()
-    const late = window.setTimeout(measure, 120)
-    window.addEventListener('scroll', measure, { passive: true })
-    window.addEventListener('resize', measure)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.clearTimeout(late)
-      window.removeEventListener('scroll', measure)
-      window.removeEventListener('resize', measure)
-    }
-  }, [pathname])
-  const clear = overStill && !menuOpen && !installed
-
   return (
     <>
       <a
@@ -55,18 +30,10 @@ export function Header() {
         Skip to content
       </a>
       <header
-        className={cn(
-          'fixed inset-x-0 top-0 z-50 text-ivory transition-[background-color,backdrop-filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]',
-          clear ? 'header-clear bg-transparent' : 'bg-black',
-        )}
+        className="fixed inset-x-0 top-0 z-50 bg-black text-ivory"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div
-          className={cn(
-            'relative flex h-[5.25rem] items-center justify-between border-b px-5 transition-colors duration-700 md:h-[5.75rem] md:px-12 lg:px-16',
-            clear ? 'border-transparent' : 'border-ivory/10',
-          )}
-        >
+        <div className="relative flex h-[5.25rem] items-center justify-between border-b border-ivory/10 px-5 md:h-[5.75rem] md:px-12 lg:px-16">
           <Wordmark className="pointer-events-auto absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2" />
 
           <div className="flex min-w-0 items-center">

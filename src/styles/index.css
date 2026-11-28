@@ -449,16 +449,6 @@ html.snap-product {
   .fade-in { animation: none; }
 }
 
-/* Header over an opening photograph: a soft shade keeps the mark legible on light stills. */
-.header-clear::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 -2.5rem;
-  background: linear-gradient(to bottom, rgb(12 10 9 / 0.5), rgb(12 10 9 / 0.18) 60%, transparent);
-  pointer-events: none;
-  z-index: -1;
-}
-
 /* Opening stills settle in over a long breath. */
 @keyframes still-drift {
   from { transform: scale(1.06); }
